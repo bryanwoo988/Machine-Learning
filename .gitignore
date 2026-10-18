@@ -1,0 +1,26 @@
+# Downloaded Google pages: rebuilt by tools/google/fetch.py, not published as-is
+tools/.cache/
+node_modules/
+
+# Python tooling
+venv/
+__pycache__/
+*.pyc
+
+# Local agent/plugin state — not part of the app
+.swarm/
+.claude-flow/
+.claude/
+ruvector.db
+agentdb.rvf
+agentdb.rvf.lock
+*.db
+*.db-shm
+*.db-wal
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*~
