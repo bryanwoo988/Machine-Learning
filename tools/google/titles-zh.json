@@ -1,0 +1,14 @@
+{
+  "Linear regression": "线性回归",
+  "Logistic regression": "逻辑回归",
+  "Classification": "分类",
+  "Working with numerical data": "处理数值数据",
+  "Working with categorical data": "处理分类数据",
+  "Datasets, generalization, and overfitting": "数据集、泛化和过拟合",
+  "Neural networks": "神经网络",
+  "Embeddings": "嵌入",
+  "Intro to Large Language Models": "大型语言模型简介",
+  "Production ML systems": "生产环境机器学习系统",
+  "Automated machine learning": "自动化机器学习 (AutoML)",
+  "Fairness": "公平性"
+}

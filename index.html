@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Machine Learning · 机器学习</title>
+<meta name="description" content="Google's four foundational machine-learning courses in English and 中文, with interactive figures, notes and quizzes — readable offline.">
+<meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131f" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Machine Learning">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Machine Learning · 机器学习">
+<meta property="og:description" content="Google's foundational ML courses in English and 中文, readable offline.">
+<meta property="og:url" content="https://bryanwoo988.github.io/Machine-Learning/">
+<meta property="og:image" content="https://bryanwoo988.github.io/Machine-Learning/icons/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1290x2796-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1290x2796-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1179x2556-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1179x2556-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1284x2778-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1284x2778-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1170x2532-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1170x2532-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1125x2436-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1125x2436-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1242x2688-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1242x2688-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/828x1792-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/828x1792-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/750x1334-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/750x1334-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1536x2048-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1536x2048-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/1668x2388-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/1668x2388-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: light)" href="icons/splash/2048x2732-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="icons/splash/2048x2732-dark.png">
+<script id="prepaint">
+/* Before the stylesheet paints anything: apply saved theme, text size and
+   language, so a dark phone never flashes white. Mirrors prefs.applyToDocument. */
+(function () {
+  var p = {};
+  try { p = JSON.parse(localStorage.getItem('ml.prefs.v1') || '{}') || {}; } catch (e) {}
+  var r = document.documentElement;
+  var theme = ['light', 'dark'].indexOf(p.theme) >= 0 ? p.theme : 'auto';
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = theme === 'auto' ? (dark ? 'dark' : 'light') : theme;
+  var s = [0.9, 1, 1.15, 1.3, 1.5, 1.75].indexOf(p.scale) >= 0 ? p.scale : 1;
+  r.style.setProperty('--font-scale', s);
+  if (s >= 1.3) r.dataset.single = '';
+  if (p.chosen && ['en', 'zh'].indexOf(p.lang) >= 0) r.lang = p.lang === 'zh' ? 'zh-Hans' : p.lang;
+})();
+</script>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/reader.css">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<script src="js/reader.js"></script>
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<div id="splash" aria-hidden="true">
+  <img src="icons/icon-192.png" alt="" width="96" height="96">
+  <p class="splash-name">机器学习 · Machine Learning</p>
+</div>
+
+<header class="topbar">
+  <a class="brand" href="#/" data-action="home">
+    <img src="icons/icon-192.png" alt="" width="28" height="28">
+    <span class="brand-name" data-ui="appName">Machine Learning</span>
+  </a>
+  <nav class="actions" aria-label="App">
+    <button type="button" class="icon-btn" data-action="search"></button>
+    <button type="button" class="icon-btn" data-action="more"></button>
+  </nav>
+</header>
+
+<main id="main" class="layout" tabindex="-1"></main>
+
+<!-- Bottom bar: everything the thumb needs, where the thumb is. -->
+<nav class="bottomnav" id="bottomnav">
+  <button type="button" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h11"/></svg><span data-ui="contents">Contents</span></button>
+  <button type="button" data-nav="tools"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><path d="M16.5 13v7M13 16.5h7"/></svg><span data-ui="tools">Tools</span></button>
+  <button type="button" data-nav="notes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><span data-ui="notes">Notes</span></button>
+  <button type="button" data-nav="bookmarks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span data-ui="bookmarks">Bookmarks</span></button>
+  <button type="button" data-nav="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span data-ui="settings">Settings</span></button>
+</nav>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<div id="picker" class="picker" role="dialog" aria-modal="true" aria-labelledby="picker-title" hidden>
+  <div class="picker-card">
+    <img src="icons/icon-192.png" alt="" width="72" height="72">
+    <h1 id="picker-title"><span>Choose your language</span><span>选择语言</span></h1>
+    <div class="picker-options">
+      <button type="button" data-lang="en" class="is-default"><span class="opt-name">English</span><span class="opt-line">Google's machine-learning courses, offline</span></button>
+      <button type="button" data-lang="zh"><span class="opt-name">中文</span><span class="opt-line">Google 机器学习课程，离线可读</span></button>
+    </div>
+    <p class="picker-hint">You can change it later in Settings · 之后可在「设置」里更改</p>
+  </div>
+</div>
+
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-backdrop" data-action="close-sheet"></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true">
+    <button type="button" class="icon-btn sheet-close" data-action="close-sheet"></button>
+    <div class="sheet-body"></div>
+  </div>
+</div>
+
+<div id="update-banner" class="update-banner" role="status" hidden>
+  <span data-ui="updateReady"></span>
+  <button type="button" class="button" data-action="update" data-ui="updateNow"></button>
+  <button type="button" class="button button-quiet" data-action="update-later" data-ui="updateLater"></button>
+</div>
+</body>
+</html>

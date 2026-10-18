@@ -1,0 +1,73 @@
+name: Build and deploy
+
+# Every push to main is a release. The service worker's precache list and
+# cache name are regenerated from a hash of every file it serves, so any
+# change — index.html, a chapter, a map — reaches installed copies with
+# nothing to bump by hand.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # A missing translation, a term taught out of order or a broken source
+      # reference must never reach the site.
+      - name: Lint content
+        run: node tools/lint-content.mjs
+
+      - name: Regenerate the service worker
+        run: node tools/build-sw.mjs
+
+      - name: Tests
+        run: node --test 'tests/*.test.js'
+
+      - name: Note whether the committed service worker was current
+        run: |
+          if git diff --quiet -- sw.js; then echo "sw.js was already up to date."
+          else echo "::notice::sw.js was regenerated during the build. Run 'node tools/build-sw.mjs' locally to match."; fi
+
+      # Publish only what the app serves: no tools, specs, tests or references.
+      - name: Assemble the site
+        run: |
+          mkdir -p _site
+          for item in index.html manifest.webmanifest favicon.ico sw.js css js data icons img vendor; do
+            cp -r "$item" _site/
+          done
+          touch _site/.nojekyll
+          find _site -type f | wc -l | xargs echo "files:"
+          du -sh _site | cut -f1 | xargs echo "size:"
+          grep -E "^const CACHE" _site/sw.js
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,1580 @@
+{
+"id": "c17",
+"num": 17,
+"stage": 4,
+"title": {
+"en": "Experiments to production",
+"zh": "将实验发布到正式版"
+},
+"minutes": null,
+"sections": [
+{
+"id": "experiments",
+"path": "/machine-learning/managing-ml-projects/experiments",
+"min": null,
+"heading": {
+"en": "Experiments",
+"zh": "实验"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/experiments",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/experiments?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Experiments involve making single, small, iterative changes to model features, architecture, or hyperparameters to improve performance compared to a baseline.",
+"zh": null
+},
+{
+"en": "It's crucial to track all experimental results, including unsuccessful ones, to understand which approaches work and which don't.",
+"zh": null
+},
+{
+"en": "Teams should establish clear experimentation practices, including defining artifacts, coding standards, reproducibility measures, and tracking methods.",
+"zh": null
+},
+{
+"en": "Plan for handling wrong predictions early on, potentially by incorporating user feedback for model improvement.",
+"zh": null
+},
+{
+"en": "Consider building parts of the final pipeline alongside experimentation to facilitate a smoother transition to production.",
+"zh": null
+}
+],
+"terms": [
+"baseline"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Experiments drive a project toward viability. They are testable and reproducible hypotheses. When running experiments, the goal is to make continual, incremental improvements by evaluating a variety of model architectures and features. When experimenting, you'll want to do the following:",
+"zh": "实验有助于提高项目的可行性。它们是可测试且可重现的假设。运行实验的目标是通过评估各种模型架构和特征，不断进行渐进式改进。进行实验时，您需要执行以下操作："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Determine baseline performance.</b> Start by establishing a <button type=\"button\" class=\"term\" data-term=\"baseline\">baseline</button> metric. The baseline acts as a measuring stick to compare experiments against.<br> In some cases, the current non-ML solution can provide the first baseline metric. If no solution currently exists, create a ML model with a simple architecture, a few features, and use its metrics as the baseline.",
+"zh": "<b>确定基准效果。</b>首先，建立<button type=\"button\" class=\"term\" data-term=\"baseline\">基准</button>指标。基准值可用作衡量标准，用于与实验进行比较。<br> 在某些情况下，当前的非机器学习解决方案可以提供第一个基准指标。如果目前没有任何解决方案，请创建一个具有简单架构和少量特征的机器学习模型，并将其指标用作基准。"
+},
+{
+"en": "<b>Make single, small changes.</b> Make only a single, small change at a time, for example, to the hyperparameters, architecture, or features. If the change improves the model, that model's metrics become the new baseline to compare future experiments against.<br> The following are examples of experiments that make a single, small change:<br> <ul><li>include feature <i>X</i>.</li><li>use 0.5 dropout on the first hidden layer.</li><li>take the log transform of feature <i>Y</i>.</li><li>change the learning rate to 0.001.</li></ul>",
+"zh": "<b>进行单次小幅更改。</b>每次只进行一项小更改，例如对超参数、架构或特征进行更改。如果更改有助于改进模型，该模型的指标将成为未来实验的对照基准。<br> 以下是进行单次小更改的实验示例：<br> <ul><li>包含功能 <i>X</i>。</li><li>对第一个隐藏层使用 0.5 的 dropout 值。</li><li>对特征 <i>Y</i> 进行对数转换。</li><li>将学习速率更改为 0.001。</li></ul>"
+},
+{
+"en": "<b>Record the progress of the experiments.</b> You'll most likely need to do lots of experiments. Experiments with poor (or neutral) prediction quality compared to the baseline are still useful to track. They signal which approaches won't work. Because progress is typically non-linear, it's important to show that you're working on the problem by highlighting all the ways you found that don't work—in addition to your progress at increasing the baseline quality.",
+"zh": "<b>记录实验进度。</b>您很可能需要进行大量实验。与基准相比，预测质量较差（或中性）的实验仍有价值可循。它们会表明哪些方法行不通。由于进度通常是非线性的，因此除了展示您在提高基准质量方面的进展之外，还应突出显示您发现的所有行不通的方法，以表明您正在努力解决问题。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Because each full training on a real-world dataset can take hours (or days), consider running multiple independent experiments concurrently to explore the space quickly. As you continue to iterate, you'll hopefully get closer and closer to the level of quality you'll need for production.",
+"zh": "由于对真实数据集进行的每次完整训练都可能需要数小时（或数天），因此不妨考虑同时运行多个独立实验，以便快速探索搜索空间。随着您不断迭代，希望能越来越接近生产所需的质量水平。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Noise in experimental results",
+"zh": "实验结果中的噪声"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Note that you might encounter noise in experimental results that aren't from changes to the model or the data, making it difficult to determine if a change you made actually improved the model. The following are examples of things that can produce noise in experimental results:",
+"zh": "请注意，实验结果中可能会出现噪声，而这些噪声并非源自模型或数据的更改，这会导致您难以确定所做的更改是否确实改进了模型。以下是可能会在实验结果中产生噪声的示例："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Data shuffling: The order in which the data is presented to the model can affect the model's performance.",
+"zh": "数据洗牌：向模型呈现数据的顺序可能会影响模型的性能。"
+},
+{
+"en": "Variable initialization: The way in which the model's variables are initialized can also affect its performance.",
+"zh": "变量初始化：模型变量的初始化方式也会影响其性能。"
+},
+{
+"en": "Asynchronous parallelism: If the model is trained using asynchronous parallelism, the order in which the different parts of the model are updated can also affect its performance.",
+"zh": "异步并行：如果模型是使用异步并行训练的，则模型不同部分的更新顺序也可能会影响其性能。"
+},
+{
+"en": "Small evaluation sets: If the evaluation set is too small, it may not be representative of the overall performance of the model, producing uneven variations in the model's quality.",
+"zh": "评估集较小：如果评估集太小，可能无法代表模型的整体性能，从而导致模型质量出现不均匀的变化。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Running an experiment multiple times helps confirm experimental results.",
+"zh": "多次运行实验有助于确认实验结果。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Align on experimentation practices",
+"zh": "统一实验做法"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Your team should have a clear understanding of what exactly an \"experiment\" is, with a defined set of practices and artifacts. You'll want documentation that outlines the following:",
+"zh": "您的团队应明确了解“实验”的确切含义，并制定一套明确的做法和工件。您需要提供一份文档，其中概述了以下内容："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Artifacts.</b> What are the artifacts for an experiment? In most cases, an experiment is a tested hypothesis that can be reproduced, typically by logging the metadata (like the features and hyperparameters) that indicate the changes between experiments and how they affect model quality.",
+"zh": "<b>工件。</b>实验的工件是什么？在大多数情况下，实验是指可重现的经过测试的假设，通常通过记录元数据（例如特征和超参数）来指明实验之间的变化及其对模型质量的影响。"
+},
+{
+"en": "<b>Coding practices.</b> Will everyone use their own experimental environments? How possible (or easy) will it be to unify everyone's work into shared libraries?",
+"zh": "<b>编码做法。</b>每个人都会使用自己的实验环境吗？将所有人的成果整合到共享库中有多大可能性（或有多容易）？"
+},
+{
+"en": "<b>Reproducibility and tracking.</b> What are the standards for reproducibility? For instance, should the team use the same data pipeline and versioning practices, or is it OK to show only plots? How will experimental data be saved: as SQL queries or as model snapshots? Where will the logs from each experiment be documented: in a doc, a spreadsheet, or a CMS for managing experiments?",
+"zh": "<b>可重复性和跟踪。</b>可重复性标准是什么？例如，团队是否应使用相同的数据流水线和版本控制做法，还是只显示图表即可？实验数据将以何种方式保存：作为 SQL 查询还是作为模型快照？每个实验的日志将记录在何处：文档、电子表格还是用于管理实验的 CMS？"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Wrong predictions",
+"zh": "错误的预测"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "No real-world model is perfect. How will your system handle wrong predictions? Begin thinking early on about how to deal with them.",
+"zh": "没有完美的真实世界模型。您的系统将如何处理错误的预测结果？ 请尽早考虑如何应对这些问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A best-practices strategy encourages users to correctly label wrong predictions. For example, mail apps capture misclassified email by logging the mail users move into their spam folder, as well as the reverse. By capturing ground truth labels from users, you can design automated feedback loops for data collection and model retraining.",
+"zh": "最佳实践策略鼓励用户正确标记错误的预测结果。例如，电子邮件应用会通过记录用户移至垃圾邮件文件夹的电子邮件以及相反的情况来捕获分类错误的电子邮件。通过从用户获取标准答案标签，您可以设计自动反馈环，以便收集数据和重新训练模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Note that although UI-embedded surveys capture user feedback, the data is typically qualitative and can't be incorporated into the retraining data.",
+"zh": "请注意，虽然嵌入界面的调查会收集用户反馈，但这些数据通常是定性数据，无法纳入重新训练数据中。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Implement an end-to-end solution",
+"zh": "实现端到端解决方案"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "While your team is experimenting on the model, it's a good idea to start building out parts of the final pipeline (if you have the resources to do so).",
+"zh": "在团队对模型进行实验时，最好开始构建最终流水线的部分内容（如果有资源）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Establishing different pieces of the pipeline—like data intake and model retraining—makes it easier to move the final model to production. For example, getting an end-to-end pipeline for ingesting data and serving predictions can help the team start integrating the model into the product and to begin conducting early-stage user testing.",
+"zh": "建立流水线的不同部分（例如数据提取和模型重新训练）有助于更轻松地将最终模型移至生产环境。例如，获取用于提取数据和提供预测结果的端到端流水线有助于团队开始将模型集成到产品中，并开始进行早期用户测试。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Troubleshooting stalled projects",
+"zh": "排查项目卡住问题"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You might be in scenarios where a project's progress stalls. Maybe your team has been working on a promising experiment but hasn't had success improving the model for weeks. What should you do? The following are some possible approaches:",
+"zh": "在某些情况下，项目的进度可能会停滞不前。也许您的团队一直在进行一项有前景的实验，但数周以来一直未能成功改进模型。您应该怎么做？以下是一些可能的方法："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Strategic.</b> You might need to reframe the problem. After spending time in the experimentation phase, you probably understand the problem, the data, and the possible solutions better. With a deeper knowledge of the domain, you can probably frame the problem more precisely.<br> For instance, maybe you initially wanted to use linear regression to predict a numeric value. Unfortunately, the data wasn't good enough to train a viable linear regression model. Maybe further analysis reveals the problem can be solved by predicting whether an example is above or below a specific value. This lets you reframe the problem as a binary classification one.<br> If progress is slower than expected, don't give up. Incremental improvements over time might be the only way to solve the problem. As noted earlier, don't expect the same amount of progress week over week. Often, getting a production-ready version of a model requires substantial amounts of time. Model improvement can be irregular and unpredictable. Periods of slow progress can be followed by spikes in improvement, or the reverse.",
+"zh": "<b>战略</b>。您可能需要重新定义问题。在实验阶段花费一些时间后，您可能更了解问题、数据和可能的解决方案。通过对该领域的更深入了解，您或许可以更精确地界定问题。<br> 例如，您最初可能希望使用线性回归来预测数值。很遗憾，这些数据不足以训练出可行的线性回归模型。进一步分析后，您可能会发现可以通过预测示例是否高于或低于特定值来解决此问题。这样，您就可以将问题重新定义为二元分类问题。<br> 如果进度比预期慢，请不要放弃。随着时间的推移逐步改进可能是解决此问题的唯一方法。如前所述，不要期望每周的进度相同。通常，获得可用于生产环境的模型版本需要花费大量时间。模型改进可能不规律且不可预测。进展缓慢的时期可能会出现进步突增，反之亦然。"
+},
+{
+"en": "<b>Technical.</b> Spend time diagnosing and analyzing wrong predictions. In some cases, you can find the issue by isolating a few wrong predictions and diagnosing the model's behavior in those instances. For example, you might uncover problems with the architecture or the data. In other cases, getting more data can help. You might get a clearer signal that suggests you're on the right path, or it might produce more noise, indicating other issues exist in the approach.<br> If you're working on a problem that requires human-labeled datasets, getting a labeled dataset for model evaluation might be hard to obtain. Find resources to get the datasets you'll need for evaluation.",
+"zh": "<b>技术</b>。花时间诊断和分析错误的预测结果。在某些情况下，您可以通过隔离一些错误的预测并诊断这些实例中的模型行为来发现问题。例如，您可能会发现架构或数据存在问题。在其他情况下，获取更多数据可能会有所帮助。您可能会获得更清晰的信号，表明您走在正确的道路上，但也可能会产生更多噪声，表明该方法存在其他问题。<br> 如果您要解决的问题需要人工标记的数据集，那么获得用于模型评估的标记数据集可能很难。查找资源，获取评估所需的数据集。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Maybe no solution is possible. Time-box your approach, stopping if you haven't made progress within the timeframe. However, if you have a strong problem statement, then it probably warrants a solution.",
+"zh": "也许无法找到解决方案。为您的方法设置时间限制，如果您未在规定时间内取得进展，则停止。不过，如果您有清晰的问题陈述，那么就可能需要解决方案。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "A team member found a combination of hyperparameters that improves the baseline model metric. What should the other members of the team do?",
+"zh": "团队成员找到了一种超参数组合，可以提升基准模型指标。团队的其他成员应该做些什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Maybe incorporate one hyperparameter, but continue with their experiments.",
+"zh": "可以引入一个超参数，但继续进行实验。"
+},
+"why": {
+"en": "Correct. If one of their hyperparameters seems like a reasonable choice, try it. However, not all hyperparameter choices make sense in every experimental context.",
+"zh": "正确。如果其中某个超参数似乎是一个合理的选择，请尝试使用它。不过，并非所有超参数选项在每种实验环境中都适用。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Change all their hyperparameters in their current experiment to match their co-worker's.",
+"zh": "更改当前实验中的所有超参数，使其与同事的超参数一致。"
+},
+"why": {
+"en": "Hyperparameters that improved one model doesn't mean they'll also improve a different model. The other teammates should continue with their experiments, which might actually improve the baseline even more later on.",
+"zh": "对一个模型有益的超参数并不一定对另一个模型也有益。其他团队成员应继续进行实验，这实际上可能会进一步提升基准水平。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Start building an end-to-end pipeline that will be used to implement the model.",
+"zh": "开始构建用于实现模型的端到端流水线。"
+},
+"why": {
+"en": "A model that improves the baseline doesn't mean it's the model that will ultimately be used in production. They should continue with their experiments, which might actually improve the baseline even more later on.",
+"zh": "模型优于基准模型并不意味着它最终会在生产环境中使用。他们应继续进行实验，这实际上可能会进一步提升基准。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "pipelines",
+"path": "/machine-learning/managing-ml-projects/pipelines",
+"min": null,
+"heading": {
+"en": "ML pipelines",
+"zh": "机器学习流水线"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/pipelines",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/pipelines?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Production Machine Learning prioritizes automated pipelines over individual models to accommodate evolving data and ensure accuracy through regular retraining.",
+"zh": null
+},
+{
+"en": "Pipelines streamline the ML workflow by automating data collection, model training, validation, and deployment for enhanced efficiency and reliability.",
+"zh": null
+},
+{
+"en": "Two primary pipeline functions exist: serving pipelines for delivering predictions and a combination of data, training, and validation pipelines for updating the model to combat staleness.",
+"zh": null
+},
+{
+"en": "Model staleness varies based on data dynamism, necessitating training frequency adjustments, ideally with daily training and deployment as a best practice.",
+"zh": null
+},
+{
+"en": "Version-controlled repositories are crucial for managing datasets, ensuring reproducibility, compliance, and auditability, while logging predictions and ground truth aids in monitoring model quality.",
+"zh": null
+}
+],
+"terms": [
+"feature-engineering",
+"ground-truth",
+"offline-inference",
+"online-inference",
+"prediction-bias",
+"test-set"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In production ML, the goal isn't to build a single model and deploy it. The goal is to build automated pipelines for developing, testing, and deploying models over time. Why? As the world changes, trends in data shift, causing models in production to go stale. Models typically need retraining with up-to-date data to continue serving high-quality predictions over the long term. In other words, you'll want a way to replace stale models with fresh ones.",
+"zh": "在生产环境中的机器学习中，目标不是构建单个模型并部署它。目标是构建自动化流水线，以便随着时间的推移开发、测试和部署模型。为什么呢？随着世界变化，数据趋势也会发生变化，导致生产环境中的模型过时。模型通常需要使用最新数据重新训练，才能在长期内继续提供高质量的预测。换句话说，您需要一种方法来替换过时的模型，以便使用最新的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Without pipelines, replacing a stale model is an error-prone process. For example, once a model starts serving bad predictions, someone will need to manually collect and process new data, train a new model, validate its quality, and then finally deploy it. ML pipelines automate many of these repetitive processes, making the management and maintenance of models more efficient and reliable.",
+"zh": "如果没有流水线，替换过时的模型就很容易出错。例如，一旦模型开始提供错误的预测，就需要有人手动收集和处理新数据，训练新模型，验证其质量，然后最终部署该模型。机器学习流水线可自动执行许多此类重复性流程，从而更高效、更可靠地管理和维护模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Building pipelines",
+"zh": "构建流水线"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "ML pipelines organize the steps for building and deploying models into well-defined tasks. Pipelines have one of two functions: delivering predictions or updating the model.",
+"zh": "机器学习流水线将构建和部署模型的步骤整理成明确定义的任务。流水线具有以下两种功能之一：提供预测或更新模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Delivering predictions",
+"zh": "提供预测结果"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The serving pipeline delivers predictions. It exposes your model to the real world, making it accessible to your users. For example, when a user wants a prediction—what the weather will be like tomorrow, or how many minutes it'll take to travel to the airport, or a list of recommended videos—the serving pipeline receives and processes the user's data, makes a prediction, and then delivers it to the user.",
+"zh": "服务流水线用于提供预测结果。它将您的模型展示给现实世界，让用户可以访问。例如，当用户需要预测时（例如明天的天气如何、前往机场需要多少分钟，或者推荐的视频列表），服务流水线会接收并处理用户的数据，做出预测，然后将预测结果提供给用户。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Updating the model",
+"zh": "更新模型"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Models tend to go stale almost immediately after they go into production. In essence, they're making predictions using old information. Their training datasets captured the state of the world a day ago, or in some cases, an hour ago. Inevitably the world has changed: a user has watched more videos and needs a new list of recommendations; rain has caused traffic to slow and users need updated estimates for their arrival times; a popular trend causes retailers to request updated inventory predictions for certain items.",
+"zh": "模型在部署到生产环境后，很快就会过时。从本质上讲，它们是使用旧信息进行预测。其训练数据集捕获的是一天前（在某些情况下是一小时前）的世界状态。世界在不断变化：用户观看了更多视频，需要新的推荐列表；下雨导致交通变缓，用户需要更新到达时间估计值；热门趋势导致零售商请求更新特定商品的库存预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Typically, teams train new models well before the production model goes stale. In some cases, teams train and deploy new models daily in a continuous training and deployment cycle. Ideally, training a new model should happen well before the production model goes stale.",
+"zh": "通常，团队会在生产模型过时之前很久就训练新模型。在某些情况下，团队会在持续的训练和部署周期中每天训练和部署新模型。理想情况下，应在新版模型过时之前及时训练新模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following pipelines work together to train a new model:",
+"zh": "以下流水线可协同工作来训练新模型："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Data pipeline</b>. The data pipeline processes user data to create training and test datasets.",
+"zh": "<b>数据流水线</b>。数据流水线会处理用户数据，以创建训练数据集和测试数据集。"
+},
+{
+"en": "<b>Training pipeline</b>. The training pipeline trains models using the new training datasets from the data pipeline.",
+"zh": "<b>训练流水线</b>。训练流水线使用来自数据流水线的新训练数据集来训练模型。"
+},
+{
+"en": "<b>Validation pipeline</b>. The validation pipeline validates the trained model by comparing it with the production model using <button type=\"button\" class=\"term\" data-term=\"test-set\">test datasets</button> generated by the data pipeline.",
+"zh": "<b>验证流水线</b>。验证流水线通过将训练后的模型与生产模型进行比较来验证训练后的模型，所用的是由数据流水线生成的<button type=\"button\" class=\"term\" data-term=\"test-set\">测试数据集</button>。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 4 illustrates the inputs and outputs of each ML pipeline.",
+"zh": "图 4 展示了每个机器学习流水线的输入和输出。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>ML pipelines</b>",
+"zh": "<b>机器学习流水线</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/pipes.png",
+"alt": {
+"en": "ML pipelines showing their inputs and outputs. The serving pipeline\ntakes user input and delivers predictions. The data pipeline processes\nthe application data logs to create training and test datasets that the\ntraining and validation pipeline use to train and validate new\nmodels",
+"zh": "显示输入和输出的机器学习流水线。服务流水线接受用户输入并提供预测结果。数据流水线处理应用数据日志，以创建训练和测试数据集，供训练和验证流水线用于训练和验证新模型"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 4</b>. ML pipelines automate many processes for developing and maintaining models. Each pipeline shows its inputs and outputs.",
+"zh": "<b>图 4</b>. 机器学习流水线可自动执行许多开发和维护模型的过程。每个流水线都会显示其输入和输出。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "At a very general level, here's how the pipelines keep a fresh model in production:",
+"zh": "从非常一般的层面来看，流水线通过以下方式在生产环境中保持模型的新鲜度："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "First, a model goes into production, and the serving pipeline starts delivering predictions.",
+"zh": "首先，模型投入生产，服务流水线开始提供预测。"
+},
+{
+"en": "The data pipeline immediately begins collecting data to generate new training and test datasets.",
+"zh": "数据流水线会立即开始收集数据，以生成新的训练数据集和测试数据集。"
+},
+{
+"en": "Based on a schedule or a trigger, the training and validation pipelines train and validate a new model using the datasets generated by the data pipeline.",
+"zh": "根据时间表或触发条件，训练和验证流水线会使用数据流水线生成的数据集来训练和验证新模型。"
+},
+{
+"en": "When the validation pipeline confirms the new model isn't worse than the production model, the new model gets deployed.",
+"zh": "当验证流水线确认新模型不逊于生产模型时，系统会部署新模型。"
+},
+{
+"en": "This process repeats continuously.",
+"zh": "此过程会不断重复。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Model staleness and training frequency",
+"zh": "模型过时程度和训练频率"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Almost all models go stale. Some models go stale faster than others. For example, models that recommend clothes typically go stale quickly because consumer preferences are notorious for changing frequently. On the other hand, models that identify flowers might never go stale. A flower's identifying characteristics remain stable.",
+"zh": "几乎所有模型都会过时。有些模型比其他模型更快过时。例如，推荐服装的模型通常很快就会过时，因为消费者的偏好众所周知地经常变化。另一方面，识别花卉的模型可能永远不会过时。花卉的识别特征保持稳定。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Most models begin to go stale immediately after they're put into production. You'll want to establish a training frequency that reflects the nature of your data. If the data is dynamic, train often. If it's less dynamic, you might not need to train that often.",
+"zh": "大多数模型在投入生产环境后立即开始过时。您需要确定一个能反映数据性质的训练频率。如果数据是动态的，请经常训练。如果变化不大，您可能不需要经常训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Train models before they go stale. Early training provides a buffer to resolve potential issues, for example, if the data or training pipeline fails, or the model quality is poor.",
+"zh": "在模型过时之前对其进行训练。提前训练可提供缓冲时间来解决潜在问题，例如数据或训练流水线失败，或者模型质量较差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A recommended best practice is to train and deploy new models on a daily basis. Just like regular software projects that have a daily build and release process, ML pipelines for training and validation often do best when ran daily.",
+"zh": "建议的最佳实践是每天训练和部署新模型。 与具有每日构建和发布流程的常规软件项目一样，用于训练和验证的机器学习流水线通常在每天运行时效果最佳。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following models is likely to go stale quickly and will need to be constantly replaced with one trained on newer data? Select all that apply.",
+"zh": "以下哪种模型可能很快就会过时，需要不断替换为使用较新数据训练的模型？ 请选择所有适用的选项。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Predicts spam",
+"zh": "预测垃圾内容"
+},
+"why": {
+"en": "Correct. These model use data that changes constantly in response to a collection of factors, like new spam tactics. As a result, they need to be constantly updated to respond to ever-changing trends.",
+"zh": "正确。这些模型使用的数据会根据一系列因素（例如新的垃圾内容策略）不断变化。因此，它们需要不断更新，以应对不断变化的趋势。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Recommends clothes",
+"zh": "推荐服装"
+},
+"why": {
+"en": "Correct. These model use data that changes constantly in response to a collection of factors, like consumer preferences. As a result, they need to be constantly updated to respond to ever-changing trends.",
+"zh": "正确。这些模型使用的数据会根据一系列因素（例如消费者偏好）不断变化。因此，它们需要不断更新，以应对不断变化的趋势。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Classifies bird species",
+"zh": "对鸟类进行分类"
+},
+"why": {
+"en": "Bird species don't change over time.",
+"zh": "鸟类物种不会随时间而变化。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Predicts if transaction is fraudulent",
+"zh": "预测交易是否为欺诈性交易"
+},
+"why": {
+"en": "Correct. These model use data that changes constantly in response to a collection of factors, like new fraud tactics. As a result, they need to be constantly updated to respond to ever-changing trends.",
+"zh": "正确。这些模型使用的数据会根据一系列因素（例如新的欺诈策略）不断变化。因此，它们需要不断更新，以应对不断变化的趋势。"
+},
+"correct": true
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Serving pipeline",
+"zh": "服务流水线"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The serving pipeline generates and delivers predictions in one of two ways: online or offline.",
+"zh": "服务流水线通过以下两种方式之一生成和交付预测结果：在线或离线。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Online predictions</b>. <button type=\"button\" class=\"term\" data-term=\"online-inference\">Online predictions</button> happen in real time, typically by sending a request to an online server and returning a prediction. For example, when a user wants a prediction, the user's data is sent to the model and the model returns the prediction.",
+"zh": "<b>在线预测</b>。<button type=\"button\" class=\"term\" data-term=\"online-inference\">在线预测</button>是实时进行的，通常通过向在线服务器发送请求并返回预测结果来实现。 例如，当用户需要预测时，系统会将用户的数据发送给模型，然后模型会返回预测结果。"
+},
+{
+"en": "<b>Offline predictions</b>. <button type=\"button\" class=\"term\" data-term=\"offline-inference\">Offline predictions</button> are precomputed and cached. To serve a prediction, the app finds the cached prediction in the database and returns it. For example, a subscription-based service might predict the churn rate for its subscribers. The model predicts the likelihood of churning for every subscriber and caches it. When the app needs the prediction—for instance, to incentive users who might be about to churn—it just looks up the precomputed prediction.",
+"zh": "<b>离线预测</b>。<button type=\"button\" class=\"term\" data-term=\"offline-inference\">离线预测</button>是预先计算并缓存的。为了提供预测，应用会在数据库中查找缓存的预测并返回该预测。例如，基于订阅的服务可能会预测订阅者的流失率。该模型会预测每位订阅者的流失可能性并将其缓存。当应用需要预测结果时（例如，为了激励可能即将流失的用户），只需查找预先计算的预测结果即可。"
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>The infrastructure is different for online and offline predictions. In this course, we refer to both as the \"serving pipeline.\"",
+"zh": "<b>注意</b>：在线预测和离线预测的基础设施不同。 在本课程中，我们将两者统称为“服务流水线”。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 5 shows how online and offline predictions get generated and delivered.",
+"zh": "图 5 显示了在线预测和离线预测的生成和交付方式。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Online and offline predictions</b>",
+"zh": "<b>在线和离线预测</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/offline-online.png",
+"alt": {
+"en": "Predictions can be delivered in real time or batched and cached for lookup.",
+"zh": "预测结果可以实时交付，也可以批量交付并缓存以供查找。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 5</b>. Online predictions deliver predictions in real time. Offline predictions are cached and looked up at serving time.",
+"zh": "<b>图 5</b>. 在线预测可实时提供预测结果。离线预测会缓存起来，并在提供预测时进行查找。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Prediction post-processing",
+"zh": "预测后处理"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Typically, predictions get post-processed before they're delivered. For example, predictions might be post-processed to remove toxic or biased content. Classification results might go through a process to reorder results instead of showing the model's raw output, for instance, to boost more authoritative content, present a diversity of results, demote particular results (like clickbait), or remove results for legal reasons.",
+"zh": "通常情况下，预测结果在交付之前会经过后处理。例如，可以对预测结果进行后处理，以移除有害或有偏见的内容。分类结果可能通过某个流程对结果进行重新排序，而不是显示模型的原始输出，例如，为了提升更权威的内容、呈现多样化的结果、降低特定结果（例如点击诱饵）的排名，或出于法律原因移除结果。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 6 shows a serving pipeline and the typical tasks involved in delivering predictions.",
+"zh": "图 6 显示了服务流水线以及交付预测结果所涉及的典型任务。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Post-processing predictions</b>",
+"zh": "<b>后处理预测</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/prediction-process.png",
+"alt": {
+"en": "The serving pipeline typically post-processing predictions.",
+"zh": "服务流水线通常会对预测结果进行后处理。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 6</b>. Serving pipeline illustrating the typical tasks involved to deliver predictions.",
+"zh": "<b>图 6</b>. 服务流水线，用于说明交付预测结果所涉及的典型任务。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Note that the <button type=\"button\" class=\"term\" data-term=\"feature-engineering\">feature engineering</button> step is typically built within the model and not a separate, stand-alone process. The data processing code in the serving pipeline is often nearly identical to the data processing code the data pipeline uses to create training and test datasets.",
+"zh": "请注意，<button type=\"button\" class=\"term\" data-term=\"feature-engineering\">特征工程</button>步骤通常是在模型内构建的，而不是一个单独的独立流程。服务流水线中的数据处理代码通常与数据流水线用于创建训练和测试数据集的数据处理代码几乎完全相同。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Assets and metadata storage",
+"zh": "素材资源和元数据存储"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The serving pipeline should incorporate a repository to log model predictions and, if possible, the ground truth.",
+"zh": "传送流水线应包含一个用于记录模型预测和（如果可能）标准答案的代码库。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Logging model predictions lets you monitor the quality of your model. By aggregating predictions, you can monitor the general quality of your model and determine if it's starting to lose quality. Generally, the production model's predictions should have the same average as the labels from the training dataset. For more information, see <button type=\"button\" class=\"term\" data-term=\"prediction-bias\">prediction bias</button>.",
+"zh": "记录模型预测结果有助于您监控模型质量。通过汇总预测结果，您可以监控模型的总体质量，并确定模型是否开始失去质量。一般来说，生产模型的预测结果应与训练数据集中的标签具有相同的平均值。如需了解详情，请参阅<button type=\"button\" class=\"term\" data-term=\"prediction-bias\">预测偏差</button>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Capturing ground truth",
+"zh": "捕获标准答案"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "In some cases, the <button type=\"button\" class=\"term\" data-term=\"ground-truth\">ground truth</button> only becomes available much later. For example, if a weather app predicts the weather six weeks into the future, the ground truth (what the weather actually is) won't be available for six weeks.",
+"zh": "在某些情况下，<button type=\"button\" class=\"term\" data-term=\"ground-truth\">标准答案</button>只有在很久之后才会提供。例如，如果天气应用预测未来 6 周的天气，那么 6 周内都无法获得实际天气情况这一真实数据。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When possible, get users to report the ground truth by adding feedback mechanisms into the app. A mail app can implicitly captures user feedback when users move mail from their inbox to their spam folder. However, this only works when user correctly categorize their mail. When users leave spam in their inbox (because they know it's spam and never open it), the training data becomes inaccurate. That particular piece of mail will be labeled \"not spam\" when it should be \"spam.\" In other words, <i>always try to find ways to capture and record the ground truth</i>, but be aware of the shortcomings that might exist in feedback mechanisms.",
+"zh": "如果可能，请在应用中添加反馈机制，让用户报告实际情况。当用户将邮件从收件箱移至垃圾邮件文件夹时，邮件应用可以隐式捕获用户反馈。不过，只有在用户正确分类邮件时，此功能才有效。如果用户将垃圾邮件留在收件箱中（因为他们知道这是垃圾邮件，并且从不打开），训练数据就会变得不准确。相应邮件会被标记为“非垃圾邮件”，但实际上应标记为“垃圾邮件”。换句话说，<i>始终尝试寻找捕获和记录标准答案的方法</i>，但也要注意反馈机制中可能存在的缺点。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 7 shows predictions being delivered to a user and logged to a repository.",
+"zh": "图 7 显示了向用户提供预测结果并将预测结果记录到代码库的过程。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Logging predictions</b>",
+"zh": "<b>记录预测</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/prediction-log.png",
+"alt": {
+"en": "The serving pipeline should log predictions to monitor model staleness.",
+"zh": "服务流水线应记录预测结果，以监控模型过时情况。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 7</b>. Log predictions to monitor model quality.",
+"zh": "<b>图 7</b>. 记录预测结果以监控模型质量。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Data pipelines",
+"zh": "数据流水线"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Data pipelines generate training and test datasets from application data. The training and validation pipelines then use the datasets to train and validate new models.",
+"zh": "数据流水线可根据应用数据生成训练数据集和测试数据集。然后，训练和验证流水线会使用这些数据集来训练和验证新模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The data pipeline creates training and test datasets with the same features and label originally used to train the model, but with newer information. For example, a maps app would generate training and test datasets from recent travel times between points for millions of users, along with other relevant data, like the weather.",
+"zh": "数据流水线会创建训练数据集和测试数据集，这些数据集具有最初用于训练模型的相同特征和标签，但包含更新的信息。例如，地图应用会根据数百万用户最近在各点之间的出行时间以及天气等其他相关数据，生成训练数据集和测试数据集。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A video recommendation app would generate training and test datasets that included the videos a user clicked on from the recommended list (along with the ones not clicked), as well as other relevant data, like watch history.",
+"zh": "视频推荐应用会生成训练数据集和测试数据集，其中包含用户从推荐列表中点击的视频（以及未点击的视频），以及其他相关数据，例如观看记录。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 8 illustrates the data pipeline using application data to generate training and test datasets.",
+"zh": "图 8 展示了使用应用数据生成训练数据集和测试数据集的数据流水线。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Data pipeline</b>",
+"zh": "<b>数据流水线</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/data-process.png",
+"alt": {
+"en": "The data pipeline generates training and test datasets.",
+"zh": "数据流水线会生成训练数据集和测试数据集。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 8</b>. Data pipeline processes application data to create datasets for the training and validation pipelines.",
+"zh": "<b>图 8</b>. 数据流水线处理应用数据，以创建用于训练和验证流水线的数据集。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Data collection and processing",
+"zh": "数据收集和处理"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The tasks for collecting and processing data in data pipelines will probably differ from the <a href=\"#/ch/c17/experiments\">experimentation phase</a> (where you determined that your solution was feasible):",
+"zh": "数据流水线中用于收集和处理数据的任务可能与<a href=\"#/ch/c17/experiments\">实验阶段</a>（您在该阶段确定了解决方案的可行性）不同："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Data collection</b>. During experimentation, collecting data typically requires accessing saved data. For data pipelines, collecting data might require discovering and getting approval to access streaming logs data.<br> If you need human-labeled data (like medical images), you'll need a process for collecting and updating it as well.",
+"zh": "<b>数据收集</b>。在实验期间，收集数据通常需要访问已保存的数据。对于数据流水线，收集数据可能需要发现并获得访问流式日志数据的批准。<br> 如果您需要人工标记的数据（例如医学图像），则还需要一个用于收集和更新这些数据的流程。"
+},
+{
+"en": "<b>Data processing</b>. During experimentation, the right features came from scraping, joining, and sampling the experimentation datasets. For the data pipelines, generating those same features might require entirely different processes. However, be sure to duplicate the data transformations from the experimentation phase by applying the same mathematical operations to the features and labels.",
+"zh": "<b>数据处理</b>。在实验期间，合适的特征来自对实验数据集的抓取、联接和抽样。对于数据流水线，生成这些相同的特征可能需要完全不同的流程。不过，请务必复制实验阶段的数据转换，方法是对特征和标签应用相同的数学运算。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Assets and metadata storage",
+"zh": "素材资源和元数据存储"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "You'll need a process for storing, versioning, and managing your training and test datasets. Version controlled repositories provide the following benefits:",
+"zh": "您需要一个流程来存储、版本控制和管理训练数据集和测试数据集。启用版本控制的代码库具有以下优势："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Reproducibility</b>. Recreate and standardize model training environments and compare prediction quality among different models.",
+"zh": "<b>可再现性</b>。重新创建并标准化模型训练环境，以及比较不同模型之间的预测质量。"
+},
+{
+"en": "<b>Compliance</b>. Adhere to regulatory compliance requirements for auditability and transparency.",
+"zh": "<b>合规性</b>。遵守可审核性和透明度方面的监管合规性要求。"
+},
+{
+"en": "<b>Retention</b>. Set data retention values for how long to store the data.",
+"zh": "<b>留存</b>。设置数据保留值，以确定数据存储时长。"
+},
+{
+"en": "<b>Access management</b>. Manage who can access your data through fine-grained permissions.",
+"zh": "<b>访问权限管理</b>。通过精细的权限管理功能，控制哪些人可以访问您的数据。"
+},
+{
+"en": "<b>Data integrity</b>. Track and understand changes to datasets over time, making it easier to diagnose issues with your data or your model.",
+"zh": "<b>数据完整性</b>。跟踪和了解数据集随时间的变化，从而更轻松地诊断数据或模型存在的问题。"
+},
+{
+"en": "<b>Discoverability</b>. Make it easy for others to find your datasets and features. Other teams can then determine if they'd be useful for their purposes.",
+"zh": "<b>可发现性</b>。让其他人能够轻松找到您的数据集和功能。然后，其他团队可以确定这些模型是否适合其用途。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Documenting your data",
+"zh": "记录数据"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Good documentation helps others understand key information about your data, like its type, source, size, and other essential metadata. In most cases, documenting your data in a design doc is sufficient. If you plan on sharing or publishing your data, use <a href=\"https://sites.research.google/datacardsplaybook/\" target=\"_blank\" rel=\"noopener\">data cards</a> to structure the information. Data cards make it easier for others to discover and understand your datasets.",
+"zh": "良好的文档有助于他人了解有关数据的关键信息，例如数据类型、来源、大小和其他基本元数据。在大多数情况下，在设计文档 中记录数据就足够了。如果您打算分享或发布数据，请使用 <a href=\"https://sites.research.google/datacardsplaybook/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">数据卡片</a> 来整理信息。数据卡片可让其他人更轻松地发现和了解您的数据集。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Training and validation pipelines",
+"zh": "训练和验证流水线"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The training and validation pipelines produce new models to replace production models before they go stale. Continually training and validating new models ensures the best model is always in production.",
+"zh": "训练和验证流水线会生成新模型来替换过时的生产模型。通过不断训练和验证新模型，确保生产环境中始终使用最佳模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The training pipeline generates a new model from the training datasets, and the validation pipeline compares the quality of the new model with the one in production using test datasets.",
+"zh": "训练流水线会根据训练数据集生成新模型，而验证流水线会使用测试数据集将新模型的质量与生产环境中的模型进行比较。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 9 illustrates the training pipeline using a training dataset to train a new model.",
+"zh": "图 9 展示了使用训练数据集训练新模型的训练流水线。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Training pipeline</b>",
+"zh": "<b>训练流水线</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/train.png",
+"alt": {
+"en": "The training pipeline trains new models on fresh data.",
+"zh": "训练流水线会根据最新数据训练新模型。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 9</b>. The training pipeline trains new models using the most recent training dataset.",
+"zh": "<b>图 9</b>. 训练流水线使用最新的训练数据集训练新模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "After the model is trained, the validation pipeline uses test datasets to compare the production model's quality against the trained model.",
+"zh": "模型训练完毕后，验证流水线会使用测试数据集将生产模型的质量与训练模型的质量进行比较。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In general, if the trained model isn't meaningfully worse than the production model, the trained model goes into production. If the trained model is worse, the monitoring infrastructure should create an alert. Trained models with worse prediction quality could indicate potential issues with the data or validation pipelines. This approach works to ensure the best model, trained on the freshest data, is always in production.",
+"zh": "一般来说，如果训练后的模型与生产模型相比没有明显变差，则训练后的模型会投入生产。如果训练后的模型效果更差，监控基础架构应创建提醒。如果训练后的模型预测质量较差，可能表示数据或验证流水线存在潜在问题。此方法可确保始终在生产环境中使用基于最新数据训练的最佳模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Assets and metadata storage",
+"zh": "素材资源和元数据存储"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Models and their metadata should be stored in versioned repositories to organize and track model deployments. Model repositories provide the following benefits:",
+"zh": "模型及其元数据应存储在版本控制的代码库中，以便整理和跟踪模型部署。模型代码库具有以下优势："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Tracking and evaluation</b>. Track models in production and understand their evaluation and prediction quality metrics.",
+"zh": "<b>跟踪和评估</b>。跟踪生产环境中的模型，并了解其评估和预测质量指标。"
+},
+{
+"en": "<b>Model release process</b>. Easily review, approve, release, or roll back models.",
+"zh": "<b>模型发布流程</b>。轻松查看、批准、发布或回滚模型。"
+},
+{
+"en": "<b>Reproducibility and debugging</b>. Reproduce model results and more effectively debug issues by tracing a model's datasets and dependencies across deployments.",
+"zh": "<b>可重现性和调试</b>。通过跟踪模型在各个部署中的数据集和依赖项，重现模型结果并更有效地调试问题。"
+},
+{
+"en": "<b>Discoverability</b>. Make it easy for others to find your model. Other teams can then determine if your model (or parts of it) can be used for their purposes.",
+"zh": "<b>可发现性</b>。让其他人能够轻松找到您的模型。其他团队随后可以确定您的模型（或其中的部分内容）是否可用于其用途。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 10 illustrates a validated model stored in a model repository.",
+"zh": "图 10 展示了存储在模型代码库中的已验证模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Model storage</b>",
+"zh": "<b>模型存储</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/model-store.png",
+"alt": {
+"en": "Store models in a versioned repository",
+"zh": "将模型存储在版本化代码库中"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 10</b>. Validated models are stored in a model repository for tracking and discoverability.",
+"zh": "<b>图 10</b>. 经过验证的模型会存储在模型代码库中，以便进行跟踪和发现。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Use <a href=\"https://modelcards.withgoogle.com/face-detection\" target=\"_blank\" rel=\"noopener\">model cards</a> to document and share key information about your model, like its purpose, architecture, hardware requirements, evaluation metrics, etc.",
+"zh": "使用 <a href=\"https://modelcards.withgoogle.com/face-detection\" target=\"_blank\" rel=\"noopener\">模型卡片</a> 记录并分享有关模型的重要信息，例如其用途、架构、硬件要求、评估指标等。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What are some of the main reasons for using versioned repositories to store predictions, datasets, and models? Select all that apply.",
+"zh": "使用版本控制的存储库来存储预测、数据集和模型的主要原因有哪些？请选择所有适用的选项。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Reproduce and debug issues",
+"zh": "重现和调试问题"
+},
+"why": {
+"en": "Correct. Storing assets in versioned repositories is critical for diagnosing and debugging problems.",
+"zh": "正确。将资源存储在版本控制的代码库中对于诊断和调试问题至关重要。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Monitor model quality",
+"zh": "监控模型质量"
+},
+"why": {
+"en": "Correct. Storing assets in versioned repositories is critical for monitoring model quality.",
+"zh": "正确。将资源存储在版本控制的代码库中对于监控模型质量至关重要。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Reduce compute quota",
+"zh": "减少计算配额"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Challenges building pipelines",
+"zh": "构建流水线的挑战"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "When building pipelines, you might encounter the following challenges:",
+"zh": "在构建流水线时，您可能会遇到以下挑战："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Getting access to the data you need</b>. Data access might require justifying why you need it. For example, you might need to explain how the data will be used and clarify how personal identifiable information (PII) issues will be solved. Be prepared to show a proof-of-concept demonstrating how your model makes better predictions with access to certain kinds of data.",
+"zh": "<b>获取所需数据的访问权限</b>。数据访问可能需要说明您需要访问的原因。例如，您可能需要说明数据的使用方式，并阐明如何解决个人身份信息 (PII) 问题。准备好展示概念验证，证明您的模型在获得特定类型的数据后可以做出更准确的预测。"
+},
+{
+"en": "<b>Getting the right features</b>. In some cases, the features used in the experimentation phase won't be available from the real-time data. Therefore, when experimenting, try to confirm that you'll be able to get the same features in production.",
+"zh": "<b>获取合适的特征</b>。在某些情况下，实验阶段使用的功能无法通过实时数据获得。因此，在进行实验时，请尽量确认您能否在正式版中获得相同的功能。"
+},
+{
+"en": "<b>Understanding how the data is collected and represented</b>. Learning how the data was collected, who collected it, and how it was collected (along with other issues) can take time and effort. It's important to understand the data thoroughly. Don't use data you're not confident in to train a model that might go to production.",
+"zh": "<b>了解数据的收集和呈现方式</b>。了解数据的收集方式、收集者以及收集方式（以及其他问题）可能需要花费时间和精力。请务必透彻了解数据。请勿使用您不确信的数据来训练可能用于生产环境的模型。"
+},
+{
+"en": "<b>Understanding the tradeoffs between effort, cost, and model quality</b>. Incorporating a new feature into a data pipeline can require a lot of effort. However, the additional feature might only slightly improve the model's quality. In other cases, adding a new feature might be easy. However, the resources to get and store the feature might be prohibitively expensive.",
+"zh": "<b>了解在工作量、费用和模型质量之间进行权衡取舍</b>。 将新功能纳入数据流水线可能需要付出大量精力。不过，添加的特征可能只会略微提高模型质量。在其他情况下，添加新功能可能很容易。 不过，获取和存储该功能的资源可能非常昂贵。"
+},
+{
+"en": "<b>Getting compute</b>. If you need TPUs for retraining, it might be hard to get the required quota. Also, managing TPUs is complicated. For example, some parts of your model or data might need to be specifically designed for TPUs by splitting parts of them across multiple TPU chips.",
+"zh": "<b>获取计算资源</b>。如果您需要 TPU 进行重新训练，可能很难获得所需的配额。此外，管理 TPU 也非常复杂。例如，您可能需要专门为 TPU 设计模型或数据的某些部分，方法是将这些部分拆分到多个 TPU 芯片上。"
+},
+{
+"en": "<b>Finding the right golden dataset</b>. If the data changes frequently, getting <button type=\"button\" class=\"term\" data-term=\"golden-dataset\">golden datasets</button> with consistent and accurate labels can be challenging.",
+"zh": "<b>找到合适的黄金数据集</b>。如果数据经常变化，则很难获得具有一致且准确标签的<button type=\"button\" class=\"term\" data-term=\"golden-dataset\">黄金数据集</button>。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Catching these types of problems during experimentation saves time. For example, you don't want to develop the best features and model only to learn they're not viable in production. Therefore, try to confirm as early as possible that your solution will work within the constraints of a production environment. It's better to spend time verifying a solution works rather than needing to return to the experimentation phase because the pipeline phase uncovered insurmountable problems.",
+"zh": "在实验期间发现这些类型的问题可以节省时间。例如，您不希望开发出最佳的特征和模型，结果却发现它们在生产环境中不可行。因此，请尽早确认您的解决方案是否能在生产环境的限制范围内正常运行。最好花时间验证解决方案是否有效，而不是因为流水线阶段发现了无法克服的问题而需要返回实验阶段。"
+}
+}
+]
+},
+{
+"id": "production",
+"path": "/machine-learning/managing-ml-projects/production",
+"min": null,
+"heading": {
+"en": "Productionization",
+"zh": "生产化"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/production",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/production?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Production ML pipelines require sufficient compute resources like RAM, CPUs, and GPUs/TPUs for serving, training, data processing, and validation.",
+"zh": null
+},
+{
+"en": "Implement robust logging, monitoring, and alerting to proactively detect data and model issues (e.g., data drift, prediction skews, quality degradation) across all pipeline stages.",
+"zh": null
+},
+{
+"en": "Establish a clear model deployment strategy outlining approvals, procedures, environments, and rollback mechanisms, and aim for automated deployments for efficiency and reliability.",
+"zh": null
+},
+{
+"en": "Estimate quota needs based on similar projects and service predictions, and factor in resources for both production and ongoing experimentation.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "To prepare your ML pipelines for production, you need to do the following:",
+"zh": "如需为生产环境准备机器学习流水线，您需要执行以下操作："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Provision compute resources for your pipelines",
+"zh": "为流水线预配计算资源"
+},
+{
+"en": "Implement logging, monitoring, and alerting",
+"zh": "实现日志记录、监控和提醒"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Provisioning compute resources",
+"zh": "预配计算资源"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Running ML pipelines requires compute resources, like RAM, CPUs, and GPUs/TPUs. Without adequate compute, you can't run your pipelines. Therefore, make sure to get sufficient quota to provision the required resources your pipelines need to run in production.",
+"zh": "运行 ML 流水线需要计算资源，例如 RAM、CPU 和 GPU/TPU。如果没有足够的计算资源，您将无法运行流水线。因此，请务必获取足够的配额，以便预配流水线在生产环境中运行所需的资源。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Serving, training, and validation pipelines</b>. These pipelines require TPUs, GPUs, or CPUs. Depending on your use case, you might train and serve on different hardware, or use the same hardware. For example, training might happen on CPUs but serving might use TPUs, or vice versa. In general, it's common to train on bigger hardware and then serve on smaller hardware.<br> <br> When picking hardware, consider the following:<br> <ul><li>Can you train on less expensive hardware?</li><li>Would switching to different hardware boost performance?</li><li>What size is the model and which hardware will optimize its performance?</li><li>What hardware is ideal based on your model's architecture?</li></ul> <b>Note:</b>When switching models between hardware, consider the time and effort to migrate the model. Switching hardware might make the model cheaper to run, but the engineering effort to do so might outweigh the savings—or engineering effort might be better prioritized on other work.",
+"zh": "<b>提供、训练和验证流水线</b>。这些流水线需要 TPU、GPU 或 CPU。根据您的使用情形，您可能会在不同的硬件上进行训练和提供服务，也可能会使用相同的硬件。例如，训练可能在 CPU 上进行，但服务可能使用 TPU，反之亦然。一般来说，在较大的硬件上进行训练，然后在较小的硬件上进行服务是很常见的。<br> <br> 选择硬件时，请考虑以下事项：<br> <ul><li>您能否在价格较低的硬件上进行训练？</li><li>改用其他硬件是否会提升性能？</li><li>模型的大小是多少？哪些硬件可以优化其性能？</li><li>根据模型的架构，理想的硬件是什么？</li></ul> <b>注意</b>：在硬件之间切换模型时，请考虑迁移模型所需的时间和精力。切换硬件可能会降低模型运行成本，但这样做所需的工程设计工作量可能超过节省的费用，或者工程设计工作量可能更适合优先用于其他工作。"
+},
+{
+"en": "<b>Data pipelines</b>. Data pipelines require quota for RAM and CPU You'll need to estimate how much quota your pipeline needs to generate training and test datasets.",
+"zh": "<b>数据流水线</b>。数据流水线需要 RAM 和 CPU 的配额 您需要估算流水线生成训练和测试数据集所需的配额。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "You might not allocate quota for each pipeline. Instead, you might allocate quota that pipelines share. In such cases, verify you have enough quota to run all your pipelines, and set up monitoring and altering to prevent a single, errant pipeline from consuming all the quota.",
+"zh": "您可能不会为每个流水线分配配额。您可以改为分配流水线共享的配额。在这种情况下，请验证您是否有足够的配额来运行所有流水线，并设置监控和提醒，以防止单个错误的流水线消耗所有配额。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Estimating quota",
+"zh": "估算配额"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "To estimate the quota you'll need for the data and training pipelines, find similar projects to base your estimates on. To estimate serving quota, try to predict the service's queries per second. These methods provide a baseline. As you begin prototyping a solution during the experimentation phase, you'll begin to get a more precise quota estimate.",
+"zh": "如需估算数据和训练流水线所需的配额，请查找类似的项目，以便根据这些项目进行估算。如需估算投放配额，请尝试预测服务的每秒查询次数。这些方法提供了一个基准。当您在实验阶段开始为解决方案制作原型时，您将开始获得更精确的配额估算值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When estimating quota, remember to factor in quota not only for your production pipelines, but also for ongoing experiments.",
+"zh": "在估算配额时，请务必考虑不仅是生产流水线的配额，还有正在进行的实验的配额。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "When choosing hardware to serve predictions, you should always choose more powerful hardware than was used to train the model.",
+"zh": "选择用于提供预测的硬件时，您应始终选择比用于训练模型的硬件更强大的硬件。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "False",
+"zh": "错误"
+},
+"why": {
+"en": "Correct. Typically, training requires bigger hardware than serving.",
+"zh": "正确。通常，训练所需的硬件比服务所需的硬件更大。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "True",
+"zh": "正确"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Logging, monitoring, and alerting",
+"zh": "日志记录、监控和提醒"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Logging and monitoring a production model's behavior is critical. Robust monitoring infrastructure confirms your models are serving reliable, high-quality predictions.",
+"zh": "记录和监控生产模型的行为至关重要。强大的监控基础架构可确保您的模型提供可靠的高质量预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Good logging and monitoring practices help proactively identify issues in ML pipelines and mitigate potential business impact. When issues do occur, alerts notify members of your team, and comprehensive logs facilitate diagnosing the problem's root cause.",
+"zh": "良好的日志记录和监控实践有助于主动发现机器学习流水线中的问题，并减轻潜在的业务影响。如果出现问题，系统会向团队成员发送提醒，而全面的日志有助于诊断问题的根本原因。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You should implement logging and monitoring to detect the following issues with ML pipelines:",
+"zh": "您应实现日志记录和监控，以检测机器学习流水线中的以下问题："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Pipeline",
+"zh": "流水线"
+},
+{
+"en": "Monitor",
+"zh": "监控"
+}
+],
+"rows": [
+[
+{
+"en": "Serving",
+"zh": "服务"
+},
+{
+"en": "<ul><li>Skews or drifts in the serving data compared to the training data</li><li>Skews or drifts in predictions</li><li>Data type issues, like missing or corrupted values</li><li>Quota usage</li><li>Model quality metrics Calculating a production model's quality is different than calculating a model's quality during training. In production, you won't necessarily have access to the ground truth to compare predictions against. Instead, you'll need to write custom monitoring instrumentation to capture metrics that act as a proxy for model quality. For example, in a mail app, you won't know which mail is spam in real time. Instead, you can monitor the percentage of mail users move to spam. If the number jumps from 0.5% to 3%, that signals a potential issue with the model.<br> Note that comparing the changes in the proxy metrics is more insightful than their raw numbers.</li></ul>",
+"zh": "<ul><li>应用数据与训练数据相比出现偏差或漂移</li><li>预测中的偏差或漂移</li><li>数据类型问题，例如值缺失或损坏</li><li>配额用量</li><li>模型质量指标 计算生产模型的质量与计算训练期间的模型的质量不同。在生产环境中，您不一定能访问标准答案，以便将预测结果与标准答案进行比较。相反，您需要编写自定义监控检测代码来捕获可作为模型质量代理的指标。例如，在邮件应用中，您无法实时了解哪些邮件是垃圾邮件。您可以改为监控用户将邮件移至“垃圾内容”文件夹的百分比。如果该数字从 0.5% 跃升至 3%，则表示模型可能存在问题。<br> 请注意，比较代理指标的变化比比较原始数字更有意义。</li></ul>"
+}
+],
+[
+{
+"en": "Data",
+"zh": "数据"
+},
+{
+"en": "<ul><li>Skews and drifts in feature values</li><li>Skews and drifts in label values</li><li>Data type issues, like missing or corrupted values</li><li>Quota usage rate</li><li>Quota limit about to be reached</li></ul>",
+"zh": "<ul><li>特征值中的偏差和漂移</li><li>标签值中的偏差和漂移</li><li>数据类型问题，例如值缺失或损坏</li><li>配额使用率</li><li>即将达到配额上限</li></ul>"
+}
+],
+[
+{
+"en": "Training",
+"zh": "培训"
+},
+{
+"en": "<ul><li>Training time</li><li>Training failures</li><li>Quota usage</li></ul>",
+"zh": "<ul><li>训练时间</li><li>训练失败</li><li>配额用量</li></ul>"
+}
+],
+[
+{
+"en": "Validation",
+"zh": "验证"
+},
+{
+"en": "<ul><li>Skew or drift in the test datasets</li></ul>",
+"zh": "<ul><li>测试数据集中的偏差或偏移</li></ul>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You'll also want logging, monitoring, alerting for the following:",
+"zh": "您还需要为以下内容设置日志记录、监控和提醒："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Latency</b>. How long does it take to deliver a prediction?",
+"zh": "<b>延迟时间</b>。预测需要多长时间才能交付？"
+},
+{
+"en": "<b>Outages</b>. Has the model stopped delivering predictions?",
+"zh": "<b>中断</b>。模型是否已停止提供预测？"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following is the main reason for logging and monitoring your ML pipelines?",
+"zh": "以下哪项是记录和监控机器学习流水线的主要原因？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Proactively detect issues before they impact users",
+"zh": "主动发现问题，以免用户受到影响"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "Track quota and resource usage",
+"zh": "跟踪配额和资源用量"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "Identify potential security problems",
+"zh": "识别潜在的安全问题"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "All of the above",
+"zh": "以上皆是"
+},
+"why": {
+"en": "Correct. Logging and monitoring your ML pipelines helps prevent and diagnose problems before they become serious.",
+"zh": "正确。记录和监控机器学习流水线有助于在问题变得严重之前预防和诊断问题。"
+},
+"correct": true
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Deploying a model",
+"zh": "部署模型"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "For model deployment, you'll want to document the following:",
+"zh": "对于模型部署，您需要记录以下内容："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Approvals required to begin deployment and increase the roll out.",
+"zh": "开始部署和增加推出范围所需的审批。"
+},
+{
+"en": "How to put a model into production.",
+"zh": "如何将模型投入生产环境。"
+},
+{
+"en": "Where the model gets deployed, for example, if there are staging or canary environments.",
+"zh": "模型部署的位置，例如是否存在预发布或 Canary 环境。"
+},
+{
+"en": "What to do if a deployment fails.",
+"zh": "如果部署失败，该怎么办。"
+},
+{
+"en": "How to rollback a model already in production.",
+"zh": "如何回滚已部署到生产环境中的模型。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "After automating model training, you'll want to automate validation and deployment. Automating deployments distributes responsibility and reduces the likelihood of a deployment being bottlenecked by a single person. It also reduces potential mistakes, increases efficiency and reliability, and enables on-call rotations and SRE support.",
+"zh": "在自动执行模型训练后，您可能还想自动执行验证和部署。自动化部署可分摊责任，并降低因单个人员而导致部署受阻的可能性。它还可以减少潜在的错误，提高效率和可靠性，并支持轮班待命和 SRE 支持。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Typically you deploy new models to a subset of users to check that the model is behaving as expected. If it is, continue with the deployment. If it's not, you rollback the deployment and begin diagnosing and debugging the issues.",
+"zh": "通常，您会将新模型部署到一部分用户，以检查模型是否按预期运行。如果确实如此，请继续进行部署。如果不是，您将回滚部署，并开始诊断和调试问题。"
+}
+}
+]
+}
+]
+}

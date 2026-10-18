@@ -1,0 +1,1673 @@
+{
+"id": "c04",
+"num": 4,
+"stage": 2,
+"title": {
+"en": "Classification",
+"zh": "分类"
+},
+"minutes": 70,
+"sections": [
+{
+"id": "classification",
+"path": "/machine-learning/crash-course/classification",
+"min": 3,
+"heading": {
+"en": "Classification",
+"zh": "分类"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module focuses on converting logistic regression models into binary classification models for predicting categories instead of probabilities.",
+"zh": null
+},
+{
+"en": "You'll learn how to determine the optimal threshold for classification, calculate and select appropriate evaluation metrics, and interpret ROC and AUC.",
+"zh": null
+},
+{
+"en": "The module covers binary and provides an introduction to multi-class classification, building upon prior knowledge of machine learning, linear regression, and logistic regression.",
+"zh": null
+},
+{
+"en": "The content explores methods for evaluating the quality of classification model predictions and applying them to real-world scenarios.",
+"zh": null
+}
+],
+"terms": [
+"binary-classification",
+"class",
+"classification-model",
+"multi-class",
+"sigmoid-function"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Determine an appropriate threshold for a binary classification model.</li><li>Calculate and choose appropriate metrics to evaluate a binary classification model.</li><li>Interpret ROC and AUC.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>为二元分类模型确定合适的阈值。</li><li>计算并选择适当的指标来评估二元分类模型。</li><li>解读 ROC 和曲线下面积。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c03/logistic-regression\">Logistic regression</a></li></ul>",
+"zh": "<b>前提条件</b>： 本单元假定您熟悉 以下模块：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c03/logistic-regression\">逻辑回归</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the <a href=\"#/ch/c03/logistic-regression\">Logistic regression module</a>, you learned how to use the <button type=\"button\" class=\"term\" data-term=\"sigmoid-function\"><b>sigmoid function</b></button> to convert raw model output to a value between 0 and 1 to make probabilistic predictions—for example, predicting that a given email has a 75% chance of being spam. But what if your goal is not to output probability but a category—for example, predicting whether a given email is \"spam\" or \"not spam\"?",
+"zh": "在<a href=\"#/ch/c03/logistic-regression\">逻辑回归模块</a>中，您学习了如何使用 <button type=\"button\" class=\"term\" data-term=\"sigmoid-function\"><b>sigmoid 函数</b></button>将原始模型输出转换为介于 0 到 1 之间的值，以进行概率预测，例如预测指定电子邮件是垃圾邮件的概率为 75%。但是，如果您的目标不是输出概率，而是输出类别（例如，预测指定电子邮件是“垃圾邮件”还是“非垃圾邮件”），该怎么办？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>Classification</b></button> is the task of predicting which of a set of <button type=\"button\" class=\"term\" data-term=\"class\"><b>classes</b></button> (categories) an example belongs to. In this module, you'll learn how to convert a logistic regression model that predicts a probability into a <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>binary classification</b></button> model that predicts one of two classes. You'll also learn how to choose and calculate appropriate metrics to evaluate the quality of a classification model's predictions. Finally, you'll get a brief introduction to <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>multi-class classification</b></button> problems, which are discussed in more depth later in the course.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>分类</b></button>是指预测某个示例属于一组<button type=\"button\" class=\"term\" data-term=\"class\"><b>类</b></button>（类别）中的哪一类。在本单元中，您将了解如何 一种逻辑回归模型， <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>二元分类</b></button> 用于预测两个类别中某一个的模型。您还将了解如何选择和计算适当的指标，以评估分类模型的预测质量。最后，该课程将简要介绍 <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>多类别分类</b></button> 这些问题将在本课程的稍后部分进行详细介绍。"
+}
+}
+]
+},
+{
+"id": "thresholding",
+"path": "/machine-learning/crash-course/classification/thresholding",
+"min": 12,
+"heading": {
+"en": "Thresholds and the confusion matrix",
+"zh": "阈值和混淆矩阵"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/thresholding",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/thresholding?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"binary-classification",
+"class_imbalanced_data_set",
+"classification-threshold",
+"confusion_matrix",
+"ground_truth",
+"negative_class",
+"positive_class"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Let's say you have a logistic regression model for spam-email detection that predicts a value between 0 and 1, representing the probability that a given email is spam. A prediction of 0.50 signifies a 50% likelihood that the email is spam, a prediction of 0.75 signifies a 75% likelihood that the email is spam, and so on.",
+"zh": "假设您有一个用于垃圾邮件检测的逻辑回归模型，该模型预测一个介于 0 到 1 之间的值，表示给定电子邮件是垃圾邮件的概率。预测值为 0.50 表示该电子邮件是垃圾邮件的概率为 50%，预测值为 0.75 表示该电子邮件是垃圾邮件的概率为 75%，以此类推。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You'd like to deploy this model in an email application to filter spam into a separate mail folder. But to do so, you need to convert the model's raw numerical output (e.g., <code>0.75</code>) into one of two categories: \"spam\" or \"not spam.\"",
+"zh": "您希望在电子邮件应用中部署此模型，以将垃圾邮件过滤到单独的邮件文件夹中。不过，为此，您需要转换模型的原始数值输出（例如<code>0.75</code>）分为“垃圾邮件”或“非垃圾邮件”这两类。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To make this conversion, you choose a threshold probability, called a <button type=\"button\" class=\"term\" data-term=\"classification-threshold\"><b>classification threshold</b></button>. Examples with a probability above the threshold value are then assigned to the <button type=\"button\" class=\"term\" data-term=\"positive_class\"><b>positive class</b></button>, the class you are testing for (here, <code>spam</code>). Examples with a lower probability are assigned to the <button type=\"button\" class=\"term\" data-term=\"negative_class\"><b>negative class</b></button>, the alternative class (here, <code>not spam</code>).",
+"zh": "如需进行此转换，您需要选择一个阈值概率，称为<button type=\"button\" class=\"term\" data-term=\"classification-threshold\"><b>分类阈值</b></button>。然后，概率高于阈值的示例会被分配到<button type=\"button\" class=\"term\" data-term=\"positive_class\"><b>正类别</b></button>（即您要测试的类，此处为 <code>spam</code>）。概率较低的示例会被分配到<button type=\"button\" class=\"term\" data-term=\"negative_class\"><b>负类别</b></button>（即备选类别，此处为 <code>not spam</code>）。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for more details on the classification threshold.</b>",
+"zh": "<b>点击此处详细了解分类阈值</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "You may be wondering: what happens if the predicted score is equal to the classification threshold (for instance, a score of 0.5 where the classification threshold is also 0.5)? Handling for this case depends on the particular implementation chosen for the classification model. The <a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a> library predicts the negative class if the score and threshold are equal, but other tools/frameworks may handle this case differently.",
+"zh": "您可能想知道：如果预测得分等于分类阈值（例如，得分为 0.5，分类阈值也为 0.5），会怎么样？此类情况的处理方式取决于为分类模型选择的具体实现。如果得分和阈值相等，<a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a> 库会预测负类，但其他工具/框架可能会以不同的方式处理这种情况。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose the model scores one email as 0.99, predicting that email has a 99% chance of being spam, and another email as 0.51, predicting it has a 51% chance of being spam. If you set the classification threshold to 0.5, the model will classify both emails as spam. If you set the threshold to 0.95, only the email scoring 0.99 will be classified as spam.",
+"zh": "假设模型为某封电子邮件评分为 0.99，预测该电子邮件是垃圾邮件的概率为 99%；为另一封电子邮件评分为 0.51，预测该电子邮件是垃圾邮件的概率为 51%。如果您将分类阈值设置为 0.5，模型将将这两封电子邮件都归类为垃圾邮件。如果您将阈值设置为 0.95，则只有得分为 0.99 的电子邮件才会被归类为垃圾邮件。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "While 0.5 might seem like an intuitive threshold, it's not a good idea if the cost of one type of wrong classification is greater than the other, or if the classes are imbalanced. If only 0.01% of emails are spam, or if misfiling legitimate emails is worse than letting spam into the inbox, labeling anything the model considers at least 50% likely to be spam as spam produces undesirable results.",
+"zh": "虽然 0.5 可能看起来是一个直观的阈值，但如果一种错误分类的代价大于另一种，或者类不平衡，则不建议使用该阈值。如果只有 0.01% 的电子邮件是垃圾邮件，或者将合法电子邮件归错会比让垃圾邮件进入收件箱更糟糕，那么如果将模型认为至少有 50% 的可能性是垃圾邮件的任何内容都标记为垃圾邮件，就会产生不理想的结果。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Confusion matrix",
+"zh": "混淆矩阵"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The probability score is not reality, or <button type=\"button\" class=\"term\" data-term=\"ground_truth\"><b>ground truth</b></button>. There are four possible outcomes for each output from a binary classifier. For the spam classifier example, if you lay out the ground truth as columns and the model's prediction as rows, the following table, called a <button type=\"button\" class=\"term\" data-term=\"confusion_matrix\"><b>confusion matrix</b></button>, is the result:",
+"zh": "概率得分不是现实情况，也不是<button type=\"button\" class=\"term\" data-term=\"ground_truth\"><b>标准答案</b></button>。二元分类器的每个输出有四种可能的结果。在垃圾邮件分类器示例中，如果您将标准答案作为列，将模型的预测作为行，则会得到以下表格（称为<button type=\"button\" class=\"term\" data-term=\"confusion_matrix\"><b>混淆矩阵</b></button>）："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Actual positive",
+"zh": "实际正例"
+},
+{
+"en": "Actual negative",
+"zh": "实际负例"
+}
+],
+"rows": [
+[
+{
+"en": "Predicted positive",
+"zh": "预测为正例"
+},
+{
+"en": "<b>True positive (TP)</b>: A spam email correctly classified as a spam email. These are the spam messages automatically sent to the spam folder.",
+"zh": "<b>真正例 (TP)</b>：垃圾邮件被正确分类为垃圾邮件。这些是系统自动发送到“垃圾邮件”文件夹的垃圾邮件。"
+},
+{
+"en": "<b>False positive (FP)</b>: A not-spam email misclassified as spam. These are the legitimate emails that wind up in the spam folder.",
+"zh": "<b>假正例 (FP)</b>：非垃圾邮件被误分类为垃圾邮件。这些是最终被移至“垃圾邮件”文件夹的正常电子邮件。"
+}
+],
+[
+{
+"en": "Predicted negative",
+"zh": "预测为负"
+},
+{
+"en": "<b>False negative (FN)</b>: A spam email misclassified as not-spam. These are spam emails that aren't caught by the spam filter and make their way into the inbox.",
+"zh": "<b>假负例 (FN)</b>：垃圾邮件被误分类为非垃圾邮件。这些垃圾邮件未被垃圾邮件过滤器捕获，而是进入了收件箱。"
+},
+{
+"en": "<b>True negative (TN)</b>: A not-spam email correctly classified as not-spam. These are the legitimate emails that are sent directly to the inbox.",
+"zh": "<b>真负例 (TN)</b>：非垃圾邮件被正确分类为非垃圾邮件。 这些是直接发送到收件箱的真实电子邮件。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice that the total in each row gives all predicted positives (TP + FP) and all predicted negatives (FN + TN), regardless of validity. The total in each column, meanwhile, gives all real positives (TP + FN) and all real negatives (FP + TN) regardless of model classification.",
+"zh": "请注意，每行的总和表示所有预测正例 (TP + FP) 和所有预测负例 (FN + TN)，无论其有效性如何。与此同时，每个列中的总和会显示所有真实正例 (TP + FN) 和所有真实负例 (FP + TN)，而不会考虑模型分类。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When the total of actual positives is not close to the total of actual negatives, the dataset is <button type=\"button\" class=\"term\" data-term=\"class_imbalanced_data_set\"><b>imbalanced</b></button>. An instance of an imbalanced dataset might be a set of thousands of photos of clouds, where the rare cloud type you are interested in, say, volutus clouds, only appears a few times.",
+"zh": "如果实际正例的总数与实际负例的总数不接近，则表示数据集<button type=\"button\" class=\"term\" data-term=\"class_imbalanced_data_set\"><b>不平衡</b></button>。不平衡数据集的一个示例可能是一组数以千计的云彩照片，其中您感兴趣的罕见云彩类型（例如卷云）只出现了几次。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Effect of threshold on true and false positives and negatives",
+"zh": "阈值对真正例、假正例和假负例的影响"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Different thresholds usually result in different numbers of true and false positives and true and false negatives. The following video explains why this is the case.",
+"zh": "不同的阈值通常会导致真正例、假正例、真负例和假负例的数量不同。以下视频介绍了具体原因。"
+}
+},
+{
+"type": "video",
+"id": "QM0sYbEQSkM"
+},
+{
+"type": "p",
+"html": {
+"en": "Try changing the threshold yourself.",
+"zh": "请尝试自行更改阈值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This widget includes three toy datasets:",
+"zh": "此 widget 包含三个玩具数据集："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Separated</b>, where positive examples and negative examples are generally well differentiated, with most positive examples having higher scores than negative examples.",
+"zh": "<b>分离</b>：正例和负例通常区分明显，大多数正例的分数高于负例。"
+},
+{
+"en": "<b>Unseparated</b>, where many positive examples have lower scores than negative examples, and many negative examples have higher scores than positive examples.",
+"zh": "<b>未分离</b>，其中许多正例的得分低于负例，许多负例的得分高于正例。"
+},
+{
+"en": "<b>Imbalanced</b>, containing only a few examples of the positive class.",
+"zh": "<b>不均衡</b>，仅包含少数正类示例。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check your understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Imagine a phishing or malware classification model where phishing and malware websites are in the class labeled <b>1</b> (true) and harmless websites are in the class labeled <b>0</b> (false). This model mistakenly classifies a legitimate website as malware. What is this called?",
+"zh": "假设有一个钓鱼式攻击或恶意软件分类模型，其中钓鱼式攻击网站和恶意软件网站属于标记为 <b>1</b>（true）的类别，无害网站属于标记为 <b>0</b>（false）的类别。此模型误将合法网站归类为恶意软件。这叫什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A false positive",
+"zh": "假正例"
+},
+"why": {
+"en": "A negative example (legitimate site) has been wrongly classified as a positive example (malware site).",
+"zh": "负例（合法网站）被错误地归类为正例（恶意软件网站）。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "A true positive",
+"zh": "真正例"
+},
+"why": {
+"en": "A true positive would be a malware site correctly classified as malware.",
+"zh": "真正例是指被正确归类为恶意软件的恶意软件网站。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "A false negative",
+"zh": "假负例"
+},
+"why": {
+"en": "A false negative would be a malware site incorrectly classified as a legitimate site.",
+"zh": "假负例是指恶意软件网站被错误地归类为合法网站。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "A true negative",
+"zh": "真负例"
+},
+"why": {
+"en": "A true negative would be a legitimate site correctly classified as a legitimate site.",
+"zh": "真负例是指被正确归类为合法网站的合法网站。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "In general, what happens to the number of false positives when the classification threshold increases? What about true positives? Experiment with the slider above.",
+"zh": "一般来说，如果提高分类阈值，假正例的数量会怎样？真正例又如何？请尝试使用上面的滑块。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Both true and false positives decrease.",
+"zh": "真正例和假正例都会减少。"
+},
+"why": {
+"en": "As the threshold increases, the model will likely predict fewer positives overall, both true and false. A spam classifier with a threshold of .9999 will only label an email as spam if it considers the classification to be at least 99.99% likely, which means it is highly unlikely to mislabel a legitimate email, but also likely to miss actual spam email.",
+"zh": "随着阈值的提高，模型预测的正例（包括真正例和假正例）总数可能会减少。如果垃圾邮件分类器的阈值为 .9999，则只有在其认为分类概率至少为 99.99% 时，才会将电子邮件标记为垃圾邮件，这意味着它不太可能误标记合法电子邮件，但也可能会漏掉实际的垃圾邮件。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Both true and false positives increase.",
+"zh": "真正例和假正例都会增加。"
+},
+"why": {
+"en": "Using the slider above, try setting the threshold to 0.1, then dragging it to 0.9. What happens to the number of false positives and true positives?",
+"zh": "使用上方的滑块，尝试将阈值设置为 0.1，然后将其拖动到 0.9。假正例和真正例的数量会发生什么变化？"
+},
+"correct": false
+},
+{
+"html": {
+"en": "True positives increase. False positives decrease.",
+"zh": "真正例增加。误报减少。"
+},
+"why": {
+"en": "Using the slider above, try setting the threshold to 0.1, then dragging it to 0.9. What happens to the number of false positives and true positives?",
+"zh": "使用上方的滑块，尝试将阈值设置为 0.1，然后将其拖动到 0.9。假正例和真正例的数量会发生什么变化？"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "In general, what happens to the number of false negatives when the classification threshold increases? What about true negatives? Experiment with the slider above.",
+"zh": "一般来说，如果提高分类阈值，假负例的数量会怎样？真负例又如何？请尝试使用上面的滑块。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Both true and false negatives increase.",
+"zh": "真负例和假负例都会增加。"
+},
+"why": {
+"en": "As the threshold increases, the model will likely predict more negatives overall, both true and false. At a very high threshold, almost all emails, both spam and not-spam, will be classified as not-spam.",
+"zh": "随着阈值的提高，模型预测的总体负例数量（包括真负例和假负例）可能会增加。如果设置非常高的阈值，几乎所有电子邮件（包括垃圾邮件和非垃圾邮件）都会被归类为非垃圾邮件。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Both true and false negatives decrease.",
+"zh": "真负例和假负例都会减少。"
+},
+"why": {
+"en": "Using the slider above, try setting the threshold to 0.1, then dragging it to 0.9. What happens to the number of false negatives and true negatives?",
+"zh": "使用上方的滑块，尝试将阈值设置为 0.1，然后将其拖动到 0.9。假负例数和真负例数会发生什么变化？"
+},
+"correct": false
+},
+{
+"html": {
+"en": "True negatives increase. False negatives decrease.",
+"zh": "真负例会增加。假负例减少。"
+},
+"why": {
+"en": "Using the slider above, try setting the threshold to 0.1, then dragging it to 0.9. What happens to the number of false negatives and true negatives?",
+"zh": "使用上方的滑块，尝试将阈值设置为 0.1，然后将其拖动到 0.9。假负例数和真负例数会发生什么变化？"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "accuracy-precision-recall",
+"path": "/machine-learning/crash-course/classification/accuracy-precision-recall",
+"min": 15,
+"heading": {
+"en": "Classification: Accuracy, recall, precision, and related metrics",
+"zh": "分类：准确率、召回率、精确率和相关指标"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"accuracy",
+"false-positive-rate-fpr",
+"precision",
+"recall"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "True and false positives and negatives are used to calculate several useful metrics for evaluating models. Which evaluation metrics are most meaningful depends on the specific model and the specific task, the cost of different misclassifications, and whether the dataset is balanced or imbalanced.",
+"zh": "真正例、假正例、真负例和假负例可用于计算多种有用的指标来评估模型。哪些评估指标最有意义取决于具体模型和具体任务、不同错误分类的成本，以及数据集是平衡的还是不平衡的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "All of the metrics in this section are calculated at a single fixed threshold, and change when the threshold changes. Very often, the user tunes the threshold to optimize one of these metrics.",
+"zh": "此部分中的所有指标均以单个固定阈值计算，并且会随着阈值的变化而变化。用户通常会调整阈值来优化其中一项指标。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Accuracy",
+"zh": "准确率"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>Accuracy</b></button> is the proportion of all classifications that were correct, whether positive or negative. It is mathematically defined as:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>准确率</b></button>是指所有正确分类（无论是正类别还是负类别）所占的比例。其数学定义如下："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8778em;vertical-align:-0.1944em;\"></span><span class=\"mord text\"><span class=\"mord\">Accuracy</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0574em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">total classifications</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">correct classifications</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">TN</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">FN</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">TN</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8778em;vertical-align:-0.1944em;\"></span><span class=\"mord text\"><span class=\"mord\">Accuracy</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0574em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">total classifications</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">correct classifications</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">TN</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">FN</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">TN</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the spam classification example, accuracy measures the <i>fraction of all emails correctly classified.</i>",
+"zh": "在垃圾邮件分类示例中，准确率衡量的是<i>所有正确分类的电子邮件所占的比例</i>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A perfect model would have zero false positives and zero false negatives, and therefore an accuracy of 1.0, or 100%.",
+"zh": "理想的模型不会出现假正例和假负例，因此准确率为 1.0 或 100%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Because it incorporates all four outcomes from the <a href=\"#/ch/c04/thresholding\">confusion matrix</a> (TP, FP, TN, FN), given a balanced dataset, with similar numbers of examples in both classes, accuracy can serve as a coarse-grained measure of model quality. For this reason, it is often the default evaluation metric used for generic or unspecified models carrying out generic or unspecified tasks.",
+"zh": "由于准确率纳入了<a href=\"#/ch/c04/thresholding\">混淆矩阵</a>中的所有四种结果（真阳性、假阳性、真阴性和假阴性），因此在给定平衡的数据集（两个类别中的样本数量相似）的情况下，准确率可以作为模型质量的粗略衡量指标。因此，对于执行通用或未指定任务的通用或未指定模型，它通常是默认的评估指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "However, when the dataset is imbalanced, or where one kind of mistake (FN or FP) is more costly than the other, which is the case in most real-world applications, it's better to optimize for one of the other metrics instead.",
+"zh": "不过，如果数据集不平衡，或者一种错误（假反例或假正例）的代价高于另一种错误，这在大多数实际应用中都是如此，那么最好优化其他指标之一。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For heavily imbalanced datasets, where one class appears very rarely, say 1% of the time, a model that predicts negative 100% of the time would score 99% on accuracy, despite being useless.",
+"zh": "对于严重不平衡的数据集（其中一个类别的出现频率非常低，例如仅占 1%），即使模型 100% 的时间都预测为负类别，其准确率也会达到 99%，但实际上毫无用处。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>In machine learning (ML), words like <i>recall</i>, <i>precision</i>, and <i>accuracy</i> have mathematical definitions that may differ from, or be more specific than, more commonly used meanings of the word.",
+"zh": "<b>注意</b>：在机器学习 (ML) 中，“召回率”“精确率”和“准确率”等词语具有数学定义，这些定义可能与这些词语的常用含义不同，或者比这些词语的常用含义更具体。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Recall, or true positive rate",
+"zh": "召回率或真正例率"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The <b>true positive rate (TPR)</b>, or the proportion of all actual positives that were classified correctly as positives, is also known as <button type=\"button\" class=\"term\" data-term=\"recall\"><b>recall</b></button>.",
+"zh": "<b>真正例率 (TPR)</b>，即所有实际正例中被正确分类为正例的比例，也称为<button type=\"button\" class=\"term\" data-term=\"recall\"><b>召回率</b></button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Recall is mathematically defined as:",
+"zh": "从数学角度来看，召回率的定义如下："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">Recall (or TPR)</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">all actual positives</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">correctly classified actual positives</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">FN</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">Recall (or TPR)</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">all actual positives</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">correctly classified actual positives</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">FN</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "False negatives are actual positives that were misclassified as negatives, which is why they appear in the denominator. In the spam classification example, recall measures the <i>fraction of spam emails that were correctly classified as spam.</i> This is why another name for recall is <b>probability of detection</b>: it answers the question \"What fraction of spam emails are detected by this model?\"",
+"zh": "假负例是指被错误分类为负例的实际正例，因此会出现在分母中。在垃圾邮件分类示例中，召回率衡量的是<i>被正确归类为垃圾邮件的垃圾邮件所占的比例</i>。因此，召回率的另一个名称是<b>检测概率</b>：它回答了“此模型检测到的垃圾邮件占垃圾邮件总数的百分比是多少？”这一问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A hypothetical perfect model would have zero false negatives and therefore a recall (TPR) of 1.0, which is to say, a 100% detection rate.",
+"zh": "假设有一个完美模型，它不会出现假负例，因此召回率 (TPR) 为 1.0，也就是说，检测率为 100%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In an imbalanced dataset where the number of actual positives is very low, recall is a more meaningful metric than accuracy because it measures the ability of the model to correctly identify all positive instances. For applications like disease prediction, correctly identifying the positive cases is crucial. A false negative typically has more serious consequences than a false positive. For a concrete example comparing recall and accuracy metrics, see the notes in the definition of <button type=\"button\" class=\"term\" data-term=\"recall\"><b>recall</b></button>.",
+"zh": "在实际正例数量非常少的不平衡数据集中，召回率比准确率更有意义，因为它可以衡量模型正确识别所有正例的能力。对于疾病预测等应用，正确识别阳性病例至关重要。假负例的后果通常比假正例更严重。如需查看比较召回率和准确率指标的具体示例，请参阅<button type=\"button\" class=\"term\" data-term=\"recall\"><b>召回率</b></button>定义中的注释。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "False positive rate",
+"zh": "假正例率"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The <button type=\"button\" class=\"term\" data-term=\"false-positive-rate-fpr\"><b>false positive rate (FPR)</b></button> is the proportion of all actual negatives that were classified <i>incorrectly</i> as positives, also known as the <b>probability of false alarm.</b> It is mathematically defined as:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"false-positive-rate-fpr\"><b>假正例率 (FPR)</b></button> 是指所有实际负例中被<i>错误</i>分类为正例的比例，也称为<b>误报概率</b>。其数学定义如下："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">FPR</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">all actual negatives</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">incorrectly classified actual negatives</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">TN</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">FPR</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">all actual negatives</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">incorrectly classified actual negatives</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">TN</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "False positives are actual negatives that were misclassified, which is why they appear in the denominator. In the spam classification example, FPR measures the <i>fraction of legitimate emails that were incorrectly classified as spam,</i> or the model's rate of false alarms.",
+"zh": "假正例是指被错误分类的实际负例，因此会出现在分母中。在垃圾邮件分类示例中，假正例率衡量的是<i>被错误分类为垃圾邮件的合法电子邮件所占的比例</i>，即模型的误报率。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A perfect model would have zero false positives and therefore a FPR of 0.0, which is to say, a 0% false alarm rate.",
+"zh": "理想的模型不会出现假正例，因此 FPR 为 0.0，也就是说，误报率为 0%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For an imbalanced dataset, FPR is generally a more informative metric than accuracy. However, if the number of actual negatives is very low, FPR may not be an ideal choice, due to its volatility. For example, if there are only four actual negatives in a dataset, one misclassification results in an FPR of 25%, while a second misclassification causes the FPR to jump to 50%. In cases like this, precision (described next) may be a more stable metric for evaluating the effects of false positives.",
+"zh": "对于不平衡的数据集，FPR 通常比准确率更能提供信息。不过，如果实际负例数量非常少，则 FPR 可能不是理想的选择，因为它波动性较大。例如，如果数据集中只有 4 个实际负例，那么一次错误分类会导致 FPR 达到 25%，而第二次错误分类会导致 FPR 跃升至 50%。在这种情况下，精确率（将在下文中介绍）可能是一个更稳定的指标，可用于评估假正例的影响。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Precision",
+"zh": "精确率"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"precision\"><b>Precision</b></button> is the proportion of all the model's positive classifications that are actually positive. It is mathematically defined as:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"precision\"><b>精确率</b></button>是指模型的所有正类别分类中实际为正类别的比例。其数学定义如下："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">Precision</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">everything classified as positive</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">correctly classified actual positives</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">Precision</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">everything classified as positive</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">correctly classified actual positives</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">FP</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">TP</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the spam classification example, precision measures the <i>fraction of emails classified as spam that were actually spam.</i>",
+"zh": "在垃圾邮件分类示例中，精确率衡量的是<i>被归类为垃圾邮件的电子邮件中实际为垃圾邮件的比例</i>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A hypothetical perfect model would have zero false positives and therefore a precision of 1.0.",
+"zh": "假设有一个完美模型，它不会产生任何假正例，因此精确率为 1.0。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In an imbalanced dataset where the number of actual positives is very, very low, say 1-2 examples in total, precision is less meaningful and less useful as a metric.",
+"zh": "在实际正例数量非常少的不平衡数据集中（例如总共只有 1-2 个正例），精确率作为一种指标的意义和实用性会降低。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Precision improves as false positives decrease, while recall improves when false negatives decrease. But as seen in the previous section, increasing the classification threshold tends to decrease the number of false positives and increase the number of false negatives, while decreasing the threshold has the opposite effects. As a result, precision and recall often show an inverse relationship, where improving one of them worsens the other.",
+"zh": "假正例越少，精确率越高；假负例越少，召回率越高。但如上一部分所示，提高分类阈值往往会减少假正例的数量并增加假负例的数量，而降低阈值则会产生相反的效果。因此，精确率和召回率通常呈反比关系，即提高其中一个指标会降低另一个指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Try it yourself:",
+"zh": "亲自尝试："
+}
+},
+{
+"type": "more",
+"title": {
+"en": "What does NaN mean in the metrics?",
+"zh": "指标中的 NaN 是什么意思？"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "NaN, or \"not a number,\" appears when dividing by 0, which can happen with any of these metrics. When TP and FP are both 0, for example, the formula for precision has 0 in the denominator, resulting in NaN. While in some cases NaN can indicate perfect performance and could be replaced by a score of 1.0, it can also come from a model that is practically useless. A model that never predicts positive, for example, would have 0 TPs and 0 FPs and thus a calculation of its precision would result in NaN.",
+"zh": "当除数为 0 时，系统会显示 NaN（“非数字”），这可能会发生在任何上述指标中。例如，当 TP 和 FP 均为 0 时，精确率公式的分母为 0，导致结果为 NaN。虽然在某些情况下，NaN 可能表示性能完美，可以替换为 1.0 的得分，但它也可能来自实际上毫无用处的模型。例如，如果模型从不预测正例，则其真正例数和假正例数均为 0，因此计算出的精确率将为 NaN。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Choice of metric and tradeoffs",
+"zh": "指标选择和权衡"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The metric(s) you choose to prioritize when evaluating the model and choosing a threshold depend on the costs, benefits, and risks of the specific problem. In the spam classification example, it often makes sense to prioritize recall, nabbing all the spam emails, or precision, trying to ensure that spam-labeled emails are in fact spam, or some balance of the two, above some minimum accuracy level.",
+"zh": "在评估模型和选择阈值时，您选择优先考虑的指标取决于特定问题的成本、收益和风险。在垃圾邮件分类示例中，通常需要优先考虑召回率（捕获所有垃圾邮件）或精确率（尽量确保标记为垃圾邮件的电子邮件确实是垃圾邮件），或者在达到一定最低准确率水平的前提下，在两者之间取得某种平衡。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Metric",
+"zh": "指标"
+},
+{
+"en": "Guidance",
+"zh": "指南"
+}
+],
+"rows": [
+[
+{
+"en": "Accuracy",
+"zh": "准确率"
+},
+{
+"en": "Use as a rough indicator of model training progress/convergence for balanced datasets.<br> For model performance, use only in combination with other metrics.<br> Avoid for imbalanced datasets. Consider using another metric.",
+"zh": "可作为平衡数据集的模型训练进度/收敛情况的粗略指标。<br> 对于模型效果，请仅与其他指标结合使用。<br> 避免用于不平衡的数据集。考虑使用其他指标。"
+}
+],
+[
+{
+"en": "Recall<br>(True positive rate)",
+"zh": "召回率<br>（真正例率）"
+},
+{
+"en": "Use when false negatives are more expensive than false positives.",
+"zh": "当假负例的代价高于假正例时使用。"
+}
+],
+[
+{
+"en": "False positive rate",
+"zh": "假正例率"
+},
+{
+"en": "Use when false positives are more expensive than false negatives.",
+"zh": "当假正例的代价高于假负例时使用。"
+}
+],
+[
+{
+"en": "Precision",
+"zh": "精确率"
+},
+{
+"en": "Use when it's very important for positive predictions to be accurate.",
+"zh": "当正预测的准确性非常重要时使用。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "more",
+"title": {
+"en": "(Optional, advanced) F1 score",
+"zh": "（可选，高级）F1 得分"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The <b>F1 score</b> is the harmonic mean (a kind of average) of precision and recall.",
+"zh": "<b>F1 得分</b>是精确率和召回率的调和平均值（一种平均值）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Mathematically, it is given by:",
+"zh": "在数学上，其计算公式如下："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">F1</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">2</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.3074em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.427em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">precision + recall</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">precision * recall</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">2</span><span class=\"mord text\"><span class=\"mord\">TP + FP + FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">2</span><span class=\"mord text\"><span class=\"mord\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">F1</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">2</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.3074em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.427em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">precision + recall</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">precision * recall</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.1297em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">2</span><span class=\"mord text\"><span class=\"mord\">TP + FP + FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">2</span><span class=\"mord text\"><span class=\"mord\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This metric balances the importance of precision and recall, and is preferable to accuracy for class-imbalanced datasets. When precision and recall both have perfect scores of 1.0, F1 will also have a perfect score of 1.0. More broadly, when precision and recall are close in value, F1 will be close to their value. When precision and recall are far apart, F1 will be similar to whichever metric is worse.",
+"zh": "此指标可平衡精确率和召回率的重要性，对于类别不平衡的数据集，此指标比准确率更可取。当精确率和召回率均为满分 1.0 时，F1 得分也将为满分 1.0。更广泛地说，当精确率和召回率的值接近时，F1 将接近它们的值。当精确率和召回率相差很大时，F1 将与较差的指标类似。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "A model outputs 5 TP, 6 TN, 3 FP, and 2 FN. Calculate the recall.",
+"zh": "某模型输出 5 个 TP、6 个 TN、3 个 FP 和 2 个 FN。计算召回率。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "0.714",
+"zh": "0.714"
+},
+"why": {
+"en": "Recall is calculated as <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">7</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">5</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>.",
+"zh": "召回率的计算公式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">7</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">5</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "0.455",
+"zh": "0.455"
+},
+"why": {
+"en": "Recall considers all actual positives, not all correct classifications. The formula for recall is <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>.",
+"zh": "召回率考虑的是所有实际正例，而不是所有正确分类。召回率的公式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "0.625",
+"zh": "0.625"
+},
+"why": {
+"en": "Recall considers all actual positives, not all positive classifications. The formula for recall is <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>",
+"zh": "召回率考虑的是所有实际正例，而不是所有正例分类。召回率的公式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">FN</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "A model outputs 3 TP, 4 TN, 2 FP, and 1 FN. Calculate the precision.",
+"zh": "某个模型输出 3 个 TP、4 个 TN、2 个 FP 和 1 个 FN。计算精确率。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "0.6",
+"zh": "0.6"
+},
+"why": {
+"en": "Precision is calculated as <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">5</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>.",
+"zh": "精确率的计算公式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">5</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "0.75",
+"zh": "0.75"
+},
+"why": {
+"en": "Precision considers all positive classifications, not all actual positives. The formula for precision is <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>.",
+"zh": "精确率考虑的是所有正例分类，而不是所有实际正例。精确率的计算公式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "0.429",
+"zh": "0.429"
+},
+"why": {
+"en": "Precision considers all positive classifications, not all correct classifications. The formula for precision is <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>",
+"zh": "精确率考虑的是所有正例分类，而不是所有正确分类。精确率的计算公式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.2757em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8723em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span><span class=\"mbin mtight\">+</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">FP</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">TP</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "You're building a binary classifier that checks photos of insect traps for whether a dangerous invasive species is present. If the model detects the species, the entomologist (insect scientist) on duty is notified. Early detection of this insect is critical to preventing an infestation. A false alarm (false positive) is easy to handle: the entomologist sees that the photo was misclassified and marks it as such. Assuming an acceptable accuracy level, which metric should this model be optimized for?",
+"zh": "您正在构建一个二元分类器，用于检查昆虫诱捕器的照片中是否出现危险的入侵物种。如果模型检测到该物种，值班的昆虫学家（昆虫科学家）会收到通知。尽早发现这种昆虫对于防止虫害至关重要。误报（假正例）很容易处理：昆虫学家看到照片被错误分类，并将其标记为错误分类。假设准确率达到可接受的水平，该模型应针对哪个指标进行优化？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Recall",
+"zh": "召回率"
+},
+"why": {
+"en": "In this scenario, false alarms (FP) are low-cost, and false negatives are highly costly, so it makes sense to maximize recall, or the probability of detection.",
+"zh": "在这种情况下，假正例 (FP) 的成本较低，而假负例的成本很高，因此最好尽可能提高召回率，即检测概率。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "False positive rate (FPR)",
+"zh": "假正例率 (FPR)"
+},
+"why": {
+"en": "In this scenario, false alarms (FP) are low-cost. Trying to minimize them at the risk of missing actual positives doesn't make sense.",
+"zh": "在这种情况下，误报 (FP) 的成本较低。试图最大限度地减少误报，但可能会漏掉实际的正例，这毫无意义。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Precision",
+"zh": "精确率"
+},
+"why": {
+"en": "In this scenario, false alarms (FP) aren't particularly harmful, so trying to improve the correctness of positive classifications doesn't make sense.",
+"zh": "在这种情况下，误报 (FP) 的危害并不大，因此尝试提高正类别的正确性没有意义。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "roc-and-auc",
+"path": "/machine-learning/crash-course/classification/roc-and-auc",
+"min": 10,
+"heading": {
+"en": "Classification: ROC and AUC",
+"zh": "分类 (Classification)：ROC 和曲线下面积"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"AUC",
+"roc-receiver-operating-characteristic-curve"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The previous section presented a set of model metrics, all calculated at a single classification threshold value. But if you want to evaluate a model's quality across all possible thresholds, you need different tools.",
+"zh": "上一部分介绍了一系列模型指标，所有这些指标都是基于单个分类阈值值计算得出的。但是，如果您想评估模型在所有可能阈值下的质量，则需要使用不同的工具。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Receiver-operating characteristic curve (ROC)",
+"zh": "接收器操作特征曲线 (ROC)"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The <button type=\"button\" class=\"term\" data-term=\"roc-receiver-operating-characteristic-curve\"><b>ROC curve</b></button> is a visual representation of model performance across all thresholds. The long version of the name, receiver operating characteristic, is a holdover from WWII radar detection.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"roc-receiver-operating-characteristic-curve\"><b>ROC 曲线</b></button>直观地显示了所有阈值下的模型性能。名称的长版本“接收器操作特性”源自二战雷达检测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The ROC curve is drawn by calculating the true positive rate (TPR) and false positive rate (FPR) at every possible threshold (in practice, at selected intervals), then graphing TPR over FPR. A perfect model, which at some threshold has a TPR of 1.0 and a FPR of 0.0, can be represented by either a point at (0, 1) if all other thresholds are ignored, or by the following:",
+"zh": "绘制 ROC 曲线的方法是：计算每个可能的阈值（在实践中，是按选定的间隔）的真正例率 (TPR) 和假正例率 (FPR)，然后将 TPR 与 FPR 绘制到图表中。完美的模型在某个阈值下的 TPR 为 1.0，FPR 为 0.0，如果忽略所有其他阈值，则可以用 (0, 1) 点表示，也可以用以下方式表示："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/auc_1-0.png",
+"alt": {
+"en": "Figure 1. A graph of TPR (y-axis) against FPR (x-axis) showing the\n            performance of a perfect model: a line from (0,1) to (1,1).",
+"zh": "图 1. TPR（y 轴）与 FPR（x 轴）对比的图表，显示了理想模型的性能：一条从 (0,1) 到 (1,1) 的线。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> ROC and AUC of a hypothetical perfect model.",
+"zh": "<b>图 1.</b> 假设的理想模型的 ROC 和 AUC。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Area under the curve (AUC)",
+"zh": "曲线下面积 (AUC)"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The <button type=\"button\" class=\"term\" data-term=\"AUC\"><b>area under the ROC curve (AUC)</b></button> represents the probability that the model, if given a randomly chosen positive and negative example, will rank the positive higher than the negative.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"AUC\"><b>ROC 曲线下面积 (AUC)</b></button> 表示，如果给定随机选择的正例和负例，模型将正例排在负例之上的概率。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The perfect model above, containing a square with sides of length 1, has an area under the curve (AUC) of 1.0. This means there is a 100% probability that the model will correctly rank a randomly chosen positive example higher than a randomly chosen negative example. In other words, looking at the spread of data points below, AUC gives the probability that the model will place a randomly chosen square to the right of a randomly chosen circle, independent of where the threshold is set.",
+"zh": "上面的完美模型包含边长为 1 的正方形，其曲线下面积 (AUC) 为 1.0。这意味着，模型将随机选择的正例正确排在随机选择的负例之上的概率为 100%。换句话说，查看下方的数据点分布情况，AUC 可提供模型将随机选择的方形放置在随机选择的圆形右侧的概率，而不会受到阈值设置位置的影响。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/no_slider_data.png",
+"alt": {
+"en": "Figure 2. Visualization of a classifier with AUC = 1.0, where all positive examples are ranked to the right of negative examples.",
+"zh": "不带滑块的微件数据行"
+},
+"caption": {
+"en": "<b>Figure 2.</b> A spread of predictions for a binary classification model. AUC is the chance a randomly chosen square is positioned to the right of a randomly chosen circle.",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In more concrete terms, a spam classifier with AUC of 1.0 always assigns a random spam email a higher probability of being spam than a random legitimate email. The actual classification of each email depends on the threshold that you choose.",
+"zh": "更具体地说，AUC 为 1.0 的垃圾邮件分类器始终会为随机垃圾邮件分配比随机合规电子邮件更高的垃圾邮件概率。每封电子邮件的实际分类取决于您选择的阈值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For a binary classifier, a model that does exactly as well as random guesses or coin flips has a ROC that is a diagonal line from (0,0) to (1,1). The AUC is 0.5, representing a 50% probability of correctly ranking a random positive and negative example.",
+"zh": "对于二元分类器，如果模型的效果与随机猜测或抛硬币的效果完全一样，则其 ROC 曲线为从 (0,0) 到 (1,1) 的对角线。AUC 为 0.5，表示正确对随机正例和负例进行排名的概率为 50%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the spam classifier example, a spam classifier with AUC of 0.5 assigns a random spam email a higher probability of being spam than a random legitimate email only half the time.",
+"zh": "在垃圾邮件分类器示例中，AUC 为 0.5 的垃圾邮件分类器仅在 50% 的情况下会将随机垃圾邮件的垃圾邮件概率设为高于随机合法邮件的垃圾邮件概率。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/auc_0-5.png",
+"alt": {
+"en": "Figure 3. A graph of TPR (y-axis) against FPR (x-axis) showing the\n            performance of a random 50-50 guesser: a diagonal line from (0,0)\n            to (1,1).",
+"zh": "图 2. TPR（y 轴）与 FPR（x 轴）对比的图表，显示了 50-50 随机猜测者的性能：从 (0,0) 到 (1,1) 的对角线。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> ROC and AUC of completely random guesses.",
+"zh": "<b>图 2.</b> 完全随机猜测的 ROC 和 AUC。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "(Optional, advanced) Precision-recall curve",
+"zh": "（可选，高级）精确率与召回率曲线"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "AUC and ROC work well for comparing models when the dataset is roughly balanced between classes. When the dataset is imbalanced, precision-recall curves (PRCs) and the area under those curves may offer a better comparative visualization of model performance. Precision-recall curves are created by plotting precision on the y-axis and recall on the x-axis across all thresholds.",
+"zh": "如果数据集在类别之间大致平衡，AUC 和 ROC 非常适合比较模型。当数据集不均衡时，准确率-召回率曲线 (PRC) 和这些曲线下的面积可以更好地直观比较模型性能。精确率/召回率曲线的创建方法是，在 y 轴上绘制精确率，在 x 轴上绘制所有阈值下的召回率。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/prauc.png",
+"alt": {
+"en": "Precision-recall curve example with downward convex curve from (0,1)\n            to (1,0)",
+"zh": "精确率与召回率曲线示例，曲线从 (0,1) 向下凸起到 (1,0)"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "AUC and ROC for choosing model and threshold",
+"zh": "用于选择模型和阈值的 AUC 和 ROC"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "AUC is a useful measure for comparing the performance of two different models, as long as the dataset is roughly balanced. The model with greater area under the curve is generally the better one.",
+"zh": "AUC 是比较两个不同模型性能的有效衡量指标，前提是数据集大致平衡。曲线下面积较大的模型通常是更好的模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/auc_0-65.png",
+"alt": {
+"en": "Figure 4.a. ROC/AUC graph of a model with AUC=0.65.",
+"zh": "图 3.a. AUC 为 0.65 的模型的 ROC/AUC 图。"
+},
+"caption": {
+"en": "<b>Figure 4.</b> ROC and AUC of two hypothetical models. The curve on the right, with a greater AUC, represents the better of the two models.",
+"zh": "<b>图 3.</b> 两个假设模型的 ROC 和 AUC。右侧曲线的 AUC 较高，表示该模型优于左侧曲线对应的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The points on a ROC curve closest to (0,1) represent a range of the best-performing thresholds for the given model. As discussed in the <a href=\"#/ch/c04/thresholding\">Thresholds</a>, <a href=\"#/ch/c04/thresholding\">Confusion matrix</a> and <a href=\"#/ch/c04/accuracy-precision-recall\">Choice of metric and tradeoffs</a> sections, the threshold you choose depends on which metric is most important to the specific use case. Consider the points A, B, and C in the following diagram, each representing a threshold:",
+"zh": "ROC 曲线上最接近 (0,1) 的点表示给定模型效果最佳的阈值范围。如<a href=\"#/ch/c04/thresholding\">阈值</a>、<a href=\"#/ch/c04/thresholding\">混淆矩阵</a>和<a href=\"#/ch/c04/accuracy-precision-recall\">指标选择和权衡</a>部分所述，您选择的阈值取决于哪个指标对特定用例而言最重要。请考虑下图中的点 A、B 和 C，每个点都代表一个阈值："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/auc_abc.png",
+"alt": {
+"en": "Figure 5. A ROC curve of AUC=0.84 showing three points on the\n            convex part of the curve closest to (0,1) labeled A, B, C in order.",
+"zh": "图 4. AUC 为 0.84 的 ROC 曲线，显示曲线凸出部分上距离 (0,1) 最远的三个点，分别标记为 A、B 和 C。"
+},
+"caption": {
+"en": "<b>Figure 5.</b> Three labeled points representing thresholds.",
+"zh": "<b>图 4.</b> 三个标记的点，表示阈值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If false positives (false alarms) are highly costly, it may make sense to choose a threshold that gives a lower FPR, like the one at point A, even if TPR is reduced. Conversely, if false positives are cheap and false negatives (missed true positives) highly costly, the threshold for point C, which maximizes TPR, may be preferable. If the costs are roughly equivalent, point B may offer the best balance between TPR and FPR.",
+"zh": "如果假正例（误报）的代价很高，则可能有必要选择 FPR 较低的阈值（例如 A 点），即使 TPR 会降低也是如此。反之，如果假正例成本较低，而假负例（漏掉的真正例）成本较高，则点 C 的阈值（可最大限度地提高 TPR）可能更为合适。如果费用大致相当，点 B 在 TPR 和 FPR 之间可能提供最佳平衡。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Here is the ROC curve for the data we have seen before:",
+"zh": "下面是之前所见数据的 ROC 曲线："
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "In practice, ROC curves are much less regular than the illustrations given above. Which of the following models, represented by their ROC curve and AUC, has the best performance?",
+"zh": "在实践中，ROC 曲线远不如上文中的示例那样规律。以下哪个模型（以其 ROC 曲线和 AUC 表示）的性能最好？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "This model has the highest AUC, which corresponds with the best performance.",
+"zh": "此模型的 AUC 值最高，对应的效果也最好。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following models performs worse than chance?",
+"zh": "以下哪个模型的效果不如随机猜测？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "This model has an AUC lower than 0.5, which means it performs worse than chance.",
+"zh": "此模型的 AUC 低于 0.5，这意味着其效果不如随机分类。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "This model performs slightly better than chance.",
+"zh": "此模型的效果略高于随机模型。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "This model performs the same as chance.",
+"zh": "此模型的效果与随机模型相同。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "",
+"zh": ""
+},
+"why": {
+"en": "This is a hypothetical perfect classifier.",
+"zh": "这是假设的完美分类器。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "（可选、高级）加分题",
+"zh": "（可选、高级）加分题"
+},
+"blocks": [
+{
+"type": "quiz",
+"q": {
+"en": "可以对上一个问题中效果不如随机的模型做出以下哪项更改，使其效果优于随机模型？",
+"zh": "可以对上一个问题中效果不如随机的模型做出以下哪项更改，使其效果优于随机模型？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "将预测结果取反，即将 <b>1</b> 的预测结果变为 <b>0</b>，将 <b>0</b> 的预测结果变为 <b>1</b>。",
+"zh": "将预测结果取反，即将 <b>1</b> 的预测结果变为 <b>0</b>，将 <b>0</b> 的预测结果变为 <b>1</b>。"
+},
+"why": {
+"en": "如果二元分类器将示例归入错误类别的频率高于随机概率，那么切换类别标签后，其预测结果的准确性会立即高于随机概率，而无需重新训练模型。",
+"zh": "如果二元分类器将示例归入错误类别的频率高于随机概率，那么切换类别标签后，其预测结果的准确性会立即高于随机概率，而无需重新训练模型。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "让其始终预测负类别。",
+"zh": "让其始终预测负类别。"
+},
+"why": {
+"en": "这不一定会提高效果，但可能会使效果高于随机效果。此外，如<a href=\"#/ch/c04/accuracy-precision-recall\">准确性</a>部分所述，这不是一个有用的模型。",
+"zh": "这不一定会提高效果，但可能会使效果高于随机效果。此外，如<a href=\"#/ch/c04/accuracy-precision-recall\">准确性</a>部分所述，这不是一个有用的模型。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "让其始终预测正类别。",
+"zh": "让其始终预测正类别。"
+},
+"why": {
+"en": "这不一定会提高效果，但可能会使效果高于随机效果。此外，如<a href=\"#/ch/c04/accuracy-precision-recall\">准确性</a>部分所述，这不是一个有用的模型。",
+"zh": "这不一定会提高效果，但可能会使效果高于随机效果。此外，如<a href=\"#/ch/c04/accuracy-precision-recall\">准确性</a>部分所述，这不是一个有用的模型。"
+},
+"correct": false
+}
+],
+"only": "zh"
+}
+],
+"only": "zh"
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following changes can be made to the worse-than-chance model in the previous question to cause it to perform better than chance?",
+"zh": "假设在某种情况下，允许部分垃圾邮件进入收件箱，比将重要的业务电子邮件发送到“垃圾邮件”文件夹要好。您已针对这种情况训练了垃圾邮件分类器，其中正类别为垃圾邮件，负类别为非垃圾邮件。 分类器 ROC 曲线上的以下哪个点更理想？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Reverse the predictions, so predictions of <b>1</b> become <b>0</b>, and predictions of <b>0</b> become <b>1</b>.",
+"zh": "点 A"
+},
+"why": {
+"en": "If a binary classifier reliably puts examples in the wrong classes more often than chance, switching the class label immediately makes its predictions better than chance without having to retrain the model.",
+"zh": "在这种用例中，最好尽量减少误报，即使真正例也会减少。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Have it always predict the negative class.",
+"zh": "点 B"
+},
+"why": {
+"en": "This may or may not improve performance above chance. Also, as discussed in the <a href=\"#/ch/c04/accuracy-precision-recall\">Accuracy</a> section, this isn't a useful model.",
+"zh": "此阈值可平衡真正例和假正例。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Have it always predict the positive class.",
+"zh": "点 C"
+},
+"why": {
+"en": "This may or may not improve performance above chance. Also, as discussed in the <a href=\"#/ch/c04/accuracy-precision-recall\">Accuracy</a> section, this isn't a useful model.",
+"zh": "此阈值会最大限度地提高真正例的数量（标记更多垃圾邮件），但会导致假正例增多（更多合法电子邮件被标记为垃圾邮件）。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Imagine a situation where it's better to allow some spam to reach the inbox than to send a business-critical email to the spam folder. You've trained a spam classifier for this situation where the positive class is spam and the negative class is not-spam. Which of the following points on the ROC curve for your classifier is preferable?",
+"zh": "Imagine a situation where it's better to allow some spam to reach the inbox than to send a business-critical email to the spam folder. You've trained a spam classifier for this situation where the positive class is spam and the negative class is not-spam. Which of the following points on the ROC curve for your classifier is preferable?"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Point A",
+"zh": "Point A"
+},
+"why": {
+"en": "In this use case, it's better to minimize false positives, even if true positives also decrease.",
+"zh": "In this use case, it's better to minimize false positives, even if true positives also decrease."
+},
+"correct": true
+},
+{
+"html": {
+"en": "Point B",
+"zh": "Point B"
+},
+"why": {
+"en": "This threshold balances true and false positives.",
+"zh": "This threshold balances true and false positives."
+},
+"correct": false
+},
+{
+"html": {
+"en": "Point C",
+"zh": "Point C"
+},
+"why": {
+"en": "This threshold maximizes true positives (flags more spam) at a cost of more false positives (more legitimate emails flagged as spam).",
+"zh": "This threshold maximizes true positives (flags more spam) at a cost of more false positives (more legitimate emails flagged as spam)."
+},
+"correct": false
+}
+],
+"only": "en"
+}
+]
+},
+{
+"id": "prediction-bias",
+"path": "/machine-learning/crash-course/classification/prediction-bias",
+"min": 3,
+"heading": {
+"en": "Classification: Prediction bias",
+"zh": "分类：预测偏差"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/prediction-bias",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/prediction-bias?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Prediction bias, calculated as the difference between the average prediction and the average ground truth, is a quick check for model or data issues.",
+"zh": null
+},
+{
+"en": "A model with zero prediction bias ideally predicts the same average outcome as observed in the ground truth data, such as a spam detection model predicting the same percentage of spam emails as actually present in the dataset.",
+"zh": null
+},
+{
+"en": "Significant prediction bias can indicate problems in the training data, the model itself, or the new data being applied to the model.",
+"zh": null
+},
+{
+"en": "Common causes of prediction bias include biased data, excessive regularization, bugs in the training process, and insufficient features provided to the model.",
+"zh": null
+}
+],
+"terms": [
+"ground-truth",
+"prediction",
+"prediction_bias"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Calculating <button type=\"button\" class=\"term\" data-term=\"prediction_bias\"><b>prediction bias</b></button> is a quick check that can flag issues with the model or training data early on.",
+"zh": "计算<button type=\"button\" class=\"term\" data-term=\"prediction_bias\"><b>预测偏差</b></button>是一种快速检查，可尽早发现模型或训练数据的问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Prediction bias is the difference between the mean of a model's <button type=\"button\" class=\"term\" data-term=\"prediction\"><b>predictions</b></button> and the mean of <button type=\"button\" class=\"term\" data-term=\"ground-truth\"><b>ground-truth</b></button> labels in the data. A model trained on a dataset where 5% of the emails are spam should predict, on average, that 5% of the emails it classifies are spam. In other words, the mean of the labels in the ground-truth dataset is 0.05, and the mean of the model's predictions should also be 0.05. If this is the case, the model has zero prediction bias. Of course, the model might still have other problems.",
+"zh": "预测偏差是指模型<button type=\"button\" class=\"term\" data-term=\"prediction\"><b>预测结果</b></button>的平均值与数据中<button type=\"button\" class=\"term\" data-term=\"ground-truth\"><b>标准答案</b></button>标签的平均值之间的差值。如果模型基于 5% 的电子邮件为垃圾邮件的数据集进行训练，那么平均而言，该模型预测的垃圾邮件比例应为 5%。换句话说，标准答案数据集中的标签平均值为 0.05，模型的预测结果的平均值也应为 0.05。在这种情况下，模型具有零预测偏差。当然，模型可能仍然存在其他问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If the model instead predicts 50% of the time that an email is spam, then something is wrong with the training dataset, the new dataset the model is applied to, or with the model itself. Any significant difference between the two means suggests that the model has some prediction bias.",
+"zh": "如果模型预测电子邮件为垃圾邮件的概率为 50%，则说明训练数据集、模型应用到的新数据集或模型本身存在问题。如果这两个平均值之间存在显著差异，则表明模型存在一定的预测偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Prediction bias can be caused by:",
+"zh": "预测偏差可能是由以下原因造成的："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Biases or noise in the data, including biased sampling for the training set",
+"zh": "数据中的偏差或噪声，包括训练集的抽样偏差"
+},
+{
+"en": "Too-strong regularization, meaning that the model was oversimplified and lost some necessary complexity",
+"zh": "正则化过强，这意味着模型过于简单，丢失了一些必要的复杂性"
+},
+{
+"en": "Bugs in the model training pipeline",
+"zh": "模型训练流水线中的 bug"
+},
+{
+"en": "The set of features provided to the model being insufficient for the task",
+"zh": "提供给模型的特征集不足以完成任务"
+}
+]
+}
+]
+},
+{
+"id": "multiclass",
+"path": "/machine-learning/crash-course/classification/multiclass",
+"min": 2,
+"heading": {
+"en": "Classification: Multi-class classification",
+"zh": "分类：多类别分类"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/multiclass",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/multiclass?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Multi-class classification extends binary classification to handle more than two classes, often by breaking the problem down into multiple binary classifications.",
+"zh": null
+},
+{
+"en": "In multi-class classification, each example is assigned to only one class, like classifying handwritten digits (0-9).",
+"zh": null
+},
+{
+"en": "If an example can belong to multiple classes, it's called multi-label classification, which is a distinct but related concept.",
+"zh": null
+},
+{
+"en": "Multi-class classification can be achieved by creating a series of binary classifiers, each distinguishing between a subset of classes.",
+"zh": null
+}
+],
+"terms": [
+"binary_classification"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Multi-class classification can be treated as an extension of <button type=\"button\" class=\"term\" data-term=\"binary_classification\"><b>binary classification</b></button> to more than two classes. If each example can only be assigned to one class, then the classification problem can be handled as a binary classification problem, where one class contains one of the multiple classes, and the other class contains all the other classes put together. The process can then be repeated for each of the original classes.",
+"zh": "多类别分类可被视为对<button type=\"button\" class=\"term\" data-term=\"binary_classification\">二元分类</button>的扩展，适用于两个以上的类别。如果每个示例只能分配到一个类，则可以将分类问题处理为二元分类问题，其中一个类包含多个类中的其中一个，另一个类包含所有其他类。然后，可以对每个原始类别重复此过程。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, in a three-class multi-class classification problem, where you're classifying examples with the labels <b>A</b>, <b>B</b>, and <b>C</b>, you could turn the problem into two separate binary classification problems. First, you might create a binary classifier that categorizes examples using the label <b>A+B</b> and the label <b>C</b>. Then, you could create a second binary classifier that reclassifies the examples that are labeled <b>A+B</b> using the label <b>A</b> and the label <b>B</b>.",
+"zh": "例如，在一个包含三个类别的多类分类问题中，您需要对标签为 <b>A</b>、<b>B</b> 和 <b>C</b> 的示例进行分类，您可以将该问题转换为两个单独的二元分类问题。首先，您可以创建一个二元分类器，使用标签 <b>A+B</b> 和标签 <b>C</b> 对示例进行分类。然后，您可以创建第二个二元分类器，使用标签 <b>A</b> 和标签 <b>B</b> 重新对标记为 <b>A+B</b> 的示例进行分类。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "An example of a multi-class problem is a handwriting classifier that takes an image of a handwritten digit and decides which digit, 0-9, is represented.",
+"zh": "多类别问题的例子是手写分类器，它会获取手写数字的图像，并决定要代表哪个数字 0-9。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If class membership isn't exclusive, which is to say, an example can be assigned to multiple classes, this is known as a <i>multi-label</i> classification problem.",
+"zh": "如果类成员资格不是排他的，也就是说，一个示例可以分配给多个类，这称为<i>多标签</i>分类问题。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "Multi-class classification is explored more deeply in the <a href=\"#/ch/c08/multi-class\">Multi-class neural networks</a> section of the <a href=\"#/ch/c08/neural-networks\">Neural Networks</a> module.",
+"zh": "<a href=\"#/ch/c08/neural-networks\">神经网络</a>模块的<a href=\"#/ch/c08/multi-class\">多类别神经网络</a>部分更深入地介绍了多类别分类。"
+}
+}
+]
+},
+{
+"id": "programming-exercise",
+"path": "/machine-learning/crash-course/classification/programming-exercise",
+"min": 15,
+"heading": {
+"en": "Classification: Programming exercise",
+"zh": "分类：编程练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/programming-exercise",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/programming-exercise?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In the following exercise, you'll train a binary classifier to separate two similar-looking species of rice and calculate relevant metrics.",
+"zh": "在以下练习中，您将训练一个二元分类器来区分两种外观相似的稻米品种，并计算相关指标。"
+}
+},
+{
+"type": "link",
+"href": {
+"en": "https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/binary_classification_rice.ipynb?utm_source=mlcc&utm_campaign=colab-external&utm_medium=referral&utm_content=binary_classification",
+"zh": "https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/binary_classification_rice.ipynb?utm_source=mlcc&utm_campaign=colab-external&utm_medium=referral&utm_content=binary_classification&hl=zh-cn"
+},
+"html": {
+"en": "Open classification exercise",
+"zh": "打开分类练习"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Programming exercises run directly in your browser (no setup required!) using the <a href=\"https://colab.research.google.com\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> platform. Colaboratory is supported on most major browsers, and is most thoroughly tested on desktop versions of Chrome and Firefox.",
+"zh": "您可以使用 <a href=\"https://colab.research.google.com?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> 平台直接在浏览器中运行编程练习（无需设置！）。大多数主流浏览器都支持 Colaboratory，并且在桌面版 Chrome 和 Firefox 上进行了最全面的测试。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/classification/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Classification: Test your knowledge",
+"zh": "分类：测试知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/classification/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/classification/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c05/numerical-data\">Representing numerical data</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想遵循建议顺序 我们建议您接下来学习以下单元： <b><a href=\"#/ch/c05/numerical-data\">表示数值数据</a></b>。"
+}
+}
+]
+}
+]
+}

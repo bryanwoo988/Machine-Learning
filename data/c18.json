@@ -1,0 +1,372 @@
+{
+"id": "c18",
+"num": 18,
+"stage": 4,
+"title": {
+"en": "Global considerations and resources",
+"zh": "全球注意事项和资源"
+},
+"minutes": null,
+"sections": [
+{
+"id": "ethics",
+"path": "/machine-learning/managing-ml-projects/ethics",
+"min": null,
+"heading": {
+"en": "AI and ML ethics and safety",
+"zh": "AI 和机器学习道德与安全"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/ethics",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/ethics?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "ML models should benefit society and avoid causing harm, bias, or misuse of personal data.",
+"zh": null
+},
+{
+"en": "Google's AI principles emphasize fairness, privacy, transparency, and safety in ML development.",
+"zh": null
+},
+{
+"en": "Fairness in models requires addressing potential biases in training data and ensuring equitable outcomes for all user groups.",
+"zh": null
+},
+{
+"en": "Privacy considerations involve adhering to relevant regulations, protecting personal data, and ensuring secure data handling practices.",
+"zh": null
+},
+{
+"en": "Transparency and safety involve making model functionality understandable, documenting model details, and designing models to operate securely and reliably.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "ML has the potential to transform society in many meaningful ways, either positively or negatively. It's critical to consider the ethical implications of your models and the systems they're a part of.",
+"zh": "机器学习有可能以许多有意义的方式（正面或负面）改变社会。请务必考虑模型及其所属系统的道德影响。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Your ML projects should benefit society.\n\nThey shouldn't cause harm or be susceptible to misuse.\nThey shouldn't perpetuate, reinforce, or exacerbate biases or prejudices.\nThey shouldn't collect or use personal data irresponsibly.",
+"zh": "您的机器学习项目应造福于社会。\n\n这些内容不应造成伤害或容易被滥用。\n不得助长、强化或加剧偏见或成见。\n不得无责任地收集或使用个人数据。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Google's AI principles",
+"zh": "Google 的 AI 原则"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Google advocates developing ML and AI applications that adhere to its <a href=\"https://ai.google/responsibility/principles/\" target=\"_blank\" rel=\"noopener\">Responsible AI principles</a>.",
+"zh": "Google 提倡开发遵循 <a href=\"https://ai.google/responsibility/principles/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Responsible AI 原则</a>的机器学习和 AI 应用。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Beyond adhering to responsible AI principles, aim to develop systems that incorporate the following:",
+"zh": "除了遵循 Responsible AI 原则之外，还应致力于开发包含以下各项的系统："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Fairness",
+"zh": "公平性"
+},
+{
+"en": "Privacy",
+"zh": "隐私权"
+},
+{
+"en": "Transparency",
+"zh": "透明度"
+},
+{
+"en": "Safety",
+"zh": "安全"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Fairness",
+"zh": "公平性"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Avoid creating or reinforcing unfair <button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\">bias</button>. Models exhibit bias when their training data has some of the following characteristics:",
+"zh": "避免造成或加深不公平的<button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\">偏见</button>。如果模型的训练数据具有以下某些特征，则会出现偏差："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Doesn't reflect the real-world population of their users.",
+"zh": "未反映其用户的真实受众群体。"
+},
+{
+"en": "Preserves biased decisions or outcomes, for example, criminal justice decisions like incarceration times.",
+"zh": "保留有偏见的决定或结果，例如刑事司法决定（例如监禁时间）。"
+},
+{
+"en": "Uses features with more predictive power for certain groups of users.",
+"zh": "针对特定用户群体使用预测能力更强的功能。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The previous examples are just some ways models become biased. Understanding your data thoroughly is critical for uncovering and resolving any potential biases it contains. The first step for developing fair models is verifying the training data accurately reflects the distribution of your users. The following are further practices to help create fair models:",
+"zh": "上述示例只是模型产生偏差的一些方式。彻底了解数据对于发现和解决其中的任何潜在偏差至关重要。开发公平模型的第一步是验证训练数据是否准确反映了用户的分布情况。以下是进一步的做法，有助于创建公平的模型："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Identify underrepresented groups in evaluation datasets or groups that might experience worse model quality compared to other groups. You might need to oversample a subgroup of your users to increase their presence in the training data.",
+"zh": "找出评估数据集中代表性不足的群体，或与其他群体相比可能获得较差模型质量的群体。您可能需要对部分用户进行过采样，以增加他们在训练数据中的比例。"
+},
+{
+"en": "Use <button type=\"button\" class=\"term\" data-term=\"golden-dataset\">golden datasets</button> (also known as benchmark datasets) to validate the model against fairness issues and detect implicit bias.",
+"zh": "使用<button type=\"button\" class=\"term\" data-term=\"golden-dataset\">黄金数据集</button>（也称为基准数据集）来验证模型是否存在公平性问题，并检测隐性偏差。"
+},
+{
+"en": "Avoid including sensitive features in datasets, like gender or ethnicity.",
+"zh": "避免在数据集中包含敏感特征，例如性别或种族。"
+},
+{
+"en": "Avoid including features with little empirical or explanatory power, but especially in sensitive contexts where the trained model is used to perform high-impact tasks in areas such as healthcare, finance, education, employment, and so forth. For example, in a model for approving home loans, don't include names in the training data. Not only is an applicant's name irrelevant to the prediction task, but leaving such an irrelevant feature in the dataset also has the potential to create implicit bias or allocative harms. For instance, the model might correlate male names with a higher probability for repayment, or vice versa.",
+"zh": "避免添加具有较低实证或解释力的特征，尤其是在敏感情境中，因为训练好的模型会用于在医疗保健、金融、教育、就业等领域执行影响深远的任务。例如，在用于批准住房贷款的模型中，请勿在训练数据中添加姓名。申请人的姓名不仅与预测任务无关，而且在数据集中保留此类无关特征也可能会造成隐性偏见或分配性伤害。例如，该模型可能会将男性姓名与更高的还款概率相关联，反之亦然。"
+},
+{
+"en": "Measure potential adverse impact a model's predictions might have on particular groups, and consider intentional bias correction techniques if you find adverse impact in a sensitive context.",
+"zh": "衡量模型预测结果对特定群体可能产生的潜在负面影响，如果您发现在敏感情境中存在负面影响，请考虑使用有意偏差校正技术。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Privacy",
+"zh": "隐私权"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Incorporate privacy design principles from the beginning.",
+"zh": "从一开始就遵循隐私保护设计原则。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following are privacy related laws and policies to be aware of and adhere to:",
+"zh": "以下是需要了解并遵守的与隐私权相关的法律和政策："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://wikipedia.org/wiki/Digital_Markets_Act\" target=\"_blank\" rel=\"noopener\">European Union's Digital Markets Act (DMA)</a> for consent to share or use personal data.",
+"zh": "<a href=\"https://wikipedia.org/wiki/Digital_Markets_Act\" target=\"_blank\" rel=\"noopener\">欧盟《数字市场法案》(DMA)</a>，要求征得用户同意分享或使用个人数据。"
+},
+{
+"en": "<a href=\"https://wikipedia.org/wiki/General_Data_Protection_Regulation\" target=\"_blank\" rel=\"noopener\">European Union GDPR</a> laws.",
+"zh": "<a href=\"https://wikipedia.org/wiki/General_Data_Protection_Regulation\" target=\"_blank\" rel=\"noopener\">《一般数据保护条例》(GDPR)</a> 法案。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Moreover, be sure to remove all personally identifiable information (PII) from datasets and confirm your model and data repositories are set up with the right permissions, for example, not world-readable.",
+"zh": "此外，请务必从数据集中移除所有个人身份信息 (PII)，并确认您的模型和数据仓库设置了正确的权限，例如不允许世界读取。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Transparency",
+"zh": "透明度"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Be accountable to people. For example, make it easy for others to understand what your model does, how it does it, and why it does it. <a href=\"https://modelcards.withgoogle.com/face-detection\" target=\"_blank\" rel=\"noopener\">Model cards</a> provide a template to document your model and create transparency artifacts.",
+"zh": "对用户负责。例如，让其他人能够轻松了解您的模型的用途、运作方式和运作原因。 <a href=\"https://modelcards.withgoogle.com/face-detection\" target=\"_blank\" rel=\"noopener\">模型卡片</a> 提供了一个模板，用于记录模型并创建透明度工件。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Safety",
+"zh": "安全"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Design models to operate safely in adversarial conditions. For example, test your model with potential hostile inputs to confirm your model is secure. Furthermore, check for potential failure conditions. Teams typically use specially designed datasets to test their models with inputs or conditions that caused the model to fail in the past.",
+"zh": "设计模型，使其能够在对抗性条件下安全运行。例如，使用潜在的恶意输入来测试模型，以确认模型是否安全。此外，请检查是否存在潜在的失败情况。团队通常使用专门设计的数据集，通过过去导致模型失败的输入或条件来测试模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You're developing a model to quickly approve auto loans. What ethical implications should you consider?",
+"zh": "您正在开发一个模型，以便快速批准汽车贷款。您应考虑哪些伦理问题？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Does the model perpetuate existing biases or stereotypes?",
+"zh": "模型是否会助长现有的偏见或刻板印象？"
+},
+"why": {
+"en": "Correct. Models should be trained on high-quality datasets that have been inspected for potential implicit biases or prejudices.",
+"zh": "正确。模型应使用经过检查以排除潜在隐性偏见或偏见的高质量数据集进行训练。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Does the model serve predictions with low-enough latency?",
+"zh": "模型是否以足够低的延迟时间提供预测？"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "Can the model be deployed to devices, like phones?",
+"zh": "该模型能否部署到手机等设备？"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Always consider the broader social contexts your models operate within. Work to be sure your handling of sensitive data doesn't violate privacy issues, perpetuate bias, or infringe on someone else's intellectual property.",
+"zh": "始终考虑模型所处的更广泛的社会背景。请努力确保您在处理敏感数据时不会侵犯隐私、助长偏见或侵犯他人的知识产权。"
+}
+}
+]
+},
+{
+"id": "resources",
+"path": "/machine-learning/managing-ml-projects/resources",
+"min": null,
+"heading": {
+"en": "ML resources",
+"zh": "机器学习资源"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/resources",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/resources?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "ML development requires using a variety of constantly evolving tools and frameworks. New ML tools continue to emerge as ways to handle complex data types, advances in hardware, and techniques for orchestrating pipelines continue to develop.",
+"zh": "机器学习开发需要使用各种不断发展的工具和框架。随着硬件技术的不断进步以及管道编排技术的不断发展，用于处理复杂数据类型的新机器学习工具不断涌现。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As a result, companies, organizations, and teams implement\nML solutions using different tools and frameworks, which likely\nchange over time.",
+"zh": "因此，公司、组织和团队会使用不同的工具和框架来实现机器学习解决方案，这些工具和框架可能会随时间而变化。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "While common frameworks and best practices are emerging, keep in mind that the nature of your particular problem might require custom solutions in certain cases. The following sections provide links to resources for getting started with ML and AI development.",
+"zh": "虽然常见框架和最佳实践不断涌现，但请注意，在某些情况下，您可能需要根据具体问题的性质采用自定义解决方案。以下部分提供了指向资源的链接，可帮助您开始学习机器学习和 AI 开发。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Tools and frameworks for building ML and AI applications and products:<br> <ul><li><a href=\"https://developers.google.com/focus/ai-development\" target=\"_blank\" rel=\"noopener\">developers.google.com/focus/ai-development</a></li><li><a href=\"https://ai.google/build\" target=\"_blank\" rel=\"noopener\">ai.google/build</a></li></ul>",
+"zh": "用于构建机器学习和 AI 应用和产品的工具和框架：<br> <ul><li><a href=\"https://developers.google.com/focus/ai-development?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">developers.google.com/focus/ai-development</a></li><li><a href=\"https://ai.google/build?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">ai.google/build</a></li></ul>"
+},
+{
+"en": "AI and ML community for sharing ML models and datasets:<br> <ul><li><a href=\"https://kaggle.com\" target=\"_blank\" rel=\"noopener\">Kaggle</a></li></ul>",
+"zh": "用于分享机器学习模型和数据集的 AI 和机器学习社区：<br> <ul><li><a href=\"https://kaggle.com\" target=\"_blank\" rel=\"noopener\">Kaggle</a></li></ul>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Continue your ML education by exploring other courses at <a href=\"https://developers.google.com/machine-learning/\" target=\"_blank\" rel=\"noopener\">developers.google.com/machine-learning</a>.",
+"zh": "如需继续学习机器学习，请访问 <a href=\"https://developers.google.com/machine-learning/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">developers.google.com/machine-learning</a> 探索其他课程。"
+}
+}
+]
+}
+]
+}

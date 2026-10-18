@@ -1,0 +1,1072 @@
+{
+"id": "c15",
+"num": 15,
+"stage": 4,
+"title": {
+"en": "Introduction",
+"zh": "简介"
+},
+"minutes": null,
+"sections": [
+{
+"id": "intro",
+"path": "/machine-learning/managing-ml-projects",
+"min": null,
+"heading": {
+"en": "Managing ML projects",
+"zh": "管理机器学习项目"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This course provides a comprehensive framework for managing machine learning (ML) projects, guiding you through all stages from ideation to production.",
+"zh": null
+},
+{
+"en": "It covers key aspects such as defining project phases, planning and management strategies, establishing success metrics, and implementing responsible AI practices.",
+"zh": null
+},
+{
+"en": "While focused on traditional ML models, the course also offers insights into managing generative AI projects, highlighting common principles and key differences.",
+"zh": null
+},
+{
+"en": "To benefit from this course, you should have a basic understanding of machine learning and have already determined that ML is the appropriate solution for your problem.",
+"zh": null
+},
+{
+"en": "It's estimated to take approximately 90 minutes to complete this course, equipping you with the necessary skills to effectively manage your ML projects.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<i>Managing ML Projects</i> shows you how to manage an ML project as it progresses from an idea to a production-ready implementation. The course covers the ML development phases and the roles and skills typically found on ML teams. It discusses strategies for working with stakeholders and provides details on how to plan and manage an ML project at each phase of development.",
+"zh": "<i>管理机器学习项目</i>介绍了如何在机器学习项目从构思到可用于生产环境的实现过程中进行管理。本课程涵盖机器学习开发阶段以及机器学习团队通常所具备的角色和技能。其中探讨了与利益相关方合作的策略，并详细介绍了如何在每个开发阶段规划和管理机器学习项目。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "By demystifying the complexities inherent in ML projects, the course provides a solid theoretical framework for managing ML projects.",
+"zh": "通过揭秘机器学习项目固有的复杂性，本课程为管理机器学习项目提供了一个可靠的理论框架。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The course focuses on traditional ML models. Although generative AI is in the spotlight, traditional ML plays a vital role at Google, underpinning many services and projects, from predicting travel times in Maps to estimating the price of airline tickets in Flights, from predicting compute quota for Google Cloud customers to recommending relevant videos in YouTube.",
+"zh": "本课程重点介绍传统机器学习模型。虽然生成式 AI 备受关注，但传统机器学习在 Google 中发挥着重要作用，并且支持许多服务和项目，包括在 Google 地图中预测行程时间、估算机票中的机票价格、预测 Google Cloud 的 TPU 配额、在 YouTube 中推荐相关视频。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In general, the principles for managing traditional ML projects are identical for managing generative AI projects. When there's a significant difference, the course provides relevant generative AI advice and guidance.",
+"zh": "一般来说，管理传统机器学习项目的原则与生成式 AI 项目的管理原则相同。当存在显著差异时，本课程会提供相关的生成式 AI 建议和指导。"
+}
+},
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Objectives:</b> <ul><li>Define the phases and elements of an ML project.</li><li>Describe how to plan and manage an ML project.</li><li>Determine business and model success metrics.</li><li>Recognize the iterative process of running ML experiments.</li><li>Design a solution for productionizing ML pipelines.</li><li>Implement responsible ML and AI practices at each development phase.</li></ul>",
+"zh": "<b>目标</b>： <ul><li>定义机器学习项目的阶段和元素。</li><li>介绍如何规划和管理机器学习项目。</li><li>确定业务和模型成效指标。</li><li>识别运行机器学习实验的迭代过程。</li><li>设计解决方案，以便将机器学习流水线投入生产环境。</li><li>在每个开发阶段实施负责任的机器学习和 AI 实践。</li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Prerequisites:</b>",
+"zh": "<b>前提条件</b>："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "You should have a basic understanding of machine learning. For a brief introduction to machine learning concepts, see <a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a>. For a hands-on introduction to machine learning, see <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">Machine Learning Crash Course</a>.",
+"zh": "您应该对机器学习有基本的了解。如需查看机器学习概念的简要介绍，请参阅<a href=\"#/ch/c01/intro\">机器学习简介</a>。有关机器学习的实操介绍，请参阅<a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">机器学习速成课程</a>。"
+},
+{
+"en": "You should first verify that ML is the right approach for your problem. If you haven't framed your problem in terms of an ML solution, complete <a href=\"#/ch/c14/intro\">Introduction to Machine Learning Problem Framing</a>.",
+"zh": "您应该首先验证机器学习是否是解决您问题的正确方法。如果您尚未根据机器学习解决方案来构想您的问题，请完成<a href=\"#/ch/c14/intro\">机器学习问题构建简介</a>。"
+}
+]
+}
+]
+},
+{
+"id": "phases",
+"path": "/machine-learning/managing-ml-projects/phases",
+"min": null,
+"heading": {
+"en": "ML development phases",
+"zh": "机器学习开发阶段"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/phases",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/phases?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "ML solutions are developed in iterative phases: ideation and planning, experimentation, pipeline building, and productionization.",
+"zh": null
+},
+{
+"en": "Each phase has specific goals, tasks, and outcomes that contribute to the overall success of the project.",
+"zh": null
+},
+{
+"en": "Identifying the right problem for an ML solution and ensuring its feasibility is crucial in the initial phase.",
+"zh": null
+},
+{
+"en": "Rigorous experimentation is essential for building an effective ML model and may involve numerous iterations.",
+"zh": null
+},
+{
+"en": "Productionizing an ML solution requires robust pipelines for data processing, model training, serving predictions, and ongoing monitoring.",
+"zh": null
+}
+],
+"terms": [
+"feature",
+"hyperparameter",
+"model",
+"pipeline",
+"prediction"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "ML projects progress in phases with specific goals, tasks, and outcomes. A clear understanding of the ML development phases helps to establish engineering responsibilities, manage stakeholder expectations, and efficiently allocate resources.",
+"zh": "机器学习项目会分阶段进行，每个阶段都有特定的目标、任务和成果。清楚了解机器学习开发阶段有助于确定工程责任、管理利益相关者的预期，并高效分配资源。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Successfully moving through the phases (often iteratively) is foundational for designing, assembling, and building ML <button type=\"button\" class=\"term\" data-term=\"model\">models</button> that solve business problems over the long term.",
+"zh": "成功完成各个阶段（通常是迭代式地完成）是设计、组装和构建可长期解决业务问题的机器学习<button type=\"button\" class=\"term\" data-term=\"model\">模型</button>的基础。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "At a high level, implementing an ML solution consists of the following phases:",
+"zh": "概括来讲，实现机器学习解决方案包括以下阶段："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Ideation and planning",
+"zh": "构思和规划"
+},
+{
+"en": "Experimentation",
+"zh": "实验"
+},
+{
+"en": "Pipeline building",
+"zh": "流水线构建"
+},
+{
+"en": "Productionization",
+"zh": "生产化"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Ideation and planning",
+"zh": "构思和规划"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "During the ideation and planning phase, you frame your problem in terms of an ML solution and estimate the project's feasibility.",
+"zh": "在构思和规划阶段，您需要从机器学习解决方案的角度来阐述问题，并估计项目的可行性。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Goal</b>: To determine if ML is the best solution to your problem.",
+"zh": "<b>目标</b>：确定机器学习是否是解决问题的最佳方案。"
+},
+{
+"en": "<b>Tasks</b>: Analyze the business problem to understand your project's constraints.",
+"zh": "<b>任务</b>：分析业务问题，了解项目的限制条件。"
+},
+{
+"en": "<b>Outcome</b>: A design doc outlining how to solve a problem with a ML solution.",
+"zh": "<b>结果</b>：一份设计文档，概述了如何通过机器学习解决方案解决问题。"
+}
+]
+},
+{
+"type": "note",
+"kind": "special",
+"html": {
+"en": "<b>Important:</b>During the ideation and planning stage, it can take a long time to understand the data and metrics required for a production-ready system.",
+"zh": "<b>重要提示</b>：在构思和规划阶段，可能需要很长时间才能了解生产就绪型系统所需的数据和指标。"
+}
+},
+{
+"type": "video",
+"id": "0EXg3sCPj6I"
+},
+{
+"type": "h",
+"html": {
+"en": "Experimentation",
+"zh": "实验"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Experimentation is the core of machine learning. During this phase, you verify that an ML solution is viable. Finding a solution is an iterative process. It's not uncommon to try hundreds of experiments before finding the right combination of <button type=\"button\" class=\"term\" data-term=\"feature\">features</button>, <button type=\"button\" class=\"term\" data-term=\"hyperparameter\">hyperparameters</button>, and model architecture that solves the problem.",
+"zh": "实验是机器学习的核心。在此阶段，您将验证机器学习解决方案是否可行。寻找解决方案是一个迭代过程。在找到可解决问题的<button type=\"button\" class=\"term\" data-term=\"feature\">特征</button>、<button type=\"button\" class=\"term\" data-term=\"hyperparameter\">超参数</button>和模型架构的正确组合之前，尝试数百次实验并不罕见。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Goal</b>: To build a model that solves the business problem.",
+"zh": "<b>目标</b>：构建可解决业务问题的模型。"
+},
+{
+"en": "<b>Tasks</b>: Experiment with features, hyperparameters, and model architectures.",
+"zh": "<b>任务</b>：对特征、超参数和模型架构进行实验。"
+},
+{
+"en": "<b>Outcome</b>: A model with good enough quality to put into production.",
+"zh": "<b>结果</b>：质量足够好，可以投入生产环境的模型。"
+}
+]
+},
+{
+"type": "note",
+"kind": "special",
+"html": {
+"en": "<b>Important:</b>During the experimentation phase, new-to-ML practitioners often underestimate the challenges of designing and implementing the appropriate experimentation tooling and processes.",
+"zh": "<b>重要提示</b>：在实验阶段，刚接触机器学习的从业者往往会低估设计和实现适当的实验工具和流程所面临的挑战。"
+}
+},
+{
+"type": "video",
+"id": "3EhWXqRPaNs"
+},
+{
+"type": "h",
+"html": {
+"en": "Pipeline building and productionization",
+"zh": "流水线构建和生产化"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "During the <button type=\"button\" class=\"term\" data-term=\"pipeline\">pipeline</button> building and productionization phase, you build pipelines for processing data, training a model, and serving <button type=\"button\" class=\"term\" data-term=\"prediction\">predictions</button>. You then deploy the model and pipelines into production with the necessary monitoring and logging infrastructure.",
+"zh": "在<button type=\"button\" class=\"term\" data-term=\"pipeline\">流水线</button>构建和生产化阶段，您将构建用于处理数据、训练模型和提供<button type=\"button\" class=\"term\" data-term=\"prediction\">预测</button>的流水线。然后，您将模型和流水线部署到生产环境中，并提供必要的监控和日志记录基础架构。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Goal</b>: To build and implement the infrastructure for scaling, monitoring, and maintaining models in production.",
+"zh": "<b>目标</b>：构建并实现用于在生产环境中扩缩、监控和维护模型的基础设施。"
+},
+{
+"en": "<b>Tasks</b>: Build pipelines to automate many of the tasks for keeping up-to-date models in production.",
+"zh": "<b>任务</b>：构建流水线，以自动执行许多任务，从而使生产环境中的模型保持最新状态。"
+},
+{
+"en": "<b>Outcomes</b>: Validated ML pipelines.",
+"zh": "<b>成果</b>：经过验证的机器学习流水线。"
+}
+]
+},
+{
+"type": "note",
+"kind": "special",
+"html": {
+"en": "<b>Important:</b>During the productionization phase, it's easy to underestimate the complexity of productionizing data pipelines and evaluating models, especially as features evolve. For instance, not only do you have to implement all the monitoring infrastructure required for a non-ML project, but also all the ML-specific monitoring.",
+"zh": "<b>重要提示</b>：在生产化阶段，很容易低估数据流水线生产化和模型评估的复杂性，尤其是在功能不断发展的情况下。例如，您不仅必须实现非机器学习项目所需的所有监控基础设施，还必须实现所有特定于机器学习的监控。"
+}
+},
+{
+"type": "video",
+"id": "1EwRA_Slw1Q"
+},
+{
+"type": "h",
+"html": {
+"en": "End-to-end ML workflow",
+"zh": "端到端机器学习工作流"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The following diagram illustrates the entire end-to-end ML workflow, listing each phase and its tasks and outcomes:",
+"zh": "下图展示了整个端到端机器学习工作流，列出了每个阶段及其任务和结果："
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/phases.png",
+"alt": {
+"en": "End-to-end ML workflow.",
+"zh": "端到端机器学习工作流。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 1</b>. The four main phases of an ML workflow.",
+"zh": "<b>图 1</b>. 机器学习工作流的四个主要阶段。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Keep in mind",
+"zh": "注意事项"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Multiple challenges exist at each phase. Not realizing—and planning for—them may lead to missed deadlines, frustrated engineers, and failed projects.",
+"zh": "每个阶段都存在多重挑战。 如果不了解这些因素并制定相应计划，可能会导致错过截止日期、工程师感到沮丧，以及项目失败。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You've just read about some ML technology that might benefit your product. What should you do next?",
+"zh": "您刚刚了解了一些可能对您的产品有益的机器学习技术。接下来你应该做些什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Before spending time drafting a design doc or writing code, you should first verify that ML is the right solution to your problem.",
+"zh": "在花时间起草设计文档或编写代码之前，您应先验证机器学习是否是解决问题的正确方案。"
+},
+"why": {
+"en": "Correct. Before spending time drafting a design doc or writing code, you should first verify that ML is the right solution to your problem.",
+"zh": "正确。在花费时间起草设计文档或编写代码之前，您应先验证机器学习是否是解决问题的正确方案。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Draft a design doc outlining the ML use case and the required infrastructure to implement it.",
+"zh": "撰写设计文档，其中概述了机器学习用例以及实现该用例所需的基础设施。"
+},
+"why": {
+"en": "Before drafting a design doc, you should first verify that ML is the right solution to your problem.",
+"zh": "在起草设计文档之前，您应先验证机器学习是否是解决问题的正确方案。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Find code examples and begin experimenting to determine if the model can make good predictions.",
+"zh": "查找代码示例并开始实验，以确定模型是否可以做出良好的预测。"
+},
+"why": {
+"en": "Before writing a line of code, you should first verify that ML is the right solution to your problem.",
+"zh": "在编写任何代码之前，您应先验证机器学习是否是解决问题的正确方案。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "team",
+"path": "/machine-learning/managing-ml-projects/team",
+"min": null,
+"heading": {
+"en": "Assembling an ML team",
+"zh": "组建机器学习团队"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/team",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/team?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning projects necessitate diverse teams with specialized roles like ML product managers, data scientists, and ML engineers, to address various aspects of development and deployment.",
+"zh": null
+},
+{
+"en": "Comprehensive process documentation is crucial for ML teams to establish common practices, ensure smooth collaboration, and enhance project velocity by reducing confusion and streamlining workflows.",
+"zh": null
+},
+{
+"en": "Process documentation should cover key questions regarding data handling, model development, training, evaluation, and productionization to guide the team's approach and decision-making.",
+"zh": null
+},
+{
+"en": "Establishing clear expectations, deliverables, and evaluation criteria for team members is essential, emphasizing contributions beyond project success due to the inherent uncertainties in ML development.",
+"zh": null
+},
+{
+"en": "Successful ML teams foster a collaborative environment where diverse perspectives and expertise are valued, enabling efficient problem-solving and innovative solutions.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "ML projects require teams with members who have a range of skills, expertise, and responsibilities related to machine learning. These are the most common roles found on typical ML teams:",
+"zh": "机器学习项目需要由具备机器学习相关技能、专业知识和职责的团队成员组成。以下是典型机器学习团队中常见的角色："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Role",
+"zh": "角色"
+},
+{
+"en": "Knowledge and skills",
+"zh": "知识和技能"
+},
+{
+"en": "Main deliverable",
+"zh": "主要交付成果"
+}
+],
+"rows": [
+[
+{
+"en": "ML product manager",
+"zh": "机器学习产品经理"
+},
+{
+"en": "ML product managers have a deep understanding of ML strengths and weaknesses and the ML development process. They align business problems to ML solutions by working directly with the ML team, end-users, and other stakeholders. They create the product vision, define use cases and requirements, and plan and prioritize projects.",
+"zh": "机器学习产品经理对机器学习的优势和劣势以及机器学习开发流程有深入的了解。他们会直接与机器学习团队、最终用户和其他利益相关方合作，将业务问题与机器学习解决方案相结合。他们负责制定产品愿景、定义用例和要求，以及规划和确定项目优先级。"
+},
+{
+"en": "Product requirements document (PRD).",
+"zh": "产品要求文档 (PRD)。"
+}
+],
+[
+{
+"en": "Engineering manager",
+"zh": "工程经理"
+},
+{
+"en": "Engineering managers achieve business goals by setting, communicating, and achieving team priorities. Like ML product managers, they align ML solutions to business problems. They set clear expectations for team members, conduct performance evaluations, and assist with career and professional development.",
+"zh": "工程经理通过设定、传达和实现团队优先事项来实现业务目标。与机器学习产品经理一样，他们负责将机器学习解决方案与业务问题相结合。 他们会为团队成员设定明确的期望，开展绩效评估，并协助团队成员实现职业和专业发展。"
+},
+{
+"en": "Design docs, project plans, and performance evaluations.",
+"zh": "设计文档、项目计划和效果评估。"
+}
+],
+[
+{
+"en": "Data scientist",
+"zh": "数据科学家"
+},
+{
+"en": "Data scientists use quantitative and statistical analysis to extract insights and value from data. They help to identify and test features, prototype models, and help with model interpretability.",
+"zh": "数据科学家使用定量和统计分析从数据中提取洞察和价值。它们有助于识别和测试特征、构建模型原型，并有助于提高模型的可解释性。"
+},
+{
+"en": "Reports and data visualizations that answer business questions through statistical analysis.",
+"zh": "报告和数据可视化图表，可通过统计分析回答业务问题。"
+}
+],
+[
+{
+"en": "ML engineer",
+"zh": "机器学习工程师"
+},
+{
+"en": "ML engineers design, build, productionize, and manage ML models. They are strong software engineers with a deep understanding of ML technologies and best practices.",
+"zh": "机器学习工程师负责设计、构建、部署到生产环境和管理机器学习模型。 他们是出色的软件工程师，对机器学习技术和最佳实践有深入的了解。"
+},
+{
+"en": "Deployed model with sufficient prediction quality to meet business goals.",
+"zh": "部署的模型具有足够的预测质量，可满足业务目标。"
+}
+],
+[
+{
+"en": "Data engineer",
+"zh": "数据工程师"
+},
+{
+"en": "Data engineers build data pipelines for storing, aggregating, and processing large amounts of data. They develop the infrastructure and systems for collecting and transforming raw data into useful formats for model training and serving. Data engineers are responsible for the data across the entire ML development process.",
+"zh": "数据工程师构建数据流水线，以存储、汇总和处理大量数据。他们开发基础架构和系统，用于收集原始数据并将其转换为有用的格式，以便进行模型训练和服务。数据工程师负责整个机器学习开发流程中的数据。"
+},
+{
+"en": "Fully productionized data pipelines with the necessary monitoring and alerting.",
+"zh": "完全正式投入使用的具有必要监控和提醒功能的数据流水线。"
+}
+],
+[
+{
+"en": "Developer operations (DevOps) engineer",
+"zh": "开发者运维 (DevOps) 工程师"
+},
+{
+"en": "DevOps engineers develop, deploy, scale, and monitor the serving infrastructure for ML models.",
+"zh": "DevOps 工程师负责开发、部署、扩缩和监控机器学习模型的服务基础架构。"
+},
+{
+"en": "An automated process for serving, monitoring, testing, and alerting on a model's behavior.",
+"zh": "一种自动化流程，用于提供、监控、测试和提醒模型行为。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Successful ML projects have teams with each role well represented. In smaller teams, individuals will need to handle the responsibilities for multiple roles.",
+"zh": "成功的 ML 项目的团队中，每个角色都有充分的代表。在较小的团队中，个人需要承担多个角色的职责。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Establish team practices",
+"zh": "建立团队做法"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Because the roles, tools, and frameworks vary widely in ML development, it's critical to establish common practices through excellent process documentation. For example, one engineer might think that just getting the right data is sufficient to begin training a model, while a more responsible engineer will validate that the dataset is anonymized correctly and document its metadata and provenance. Making sure engineers share common definitions for processes and design patterns reduces confusion and increases the team's velocity.",
+"zh": "由于机器学习开发中的角色、工具和框架差异很大，因此通过出色的流程文档制定通用做法至关重要。例如，某位工程师可能认为，只需获取正确的数据即可开始训练模型，而更负责任的工程师会验证数据集是否已正确匿名化，并记录其元数据和来源。确保工程师共享流程和设计模式的通用定义，有助于减少混淆并提高团队的开发速度。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Process documentation",
+"zh": "流程文档"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Process docs should define the tools, infrastructure, and processes the team will use for ML development. Good process docs help align new and current team members. They should answer the following types of questions:",
+"zh": "流程文档应定义团队将用于机器学习开发的工具、基础架构和流程。优质的流程文档有助于新团队成员和现有团队成员达成共识。它们应回答以下类型的问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "How is the data generated for the model?",
+"zh": "如何为模型生成数据？"
+},
+{
+"en": "How do we examine, validate, and visualize the data?",
+"zh": "我们如何检查、验证和直观呈现数据？"
+},
+{
+"en": "How do we modify an input feature or label in the training data?",
+"zh": "如何修改训练数据中的输入特征或标签？"
+},
+{
+"en": "How do we customize the data generation, training, and evaluation pipeline?",
+"zh": "如何自定义数据生成、训练和评估流水线？"
+},
+{
+"en": "How do I change the model architecture to accommodate changes in input features or labels?",
+"zh": "如何更改模型架构以适应输入特征或标签的变化？"
+},
+{
+"en": "How do we obtain testing examples?",
+"zh": "如何获取测试示例？"
+},
+{
+"en": "What metrics will we use to judge model quality?",
+"zh": "我们将使用哪些指标来评判模型质量？"
+},
+{
+"en": "How do we launch our models in production?",
+"zh": "如何在生产环境中发布模型？"
+},
+{
+"en": "How will we know if something is wrong with our model?",
+"zh": "如何判断模型是否有问题？"
+},
+{
+"en": "What upstream systems do our models depend on?",
+"zh": "我们的模型依赖于哪些上游系统？"
+},
+{
+"en": "How do I make my SQL maintainable and reusable?",
+"zh": "如何使 SQL 可维护且可重复使用？"
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "More potential questions",
+"zh": "更多潜在问题"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<b>Model</b>",
+"zh": "<b>型号</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Can I train models on different datasets in the same pipeline, like for fine-tuning?",
+"zh": "我可以在同一流水线中使用不同的数据集训练模型吗？例如，进行微调？"
+},
+{
+"en": "How do I add a new test dataset to my pipeline?",
+"zh": "如何向我的流水线添加新的测试数据集？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Training</b>",
+"zh": "<b>培训</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "How do I check the model's prediction on a hand-crafted example?",
+"zh": "如何检查模型对手动创建的示例的预测结果？"
+},
+{
+"en": "How do I find, examine, and visualize examples where the model made mistakes?",
+"zh": "如何查找、检查和直观呈现模型出错的示例？"
+},
+{
+"en": "How do I determine which feature was most responsible for a given prediction?",
+"zh": "如何确定给定预测结果中哪个特征的贡献最大？"
+},
+{
+"en": "How do I understand which features have the most impact on predictions within a given sample?",
+"zh": "如何了解在给定样本中哪些特征对预测有最大影响？"
+},
+{
+"en": "How do I compute or plot model predictions on a chosen dataset or sample?",
+"zh": "如何计算或绘制针对所选数据集或样本的模型预测结果？"
+},
+{
+"en": "How do I compute standard metrics for my model's predictions on a chosen dataset?",
+"zh": "如何计算模型针对所选数据集的预测的标准指标？"
+},
+{
+"en": "How do I develop and compute custom metrics?",
+"zh": "如何开发和计算自定义指标？"
+},
+{
+"en": "How do I compare my model with other models offline?",
+"zh": "如何离线将我的模型与其他模型进行比较？"
+},
+{
+"en": "Can I perform meta-analysis for multiple model evaluations in a single development environment?",
+"zh": "我可以在单个开发环境中对多个模型评估执行元分析吗？"
+},
+{
+"en": "Can I compare the current model with the one from 10 months ago?",
+"zh": "我可以将当前模型与 10 个月前的模型进行比较吗？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Productionization, monitoring, and maintenance</b>",
+"zh": "<b>正式版发布、监控和维护</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "I think I created a good model. How can I launch it in production?",
+"zh": "我认为我创建了一个不错的模型。如何在正式版中发布？"
+},
+{
+"en": "How do I verify that my new model is running in production correctly?",
+"zh": "如何验证新模型是否在生产环境中正常运行？"
+},
+{
+"en": "Can I get the history of model evaluations over time?",
+"zh": "我可以获取一段时间内模型评估的历史记录吗？"
+},
+{
+"en": "How will I know when something is wrong with the model?",
+"zh": "如何知道模型出现问题？"
+},
+{
+"en": "I got assigned a page/bug mentioning something about the model. What should I do?",
+"zh": "我被分配了一个页面/bug，其中提到了该模型。 我该怎么做？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Pipelines</b>",
+"zh": "<b>流水线</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "How could I customize the data generation/training/evaluation pipeline?",
+"zh": "如何自定义数据生成/训练/评估流水线？"
+},
+{
+"en": "When and how should I create a completely new pipeline?",
+"zh": "我应该在什么时候以及如何创建全新的流水线？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>SQL</b>",
+"zh": "<b>SQL</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "I need SQL to generate some data. Where should I put it?",
+"zh": "我需要使用 SQL 生成一些数据。我该把它放在哪里？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Infrastructure</b>",
+"zh": "<b>基础架构</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "How does our model serving work? Is there a diagram?",
+"zh": "我们的模型服务是如何运作的？有图表吗？"
+},
+{
+"en": "What upstream systems does my model depend on that I should be aware of?",
+"zh": "我应该了解我的模型依赖于哪些上游系统？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Communication</b>",
+"zh": "<b>通信</b>"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "I can't figure something out. Who (and how) should I contact?",
+"zh": "我无法解决问题。我应该与谁联系（以及如何联系）？"
+}
+]
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Keep in mind",
+"zh": "注意事项"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "What constitutes \"ML best practices\" can differ between companies, teams, and individuals. For example, some team members might consider experimental Colabs as the main deliverable, while others will want to work in R. Some might have a passion for software engineering, someone else thinks monitoring is the most important thing, yet someone else is aware of good feature productionization practices but wants to use Scala. Everyone is \"right\" from their own perspective and if steered correctly, the mix will be a powerhouse. If not, it can be a mess.",
+"zh": "不同公司、团队和个人对“机器学习最佳实践”的定义可能有所不同。例如，有些团队成员可能会将实验性 Colab 作为主要交付成果，而其他成员则希望使用 R 进行工作。有些人可能热衷于软件工程，有些人认为监控是最重要的事项，还有些人知道良好的功能生产化实践，但想使用 Scala。从各自的角度来看，每个人都是“正确的”，如果能正确引导，这种组合将会发挥强大作用。否则，可能会出现混乱。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Establishing the tools, processes, and infrastructure the team will use before writing a line of code can be the difference between the project failing after two years or successfully launching a quarter ahead of schedule.",
+"zh": "在编写一行代码之前建立团队将使用的工具、流程和基础架构，这可能会决定项目是两年后失败，还是提前一个季度成功发布。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Performance evaluations",
+"zh": "效果评估"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Due to the ambiguity and uncertainty inherent in ML, people managers need to set clear expectations and define deliverables early.",
+"zh": "由于机器学习固有的模糊性和不确定性，人力资源经理需要尽早设定明确的期望并确定交付成果。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When determining expectations and deliverables, consider how they'll be evaluated if a project or approach isn't successful. In other words, it's important that a team member's performance isn't directly connected to the success of the project. For example, it's not uncommon for team members to spend weeks investigating solutions that are ultimately unsuccessful. Even in these cases, their high-quality code, thorough documentation, and effective collaboration should contribute positively toward their evaluation.",
+"zh": "确定预期和交付成果时，请考虑如果项目或方法不成功，将如何评估它们。换句话说，团队成员的表现与项目的成败没有直接关系，这一点非常重要。例如，团队成员花费数周时间研究最终未能成功的解决方案的情况并不少见。即使在这些情况下，他们优质的代码、详实的文档和有效的协作应该也会对他们的评估产生积极影响。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What is the primary reason for having excellent process documentation and establishing common practices?",
+"zh": "制定完善的流程文档并建立通用做法的主要原因是什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Increase project velocity.",
+"zh": "提高项目速度。"
+},
+"why": {
+"en": "Correct. Having good process documentation and establishing common practices reduces confusion and streamlines the development process.",
+"zh": "正确。编写良好的流程文档并建立常见做法有助于减少混淆并简化开发流程。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Establish best practices across a company.",
+"zh": "在整个公司范围内建立最佳实践。"
+},
+"why": {
+"en": "Because ML development varies from project to project, teams typically establish their own sets of best practices to work effectively and increase their velocity.",
+"zh": "由于机器学习开发因项目而异，因此团队通常会制定自己的一套最佳实践，以便高效工作并提高速度。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Ensure all engineers on the team have the same level of expertise.",
+"zh": "确保团队中的所有工程师都拥有相同的专业水平。"
+},
+"why": {
+"en": "ML teams typically have engineers with a variety of skills and knowledge. Process documentation helps engineers align on best practices to increase their velocity.",
+"zh": "机器学习团队通常由拥有各种技能和知识的工程师组成。流程文档有助于工程师遵循最佳实践，从而加快工作速度。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "stakeholders",
+"path": "/machine-learning/managing-ml-projects/stakeholders",
+"min": null,
+"heading": {
+"en": "Stakeholders",
+"zh": "利益相关方"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/stakeholders",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/stakeholders?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning (ML) projects require early and consistent collaboration with stakeholders who have varying levels of involvement and expectations.",
+"zh": null
+},
+{
+"en": "Clearly define project deliverables like design documents, experimental results, and production-ready implementations, aligning with stakeholder expectations for each project phase.",
+"zh": null
+},
+{
+"en": "Proactively communicate the unique complexities and potential challenges inherent in ML projects to manage stakeholder expectations and ensure project success.",
+"zh": null
+},
+{
+"en": "Establish clear communication channels and involve all necessary teams, including those requiring approval, for efficient project execution.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "ML projects have multiple stakeholders with varying levels of involvement and responsibilities. Early involvement and effective collaboration with stakeholders is essential for developing the right solution, managing expectations, and ultimately for a successful ML implementation.",
+"zh": "机器学习项目涉及多个利益相关方，他们的参与程度和责任各不相同。尽早与利益相关方进行有效协作对于开发合适的解决方案、管理预期以及最终成功实现机器学习至关重要。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As early as possible, define your project's stakeholders, the expected deliverables, and the preferred communication methods.",
+"zh": "尽早确定项目的利益相关者、预期交付内容和首选沟通方式。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Be sure to include them in your list of stakeholders, as well as any other teams who need to approve aspects of your ML solution.",
+"zh": "请务必将他们以及需要批准机器学习解决方案相关事宜的任何其他团队纳入利益相关方名单中。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Deliverables",
+"zh": "交付成果"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Each stakeholder might expect different deliverables at each phase of the project. Here's a list of common deliverables.",
+"zh": "在项目的每个阶段，每位利益相关者可能期望获得不同的交付内容。下面列出了一些常见的交付内容。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Design doc.</b> Before you write a line of code, you'll most likely create a design doc that explains the problem, the proposed solution, the potential approaches, and possible risks. Typically, the design doc functions as a way to receive feedback and address questions and concerns from the project's stakeholders.",
+"zh": "<b>设计文档</b>。在编写任何代码之前，您很可能会先创建一份设计文档，其中说明问题、建议的解决方案、潜在的方法和可能的风险。通常，设计文档可用于接收反馈并解决项目利益相关者提出的问题和疑虑。"
+},
+{
+"en": "<b>Experimental results.</b> You must communicate the outcomes from the experimentation phase. You'll typically include the following:<br> <ul><li>The record of your experiments with their hyperparameters and metrics.</li><li>The training stack and saved versions of your model at certain checkpoints.</li></ul>",
+"zh": "<b>实验结果。</b>您必须传达实验阶段的结果。您通常需要添加以下内容：<br> <ul><li>实验记录，其中包含超参数和指标。</li><li>训练堆栈以及模型在特定检查点处的已保存版本。</li></ul>"
+},
+{
+"en": "<b>Production-ready implementation.</b> A full pipeline for training and serving your model is the key deliverable. At this phase, create documentation for future engineers that explain modeling decisions, deployment and monitoring specifics, and data peculiarities.",
+"zh": "<b>可用于生产环境的实现。</b>用于训练和部署模型的完整流水线是关键的可交付成果。在此阶段，请为未来的工程师创建文档，其中说明了模型构建决策、部署和监控细节以及数据特性。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "You should align early with your stakeholders on their expectations for each phase of the project.",
+"zh": "您应尽早与利益相关方就项目每个阶段的预期达成一致。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Keep in mind",
+"zh": "注意事项"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "In some cases, stakeholders might not understand the complexities and challenges of ML. This can make getting projects prioritized and executed difficult. For example, some stakeholders might assume that ML is similar to traditional software engineering practices with deterministic outcomes. They might not understand why the project's progress is stalled or why a project's milestones are non-linear.",
+"zh": "在某些情况下，利益相关者可能不了解机器学习的复杂性和挑战。这可能会导致难以确定项目优先级并执行项目。例如，某些利益相关者可能会认为机器学习与具有确定性结果的传统软件工程实践类似。他们可能不了解项目进度停滞不前的原因，也不了解项目里程碑为何是非线性的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To manage stakeholder expectations, it's critical to be clear about the complexities, timeframes, and deliverables at each stage of your project.",
+"zh": "为了管理利益相关者的预期，您必须清楚了解项目每个阶段的复杂性、时间范围和交付内容。"
+}
+}
+]
+}
+]
+}

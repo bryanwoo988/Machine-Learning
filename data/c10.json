@@ -1,0 +1,1670 @@
+{
+"id": "c10",
+"num": 10,
+"stage": 2,
+"title": {
+"en": "Intro to Large Language Models",
+"zh": "大型语言模型简介"
+},
+"minutes": 45,
+"sections": [
+{
+"id": "llm",
+"path": "/machine-learning/crash-course/llm",
+"min": 10,
+"heading": {
+"en": "Introduction to Large Language Models",
+"zh": "大型语言模型简介"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/llm",
+"zh": "https://developers.google.com/machine-learning/crash-course/llm?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module explores language models, which estimate the probability of a token or sequence of tokens occurring within a longer sequence, enabling tasks like text generation, translation, and summarization.",
+"zh": null
+},
+{
+"en": "Language models utilize context, the surrounding information of a target token, to enhance prediction accuracy, with recurrent neural networks offering more context than traditional N-grams.",
+"zh": null
+},
+{
+"en": "N-grams are ordered sequences of words used to build language models, with longer N-grams providing more context but potentially encountering sparsity issues.",
+"zh": null
+},
+{
+"en": "Tokens, the atomic units of language modeling, represent words, subwords, or characters and are crucial for understanding and processing language.",
+"zh": null
+},
+{
+"en": "While recurrent neural networks improve context understanding compared to N-grams, they have limitations, paving the way for the emergence of large language models that evaluate the whole context simultaneously.",
+"zh": null
+}
+],
+"terms": [
+"bigram",
+"language-model",
+"n-gram",
+"neural-network",
+"recurrent-neural-network",
+"token",
+"trigram",
+"vanishing-gradient-problem"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Define a few different types of language models and their components.</li><li>Describe how large language models are created and the importance of context and parameters.</li><li>Identify how large language models take advantage of self-attention.</li><li>Reveal three key problems with large language models.</li><li>Explain how fine-tuning and distillation can improve a model's predictions and efficiency.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>定义几种不同类型的语言模型及其组成部分。</li><li>介绍大语言模型的创建方式，以及上下文和参数的重要性。</li><li>确定大语言模型如何利用自注意力机制。</li><li>揭示大语言模型存在的三个关键问题。</li><li>解释微调和蒸馏如何提高模型的预测准确度和效率。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li><li><a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a></li><li><a href=\"#/ch/c08/neural-networks\">Neural networks</a></li><li><a href=\"#/ch/c09/embeddings\">Embeddings</a></li></ul>",
+"zh": "<b>前提条件</b>： 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c06/categorical-data\">处理分类数据</a></li><li><a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a></li><li><a href=\"#/ch/c08/neural-networks\">神经网络</a></li><li><a href=\"#/ch/c09/embeddings\">嵌入</a></li></ul>"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What is a language model?",
+"zh": "什么是语言模型？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A <button type=\"button\" class=\"term\" data-term=\"language-model\"><b>language model</b></button> estimates the probability of a <button type=\"button\" class=\"term\" data-term=\"token\"><b>token</b></button> or sequence of tokens occurring within a longer sequence of tokens. A token could be a word, a subword (a subset of a word), or even a single character.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"language-model\"><b>语言模型</b></button>用于估计较长的 token 序列中出现某个 <button type=\"button\" class=\"term\" data-term=\"token\"><b>token</b></button> 或 token 序列的概率。词元可以是字词、子字词（字词的子集），甚至是单个字符。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn more about tokens.",
+"zh": "点击该图标可详细了解令牌。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Most modern language models tokenize by subwords, that is, by chunks of text containing semantic meaning. The chunks could vary in length from single characters like punctuation or the possessive <i>s</i> to whole words. Prefixes and suffixes might be represented as separate subwords. For example, the word <i>unwatched</i> might be represented by the following three subwords:",
+"zh": "大多数现代语言模型都按子字词（即包含语义含义的文本块）进行分词。分块的长度可能各不相同，从标点符号或所有格 <i>s</i> 等单个字符到整个字词都有可能。 前缀和后缀可能会表示为单独的子字。 例如，字词 <i>unwatched</i> 可以由以下三个子字词表示："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "un (the prefix)",
+"zh": "un（前缀）"
+},
+{
+"en": "watch (the root)",
+"zh": "watch（根）"
+},
+{
+"en": "ed (the suffix)",
+"zh": "ed（后缀）"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The word <i>cats</i> might be represented by the following two subwords:",
+"zh": "单词 <i>cats</i> 可以由以下两个子字词表示："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "cat (the root)",
+"zh": "cat（根）"
+},
+{
+"en": "s (the suffix)",
+"zh": "s（后缀）"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "A more complex word like \"antidisestablishmentarianism\" might be represented as six subwords:",
+"zh": "像“antidisestablishmentarianism”（反对国教分离主义）这样更复杂的字词可能会表示为六个子字词："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "anti",
+"zh": "反"
+},
+{
+"en": "dis",
+"zh": "dis"
+},
+{
+"en": "establish",
+"zh": "建立"
+},
+{
+"en": "ment",
+"zh": "ment"
+},
+{
+"en": "arian",
+"zh": "arian"
+},
+{
+"en": "ism",
+"zh": "ism"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Tokenization is language specific, so the number of characters per token differs across languages. For English, one token corresponds to ~4 characters or about 3/4 of a word, so 400 tokens ~= 300 English words.",
+"zh": "词元化是特定于语言的，因此每个词元的字符数因语言而异。对于英语，一个 token 相当于约 4 个字符或约 3/4 个单词，因此 400 个 token 大约相当于 300 个英文字词。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Tokens are the atomic unit or smallest unit of language modeling.",
+"zh": "词元是语言建模的最小单位。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Tokens are now also being successfully applied to <a href=\"https://ai.googleblog.com/2023/03/scaling-vision-transformers-to-22.html\" target=\"_blank\" rel=\"noopener\">computer vision</a> and <a href=\"https://ai.googleblog.com/2022/10/audiolm-language-modeling-approach-to.html\" target=\"_blank\" rel=\"noopener\">audio generation</a>.",
+"zh": "现在，令牌也已成功应用于<a href=\"https://ai.googleblog.com/2023/03/scaling-vision-transformers-to-22.html\" target=\"_blank\" rel=\"noopener\">计算机视觉</a>和<a href=\"https://ai.googleblog.com/2022/10/audiolm-language-modeling-approach-to.html\" target=\"_blank\" rel=\"noopener\">音频生成</a>。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following sentence and the token(s) that might complete it:",
+"zh": "请看以下句子以及可能完成该句子的 token："
+}
+},
+{
+"type": "code",
+"text": "When I hear rain on my roof, I _______ in my kitchen."
+},
+{
+"type": "p",
+"html": {
+"en": "A language model determines the probabilities of different tokens or sequences of tokens to complete that blank. For example, the following probability table identifies some possible tokens and their probabilities:",
+"zh": "语言模型会确定不同 token 或 token 序列的概率，以补全该空白。例如，以下概率表列出了一些可能的令牌及其概率："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Probability",
+"zh": "Probability"
+},
+{
+"en": "Token(s)",
+"zh": "令牌"
+}
+],
+"rows": [
+[
+{
+"en": "9.4%",
+"zh": "9.4%"
+},
+{
+"en": "cook soup",
+"zh": "煮汤"
+}
+],
+[
+{
+"en": "5.2%",
+"zh": "5.2%"
+},
+{
+"en": "warm up a kettle",
+"zh": "温热水壶"
+}
+],
+[
+{
+"en": "3.6%",
+"zh": "3.6%"
+},
+{
+"en": "cower",
+"zh": "畏缩"
+}
+],
+[
+{
+"en": "2.5%",
+"zh": "2.5%"
+},
+{
+"en": "nap",
+"zh": "小憩"
+}
+],
+[
+{
+"en": "2.2%",
+"zh": "2.2%"
+},
+{
+"en": "relax",
+"zh": "放松"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In some situations, the sequence of tokens could be an entire sentence, paragraph, or even an entire essay.",
+"zh": "在某些情况下，令牌序列可能是一整个句子、段落，甚至是一整篇文章。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "An application can use the probability table to make predictions. The prediction might be the highest probability (for example, \"cook soup\") or a random selection from tokens having a probability greater than a certain threshold.",
+"zh": "应用可以使用概率表进行预测。 预测结果可能是概率最高的词元（例如“煮汤”），也可能是从概率高于特定阈值的词元中随机选择的词元。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Estimating the probability of what fills in the blank in a text sequence can be extended to more complex tasks, including:",
+"zh": "估计文本序列中填空内容的概率可以扩展到更复杂的任务，包括："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Generating text.",
+"zh": "生成文本。"
+},
+{
+"en": "Translating text from one language to another.",
+"zh": "将文本从一种语言翻译成另一种语言。"
+},
+{
+"en": "Summarizing documents.",
+"zh": "总结文档。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "By modeling the statistical patterns of tokens, modern language models develop extremely powerful internal representations of language and can generate plausible language.",
+"zh": "通过对词元的统计模式进行建模，现代语言模型可以开发出极其强大的语言内部表示，并生成合理的语言。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "N-gram language models",
+"zh": "N 元语法语言模型"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"n-gram\"><b>N-grams</b></button> are ordered sequences of words used to build language models, where N is the number of words in the sequence. For example, when N is 2, the N-gram is called a <b>2-gram</b> (or a <button type=\"button\" class=\"term\" data-term=\"bigram\"><b>bigram</b></button>); when N is 5, the N-gram is called a 5-gram. Given the following phrase in a training document:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"n-gram\"><b>N 元语法</b></button>是用于构建语言模型的有序字词序列，其中 N 是序列中的字词数量。例如，当 N 为 2 时，N 元语法称为 <b>2 元语法</b>（或 <button type=\"button\" class=\"term\" data-term=\"bigram\"><b>二元语法</b></button>）；当 N 为 5 时，N 元语法称为 5 元语法。假设训练文档中包含以下短语："
+}
+},
+{
+"type": "code",
+"text": "you are very nice"
+},
+{
+"type": "p",
+"html": {
+"en": "The resulting 2-grams are as follows:",
+"zh": "生成的 2-gram 如下所示："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "you are",
+"zh": "你是"
+},
+{
+"en": "are very",
+"zh": "非常"
+},
+{
+"en": "very nice",
+"zh": "非常好"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "When N is 3, the N-gram is called a <b>3-gram</b> (or a <button type=\"button\" class=\"term\" data-term=\"trigram\"><b>trigram</b></button>). Given that same phrase, the resulting 3-grams are:",
+"zh": "当 N 为 3 时，N 元语法称为 <b>3 元语法</b>（或<button type=\"button\" class=\"term\" data-term=\"trigram\"><b>三元语法</b></button>）。对于同一短语，生成的 3-gram 为："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "you are very",
+"zh": "您非常"
+},
+{
+"en": "are very nice",
+"zh": "非常不错"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Given two words as input, a language model based on 3-grams can predict the likelihood of the third word. For example, given the following two words:",
+"zh": "如果输入两个字词，基于 3-gram 的语言模型可以预测第三个字词的可能性。例如，假设有以下两个字词："
+}
+},
+{
+"type": "code",
+"text": "orange is"
+},
+{
+"type": "p",
+"html": {
+"en": "A language model examines all the different 3-grams derived from its training corpus that start with <code>orange is</code> to determine the most likely third word. Hundreds of 3-grams could start with the two words <code>orange is</code>, but you can focus solely on the following two possibilities:",
+"zh": "语言模型会检查从其训练语料库中派生的所有以 <code>orange is</code> 开头的三元组，以确定最有可能的第三个字词。可能有数百个 3-gram 以 <code>orange is</code> 这两个字开头，但您可以只关注以下两种可能性："
+}
+},
+{
+"type": "code",
+"text": "orange is ripe\norange is cheerful"
+},
+{
+"type": "p",
+"html": {
+"en": "The first possibility (<code>orange is ripe</code>) is about orange the fruit, while the second possibility (<code>orange is cheerful</code>) is about the color orange.",
+"zh": "第一种可能性 (<code>orange is ripe</code>) 是指水果橙子，而第二种可能性 (<code>orange is cheerful</code>) 是指颜色橙色。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Context",
+"zh": "上下文"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Humans can retain relatively long contexts. While watching Act 3 of a play, you retain knowledge of characters introduced in Act 1. Similarly, the punchline of a long joke makes you laugh because you can remember the context from the joke's setup.",
+"zh": "人类可以记住相对较长的上下文。观看戏剧的第三幕时，您会记住第一幕中介绍的角色。同样，长笑话的妙语之所以能让你发笑，是因为你记得笑话开头的背景信息。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In language models, <b>context</b> is helpful information before or after the target token. Context can help a language model determine whether \"orange\" refers to a citrus fruit or a color.",
+"zh": "在语言模型中，<b>上下文</b>是指目标令牌之前或之后的有用信息。上下文可以帮助语言模型确定“orange”是指柑橘类水果还是颜色。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Context can help a language model make better predictions, but does a 3-gram provide sufficient context? Unfortunately, the only context a 3-gram provides is the first two words. For example, the two words <code>orange is</code> doesn't provide enough context for the language model to predict the third word. Due to lack of context, language models based on 3-grams make a lot of mistakes.",
+"zh": "上下文可以帮助语言模型做出更好的预测，但 3-gram 是否提供了足够的上下文？遗憾的是，3-gram 提供的唯一上下文是前两个字词。例如，这两个字词<code>orange is</code>无法为语言模型提供足够的上下文来预测第三个字词。由于缺乏上下文，基于 3-gram 的语言模型会犯很多错误。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Longer N-grams would certainly provide more context than shorter N-grams. However, as N grows, the relative occurrence of each instance decreases. When N becomes very large, the language model typically has only a single instance of each occurrence of N tokens, which isn't very helpful in predicting the target token.",
+"zh": "与较短的 N 元语法相比，较长的 N 元语法肯定会提供更多上下文。 不过，随着 N 的增大，每个实例的相对出现次数会减少。当 N 变得非常大时，语言模型通常只包含每个 N-token 出现情况的单个实例，这对于预测目标 token 并不是很有帮助。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Recurrent neural networks",
+"zh": "循环神经网络"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"recurrent-neural-network\"><b>Recurrent neural networks</b></button> provide more context than N-grams. A recurrent neural network is a type of <button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>neural network</b></button> that trains on a sequence of tokens. For example, a recurrent neural network can <i>gradually</i> learn (and learn to ignore) selected context from each word in a sentence, kind of like you would when listening to someone speak. A large recurrent neural network can gain context from a passage of several sentences.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"recurrent-neural-network\"><b>循环神经网络</b></button>可提供比 N 元语法更多的上下文信息。循环神经网络是一种<button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>神经网络</b></button>，可基于一系列 token 进行训练。例如，循环神经网络可以<i>逐步</i>学习（并学会忽略）句子中每个字词的所选上下文，就像您在听别人说话时一样。大型循环神经网络可以从包含多个句子的段落中获取上下文。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Although recurrent neural networks learn more context than N-grams, the amount of useful context recurrent neural networks can intuit is still relatively limited. Recurrent neural networks evaluate information \"token by token.\" In contrast, large language models—the topic of the next section—can evaluate the whole context at once.",
+"zh": "虽然循环神经网络比 N-gram 模型学习的上下文更多，但循环神经网络能够直观推断出的有用上下文量仍然相对有限。循环神经网络会逐个评估信息“令牌”。相比之下，下一部分将介绍的大语言模型可以同时评估整个上下文。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Note that training recurrent neural networks for long contexts is constrained by the <button type=\"button\" class=\"term\" data-term=\"vanishing-gradient-problem\"><b>vanishing gradient problem</b></button>.",
+"zh": "请注意，训练长上下文的循环神经网络会受到<button type=\"button\" class=\"term\" data-term=\"vanishing-gradient-problem\">梯度消失问题</button>的限制。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which language model makes better predictions for English text? <ul><li>A language model based on 6-grams</li><li>A language model based on 5-grams</li></ul>",
+"zh": "哪个语言模型能更好地预测英文文本？ <ul><li>基于 6-gram 的语言模型</li><li>基于 5-gram 的语言模型</li></ul>"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The answer depends on the size and diversity of the training set.",
+"zh": "答案取决于训练集的大小和多样性。"
+},
+"why": {
+"en": "If the training set spans millions of diverse documents, then the model based on 6-grams will probably outperform the model based on 5-grams.",
+"zh": "如果训练集包含数百万份不同的文档，那么基于 6-gram 的模型可能会优于基于 5-gram 的模型。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The language model based on 6-grams.",
+"zh": "基于 6-gram 的语言模型。"
+},
+"why": {
+"en": "This language model has more context, but unless this model has trained on a lot of documents, most of the 6-grams will be rare.",
+"zh": "此语言模型具有更多上下文，但除非此模型已针对大量文档进行训练，否则大多数 6-gram 都是罕见的。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The language model based on 5-grams.",
+"zh": "基于 5-gram 的语言模型。"
+},
+"why": {
+"en": "This language model has less context, so it is unlikely to outperform the language model based on 6-grams.",
+"zh": "此语言模型的上下文较少，因此不太可能优于基于 6-gram 的语言模型。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "transformers",
+"path": "/machine-learning/crash-course/llm/transformers",
+"min": 15,
+"heading": {
+"en": "LLMs: What's a large language model?",
+"zh": "LLM：什么是大语言模型？"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/llm/transformers",
+"zh": "https://developers.google.com/machine-learning/crash-course/llm/transformers?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Large language models (LLMs) predict sequences of tokens and outperform previous models due to their vast number of parameters and broader context gathering capabilities.",
+"zh": null
+},
+{
+"en": "Transformers, the leading architecture for LLMs, utilize encoders to process input and decoders to generate output, often for tasks like translation.",
+"zh": null
+},
+{
+"en": "Self-attention, a core concept in Transformers, allows the model to weigh the importance of different words in relation to each other, enhancing context understanding.",
+"zh": null
+},
+{
+"en": "LLMs are trained using masked predictions on massive datasets, enabling them to learn patterns and generate text based on probabilities.",
+"zh": null
+},
+{
+"en": "While LLMs offer benefits like clear text generation, they also present challenges like hallucinations, computational costs, and potential biases.",
+"zh": null
+}
+],
+"terms": [
+"decoder",
+"embedding_layer",
+"encoder",
+"hallucination",
+"instruction-tuning",
+"large-language-model",
+"neural-net",
+"parameter",
+"self-attention",
+"tpu",
+"tpu-pod",
+"unsupervised-machine-learning"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "A newer technology, <button type=\"button\" class=\"term\" data-term=\"large-language-model\"><b>large language models</b> (<b>LLMs</b>)</button> predict a token or sequence of tokens, sometimes many paragraphs worth of predicted tokens. Remember that a token can be a word, a subword (a subset of a word), or even a single character. LLMs make much better predictions than N-gram language models or recurrent neural networks because:",
+"zh": "一种较新的技术，即<button type=\"button\" class=\"term\" data-term=\"large-language-model\"><b>大语言模型</b> (<b>LLM</b>)</button>，可预测一个 token 或一系列 token，有时甚至可以预测相当于多个段落的 token。请注意，词元可以是字词、子字词（字词的子集），甚至是单个字符。LLM 的预测效果比 N-gram 语言模型或循环神经网络好得多，原因如下："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "LLMs contain far more <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameters</b></button> than recurrent models.",
+"zh": "LLM 包含的<button type=\"button\" class=\"term\" data-term=\"parameter\"><b>参数</b></button>远多于循环模型。"
+},
+{
+"en": "LLMs gather far more context.",
+"zh": "LLM 会收集更多上下文。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "This section introduces the most successful and widely used architecture for building LLMs: the Transformer.",
+"zh": "本部分将介绍用于构建 LLM 的最成功且应用最广泛的架构：Transformer。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's a Transformer?",
+"zh": "什么是 Transformer？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Transformers are the state-of-the-art architecture for a wide variety of language model applications, such as translation:",
+"zh": "Transformer 是一种先进的架构，适用于各种语言模型应用，例如翻译："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/Iamagooddog.png",
+"alt": {
+"en": "Figure 1. The input is: I am a good dog. A Transformer-based\n            translator transforms that input into the output: Je suis un bon\n            chien, which is the same sentence translated into French.",
+"zh": "图 1. 输入内容为：我是一只好狗。基于 Transformer 的翻译器会将该输入转换为输出：Je suis un bon chien，这是同一句子翻译成法语后的结果。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> A Transformer-based application that translates from English to French.",
+"zh": "<b>图 1.</b> 一个基于 Transformer 的应用，可将英语翻译成法语。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Full transformers consist of an encoder and a decoder:",
+"zh": "完整的 Transformer 由编码器和解码器组成："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "An <button type=\"button\" class=\"term\" data-term=\"encoder\"><b>encoder</b></button> converts input text into an intermediate representation. An encoder is an enormous <button type=\"button\" class=\"term\" data-term=\"neural-net\"><b>neural net</b></button>.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"encoder\"><b>编码器</b></button>会将输入文本转换为中间表示形式。编码器是一个庞大的<button type=\"button\" class=\"term\" data-term=\"neural-net\"><b>神经网络</b></button>。"
+},
+{
+"en": "A <button type=\"button\" class=\"term\" data-term=\"decoder\"><b>decoder</b></button> converts that intermediate representation into useful text. A decoder is also an enormous neural net.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"decoder\"><b>解码器</b></button>会将该中间表示形式转换为有用的文本。解码器也是一个庞大的神经网络。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, in a translator:",
+"zh": "例如，在翻译器中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The encoder processes the input text (for example, an English sentence) into some intermediate representation.",
+"zh": "编码器将输入文本（例如英语句子）处理为某种中间表示形式。"
+},
+{
+"en": "The decoder converts that intermediate representation into output text (for example, the equivalent French sentence).",
+"zh": "解码器会将该中间表示形式转换为输出文本（例如，等效的法语句子）。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/TransformerBasedTranslator.png",
+"alt": {
+"en": "Figure 2. The Transformer-based translator starts with an encoder,\n            which generates an intermediate representation of an English\n            sentence. A decoder converts that intermediate representation into\n            a French output sentence.",
+"zh": "图 2. 基于 Transformer 的翻译器从编码器开始，该编码器会生成英语句子的中间表示形式。解码器会将该中间表示形式转换为法语输出句子。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> A full Transformer contains both an encoder and a decoder.",
+"zh": "<b>图 2.</b> 完整的 Transformer 包含编码器和解码器。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn more about partial Transformers.",
+"zh": "点击相应图标，详细了解部分 Transformer。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This module focuses on full Transformers, which contain both an encoder and a decoder; however, encoder-only and decoder-only architectures also exist:",
+"zh": "本模块重点介绍包含编码器和解码器的完整 Transformer；不过，也存在仅使用编码器和仅使用解码器的架构："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Encoder-only architectures map input text into an intermediate representation (often, an <button type=\"button\" class=\"term\" data-term=\"embedding_layer\"><b>embedding layer</b></button>). Use cases for encoder-only architectures include: <ul><li>Predicting any token in the input sequence (which is the conventional role of language models).</li><li>Creating a sophisticated embedding, which could serve as the input for another system, such as a classifier.</li></ul>",
+"zh": "仅使用编码器的架构会将输入文本映射为中间表示形式（通常是嵌入层）。<button type=\"button\" class=\"term\" data-term=\"embedding_layer\"></button>仅使用编码器架构的应用场景包括： <ul><li>预测输入序列中的任何 token（这是语言模型的传统角色）。</li><li>创建复杂的嵌入，可作为另一个系统（例如分类器）的输入。</li></ul>"
+},
+{
+"en": "Decoder-only architectures generate new tokens from the text already generated. Decoder-only models typically excel at generating sequences; modern decoder-only models can use their generation power to create continuations of dialog histories and other prompts.",
+"zh": "仅限解码器的架构会根据已生成的文本生成新令牌。仅限解码器的模型通常擅长生成序列；现代仅限解码器的模型可以利用其生成能力来创建对话历史记录和其他提示的后续内容。"
+}
+]
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "What is self-attention?",
+"zh": "什么是自注意力？"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "To enhance context, Transformers rely heavily on a concept called <button type=\"button\" class=\"term\" data-term=\"self-attention\"><b>self-attention</b></button>. Effectively, on behalf of each token of input, self-attention asks the following question:",
+"zh": "为了增强上下文理解能力，Transformer 很大程度上依赖于一种称为<button type=\"button\" class=\"term\" data-term=\"self-attention\"><b>自注意力</b></button>的概念。实际上，自注意力机制会针对输入的每个令牌提出以下问题："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "\"How much does each other token of input affect the interpretation of this token?\"",
+"zh": "“每个其他输入 token 对此 token 的解读有何影响？”"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The \"self\" in \"self-attention\" refers to the input sequence. Some attention mechanisms weigh relations of input tokens to tokens in an output sequence like a translation or to tokens in some other sequence. But <i>self</i>-attention only weighs the importance of relations between tokens in the input sequence.",
+"zh": "“自注意力”中的“自”是指输入序列。某些注意力机制会衡量输入词法单元与输出序列（例如翻译）中的词法单元或某些其他序列中的词法单元之间的关系。但自注意力机制仅衡量输入序列中词法单元之间关系的重要性。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To simplify matters, assume that each token is a word and the complete context is only a single sentence. Consider the following sentence:",
+"zh": "为简单起见，假设每个词元都是一个字词，而完整上下文只是一句话。请看以下句子："
+}
+},
+{
+"type": "code",
+"text": "The animal didn't cross the street because it was too tired."
+},
+{
+"type": "p",
+"html": {
+"en": "The preceding sentence contains eleven words. Each of the eleven words is paying attention to the other ten, wondering how much each of those ten words matters to itself. For example, notice that the sentence contains the pronoun <b>it</b>. Pronouns are often ambiguous. The pronoun <b>it</b> typically refers to a recent noun or noun phrase, but in the example sentence, which recent noun does <b>it</b> refer to—the animal or the street?",
+"zh": "上句话包含 11 个字词。这 11 个字词中的每一个都在关注其他 10 个字词，想知道这 10 个字词对自己的重要程度。例如，请注意，该句子包含代词 <b>it</b>。代词通常比较含糊。代词 <b>it</b> 通常指代最近的名词或名词短语，但在示例句子中，<b>it</b> 指代的是哪个最近的名词，是动物还是街道？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The self-attention mechanism determines the relevance of <i>each</i> nearby word to the pronoun <b>it</b>. Figure 3 shows the results—the bluer the line, the more important that word is to the pronoun <b>it.</b> That is, <b>animal</b> is more important than <b>street</b> to the pronoun <b>it</b>.",
+"zh": "自注意力机制可确定<i>每个</i>附近字词与代词 <b>it</b> 的相关性。图 3 显示了结果，线条越蓝，表示相应字词对代词“it”越重要。也就是说，对于代词 <b>it</b>，<b>动物</b>比<b>街道</b>更重要。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/Theanimaldidntcrossthestreet.png",
+"alt": {
+"en": "Figure 3. The relevance of each of the eleven words in the sentence:\n            'The animal didn't cross the street because it was too tired'\n            to the pronoun 'it'. The word 'animal' is the most relevant to\n            the pronoun 'it'.",
+"zh": "图 3. 句子“The animal didn&#39;t cross the street because it was too tired”（这只动物没有过马路，因为它太累了）中 11 个字词中每个字词与代词“it”的相关性。“animal”一词与代词“it”的相关度最高。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> Self-attention for the pronoun <i>it</i>. From <a href=\"https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html\" target=\"_blank\" rel=\"noopener\">Transformer: A Novel Neural Network Architecture for Language Understanding</a>.",
+"zh": "<b>图 3.</b> 代词 <i>it</i> 的自注意力。摘自<a href=\"https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html\" target=\"_blank\" rel=\"noopener\">《Transformer：一种用于语言理解的新型神经网络架构》</a>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Conversely, suppose the final word in the sentence changes as follows:",
+"zh": "反之，假设句子中的最后一个字发生如下变化："
+}
+},
+{
+"type": "code",
+"text": "The animal didn't cross the street because it was too wide."
+},
+{
+"type": "p",
+"html": {
+"en": "In this revised sentence, self-attention would hopefully rate <b>street</b> as more relevant than <b>animal</b> to the pronoun <b>it</b>.",
+"zh": "在这个修订后的句子中，自注意力机制有望将 <b>street</b> 评为比 <b>animal</b> 更贴近代词 <b>it</b>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Some self-attention mechanisms are <b>bidirectional</b>, meaning that they calculate relevance scores for tokens <i>preceding</i> and <i>following</i> the word being attended to. For example, in Figure 3, notice that words on both sides of <b>it</b> are examined. So, a bidirectional self-attention mechanism can gather context from words on either side of the word being attended to. By contrast, a <b>unidirectional</b> self-attention mechanism can only gather context from words on one side of the word being attended to. Bidirectional self-attention is especially useful for generating representations of whole sequences, while applications that generate sequences token-by-token require unidirectional self-attention. For this reason, encoders use bidirectional self-attention, while decoders use unidirectional.",
+"zh": "有些自注意力机制是<b>双向</b>的，这意味着它们会计算被关注字词<i>之前</i>和<i>之后</i>的令牌的相关性得分。例如，在图 3 中，请注意系统会检查 <b>it</b> 两侧的字词。因此，双向自注意力机制可以从被关注字词两侧的字词中收集上下文。相比之下，<b>单向</b>自注意力机制只能从被关注字词一侧的字词中收集上下文。双向自注意力机制对于生成整个序列的表示形式特别有用，而逐个生成序列令牌的应用则需要单向自注意力机制。因此，编码器使用双向自注意力，而解码器使用单向自注意力。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What is multi-head multi-layer self-attention?",
+"zh": "什么是多头多层自注意力机制？"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Each self-attention layer is typically comprised of multiple <b>self-attention heads</b>. The output of a layer is a mathematical operation (for example, weighted average or dot product) of the output of the different heads.",
+"zh": "每个自注意力层通常由多个<b>自注意力头</b>组成。层的输出是不同头的输出的数学运算（例如，加权平均值或点积）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Since the parameters of each head are initialized to random values, different heads can learn different relationships between each word being attended to and the nearby words. For example, the self-attention head described in the previous section focused on determining which noun the pronoun <b>it</b> referred to. However, other self-attention heads within the same layer might learn the grammatical relevance of each word to every other word, or learn other interactions.",
+"zh": "由于每个头的参数都初始化为随机值，因此不同的头可以学习被关注的每个字词与附近字词之间的不同关系。例如，上一部分中介绍的自注意力头侧重于确定代词“it”指的是哪个名词。不过，同一层中的其他自注意力头可能会学习每个字词与其他所有字词的语法相关性，或者学习其他互动。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A complete transformer model stacks multiple <b>self-attention layers</b> on top of one another. The output from the previous layer becomes the input for the next. This stacking allows the model to build progressively more complex and abstract understandings of the text. While earlier layers might focus on basic syntax, deeper layers can integrate that information to grasp more nuanced concepts like sentiment, context, and thematic links across the entire input.",
+"zh": "完整的 Transformer 模型会将多个<b>自注意力层</b>堆叠在一起。前一层的输出会成为下一层的输入。 这种堆叠方式可让模型逐步构建对文本的更复杂、更抽象的理解。虽然较浅的层可能侧重于基本语法，但较深的层可以整合这些信息，以掌握更细致的概念，例如整个输入中的情感、上下文和主题链接。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn about Big O for LLMs.",
+"zh": "点击相应图标，了解 LLM 的 Big O。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Self-attention forces every word in the context to learn the relevance of all the other words in the context. So, it is tempting to proclaim this an O(N<sup>2</sup>) problem, where:",
+"zh": "自注意力机制会强制上下文中的每个字词学习上下文中所有其他字词的相关性。因此，我们很容易将此问题归类为 O(N<sup>2</sup>) 问题，其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "N is the number of tokens in the context.",
+"zh": "N 是上下文中的 token 数量。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "As if the preceding Big O weren't disturbing enough, Transformers contain multiple self-attention layers and multiple self-attention heads per self-attention layer, so Big O is actually:",
+"zh": "如果说前面的大 O 符号还不够令人不安，那么 Transformer 包含多个自注意力层，并且每个自注意力层包含多个自注意力头，因此大 O 符号实际上是："
+}
+},
+{
+"type": "code",
+"text": "O(N2 · S · D)"
+},
+{
+"type": "p",
+"html": {
+"en": "where:",
+"zh": "其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "S is the number of self-attention layers.",
+"zh": "S 是自注意力层的数量。"
+},
+{
+"en": "D is the number of heads per layer.",
+"zh": "D 是每层的注意力头数。"
+}
+]
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn more about how LLMs are trained.",
+"zh": "点击相应图标，详细了解 LLM 的训练方式。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "You probably will never train an LLM from scratch. Training an industrial-strength LLM requires enormous amounts of ML expertise, computational resources, and time. Regardless, you clicked the icon to learn more, so we owe you an explanation.",
+"zh": "您可能永远不会从头开始训练 LLM。训练工业级 LLM 需要大量的机器学习专业知识、计算资源和时间。不过，您点击了该图标以了解详情，因此我们有必要向您做出说明。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The primary ingredient in building an LLM is a phenomenal amount of training data (text), typically somewhat filtered. The first phase of training is usually some form of <button type=\"button\" class=\"term\" data-term=\"unsupervised-machine-learning\"><b>unsupervised learning</b></button> on that training data. Specifically, the model trains on <b>masked predictions</b>, meaning that certain tokens in the training data are intentionally hidden. The model trains by trying to predict those missing tokens. For example, assume the following sentence is part of the training data:",
+"zh": "构建 LLM 的主要要素是海量的训练数据（文本），通常经过一定程度的过滤。训练的第一阶段通常是对训练数据进行某种形式的<button type=\"button\" class=\"term\" data-term=\"unsupervised-machine-learning\"><b>无监督学习</b></button>。具体来说，模型会基于<b>遮盖的预测</b>进行训练，这意味着训练数据中的某些 token 会被有意隐藏。模型会尝试预测这些缺失的令牌，从而进行训练。例如，假设以下句子是训练数据的一部分："
+}
+},
+{
+"type": "code",
+"text": "The residents of the sleepy town weren't prepared for what came next."
+},
+{
+"type": "p",
+"html": {
+"en": "Random tokens are removed, for example:",
+"zh": "移除了随机令牌，例如："
+}
+},
+{
+"type": "code",
+"text": "The ___ of the sleepy town weren't prepared for ___ came next."
+},
+{
+"type": "p",
+"html": {
+"en": "An LLM is just a neural net, so loss (the number of masked tokens the model correctly considered) guides the degree to which backpropagation updates parameter values.",
+"zh": "LLM 只是一个神经网络，因此损失（模型正确考虑的被遮盖令牌的数量）会指导反向传播更新参数值的程度。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A Transformer-based model trained to predict missing data gradually learns to detect patterns and higher-order structures in the data to get clues about the missing token. Consider the following example masked instance:",
+"zh": "经过训练的基于 Transformer 的模型会预测缺失的数据，并逐渐学会检测数据中的模式和高阶结构，以获取有关缺失令牌的线索。请考虑以下已遮盖的实例示例："
+}
+},
+{
+"type": "code",
+"text": "Oranges are traditionally ___ by hand. Once clipped from a tree, __ don't ripen."
+},
+{
+"type": "p",
+"html": {
+"en": "Extensive training on enormous numbers of masked examples enable an LLM to learn that \"harvested\" or \"picked\" are high probability matches for the first token and \"oranges\" or \"they\" are good choices for the second token.",
+"zh": "通过对大量遮盖示例进行广泛训练，LLM 可以学习到“harvested”或“picked”是第一个词元的高概率匹配项，而“oranges”或“they”是第二个词元的理想选择。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "An optional further training step called",
+"zh": "一个名为"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>instruction tuning</b>",
+"zh": "<b>指令调优</b>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "can improve an LLM's ability to follow instructions.",
+"zh": "的可选的进一步训练步骤可以提高 LLM 遵循指令的能力。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Why are Transformers so large?",
+"zh": "为什么 Transformer 模型这么大？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Transformers contain hundreds of billion or even trillions of <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameters</b></button>. This course has generally recommended building models with a smaller number of parameters over those with a larger number of parameters. After all, a model with a smaller number of parameters uses fewer resources to make predictions than a model with a larger number of parameters. However, research shows that Transformers with more parameters consistently outperform Transformers with fewer parameters.",
+"zh": "Transformer 包含数千亿甚至数万亿个<button type=\"button\" class=\"term\" data-term=\"parameter\"><b>参数</b></button>。本课程通常建议构建参数数量较少的模型，而不是参数数量较多的模型。毕竟，与参数较多的模型相比，参数较少的模型在进行预测时使用的资源更少。不过，研究表明，参数较多的 Transformer 始终优于参数较少的 Transformer。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "But how does an LLM <i>generate</i> text?",
+"zh": "但 LLM 如何<i>生成</i>文本？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You've seen how researchers train LLMs to predict a missing word or two, and you might be unimpressed. After all, predicting a word or two is essentially the autocomplete feature built into various text, email, and authoring software. You might be wondering how LLMs can generate sentences or paragraphs or haikus about arbitrage.",
+"zh": "您可能已经了解研究人员如何训练 LLM 来预测一两个缺失的字词，但可能对此并不感到惊讶。毕竟，预测一两个字基本上就是各种文本、电子邮件和创作软件中内置的自动补全功能。 您可能想知道 LLM 如何生成有关套利的句子、段落或俳句。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In fact, LLMs are essentially autocomplete mechanisms that can automatically predict (complete) thousands of tokens. For example, consider a sentence followed by a masked sentence:",
+"zh": "事实上，LLM 本质上是一种自动补全机制，可以自动预测（补全）数千个 token。例如，假设有一句句子，后面跟着一句被遮盖的句子："
+}
+},
+{
+"type": "code",
+"text": "My dog, Max, knows how to perform many traditional dog tricks.\n___ (masked sentence)"
+},
+{
+"type": "p",
+"html": {
+"en": "An LLM can generate probabilities for the masked sentence, including:",
+"zh": "LLM 可以生成被遮盖句子的概率，包括："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Probability",
+"zh": "Probability"
+},
+{
+"en": "Word(s)",
+"zh": "字词"
+}
+],
+"rows": [
+[
+{
+"en": "3.1%",
+"zh": "3.1%"
+},
+{
+"en": "For example, he can sit, stay, and roll over.",
+"zh": "例如，他可以坐下、待在原地和翻滚。"
+}
+],
+[
+{
+"en": "2.9%",
+"zh": "2.9%"
+},
+{
+"en": "For example, he knows how to sit, stay, and roll over.",
+"zh": "例如，他知道如何坐下、待在原地和翻滚。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A sufficiently large LLM can generate probabilities for paragraphs and entire essays. You can think of a user's questions to an LLM as the \"given\" sentence followed by an imaginary mask. For example:",
+"zh": "足够大的 LLM 可以生成段落和整篇文章的概率。您可以将用户向 LLM 提出的问题视为“给定”句子，后面跟随着一个假想的遮罩。例如："
+}
+},
+{
+"type": "code",
+"text": "User's question: What is the easiest trick to teach a dog?\nLLM's response:  ___"
+},
+{
+"type": "p",
+"html": {
+"en": "The LLM generates probabilities for various possible responses.",
+"zh": "LLM 会针对各种可能的回答生成概率。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As another example, an LLM trained on a massive number of mathematical \"word problems\" can give the appearance of doing sophisticated mathematical reasoning. However, those LLMs are basically just autocompleting a word problem prompt.",
+"zh": "再举一个例子，如果 LLM 接受过大量数学“文字题”的训练，那么它看起来就能进行复杂的数学推理。不过，这些 LLM 基本上只是自动补全文字题提示。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Benefits of LLMs",
+"zh": "LLM 的优势"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "LLMs can generate clear, easy-to-understand text for a wide variety of target audiences. LLMs can make predictions on tasks they are explicitly trained on. Some researchers claim that LLMs can also make predictions for input they were <i>not</i> explicitly trained on, but other researchers have refuted this claim.",
+"zh": "LLM 可以为各种目标受众群体生成清晰易懂的文本。LLM 可以针对明确训练过的任务做出预测。一些研究人员声称，LLM 还可以针对<i>未</i>明确训练过的输入做出预测，但其他研究人员驳斥了这一说法。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Problems with LLMs",
+"zh": "LLM 的问题"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<i>Training</i> an LLM entails many problems, including:",
+"zh": "<i>训练</i> LLM 会遇到许多问题，包括："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Gathering an enormous training set.",
+"zh": "收集庞大的训练集。"
+},
+{
+"en": "Consuming multiple months and enormous computational resources and electricity.",
+"zh": "耗费了数月时间和大量计算资源和电力。"
+},
+{
+"en": "Solving parallelism challenges.",
+"zh": "解决并行处理难题。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Using LLMs to <i>infer</i> predictions causes the following problems:",
+"zh": "使用 LLM 进行<i>推理</i>预测会导致以下问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "LLMs <button type=\"button\" class=\"term\" data-term=\"hallucination\"><b>hallucinate</b></button>, meaning their predictions often contain mistakes.",
+"zh": "LLM 会<button type=\"button\" class=\"term\" data-term=\"hallucination\"><b>产生幻觉</b></button>，这意味着它们的预测通常包含错误。"
+},
+{
+"en": "LLMs consume enormous amounts of computational resources and electricity. Training LLMs on larger datasets typically reduces the amount of resources required for inference, though the larger training sets incur more training resources.",
+"zh": "LLM 会消耗大量的计算资源和电力。 使用更大的数据集训练 LLM 通常会减少推理所需的资源量，不过更大的训练集会消耗更多训练资源。"
+},
+{
+"en": "Like all ML models, LLMs can exhibit all sorts of bias.",
+"zh": "与所有机器学习模型一样，LLM 可能会表现出各种各样的偏差。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Suppose a Transformer is trained on a billion documents, including thousands of documents containing at least one instance of the word <i>elephant</i>. Which of the following statements are probably true?",
+"zh": "假设某个 Transformer 在 10 亿个文档上进行了训练，其中包括数千个包含至少一个“elephant”字词的文档。以下哪些陈述可能为真？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "<i>Acacia trees</i>, an important part of an elephant's diet, will gradually gain a high self-attention score with the word <i>elephant</i>.",
+"zh": "<i>金合欢树</i>是大象的重要食物来源，随着“大象”一词的出现，金合欢树的自注意力得分会逐渐升高。"
+},
+"why": {
+"en": "Yes and this will enable the Transformer to answer questions about an elephant's diet.",
+"zh": "是的，这样一来，Transformer 就能回答有关大象饮食的问题。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The Transformer will associate the word <i>elephant</i> with various idioms that contain the word <i>elephant</i>.",
+"zh": "转换器会将“elephant”一词与包含“elephant”一词的各种成语相关联。"
+},
+"why": {
+"en": "Yes, the system will begin to attach high self-attention scores between the word <i>elephant</i> and other words in elephant idioms.",
+"zh": "是的，系统会开始在“elephant”一词与“elephant”成语中的其他字词之间附加较高的自注意力得分。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The Transformer will gradually learn to ignore any sarcastic or ironic uses of the word <i>elephant</i> in training data.",
+"zh": "Transformer 将逐渐学会忽略训练数据中对“elephant”一词的任何讽刺或反讽用法。"
+},
+"why": {
+"en": "Sufficiently large Transformers trained on a sufficiently broad training set become quite adept at recognizing sarcasm, humor, and irony. So, rather than ignoring sarcasm and irony, the Transformer learns from it.",
+"zh": "经过足够广泛的训练集训练的足够大的 Transformer 在识别讽刺、幽默和反讽方面变得相当熟练。因此，Transformer 不会忽略讽刺和反讽，而是会从中学习。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "tuning",
+"path": "/machine-learning/crash-course/llm/tuning",
+"min": 10,
+"heading": {
+"en": "LLMs: Fine-tuning, distillation, and prompt engineering",
+"zh": "LLM：微调、蒸馏和提示工程"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/llm/tuning",
+"zh": "https://developers.google.com/machine-learning/crash-course/llm/tuning?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Foundation LLMs are pre-trained on vast amounts of text, enabling them to understand language structure and generate creative content, but they require fine-tuning for specific ML tasks like classification or regression.",
+"zh": null
+},
+{
+"en": "Fine-tuning adapts a foundation LLM to a particular task by training it on task-specific data, improving its performance for that task but retaining the original model size.",
+"zh": null
+},
+{
+"en": "Distillation produces a smaller, more efficient version of a fine-tuned LLM, sacrificing some performance for reduced computational and environmental costs.",
+"zh": null
+},
+{
+"en": "Prompt engineering allows users to customize an LLM's output by providing examples or instructions within the prompt, leveraging the model's existing abilities without changing its parameters.",
+"zh": null
+},
+{
+"en": "Offline inference pre-computes and caches LLM predictions for tasks where real-time response isn't critical, saving resources and enabling the use of larger models.",
+"zh": null
+}
+],
+"terms": [
+"backpropagation",
+"distillation",
+"few-shot-prompting",
+"fine-tuning",
+"offline-inference",
+"one-shot-prompting",
+"online-inference",
+"parameter-efficient-tuning",
+"prompt-engineering",
+"zero-shot-prompting"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The <a href=\"#/ch/c10/transformers\">previous unit</a> described general-purpose LLMs, variously known as:",
+"zh": "<a href=\"#/ch/c10/transformers\">上一单元</a>介绍了通用 LLM，也称为："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>foundation LLMs</b>",
+"zh": "<b>基础 LLM</b>"
+},
+{
+"en": "<b>base LLMs</b>",
+"zh": "<b>基本 LLM</b>"
+},
+{
+"en": "<b>pre-trained LLMs</b>",
+"zh": "<b>预训练的 LLM</b>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "A foundation LLM is trained on enough natural language to \"know\" a remarkable amount about grammar, words, and idioms. A foundation language model can generate helpful sentences about topics it is trained on. Furthermore, a foundation LLM can perform certain tasks traditionally called \"creative,\" like writing poetry. However, a foundation LLM's generative text output isn't a solution for other kinds of common ML problems, such as regression or classification. For these use cases, a foundation LLM can serve as a <i>platform</i> rather than a solution.",
+"zh": "基础 LLM 使用足够多的自然语言进行训练，因此可以“了解”大量的语法、词语和成语。基础语言模型可以生成与其训练主题相关的实用句子。此外，基础 LLM 还可以执行传统上称为“创造性”的特定任务，例如写诗。不过，基础 LLM 的生成式文本输出并不能解决其他类型的常见机器学习问题，例如回归或分类。对于这些使用场景，基础 LLM 可以用作<i>平台</i>，而不是解决方案。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Transforming a foundation LLM into a solution that meets an application's needs requires a process called <i>fine-tuning</i>. A secondary process called <i>distillation</i> generates a smaller (fewer parameters) version of the fine-tuned model.",
+"zh": "将基础 LLM 转换为满足应用需求的解决方案需要执行一个称为<i>微调</i>的过程。称为<i>提炼</i>的辅助过程会生成经过微调的模型的较小（参数更少）版本。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Fine-tuning",
+"zh": "微调"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Research shows that the pattern-recognition abilities of foundation language models are so powerful that they sometimes require relatively little additional training to learn specific tasks. That additional training helps the model make better predictions on a specific task. This additional training, called <button type=\"button\" class=\"term\" data-term=\"fine-tuning\"><b>fine-tuning</b></button>, unlocks an LLM's practical side.",
+"zh": "研究表明，基础语言模型的模式识别能力非常强大，有时只需进行相对较少的额外训练，即可学习特定任务。这项额外的训练有助于模型针对特定任务做出更准确的预测。这项额外的训练称为<button type=\"button\" class=\"term\" data-term=\"fine-tuning\"><b>微调</b></button>，可发挥 LLM 的实用性。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Fine-tuning trains on examples <i>specific</i> to the task your application will perform. Engineers can sometimes fine-tune a foundation LLM on just a few hundred or a few thousand training examples.",
+"zh": "微调会使用<i>特定</i>于应用要执行的任务的示例进行训练。工程师有时只需几百个或几千个训练示例，即可对基础 LLM 进行微调。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Despite the relatively tiny number of training examples, standard fine-tuning is often computationally expensive. That's because standard fine-tuning involves updating the weight and bias of every parameter on each <button type=\"button\" class=\"term\" data-term=\"backpropagation\"><b>backpropagation</b></button> iteration. Fortunately, a smarter process called <button type=\"button\" class=\"term\" data-term=\"parameter-efficient-tuning\"><b>parameter-efficient tuning</b></button> can fine-tune an LLM by adjusting only a <i>subset</i> of parameters on each backpropagation iteration.",
+"zh": "尽管训练示例数量相对较少，但标准微调通常需要大量计算。这是因为标准微调涉及在每次<button type=\"button\" class=\"term\" data-term=\"backpropagation\"><b>反向传播</b></button>迭代中更新每个参数的权重和偏差。幸运的是，一种名为<button type=\"button\" class=\"term\" data-term=\"parameter-efficient-tuning\"><b>参数高效微调</b></button>的更智能的流程可以通过在每次反向传播迭代中仅调整部分参数来微调 LLM。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A fine-tuned model's predictions are usually better than the foundation LLM's predictions. However, a fine-tuned model contains the same number of parameters as the foundation LLM. So, if a foundation LLM contains ten billion parameters, then the fine-tuned version will also contain ten billion parameters.",
+"zh": "微调模型的预测结果通常比基础 LLM 的预测结果要好。不过，经过微调的模型包含与基础 LLM 相同数量的参数。因此，如果基础 LLM 包含十亿个参数，则经过微调的版本也将包含十亿个参数。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Distillation",
+"zh": "蒸馏"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Most fine-tuned LLMs contain enormous numbers of parameters. Consequently, foundation LLMs require enormous computational and environmental resources to generate predictions. Note that large swaths of those parameters are typically irrelevant for a specific application.",
+"zh": "大多数经过微调的 LLM 包含大量参数。因此，基础 LLM 需要大量的计算资源和环境资源才能生成预测。请注意，其中大部分参数通常与特定应用无关。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"distillation\"><b>Distillation</b></button> creates a smaller version of an LLM. The distilled LLM generates predictions much faster and requires fewer computational and environmental resources than the full LLM. However, the distilled model's predictions are generally not quite as good as the original LLM's predictions. Recall that LLMs with more parameters almost always generate better predictions than LLMs with fewer parameters.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"distillation\"><b>蒸馏</b></button>会创建较小的 LLM 版本。与完整 LLM 相比，提取的 LLM 生成预测的速度要快得多，并且需要的计算资源和环境资源也更少。不过，提炼模型的预测结果通常不如原始 LLM 的预测结果。回想一下，参数较多的 LLM 几乎总是比参数较少的 LLM 生成更好的预测结果。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn how distillation works.",
+"zh": "点击该图标可了解提炼功能的运作方式。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The most common form of distillation uses bulk inference to label data. This labeled data is then used to train a new, smaller model (known as the student model) that can be more affordably served. The labeled data serves as a channel by which the larger model (known as the teacher model) funnels its knowledge to the smaller model.",
+"zh": "最常见的提炼形式是使用批量推理来标记数据。然后，这些带标签的数据将用于训练一个更小的新模型（称为“学生模型”），以便以更低的费用提供服务。标记数据可作为较大模型（称为教师模型）将其知识传递给较小模型的渠道。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose you need an online toxicity scorer for automatic moderation of comments. In this case, you can use a large offline toxicity scorer to label training data. Then, you can use that training data to distill a toxicity scorer model small enough to be served and handle live traffic.",
+"zh": "例如，假设您需要在线恶意评论评分器来自动审核评论。在这种情况下，您可以使用大型离线毒性评分器为训练数据标记。然后，您可以使用这些训练数据提炼出一个足够小且可供服务和处理实时流量的毒性评分器模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A teacher model can sometimes provide more labeled data than it was trained on. Alternatively, a teacher model can funnel a numerical score instead of a binary label to the student model. A numerical score provides a richer training signal than a binary label, enabling the student model to predict not only positive and negative classes but also borderline classes.",
+"zh": "教师模型有时可以提供比其训练时更多的标记数据。或者，教师模型可以将数值分数（而非二进制标签）传递给学生模型。与二元标签相比，数值得分可提供更丰富的训练信号，使学生模型不仅可以预测正类和负类，还可以预测边界类。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Prompt engineering",
+"zh": "提示工程"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"prompt-engineering\"><b>Prompt engineering</b></button> enables an LLM's <i>end users</i> to customize the model's output. That is, end users clarify how the LLM should respond to their prompt.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"prompt-engineering\"><b>提示工程</b></button>可让 LLM 的<i>最终用户</i>自定义模型的输出。也就是说，最终用户要明确 LLM 应如何对其提示做出回应。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Humans learn well from examples. So do LLMs. Showing one example to an LLM is called <button type=\"button\" class=\"term\" data-term=\"one-shot-prompting\"><b>one-shot prompting</b></button>. For example, suppose you want a model to use the following format to output a fruit's family:",
+"zh": "人类善于从示例中学习。LLM 也是如此。向 LLM 显示一个示例称为<button type=\"button\" class=\"term\" data-term=\"one-shot-prompting\"><b>单样本提示</b></button>。例如，假设您希望模型使用以下格式输出水果的科："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "User inputs the name of a fruit: LLM outputs that fruit's class.",
+"zh": "用户输入水果的名称：LLM 输出该水果的类。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A one-shot prompt shows the LLM a single example of the preceding format and then asks the LLM to complete a query based on that example. For instance:",
+"zh": "单样本提示会向 LLM 显示上述格式的单个示例，然后要求 LLM 根据该示例完成查询。例如："
+}
+},
+{
+"type": "code",
+"text": "peach: drupe\napple: ______"
+},
+{
+"type": "p",
+"html": {
+"en": "A single example is sometimes sufficient. If it is, the LLM outputs a useful prediction. For instance:",
+"zh": "有时，单个示例就足够了。如果是，LLM 会输出有用的预测结果。例如："
+}
+},
+{
+"type": "code",
+"text": "apple: pome"
+},
+{
+"type": "p",
+"html": {
+"en": "In other situations, a single example is insufficient. That is, the user must show the LLM <i>multiple</i> examples. For instance, the following prompt contains two examples:",
+"zh": "在其他情况下，单个示例是不够的。也就是说，用户必须向 LLM 显示<i>多个</i>示例。例如，以下提示包含两个示例："
+}
+},
+{
+"type": "code",
+"text": "plum: drupe\npear: pome\nlemon: ____"
+},
+{
+"type": "p",
+"html": {
+"en": "Providing multiple examples is called <button type=\"button\" class=\"term\" data-term=\"few-shot-prompting\"><b>few-shot prompting</b></button>. You can think of the first two lines of the preceding prompt as training examples.",
+"zh": "提供多个示例称为<button type=\"button\" class=\"term\" data-term=\"few-shot-prompting\"><b>少样本提示</b></button>。您可以将上述问题的前两行视为训练示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Can an LLM provide useful predictions with no examples (<button type=\"button\" class=\"term\" data-term=\"zero-shot-prompting\"><b>zero-shot prompting</b></button>)? Sometimes, but LLMs like context. Without context, the following zero-shot prompt might return information about the technology company rather than the fruit:",
+"zh": "LLM 能否在不使用示例的情况下提供有用的预测（<button type=\"button\" class=\"term\" data-term=\"zero-shot-prompting\"><b>零样本问题</b></button>）？有时，但 LLM 喜欢上下文。如果没有上下文，以下零样本提示可能会返回与技术公司而非水果相关的信息："
+}
+},
+{
+"type": "code",
+"text": "apple: _______"
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Prompt engineering doesn't alter the model's parameters. Prompts leverage the pattern-recognition abilities of the existing LLM.",
+"zh": "<b>注意</b>：提示工程不会更改模型的参数。提示会利用现有 LLM 的模式识别能力。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Offline inference",
+"zh": "离线推理"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The number of parameters in an LLM is sometimes so large that <button type=\"button\" class=\"term\" data-term=\"online-inference\"><b>online inference</b></button> is too slow to be practical for real-world tasks like regression or classification. Consequently, many engineering teams rely on <button type=\"button\" class=\"term\" data-term=\"offline-inference\"><b>offline inference</b></button> (also known as <i>bulk inference</i> or <i>static inference</i>) instead. In other words, rather than responding to queries at serving time, the trained model makes predictions in advance and then caches those predictions.",
+"zh": "LLM 中的参数数量有时非常多，因此<button type=\"button\" class=\"term\" data-term=\"online-inference\"><b>在线推理</b></button>速度太慢，无法用于回归或分类等实际任务。因此，许多工程团队改为依赖<button type=\"button\" class=\"term\" data-term=\"offline-inference\"><b>离线推理</b></button>（也称为<i>批量推理</i>或<i>静态推理</i>）。换句话说，训练好的模型不是在服务时响应查询，而是会提前进行预测，然后缓存这些预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It doesn't matter if it takes a long time for an LLM to complete its task if the LLM only has to perform the task once a week or once a month.",
+"zh": "如果 LLM 只需每周或每月执行一次任务，那么即使 LLM 需要很长时间才能完成任务，也无妨。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, Google Search <a href=\"https://blog.google/products/search/how-mum-improved-google-searches-vaccine-information/\" target=\"_blank\" rel=\"noopener\">used an LLM</a> to perform offline inference in order to cache a list of over 800 synonyms for Covid vaccines in more than 50 languages. Google Search then used the cached list to identify queries about vaccines in live traffic.",
+"zh": "例如，Google 搜索<a href=\"https://blog.google/products/search/how-mum-improved-google-searches-vaccine-information/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">使用了 LLM</a> 来执行离线推理，以便缓存 50 多种语言的新冠疫苗 800 多个同义词列表。然后，Google 搜索使用缓存的列表来识别实时流量中与疫苗相关的查询。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Use LLMs responsibly",
+"zh": "以负责任的方式使用 LLM"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Like any form of machine learning, LLMs generally share the biases of:",
+"zh": "与任何形式的机器学习一样，LLM 通常存在以下偏差："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The data they were trained on.",
+"zh": "对其训练时所用的数据。"
+},
+{
+"en": "The data they were distilled on.",
+"zh": "对其进行提炼时所用的数据。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Use LLMs fairly and responsibly, following the guidelines presented in the <a href=\"#/ch/c05/numerical-data\"><b>data modules</b></a> and the <a href=\"#/ch/c13/fairness\"><b>Fairness module</b></a>.",
+"zh": "按照<a href=\"#/ch/c05/numerical-data\"><b>数据模块</b></a>和<a href=\"#/ch/c13/fairness\"><b>公平性模块</b></a>中介绍的指南，公平且负责任地使用 LLM。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following statements is true about LLMs?",
+"zh": "以下关于 LLM 的表述中，哪一项是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A distilled LLM contains fewer parameters than the foundation language model it sprung from.",
+"zh": "提炼后的 LLM 包含的参数比其源自的基础语言模型少。"
+},
+"why": {
+"en": "Yes, distillation reduces the number of parameters.",
+"zh": "是的，蒸馏会减少参数数量。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "A fine-tuned LLM contains fewer parameters than the foundation language model it was trained on.",
+"zh": "与其训练时所依据的基础语言模型相比，微调后的 LLM 包含的参数更少。"
+},
+"why": {
+"en": "A fine-tuned model contains the <i>same number</i> of parameters as the original foundation language model.",
+"zh": "经过微调的模型包含与原始基础语言模型<i>相同数量</i>的参数。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "As users perform more prompt engineering, the number of parameters in an LLM grows.",
+"zh": "随着用户执行更多提示工程，LLM 中的参数数量会增加。"
+},
+"why": {
+"en": "Prompt engineering doesn't add (or remove or alter) LLM parameters.",
+"zh": "提示工程不会添加（或移除或更改）LLM 参数。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/llm/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "LLMs: Test your knowledge",
+"zh": "LLM：测试知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/llm/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/llm/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/llm/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/llm/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c11/production-ml-systems\">Production ML systems</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度，探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照建议的顺序学习，建议您接下来学习以下模块：<b><a href=\"#/ch/c11/production-ml-systems\">生产环境机器学习系统</a></b>。"
+}
+},
+{
+"type": "note",
+"kind": "key",
+"html": {
+"en": "Interested in a deeper dive into large language models and generative AI? Check out the new <a href=\"https://www.kaggle.com/learn-guide/5-day-genai\" target=\"_blank\" rel=\"noopener\"><b>5-Day Gen AI Intensive Course</b></a> from Kaggle.",
+"zh": "想要深入了解大语言模型和生成式 AI？欢迎参加 Kaggle 推出的全新<a href=\"https://www.kaggle.com/learn-guide/5-day-genai\" target=\"_blank\" rel=\"noopener\"><b>5 天生成式 AI 强化课程</b></a>。"
+}
+}
+]
+}
+]
+}

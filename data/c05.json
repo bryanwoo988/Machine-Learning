@@ -1,0 +1,3000 @@
+{
+"id": "c05",
+"num": 5,
+"stage": 2,
+"title": {
+"en": "Working with numerical data",
+"zh": "处理数值数据"
+},
+"minutes": 85,
+"sections": [
+{
+"id": "numerical-data",
+"path": "/machine-learning/crash-course/numerical-data",
+"min": 3,
+"heading": {
+"en": "Working with numerical data",
+"zh": "处理数值数据"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module focuses on preparing numerical data, such as temperature or weight, for use in machine learning models.",
+"zh": null
+},
+{
+"en": "Machine learning practitioners spend significant time on data preparation tasks like cleaning and transformation.",
+"zh": null
+},
+{
+"en": "The module covers techniques like feature scaling, outlier detection, and binning to improve data quality for model training.",
+"zh": null
+},
+{
+"en": "Learners should have a basic understanding of machine learning concepts before starting this module.",
+"zh": null
+},
+{
+"en": "Categorical data, like postal codes, will be addressed in a separate module due to its distinct characteristics and handling requirements.",
+"zh": null
+}
+],
+"terms": [
+"categorical-data",
+"numerical-data"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Understand feature vectors.</li><li>Explore your dataset's potential features visually and mathematically.</li><li>Identify outliers.</li><li>Understand four different techniques to normalize numerical data.</li><li>Understand binning and develop strategies for binning numerical data.</li><li>Understand the characteristics of good continuous numerical features.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>了解特征向量。</li><li>直观地探索数据集的潜在特征 。</li><li>找出离群值。</li><li>了解对数值数据归一化的四种不同方法。</li><li>了解分箱，并制定分箱数值数据的策略。</li><li>了解良好连续数值特征的特征。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following module:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li></ul>",
+"zh": "<b>前提条件：</b> 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "ML practitioners spend far more time evaluating, cleaning, and transforming data than building models. Data is so important that this course devotes three entire units to the topic:",
+"zh": "与构建模型相比，机器学习从业者花在评估、清理和转换数据上的时间要多得多。数据非常重要，因此本课程将有整整三个单元来介绍该主题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Working with numerical data (this unit)",
+"zh": "使用数值数据（此单位）"
+},
+{
+"en": "<a href=\"#/ch/c06/categorical-data\">Working with categorical data</a>",
+"zh": "<a href=\"#/ch/c06/categorical-data\">处理分类数据</a>"
+},
+{
+"en": "<a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a>",
+"zh": "<a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "This unit focuses on <button type=\"button\" class=\"term\" data-term=\"numerical-data\"><b>numerical data</b></button>, meaning integers or floating-point values that behave like numbers. That is, they are additive, countable, ordered, and so on. The next unit focuses on <button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>categorical data</b></button>, which can include numbers that behave like categories. The third unit focuses on how to prepare your data to ensure high-quality results when training and evaluating your model.",
+"zh": "本单元着重介绍 <button type=\"button\" class=\"term\" data-term=\"numerical-data\"><b>数值数据</b></button>、 表示整数或浮点值 其行为方式与数字类似的函数。也就是说，它们是可累加的、可数的、有序的， 依此类推。下一部分将重点介绍<button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>分类数据</b></button>，其中可能包含行为类似于类别的数字。第三单元重点介绍如何 准备数据，确保在训练和评估时获得高质量结果 模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Examples of numerical data include:",
+"zh": "数值数据的示例包括："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Temperature",
+"zh": "温度"
+},
+{
+"en": "Weight",
+"zh": "重量"
+},
+{
+"en": "The number of deer wintering in a nature preserve",
+"zh": "自然保护区的鹿数量"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, US postal codes, despite being five-digit or nine-digit numbers, don't behave like numbers or represent mathematical relationships. Postal code 40004 (in Nelson County, Kentucky) is not twice the quantity of postal code 20002 (in Washington, D.C.). These numbers represent categories, specifically geographic areas, and are considered categorical data.",
+"zh": "相比之下，美国邮政编码虽然是 5 位数或 9 位数的数字，但其行为方式与数字不同，也不代表数学关系。邮政编码 40004（肯塔基州尼尔森县）不是邮政编码 20002（华盛顿特区）的两倍。这些数字代表类别（具体而言是地理区域），被视为分类数据。"
+}
+}
+]
+},
+{
+"id": "feature-vectors",
+"path": "/machine-learning/crash-course/numerical-data/feature-vectors",
+"min": 5,
+"heading": {
+"en": "Numerical data: How a model ingests data using feature vectors",
+"zh": "数值数据：模型如何使用特征向量注入数据"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/feature-vectors",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/feature-vectors?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Models ingest data through floating-point arrays called feature vectors, which are derived from dataset features.",
+"zh": null
+},
+{
+"en": "Feature vectors often utilize processed or transformed values instead of raw dataset values to enhance model learning.",
+"zh": null
+},
+{
+"en": "Feature engineering is the crucial process of converting raw data into suitable representations for the model, encompassing techniques like normalization and binning.",
+"zh": null
+},
+{
+"en": "Non-numerical data like strings must be converted into numerical values for use in feature vectors, a key aspect of feature engineering.",
+"zh": null
+}
+],
+"terms": [
+"binning",
+"bucketing",
+"feature_engineering",
+"feature_vector",
+"normalization",
+"preprocessing"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Until now, we've given you the impression that a model acts directly on the rows of a dataset; however, models actually ingest data somewhat differently.",
+"zh": "到目前为止，我们给您的印象是，模型会直接对数据集的行执行操作；但实际上，模型提取数据的方式略有不同。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose a dataset provides five columns, but only two of those columns (<code>b</code> and <code>d</code>) are features in the model. When processing the example in row 3, does the model simply grab the contents of the highlighted two cells (3b and 3d) as follows?",
+"zh": "例如，假设某个数据集提供了五个列，但其中只有两个列（<code>b</code> 和 <code>d</code>）是模型中的特征。在处理第 3 行中的示例时，模型是否会像下面这样简单地抓取突出显示的两个单元格（3b 和 3d）的内容？"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/dataset_directly_to_model.svg",
+"alt": {
+"en": "Figure 1. A model ingesting an example directly from a dataset.\n            Columns b and d of Row 3 are highlighted.",
+"zh": "图 1. 直接从数据集中提取示例的模型。\n            第三行的 b 列和 d 列处于突出显示状态。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> Not exactly how a model gets its examples.",
+"zh": "<b>图 1.</b> 这并不是模型获取示例的确切方式。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In fact, the model actually ingests an array of floating-point values called a <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vector</b></button>. You can think of a feature vector as the floating-point values comprising one example.",
+"zh": "事实上，该模型实际上会提取一个浮点值数组，称为<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>。您可以将特征向量视为构成一个示例的浮点值。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/dataset_to_feature_vector_to_model.svg",
+"alt": {
+"en": "Figure 2. The feature vector is an intermediary between the dataset\n            and the model.",
+"zh": "图 2. 特征向量是数据集与模型之间的中介。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> Closer to the truth, but not realistic.",
+"zh": "<b>图 2.</b> 更接近真实情况，但不切合实际。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "However, feature vectors seldom use the dataset's <i>raw values</i>. Instead, you must typically process the dataset's values into representations that your model can better learn from. So, a more realistic feature vector might look something like this:",
+"zh": "不过，特征矢量很少使用数据集的<i>原始值</i>。相反，您通常必须将数据集的值处理成模型可以更好地学习的表示形式。因此，更现实的特征向量可能如下所示："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/dataset_to_feature_vector_to_model_scaled.svg",
+"alt": {
+"en": "Figure 3. The feature vector contains two floating-point values:\n            0.13 and 0.47. A more realistic feature vector.",
+"zh": "图 3. 特征向量包含两个浮点值：0.13 和 0.47。更贴近现实的特征向量。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> A more realistic feature vector.",
+"zh": "<b>图 3.</b> 更逼真的特征向量。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Wouldn't a model produce better predictions by training from the <i>actual</i> values in the dataset than from <i>altered</i> values? Surprisingly, the answer is no.",
+"zh": "使用数据集中的<i>实际</i>值进行训练，而不是使用<i>经过更改</i>的值，模型的预测结果会更好吗？令人惊讶的是，答案是否定的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You must determine the best way to represent raw dataset values as trainable values in the feature vector. This process is called <button type=\"button\" class=\"term\" data-term=\"feature-engineering\"><b>feature engineering</b></button>, and it is a vital part of machine learning. The most common feature engineering techniques are:",
+"zh": "您必须确定将原始数据集值表示为特征向量中可训练值的最佳方法。此过程称为<button type=\"button\" class=\"term\" data-term=\"feature-engineering\"><b>特征工程</b></button>，是机器学习的重要组成部分。最常见的特征工程技术包括："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"normalization\"><b>Normalization</b></button>: Converting numerical values into a standard range.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"normalization\"><b>归一化</b></button>：将数值转换为标准范围。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"binning\"><b>Binning</b></button> (also referred to as <button type=\"button\" class=\"term\" data-term=\"bucketing\"><b>bucketing</b></button>): Converting numerical values into buckets of ranges.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"binning\"><b>分桶</b></button>（也称为<button type=\"button\" class=\"term\" data-term=\"bucketing\"><b>分桶</b></button>）：将数值转换为范围分桶。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "This unit covers normalizing and binning. The next unit, <a href=\"#/ch/c06/categorical-data\">Working with categorical data</a>, covers other forms of <button type=\"button\" class=\"term\" data-term=\"preprocessing\"><b>preprocessing</b></button>, such as converting non-numerical data, like strings, to floating point values.",
+"zh": "本单元将介绍归一化和分箱。下一部分“处理分类数据”将介绍其他形式的<button type=\"button\" class=\"term\" data-term=\"preprocessing\"><b>预处理</b></button>，例如将非数值数据（例如字符串）转换为浮点值。<a href=\"#/ch/c06/categorical-data\"></a>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Every value in a feature vector must be a floating-point value. However, many features are naturally strings or other non-numerical values. Consequently, a large part of feature engineering is representing non-numerical values as numerical values. You'll see a lot of this in later modules.",
+"zh": "特征向量中的每个值都必须是浮点值。不过，许多特征本质上是字符串或其他非数字值。因此，特征工程的很大一部分是将非数值表示为数值。在后续单元中，您将看到很多这类内容。"
+}
+}
+]
+},
+{
+"id": "first-steps",
+"path": "/machine-learning/crash-course/numerical-data/first-steps",
+"min": 5,
+"heading": {
+"en": "Numerical data: First steps",
+"zh": "数值数据：初始步骤"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/first-steps",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/first-steps?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Before creating feature vectors, it is crucial to analyze numerical data by visualizing it through plots and graphs and calculating basic statistics like mean, median, and standard deviation.",
+"zh": null
+},
+{
+"en": "Visualizations, such as scatter plots and histograms, can reveal anomalies and patterns in the data, aiding in identifying potential issues early in the data analysis process.",
+"zh": null
+},
+{
+"en": "Outliers, values significantly distant from others, should be identified and handled appropriately, either by correcting mistakes, retaining legitimate outliers for model training, or applying techniques like clipping.",
+"zh": null
+},
+{
+"en": "Statistical evaluation helps in understanding the distribution and characteristics of data, providing insights into potential feature and label relationships.",
+"zh": null
+},
+{
+"en": "While basic statistics and visualizations provide valuable insights, it's essential to remain vigilant as anomalies can still exist in seemingly well-balanced data.",
+"zh": null
+}
+],
+"terms": [
+"clipping",
+"outliers"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Before creating feature vectors, we recommend studying numerical data in two ways:",
+"zh": "在创建特征向量之前，我们建议您通过以下两种方式研究数值数据："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Visualize your data in plots or graphs.",
+"zh": "在图表或图形中直观呈现数据。"
+},
+{
+"en": "Get statistics about your data.",
+"zh": "获取有关数据的统计信息。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Visualize your data",
+"zh": "将数据可视化"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Graphs can help you find anomalies or patterns hiding in the data. Therefore, before getting too far into analysis, look at your data graphically, either as scatter plots or histograms. View graphs not only at the beginning of the data pipeline, but also throughout data transformations. Visualizations help you continually check your assumptions.",
+"zh": "图表可以帮助您发现数据中隐藏的异常或模式。因此，在深入分析之前，请以图形的形式（散点图或直方图）查看数据。您不仅可以在数据流水线的开头查看图表，还可以在整个数据转换过程中查看图表。可视化有助于您不断检查自己的假设。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We recommend working with pandas for visualization:",
+"zh": "我们建议使用 pandas 进行可视化："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"http://pandas.pydata.org/pandas-docs/stable/missing_data.html\" target=\"_blank\" rel=\"noopener\">Working with Missing Data (pandas Documentation)</a>",
+"zh": "<a href=\"http://pandas.pydata.org/pandas-docs/stable/missing_data.html\" target=\"_blank\" rel=\"noopener\">处理缺失数据（pandas 文档）</a>"
+},
+{
+"en": "<a href=\"http://pandas.pydata.org/pandas-docs/stable/visualization.html\" target=\"_blank\" rel=\"noopener\">Visualizations (pandas Documentation)</a>",
+"zh": "<a href=\"http://pandas.pydata.org/pandas-docs/stable/visualization.html\" target=\"_blank\" rel=\"noopener\">可视化（pandas 文档）</a>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Note that certain visualization tools are optimized for certain data formats. A visualization tool that helps you evaluate protocol buffers may or may not be able to help you evaluate CSV data.",
+"zh": "请注意，某些可视化工具针对特定数据格式进行了优化。 可帮助您评估协议缓冲区的可视化工具不一定能帮助您评估 CSV 数据。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Statistically evaluate your data",
+"zh": "对数据进行统计评估"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Beyond visual analysis, we also recommend evaluating potential features and labels mathematically, gathering basic statistics such as:",
+"zh": "除了直观分析之外，我们还建议您通过数学方法评估潜在的特征和标签，收集以下基本统计信息："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "mean and median",
+"zh": "平均值和中位数"
+},
+{
+"en": "standard deviation",
+"zh": "标准差"
+},
+{
+"en": "the values at the quartile divisions: the 0th, 25th, 50th, 75th, and 100th percentiles. The 0th percentile is the minimum value of this column; the 100th percentile is the maximum value of this column. (The 50th percentile is the median.)",
+"zh": "四分位数分界点的值：第 0、25、50、75 和 100 百分位。第 0 个百分位数是此列的最小值；第 100 个百分位数是此列的最大值。（第 50 百分位是指中位数。）"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Find outliers",
+"zh": "查找离群值"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "An <button type=\"button\" class=\"term\" data-term=\"outliers\"><b>outlier</b></button> is a value <i>distant</i> from most other values in a feature or label. Outliers often cause problems in model training, so finding outliers is important.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"outliers\"><b>离群值</b></button>是指与特征或标签中的大多数其他值<i>相差甚远</i>的值。离群值常常会导致模型训练出现问题，因此找出离群值非常重要。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When the delta between the 0th and 25th percentiles differs significantly from the delta between the 75th and 100th percentiles, the dataset probably contains outliers.",
+"zh": "如果第 0 百分位数与第 25 百分位数之间的差异与第 75 百分位数与第 100 百分位数之间的差异显著不同，则数据集可能包含离群值。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Don't over-rely on basic statistics. Anomalies can also hide in seemingly well-balanced data.",
+"zh": "<b>注意</b>：请勿过度依赖基本统计信息。异常也可能隐藏在看似平衡的数据中。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Outliers can fall into any of the following categories:",
+"zh": "离群值可以属于以下任一类别："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The outlier is due to a <i>mistake</i>. For example, perhaps an experimenter mistakenly entered an extra zero, or perhaps an instrument that gathered data malfunctioned. You'll generally delete examples containing mistake outliers.",
+"zh": "异常值是由于<i>错误</i>造成的。例如，实验者可能误输入了一个零，或者收集数据的仪器可能出现故障。您通常会删除包含异常错误的示例。"
+},
+{
+"en": "The outlier is a legitimate data point, <i>not a mistake</i>. In this case, will your trained model ultimately need to infer good predictions on these outliers? <ul><li>If yes, keep these outliers in your training set. After all, outliers in certain features sometimes mirror outliers in the label, so the outliers could actually <i>help</i> your model make better predictions. Be careful, extreme outliers can still hurt your model.</li><li>If no, delete the outliers or apply more invasive feature engineering techniques, such as <button type=\"button\" class=\"term\" data-term=\"clipping\"><b>clipping</b></button>.</li></ul>",
+"zh": "离群值是合法的数据点，<i>而非错误值</i>。在这种情况下，经过训练的模型最终是否需要对这些离群值推断出良好的预测结果？<ul><li>如果是，请将这些离群值保留在训练集中。毕竟，某些特征中的离群值有时会反映在标签中的离群值，因此离群值实际上可以<i>帮助</i>模型做出更好的预测。请注意，极端离群值仍会影响模型。</li><li>如果没有，请删除离群值，或应用更具侵入性的特征工程技术，例如<button type=\"button\" class=\"term\" data-term=\"clipping\"><b>剪裁</b></button>。</li></ul>"
+}
+]
+}
+]
+},
+{
+"id": "programming-exercises",
+"path": "/machine-learning/crash-course/numerical-data/programming-exercises",
+"min": 10,
+"heading": {
+"en": "Numerical data: Programming exercises",
+"zh": "数值数据：编程练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/programming-exercises",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/programming-exercises?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This page provides programming exercises focusing on practicing numerical data analysis skills learned in a previous lesson.",
+"zh": null
+},
+{
+"en": "Two Colab exercises are available: one on calculating descriptive statistics and identifying outliers, and another on detecting and handling bad data values in a dataset.",
+"zh": null
+},
+{
+"en": "The exercises are browser-based and require no setup, utilizing the Colaboratory platform, primarily supported on Chrome and Firefox desktop versions.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Take some time to complete the following exercises to practice what you've learned in <a href=\"#/ch/c05/first-steps\">First steps with numerical data</a>.",
+"zh": "请花些时间完成以下练习，以练习您在<a href=\"#/ch/c05/first-steps\">处理数值数据的第一步</a>中学到的内容。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Get statistics on a dataset</b>, which shows you how to find columns containing blatant outliers: <a href=\"https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/numerical_data_stats.ipynb?utm_source=mlcc&amp;utm_campaign=colab-external&amp;utm_medium=referral&amp;utm_content=numerical_data_stats\" target=\"_blank\" rel=\"noopener\">Open math statistics exercise</a>",
+"zh": "<b>获取数据集的统计信息</b>，该部分介绍了如何查找包含明显异常值的列： <a href=\"https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/numerical_data_stats.ipynb?utm_source=mlcc&amp;utm_campaign=colab-external&amp;utm_medium=referral&amp;utm_content=numerical_data_stats&amp;hl=zh-cn\" target=\"_blank\" rel=\"noopener\">打开数学统计练习</a>"
+},
+{
+"en": "<b>Find the bad part of the dataset</b>, which guides you through visual and mathematical ways to find hidden <i>bad</i> values in a dataset: <a href=\"https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/numerical_data_bad_values.ipynb?utm_source=mlcc&amp;utm_campaign=colab-external&amp;utm_medium=referral&amp;utm_content=numerical_data_bad_values\" target=\"_blank\" rel=\"noopener\">Open \"bad part\" dataset exercise</a>",
+"zh": "<b>查找数据集中有缺陷的部分</b>，该课程将引导您通过直观和数学方法查找数据集中隐藏的<i>有缺陷</i>值： <a href=\"https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/numerical_data_bad_values.ipynb?utm_source=mlcc&amp;utm_campaign=colab-external&amp;utm_medium=referral&amp;utm_content=numerical_data_bad_values&amp;hl=zh-cn\" target=\"_blank\" rel=\"noopener\">打开“bad part”数据集练习</a>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Programming exercises run directly in your browser (no setup required!) using the <a href=\"https://colab.research.google.com\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> platform. Colaboratory is supported on most major browsers, and is most thoroughly tested on desktop versions of Chrome and Firefox.",
+"zh": "编程练习会直接在浏览器中运行（无需设置！），使用 <a href=\"https://colab.research.google.com?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> 平台。大多数主流浏览器都支持 Colaboratory，并且在桌面版 Chrome 和 Firefox 上进行了最全面的测试。"
+}
+}
+]
+},
+{
+"id": "normalization",
+"path": "/machine-learning/crash-course/numerical-data/normalization",
+"min": 20,
+"heading": {
+"en": "Numerical data: Normalization",
+"zh": "数值数据：标准化"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/normalization",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/normalization?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Data normalization is crucial for enhancing machine learning model performance by scaling features to a similar range.",
+"zh": null
+},
+{
+"en": "Linear scaling, Z-score scaling, and log scaling are common normalization techniques, each suitable for different data distributions.",
+"zh": null
+},
+{
+"en": "Clipping helps manage outliers by limiting extreme values within a defined range, improving model robustness.",
+"zh": null
+},
+{
+"en": "Selecting the appropriate normalization method depends on the specific dataset and feature characteristics, often requiring experimentation for optimal results.",
+"zh": null
+},
+{
+"en": "Applying normalization consistently during both training and prediction stages ensures accurate and reliable model outcomes.",
+"zh": null
+}
+],
+"terms": [
+"clipping",
+"NaN_trap",
+"normalization",
+"scaling",
+"Z-score-normalization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "After examining your data through statistical and visualization techniques, you should transform your data in ways that will help your model train more effectively. The goal of <button type=\"button\" class=\"term\" data-term=\"normalization\"><b>normalization</b></button> is to transform features to be on a similar scale. For example, consider the following two features:",
+"zh": "通过统计和可视化技术检查数据后，您应以有助于模型更有效地训练的方式转换数据。<button type=\"button\" class=\"term\" data-term=\"normalization\">归一化</button>的目标是将特征转换为相似的比例。例如，请考虑以下两项功能："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Feature <code>X</code> spans the range 154 to 24,917,482.",
+"zh": "特征 <code>X</code> 的范围为 154 到 24,917,482。"
+},
+{
+"en": "Feature <code>Y</code> spans the range 5 to 22.",
+"zh": "特征 <code>Y</code> 的范围为 5 到 22。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "These two features span very different ranges. Normalization might manipulate <code>X</code> and <code>Y</code> so that they span a similar range, perhaps 0 to 1.",
+"zh": "这两个特征的范围差异很大。归一化可能会处理 <code>X</code> 和 <code>Y</code>，使它们跨越相似的范围（可能为 0 到 1）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Normalization provides the following benefits:",
+"zh": "归一化具有以下优势："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Helps models <i>converge more quickly</i> during training. When different features have different ranges, gradient descent can \"bounce\" and slow convergence. That said, more advanced optimizers like <button type=\"button\" class=\"term\" data-term=\"adagrad\">Adagrad</button> and <a href=\"https://arxiv.org/abs/1412.6980\" target=\"_blank\" rel=\"noopener\">Adam</a> protect against this problem by changing the effective learning rate over time.",
+"zh": "有助于模型在训练期间<i>更快地收敛</i>。当不同特征的范围不同时，梯度下降可能会“反弹”，从而减慢收敛速度。不过，<button type=\"button\" class=\"term\" data-term=\"adagrad\">Adagrad</button> 和 <a href=\"https://arxiv.org/abs/1412.6980\" target=\"_blank\" rel=\"noopener\">Adam</a> 等更高级的优化器会随时间改变有效学习速率，从而避免此问题。"
+},
+{
+"en": "Helps models <i>infer better predictions</i>. When different features have different ranges, the resulting model might make somewhat less useful predictions.",
+"zh": "有助于模型<i>做出更准确的推理预测</i>。 如果不同特征的范围不同，生成的模型可能会做出不太有用的预测。"
+},
+{
+"en": "Helps <i>avoid the \"NaN trap\"</i> when feature values are very high. <a href=\"https://wikipedia.org/wiki/NaN\" target=\"_blank\" rel=\"noopener\">NaN</a> is an abbreviation for <i>not a number</i>. When a value in a model exceeds the floating-point precision limit, the system sets the value to <code>NaN</code> instead of a number. When one number in the model becomes a NaN, other numbers in the model also eventually become a NaN.",
+"zh": "有助于在特征值非常高时<i>避免“NaN 陷阱”</i>。 <a href=\"https://wikipedia.org/wiki/NaN\" target=\"_blank\" rel=\"noopener\">NaN</a> 是<i>非数字</i>的缩写。当模型中的某个值超出浮点精确率限制时，系统会将该值设置为 <code>NaN</code> 而不是某个数字。当模型中的一个数值变成 NaN 时，模型中的其他数值最终也会变成 NaN。"
+},
+{
+"en": "Helps the model <i>learn appropriate weights</i> for each feature. Without feature scaling, the model pays too much attention to features with wide ranges and not enough attention to features with narrow ranges.",
+"zh": "帮助模型为每个特征<i>确定合适的权重</i>。如果不进行特征缩放，模型会过于关注范围较大的特征，而对范围较小的特征关注不足。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "We recommend normalizing numeric features covering distinctly different ranges (for example, age and income). We also recommend normalizing a single numeric feature that covers a wide range, such as <code>city population.</code>",
+"zh": "我们建议对涵盖明显不同范围的数值特征（例如年龄和收入）进行归一化处理。我们还建议对涵盖广泛范围的单个数值特征（例如 <code>city population.</code>）进行归一化处理"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "Warning: If you normalize a feature during training, you must also normalize that feature when making predictions.",
+"zh": "警告：如果您在训练期间对某项特征进行归一化处理，则在进行预测时也必须对该特征进行归一化处理。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following two features:",
+"zh": "请考虑以下两项功能："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Feature <code>A</code>'s lowest value is -0.5 and highest is +0.5.",
+"zh": "特征 <code>A</code> 的最低值为 -0.5，最高值为 +0.5。"
+},
+{
+"en": "Feature <code>B</code>'s lowest value is -5.0 and highest is +5.0.",
+"zh": "特征 <code>B</code> 的最低值为 -5.0，最高值为 +5.0。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Feature <code>A</code> and Feature <code>B</code> have relatively narrow spans. However, Feature <code>B</code>'s span is 10 times wider than Feature <code>A</code>'s span. Therefore:",
+"zh": "特征 <code>A</code> 和特征 <code>B</code> 的跨度相对较窄。不过，功能 <code>B</code> 的跨度是功能 <code>A</code> 的 10 倍。因此："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "At the start of training, the model assumes that Feature <code>B</code> is ten times more \"important\" than Feature <code>A</code>.",
+"zh": "在训练开始时，模型会假设特征 <code>B</code> 比特征 <code>A</code>“重要”十倍。"
+},
+{
+"en": "Training will take longer than it should.",
+"zh": "训练时间会比预期长。"
+},
+{
+"en": "The resulting model may be suboptimal.",
+"zh": "生成的模型可能不是最佳模型。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The overall damage due to not normalizing will be relatively small; however, we still recommend normalizing Feature A and Feature B to the same scale, perhaps -1.0 to +1.0.",
+"zh": "不进行归一化处理造成的总体损害相对较小；不过，我们仍然建议将特征 A 和特征 B 归一化到相同的范围，例如 -1.0 到 +1.0。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Now consider two features with a greater disparity of ranges:",
+"zh": "现在，我们来考虑两个范围差异更大的特征："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Feature <code>C</code>'s lowest value is -1 and highest is +1.",
+"zh": "特征 <code>C</code> 的最低值为 -1，最高值为 +1。"
+},
+{
+"en": "Feature <code>D</code>'s lowest value is +5000 and highest is +1,000,000,000.",
+"zh": "功能 <code>D</code> 的最低值为 +5000，最高值为 +1,000,000,000。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "If you don't normalize Feature <code>C</code> and Feature <code>D</code>, your model will likely be suboptimal. Furthermore, training will take much longer to converge or even fail to converge entirely!",
+"zh": "如果不对特征 <code>C</code> 和特征 <code>D</code> 进行归一化处理，模型很可能无法达到最佳效果。此外，训练将需要更长时间才能收敛，甚至可能完全无法收敛！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This section covers three popular normalization methods:",
+"zh": "本部分介绍了三种常用的归一化方法："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "linear scaling",
+"zh": "线性缩放"
+},
+{
+"en": "Z-score scaling",
+"zh": "Z 分数缩放"
+},
+{
+"en": "log scaling",
+"zh": "对数缩放"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "This section additionally covers <button type=\"button\" class=\"term\" data-term=\"clipping\"><b>clipping</b></button>. Although not a true normalization technique, clipping does tame unruly numerical features into ranges that produce better models.",
+"zh": "本部分还将介绍<button type=\"button\" class=\"term\" data-term=\"clipping\"><b>剪辑</b></button>。虽然剪裁不是真正的归一化技术，但它确实可以将不规则的数值特征限制在可生成更好模型的范围内。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Linear scaling",
+"zh": "线性缩放"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"scaling\">Linear scaling</button></b> (more commonly shortened to just <b>scaling</b>) means converting floating-point values from their natural range into a standard range—usually 0 to 1 or -1 to +1.",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"scaling\">线性缩放</button></b>（通常简称为<b>缩放</b>）是指将浮点值从其自然范围转换为标准范围（通常为 0 到 1 或 -1 到 +1）。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to see the math.",
+"zh": "点击相应图标即可查看数学公式。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Use the following formula to scale to the standard range 0 to 1, inclusive:",
+"zh": "使用以下公式可将值缩放到标准范围 0 到 1（含）："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span><span class=\"mord\">/</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span><span class=\"mord\">/</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "where:",
+"zh": "其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> is the scaled value.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> 是缩放后的值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> is the original value.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 是原始值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> is the lowest value in the dataset of this feature.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是相应特征的数据集中的最低值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> is the highest value in the dataset of this feature.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是相应特征的数据集中的最高值。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, consider a feature named <code>quantity</code> whose natural range spans 100 to 900. Suppose the natural value of <code>quantity</code> in a particular example is 300. Therefore, you can calculate the normalized value of 300 as follows:",
+"zh": "例如，假设某个名为 <code>quantity</code> 的特征的自然范围为 100 到 900。假设某个特定示例中 <code>quantity</code> 的自然值为 300。因此，您可以按如下方式计算 300 的归一化值："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> = 300",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> = 300"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> = 100",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> = 100"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> = 900",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> = 900"
+}
+]
+},
+{
+"type": "code",
+"text": "x' = (300 - 100) / (900 - 100)\nx' = 200 / 800\nx' = 0.25"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Linear scaling is a good choice when all of the following conditions are met:",
+"zh": "如果满足以下所有条件，线性缩放是不错的选择："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The lower and upper bounds of your data don't change much over time.",
+"zh": "数据的下限和上限不会随时间发生太大变化。"
+},
+{
+"en": "The feature contains few or no outliers, and those outliers aren't extreme.",
+"zh": "特征包含的离群值很少或没有，并且这些离群值并不极端。"
+},
+{
+"en": "The feature is approximately uniformly distributed across its range. That is, a histogram would show roughly even bars for most values.",
+"zh": "该特征在其范围内大致呈均匀分布。 也就是说，直方图会显示大致均匀的条形，对应于大多数值。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose human <code>age</code> is a feature. Linear scaling is a good normalization technique for <code>age</code> because:",
+"zh": "假设人类 <code>age</code> 是一项功能。线性缩放是 <code>age</code> 的一种很好的归一化技术，原因如下："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The approximate lower and upper bounds are 0 to 100.",
+"zh": "近似下限和上限为 0 到 100。"
+},
+{
+"en": "<code>age</code> contains a relatively small percentage of outliers. Only about 0.3% of the population is over 100.",
+"zh": "<code>age</code> 包含的离群值百分比较低。只有约 0.3% 的人口超过 100 岁。"
+},
+{
+"en": "Although certain ages are somewhat better represented than others, a large dataset should contain sufficient examples of all ages.",
+"zh": "虽然某些年龄段的代表性可能略好于其他年龄段，但大型数据集应包含所有年龄段的充足示例。"
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Most real-world features do not meet all of the criteria for linear scaling. Z-score scaling is typically a better normalization choice than linear scaling.",
+"zh": "<b>注意</b>：大多数现实世界中的特征都不符合线性缩放的所有条件。与线性缩放相比，Z-score 缩放通常是更好的归一化选择。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose your model has a feature named",
+"zh": "假设您的模型有一个名为"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<code>net_worth</code>",
+"zh": "<code>net_worth</code>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "that holds the net\nworth of different people. Would linear scaling be a good normalization\ntechnique for",
+"zh": "的特征，用于保存不同人员的净资产。线性缩放是否适合作为"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<code>net_worth</code>",
+"zh": "<code>net_worth</code>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "? Why or why not?",
+"zh": "的一种归一化技术？请说明原因。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to see the answer.",
+"zh": "点击相应图标即可查看答案。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<b>Answer:</b> Linear scaling would be a poor choice for normalizing <code>net_worth</code>. This feature contains many outliers, and the values are not uniformly distributed across its primary range. Most people would be squeezed within a very narrow band of the overall range.",
+"zh": "<b>答</b>：线性缩放不适合用于归一化 <code>net_worth</code>。此特征包含许多离群值，并且值在其主要范围内的分布不均匀。大多数人都会挤在整个范围中非常狭窄的频段内。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Z-score scaling",
+"zh": "Z 分数缩放"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A <b>Z-score</b> is the number of standard deviations a value is from the mean. For example, a value that is 2 standard deviations <i>greater</i> than the mean has a Z-score of +2.0. A value that is 1.5 standard deviations <i>less</i> than the mean has a Z-score of -1.5.",
+"zh": "<b>Z 得分</b>是指某个值与平均值相差的标准差数。 例如，比平均值<i>高</i> 2 个标准差的值的 Z 得分为 +2.0。比平均值<i>低</i> 1.5 个标准差的值的 Z 得分为 -1.5。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Representing a feature with <b>Z-score scaling</b> means storing that feature's Z-score in the feature vector. For example, the following figure shows two histograms:",
+"zh": "使用 <b>Z 得分缩放</b>表示特征意味着将该特征的 Z 得分存储在特征向量中。例如，下图显示了两个直方图："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "On the left, a classic normal distribution.",
+"zh": "左侧为经典正态分布。"
+},
+{
+"en": "On the right, the same distribution normalized by Z-score scaling.",
+"zh": "右侧是经过 Z-score 缩放归一化的同一分布。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/z-scaling_classic.png",
+"alt": {
+"en": "Figure 4. Two histograms: both showing normal distributions with\n           the identical distribution. The first histogram, which contains raw\n           data, has a mean of 200 and a standard deviation of 30. The second\n           histogram, which contains a Z-score version of the first\n           distribution, has a mean of 0 and a standard deviation of 1.",
+"zh": "图 4. 两个直方图：均显示相同的正态分布。第一个直方图包含原始数据，平均值为 200，标准差为 30。第二个直方图包含第一个分布的 Z 得分版本，其平均值为 0，标准差为 1。"
+},
+"caption": {
+"en": "<b>Figure 4.</b> Raw data (left) versus Z-score (right) for a normal distribution.",
+"zh": "<b>图 4.</b> 正态分布的原始数据（左）与 Z 得分（右）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Z-score scaling is also a good choice for data like that shown in the following figure, which has only a vaguely normal distribution.",
+"zh": "对于下图所示的仅具有模糊正态分布的数据，Z 得分缩放也是一个不错的选择。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/z-scaling-non-classic-normal-distribution.png",
+"alt": {
+"en": "Figure 5. Two histograms of identical shape, each showing a steep\n            rise to a plateau and then a relatively quick descent followed by\n            gradual decay. One histogram illustrates the\n            distribution of the raw data; the other histogram illustrates the\n            distribution of the raw data when normalized by Z-score scaling.\n            The values on the X-axis of the two histograms are very different.\n            The raw data histogram spans the domain 0 to 29,000, while\n            the Z-score scaled histogram ranges from -1 to about +4.8",
+"zh": "图 5. 两个形状相同的直方图，每个直方图都显示了从陡峭上升到平台，然后相对快速下降，最后逐渐衰减的过程。一个直方图显示了原始数据的分布情况；另一个直方图显示了通过 Z 得分缩放进行归一化后的原始数据分布情况。\n            两个直方图的 X 轴上的值差异很大。\n            原始数据直方图的范围为 0 到 29,000，而 Z 得分缩放直方图的范围为 -1 到大约 +4.8"
+},
+"caption": {
+"en": "<b>Figure 5.</b> Raw data (left) versus Z-score scaling (right) for a non-classic normal distribution.",
+"zh": "<b>图 5.</b> 非经典正态分布的原始数据（左）与 Z 得分缩放（右）。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to see the math.",
+"zh": "点击相应图标即可查看数学公式。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Use the following formula to normalize a value, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span>, to its Z-score:",
+"zh": "使用以下公式将值 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 归一化为 Z 得分："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">μ</span><span class=\"mclose\">)</span><span class=\"mord\">/</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">μ</span><span class=\"mclose\">)</span><span class=\"mord\">/</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "where:",
+"zh": "其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> is the Z-score.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> 是 Z 得分。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> is the raw value; that is, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> is the value you are normalizing.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 是原始值；也就是说，<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 是您要归一化的值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\">μ</span></span></span></span> is the mean.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\">μ</span></span></span></span> 是平均值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span></span> is the standard deviation.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span></span> 是标准差。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose:",
+"zh": "例如，假设："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "mean = 100",
+"zh": "平均值 = 100"
+},
+{
+"en": "standard deviation = 20",
+"zh": "标准差 = 20"
+},
+{
+"en": "original value = 130",
+"zh": "原始值 = 130"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Therefore:",
+"zh": "因此："
+}
+},
+{
+"type": "code",
+"text": "  Z-score = (130 - 100) / 20\n  Z-score = 30 / 20\n  Z-score = +1.5"
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn more about normal distributions.",
+"zh": "点击相应图标可详细了解正态分布。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In a classic normal distribution:",
+"zh": "在经典正态分布中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "At least 68.27% of data has a Z-score between -1.0 and +1.0.",
+"zh": "至少 68.27% 的数据的 Z 得分介于 -1.0 和 +1.0 之间。"
+},
+{
+"en": "At least 95.45% of data has a Z-score between -2.0 and +2.0.",
+"zh": "至少 95.45% 的数据的 Z 得分介于 -2.0 和 +2.0 之间。"
+},
+{
+"en": "At least 99.73% of data has a Z-score between -3.0 and +3.0.",
+"zh": "至少 99.73% 的数据的 Z 得分介于 -3.0 和 +3.0 之间。"
+},
+{
+"en": "At least 99.994% of data has a Z-score between -4.0 and +4.0.",
+"zh": "至少 99.994% 的数据的 Z 得分介于 -4.0 和 +4.0 之间。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "So, data points with a Z-score less than -4.0 or more than +4.0\nare rare, but are they truly outliers? Since",
+"zh": "因此，Z 得分低于 -4.0 或高于 +4.0 的数据点很少见，但它们真的是离群值吗？由于"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<i>outliers</i>",
+"zh": "<i>离群点</i>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "is a concept\nwithout a strict definition, no one can say for sure.\nNote that a dataset with a sufficiently large number of examples will\nalmost certainly contain at least a few of these \"rare\" examples.\nFor example, a feature with one billion examples conforming to a\nclassic normal distribution could have as many as 60,000 examples\nwith a score outside the range -4.0 to +4.0.",
+"zh": "是一个没有严格定义的概念，因此没有人能给出确切的答案。请注意，如果数据集包含足够多的示例，几乎可以肯定会包含至少几个此类“罕见”示例。例如，如果某个特征有 10 亿个符合经典正态分布的示例，那么得分在 -4.0 到 +4.0 范围之外的示例可能多达 6 万个。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Z-score is a good choice when the data follows a normal distribution or a distribution somewhat like a normal distribution.",
+"zh": "如果数据遵循正态分布或某种程度上类似于正态分布，则 Z 得分是一个不错的选择。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Note that some distributions might be normal within the bulk of their range, but still contain extreme outliers. For example, nearly all of the points in a <code>net_worth</code> feature might fit neatly into 3 standard deviations, but a few examples of this feature could be hundreds of standard deviations away from the mean. In these situations, you can combine Z-score scaling with another form of normalization (usually clipping) to handle this situation.",
+"zh": "请注意，某些分布可能在其大部分范围内都是正态分布，但仍包含极值离群点。例如，<code>net_worth</code> 特征中的几乎所有点都可能恰好位于 3 个标准差范围内，但此特征的少数几个示例可能与平均值相差数百个标准差。在这种情况下，您可以将 Z 得分缩放与其他形式的归一化（通常是剪裁）相结合来处理这种情况。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose your model trains on a feature named",
+"zh": "假设您的模型基于名为"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<code>height</code>",
+"zh": "<code>height</code>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "that holds the adult\nheights of ten million women. Would Z-score scaling be a good normalization\ntechnique for",
+"zh": "的特征进行训练，该特征包含 1,000 万名女性的成人身高。Z-score 缩放是否适合作为"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<code>height</code>",
+"zh": "<code>height</code>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "? Why or why not?",
+"zh": "的归一化技术？请说明原因。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to see the answer.",
+"zh": "点击相应图标即可查看答案。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<b>Answer:</b> Z-score scaling would be a good normalization technique for <code>height</code> because this feature conforms to a normal distribution. Ten million examples implies a lot of outliers—probably enough outliers for the model to learn patterns on very high or very low Z-scores.",
+"zh": "<b>答</b>：Z-score 缩放是 <code>height</code> 的一种很好的归一化技术，因为此特征符合正态分布。1,000 万个示例意味着存在大量离群值，可能足以让模型学习极高或极低 Z 分数的模式。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Log scaling",
+"zh": "对数缩放"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Log scaling computes the logarithm of the raw value. In theory, the logarithm could be any base; in practice, log scaling usually calculates the natural logarithm (ln).",
+"zh": "对数缩放会计算原始值的对数。从理论上讲，对数可以是任意底数；但在实践中，对数缩放通常会计算自然对数 (ln)。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to see the math.",
+"zh": "点击相应图标即可查看数学公式。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Use the following formula to normalize a value, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span>, to its log:",
+"zh": "使用以下公式将值 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 归一化为对数值："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">n</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">n</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "where:",
+"zh": "其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> is the natural logarithm of <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span>.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> 是 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 的自然对数。"
+},
+{
+"en": "original value = 54.598",
+"zh": "原始值 = 54.598"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Therefore, the log of the original value is about 4.0:",
+"zh": "因此，原始值的对数约为 4.0："
+}
+},
+{
+"type": "code",
+"text": "  4.0 = ln(54.598)"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Log scaling is helpful when the data conforms to a <i>power law</i> distribution. Casually speaking, a power law distribution looks as follows:",
+"zh": "当数据符合<i>幂律</i>分布时，对数缩放很有用。通俗地说，幂律分布如下所示："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Low values of <code>X</code> have very high values of <code>Y</code>.",
+"zh": "<code>X</code> 的值较低时，<code>Y</code> 的值非常高。"
+},
+{
+"en": "As the values of <code>X</code> increase, the values of <code>Y</code> quickly decrease. Consequently, high values of <code>X</code> have very low values of <code>Y</code>.",
+"zh": "随着 <code>X</code> 值的增加，<code>Y</code> 值会快速减小。 因此，<code>X</code> 的值较高时，<code>Y</code> 的值会非常低。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Movie ratings are a good example of a power law distribution. In the following figure, notice:",
+"zh": "电影评分是幂律分布的一个很好的例子。在下图中，请注意："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A few movies have lots of user ratings. (Low values of <code>X</code> have high values of <code>Y</code>.)",
+"zh": "有些电影有很多用户评分。（<code>X</code> 的值较低时，<code>Y</code> 的值较高。）"
+},
+{
+"en": "Most movies have very few user ratings. (High values of <code>X</code> have low values of <code>Y</code>.)",
+"zh": "大多数电影的用户评分都很少。（<code>X</code> 的值较高时，<code>Y</code> 的值较低。）"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Log scaling changes the distribution, which helps train a model that will make better predictions.",
+"zh": "对数缩放会改变分布，有助于训练出能够做出更好预测的模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/data-prep/images/norm-log-scaling-movie-ratings.svg",
+"alt": {
+"en": "Figure 6. Two graphs comparing raw data versus the log of raw data.\n            The raw data graph shows a lot of user ratings in the head, followed\n            by a long tail. The log graph has a more even distribution.",
+"zh": "图 6. 两张图表，分别比较原始数据与原始数据的对数。\n            原始数据图显示，头部有大量用户评分，后面跟着长尾。对数图的分布更均匀。"
+},
+"caption": {
+"en": "<b>Figure 6.</b> Comparing a raw distribution to its log.",
+"zh": "<b>图 6.</b> 将原始分布与其对数进行比较。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As a second example, book sales conform to a power law distribution because:",
+"zh": "再举一个例子，图书销售额符合幂律分布，因为："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Most published books sell a tiny number of copies, maybe one or two hundred.",
+"zh": "大多数已出版的图书的销量都非常低，可能只有一两百本。"
+},
+{
+"en": "Some books sell a moderate number of copies, in the thousands.",
+"zh": "有些书的销量适中，达到数千册。"
+},
+{
+"en": "Only a few <i>bestsellers</i> will sell more than a million copies.",
+"zh": "只有少数<i>畅销书</i>的销量会超过 100 万册。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you are training a linear model to find the relationship of, say, book covers to book sales. A linear model training on raw values would have to find something about book covers on books that sell a million copies that is 10,000 more powerful than book covers that sell only 100 copies. However, log scaling all the sales figures makes the task far more feasible. For example, the log of 100 is:",
+"zh": "假设您正在训练一个线性模型，以找出图书封面与图书销量之间的关系。如果线性模型基于原始值进行训练，则必须找到畅销百万册的图书封面与仅售出 100 册的图书封面之间相差 10,000 倍的某种特征。 不过，对所有销售数据进行对数缩放可使任务的可行性大大提高。 例如，100 的对数是："
+}
+},
+{
+"type": "code",
+"text": "  ~4.6 = ln(100)"
+},
+{
+"type": "p",
+"html": {
+"en": "while the log of 1,000,000 is:",
+"zh": "而 1,000,000 的对数是："
+}
+},
+{
+"type": "code",
+"text": "  ~13.8 = ln(1,000,000)"
+},
+{
+"type": "p",
+"html": {
+"en": "So, the log of 1,000,000 is only about three times larger than the log of 100. You probably <i>could</i> imagine a bestseller book cover being about three times more powerful (in some way) than a tiny-selling book cover.",
+"zh": "因此，1,000,000 的对数仅比 100 的对数大三倍左右。 您可能<i>可以</i>想象，畅销书的封面在某些方面比销量很低的图书封面强大三倍左右。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Clipping",
+"zh": "裁剪"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"clipping\"><b>Clipping</b></button> is a technique to minimize the influence of extreme outliers. In brief, clipping usually caps (reduces) the value of outliers to a specific maximum value. Clipping is a strange idea, and yet, it can be very effective.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"clipping\"><b>裁剪</b></button>是一种可最大限度减少极端离群值影响的技术。简而言之，剪裁通常会将离群值限制（减少）为特定的最大值。剪辑是一个奇怪的想法，但它可能非常有效。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, imagine a dataset containing a feature named <code>roomsPerPerson</code>, which represents the number of rooms (total rooms divided by number of occupants) for various houses. The following plot shows that over 99% of the feature values conform to a normal distribution (roughly, a mean of 1.8 and a standard deviation of 0.7). However, the feature contains a few outliers, some of them extreme:",
+"zh": "例如，假设有一个数据集包含一个名为 <code>roomsPerPerson</code> 的特征，该特征表示各种房屋的房间数（总房间数除以居住人数）。下图显示，超过 99% 的特征值符合正态分布（大致来说，平均值为 1.8，标准差为 0.7）。不过，该特征包含一些离群值，其中一些是极值："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/PreClipping.png",
+"alt": {
+"en": "Figure 7. A plot of roomsPerPerson in which nearly all the values\n            are clustered between 0 and 4, but there's a verrrrry long tail\n            reaching all the way out to 17 rooms per person",
+"zh": "图 7. roomsPerPerson 曲线图，其中几乎所有值都聚集在 0 到 4 之间，但是有一个非常长的尾巴一直延伸到每人 17 个房间"
+},
+"caption": {
+"en": "<b>Figure 7.</b> Mainly normal, but not completely normal.",
+"zh": "<b>图 7.</b> 主要正常，但并非完全正常。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "How can you minimize the influence of those extreme outliers? Well, the histogram is not an even distribution, a normal distribution, or a power law distribution. What if you simply <i>cap</i> or <i>clip</i> the maximum value of <code>roomsPerPerson</code> at an arbitrary value, say 4.0?",
+"zh": "如何最大限度地减少这些极端离群值的影响？直方图不是均匀分布、正态分布或幂律分布。如果我们只是简单地将 <code>roomsPerPerson</code> 的最大值“限制”或“削减”为某个任意值（比如 4.0），会发生什么情况呢？"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/Clipping.png",
+"alt": {
+"en": "A plot of roomsPerPerson in which all values lie between 0 and\n            4.0. The plot is bell-shaped, but there's an anomalous hill at 4.0",
+"zh": "roomsPerPerson 曲线图，其中所有值均在 0 到 4.0 之间。曲线图是钟形的，但在 4.0 处有个异常的小峰值"
+},
+"caption": {
+"en": "<b>Figure 8.</b> Clipping feature values at 4.0.",
+"zh": "<b>图 8.</b> 将特征值剪裁为 4.0。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Clipping the feature value at 4.0 doesn't mean that your model ignores all values greater than 4.0. Rather, it means that all values that were greater than 4.0 now become 4.0. This explains the peculiar hill at 4.0. Despite that hill, the scaled feature set is now more useful than the original data.",
+"zh": "将特征值剪裁为 4.0 并不意味着模型会忽略所有大于 4.0 的值。而是指所有大于 4.0 的值现在都变为 4.0。这解释了 4.0 处的特殊山丘。尽管存在这个山峰，但缩放后的特征集现在比原始数据更有用。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Wait a second! Can you really reduce every outlier value to some arbitrary upper threshold? When training a model, yes.",
+"zh": "等一下！您真的可以将每个离群值都减少到某个任意上限吗？在训练模型时，是的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You can also clip values after applying other forms of normalization. For example, suppose you use Z-score scaling, but a few outliers have absolute values far greater than 3. In this case, you could:",
+"zh": "您还可以在应用其他形式的归一化后剪裁值。例如，假设您使用 Z 得分缩放，但少数离群点的绝对值远大于 3。在这种情况下，您可以："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Clip Z-scores greater than 3 to become exactly 3.",
+"zh": "将大于 3 的 Z 分数裁剪到正好 3。"
+},
+{
+"en": "Clip Z-scores less than -3 to become exactly -3.",
+"zh": "将 Z 得分小于 -3 的值裁剪为正好 -3。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Clipping prevents your model from overindexing on unimportant data. However, some outliers are actually important, so clip values carefully.",
+"zh": "剪裁可防止模型过度关注不重要的数据。不过，有些离群值实际上很重要，因此请谨慎剪裁值。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Summary of normalization techniques",
+"zh": "归一化技术摘要"
+},
+"level": 2
+},
+{
+"type": "note",
+"kind": "key",
+"html": {
+"en": "The best normalization technique is one that works well in practice, so try new ideas if you think they'll work well on your feature distribution.",
+"zh": "最佳归一化技术是在实践中效果良好的技术，因此如果您认为新想法能很好地应用于特征分布，不妨尝试一下。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Normalization technique",
+"zh": "归一化技术"
+},
+{
+"en": "Formula",
+"zh": "公式"
+},
+{
+"en": "When to use",
+"zh": "适用情形"
+}
+],
+"rows": [
+[
+{
+"en": "Linear scaling",
+"zh": "线性缩放"
+},
+{
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0963em;vertical-align:-0.836em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.2603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.836em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0963em;vertical-align:-0.836em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.2603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1514em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">ma</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3117em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">min</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.836em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+},
+{
+"en": "When the feature is mostly uniformly distributed across range. <b>Flat-shaped</b>",
+"zh": "当特征在整个范围内大致均匀分布时。 <b>扁平状</b>"
+}
+],
+[
+{
+"en": "Z-score scaling",
+"zh": "Z 分数缩放"
+},
+{
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.9463em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.2603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\">μ</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.9463em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.2603em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\">μ</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+},
+{
+"en": "When the feature is normally distributed (peak close to mean). <b>Bell-shaped</b>",
+"zh": "当特征呈正态分布时（峰值接近平均值）。 <b>钟形</b>"
+}
+],
+[
+{
+"en": "Log scaling",
+"zh": "对数缩放"
+},
+{
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">o</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">g</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8019em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">o</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">g</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>"
+},
+{
+"en": "When the feature distribution is heavy skewed on at least either side of tail. <b>Heavy Tail-shaped</b>",
+"zh": "当特征分布在至少一侧的尾部严重偏斜时。 <b>重尾形</b>"
+}
+],
+[
+{
+"en": "Clipping",
+"zh": "裁剪"
+},
+{
+"en": "If <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5782em;vertical-align:-0.0391em;\"></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">&gt;</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">ma</span><span class=\"mord mathnormal\">x</span></span></span></span>, set <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">ma</span><span class=\"mord mathnormal\">x</span></span></span></span><br> If <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5782em;vertical-align:-0.0391em;\"></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">&lt;</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6595em;\"></span><span class=\"mord mathnormal\">min</span></span></span></span>, set <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6595em;\"></span><span class=\"mord mathnormal\">min</span></span></span></span>",
+"zh": "如果 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5782em;vertical-align:-0.0391em;\"></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">&gt;</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">ma</span><span class=\"mord mathnormal\">x</span></span></span></span>，则设置 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">ma</span><span class=\"mord mathnormal\">x</span></span></span></span><br> 如果 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5782em;vertical-align:-0.0391em;\"></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">&lt;</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6595em;\"></span><span class=\"mord mathnormal\">min</span></span></span></span>，则设置 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7519em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6595em;\"></span><span class=\"mord mathnormal\">min</span></span></span></span>"
+},
+{
+"en": "When the feature contains extreme outliers.",
+"zh": "当特征包含极端离群值时。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Test your knowledge",
+"zh": "练习：知识测验"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which technique would be most suitable for normalizing a feature with the following distribution?",
+"zh": "哪种技术最适合用于对具有以下分布的特征进行归一化处理？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Z-score scaling",
+"zh": "Z 分数缩放"
+},
+"why": {
+"en": "The data points generally conform to a normal distribution, so Z-score scaling will force them into the range –3 to +3.",
+"zh": "数据点通常符合正态分布，因此 Z 得分缩放会将它们强制缩放到 -3 到 +3 的范围内。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Linear scaling",
+"zh": "线性缩放"
+},
+"why": {
+"en": "Review the discussions of the normalization techniques on this page, and try again.",
+"zh": "查看本页面上有关归一化技术的讨论，然后重试。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Log scaling",
+"zh": "对数缩放"
+},
+"why": {
+"en": "Review the discussions of the normalization techniques on this page, and try again.",
+"zh": "查看本页面上有关归一化技术的讨论，然后重试。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Clipping",
+"zh": "裁剪"
+},
+"why": {
+"en": "Review the discussions of the normalization techniques on this page, and try again.",
+"zh": "查看本页面上有关归一化技术的讨论，然后重试。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Suppose you are developing a model that predicts a data center's productivity based on the temperature measured inside the data center. Almost all of the <code>temperature</code> values in your dataset fall between 15 and 30 (Celsius), with the following exceptions:<br> <ul><li>Once or twice per year, on extremely hot days, a few values between 31 and 45 are recorded in <code>temperature</code>.</li><li>Every 1,000th point in <code>temperature</code> is set to 1,000 rather than the actual temperature.</li></ul> Which would be a reasonable normalization technique for <code>temperature</code>?",
+"zh": "假设您正在开发一个模型，该模型可根据数据中心内部测得的温度预测数据中心的生产力。 数据集中的几乎所有 <code>temperature</code> 值都介于 15 到 30（摄氏度）之间，但以下情况除外：<br> <ul><li>在一年中，极热的天气会出现一到两次，此时 <code>temperature</code> 中会记录一些介于 31 到 45 之间的值。</li><li><code>temperature</code> 中每第 1,000 个点都设置为 1,000，而不是实际温度。</li></ul> 哪种归一化技术适合用于 <code>temperature</code>？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Clip the outlier values between 31 and 45, but delete the outliers with a value of 1,000",
+"zh": "剪裁介于 31 到 45 之间的离群值，但删除值为 1,000 的离群值"
+},
+"why": {
+"en": "The values of 1,000 are mistakes, and should be deleted rather than clipped.<br> The values between 31 and 45 are legitimate data points. Clipping would probably be a good idea for these values, assuming the dataset doesn't contain enough examples in this temperature range to train the model to make good predictions. However, during inference, note that the clipped model would therefore make the same prediction for a temperature of 45 as for a temperature of 35.",
+"zh": "1,000 的值是错误的，应删除而不是剪裁。<br> 31 到 45 之间的值是合法的数据点。 假设数据集在此温度范围内没有足够的示例来训练模型以做出良好的预测，那么对这些值进行剪裁可能是一个好主意。不过，在推理期间，请注意，剪裁后的模型对 45 度和 35 度的温度做出的预测是相同的。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Clip all the outliers",
+"zh": "剪掉所有离群点"
+},
+"why": {
+"en": "Review the discussions of the normalization techniques on this page, and try again.",
+"zh": "查看本页面上有关归一化技术的讨论，然后重试。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Delete all the outliers",
+"zh": "删除所有离群值"
+},
+"why": {
+"en": "Review the discussions of the normalization techniques on this page, and try again.",
+"zh": "查看本页面上有关归一化技术的讨论，然后重试。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Delete the outlier values between 31 and 45, but clip the outliers with a value of 1,000.",
+"zh": "删除介于 31 到 45 之间的离群值，但将值为 1,000 的离群值剪裁掉。"
+},
+"why": {
+"en": "Review the discussions of the normalization techniques on this page, and try again.",
+"zh": "查看本页面上有关归一化技术的讨论，然后重试。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "binning",
+"path": "/machine-learning/crash-course/numerical-data/binning",
+"min": 15,
+"heading": {
+"en": "Numerical data: Binning",
+"zh": "数值数据：分箱"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/binning",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/binning?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Binning is a feature engineering technique used to group numerical data into categories (bins) to improve model performance when a linear relationship is weak or data is clustered.",
+"zh": null
+},
+{
+"en": "Binning can be beneficial when features exhibit a \"clumpy\" distribution rather than a linear one, allowing the model to learn separate weights for each bin.",
+"zh": null
+},
+{
+"en": "While creating multiple bins is possible, it's generally recommended to avoid an excessive number as it can lead to insufficient training examples per bin and increased feature dimensionality.",
+"zh": null
+},
+{
+"en": "Quantile bucketing is a specific binning technique that ensures each bin contains a roughly equal number of examples, which can be particularly useful for datasets with skewed distributions.",
+"zh": null
+},
+{
+"en": "Binning offers an alternative to scaling or clipping and is particularly useful for handling outliers and improving model performance on non-linear data.",
+"zh": null
+}
+],
+"terms": [
+"binning",
+"bucketing",
+"clipping",
+"feature",
+"feature_engineering",
+"feature_vector",
+"label",
+"scaling"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<b>Binning</b> (also called <b>bucketing</b>) is a <button type=\"button\" class=\"term\" data-term=\"feature_engineering\"><b>feature engineering</b></button> technique that groups different numerical subranges into <i>bins</i> or <button type=\"button\" class=\"term\" data-term=\"bucketing\"><b><i>buckets</i></b></button>. In many cases, binning turns numerical data into categorical data. For example, consider a <button type=\"button\" class=\"term\" data-term=\"feature\"><b>feature</b></button> named <code>X</code> whose lowest value is 15 and highest value is 425. Using binning, you could represent <code>X</code> with the following five bins:",
+"zh": "<b>分箱</b>（也称为<b>分桶</b>）是一种<button type=\"button\" class=\"term\" data-term=\"feature_engineering\"><b>特征工程</b></button>技术，可将不同的数值子范围分组到<i>箱</i>或<button type=\"button\" class=\"term\" data-term=\"bucketing\"><b><i>桶</i></b></button>中。在许多情况下，分箱会将数值数据转换为分类数据。例如，假设有一个名为 <code>X</code> 的<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>，其最低值为 15，最高值为 425。使用分箱，您可以使用以下 5 个箱来表示 <code>X</code>："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Bin 1: 15 to 34",
+"zh": "分箱 1：15 至 34"
+},
+{
+"en": "Bin 2: 35 to 117",
+"zh": "Bin 2：35 到 117"
+},
+{
+"en": "Bin 3: 118 to 279",
+"zh": "Bin 3：118 至 279"
+},
+{
+"en": "Bin 4: 280 to 392",
+"zh": "Bin 4：280 至 392"
+},
+{
+"en": "Bin 5: 393 to 425",
+"zh": "箱 5：393 至 425"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Bin 1 spans the range 15 to 34, so every value of <code>X</code> between 15 and 34 ends up in Bin 1. A model trained on these bins will react no differently to <code>X</code> values of 17 and 29 since both values are in Bin 1.",
+"zh": "箱 1 的范围为 15 到 34，因此介于 15 到 34 之间的每个 <code>X</code> 值最终都会进入箱 1。基于这些箱训练的模型对 17 和 29 的 <code>X</code> 值做出的反应不会有任何不同，因为这两个值都位于箱 1 中。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vector</b></button> represents the five bins as follows:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>表示五个箱，如下所示："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Bin number",
+"zh": "分箱编号"
+},
+{
+"en": "Range",
+"zh": "Range"
+},
+{
+"en": "Feature vector",
+"zh": "特征向量"
+}
+],
+"rows": [
+[
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "15-34",
+"zh": "15-34"
+},
+{
+"en": "[1.0, 0.0, 0.0, 0.0, 0.0]",
+"zh": "[1.0, 0.0, 0.0, 0.0, 0.0]"
+}
+],
+[
+{
+"en": "2",
+"zh": "2"
+},
+{
+"en": "35-117",
+"zh": "35-117"
+},
+{
+"en": "[0.0, 1.0, 0.0, 0.0, 0.0]",
+"zh": "[0.0, 1.0, 0.0, 0.0, 0.0]"
+}
+],
+[
+{
+"en": "3",
+"zh": "3"
+},
+{
+"en": "118-279",
+"zh": "118-279"
+},
+{
+"en": "[0.0, 0.0, 1.0, 0.0, 0.0]",
+"zh": "[0.0, 0.0, 1.0, 0.0, 0.0]"
+}
+],
+[
+{
+"en": "4",
+"zh": "4"
+},
+{
+"en": "280-392",
+"zh": "280-392"
+},
+{
+"en": "[0.0, 0.0, 0.0, 1.0, 0.0]",
+"zh": "[0.0, 0.0, 0.0, 1.0, 0.0]"
+}
+],
+[
+{
+"en": "5",
+"zh": "5"
+},
+{
+"en": "393-425",
+"zh": "393-425"
+},
+{
+"en": "[0.0, 0.0, 0.0, 0.0, 1.0]",
+"zh": "[0.0, 0.0, 0.0, 0.0, 1.0]"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Even though <code>X</code> is a single column in the dataset, binning causes a model to treat <code>X</code> as <i>five</i> separate features. Therefore, the model learns separate weights for each bin.",
+"zh": "尽管 <code>X</code> 是数据集中的单列，但分箱会导致模型将 <code>X</code> 视为 <i>5</i> 个单独的特征。因此，模型会为每个箱学习单独的权重。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Binning is a good alternative to <button type=\"button\" class=\"term\" data-term=\"scaling\"><b>scaling</b></button> or <button type=\"button\" class=\"term\" data-term=\"clipping\"><b>clipping</b></button> when either of the following conditions is met:",
+"zh": "如果满足以下任一条件，分箱是<button type=\"button\" class=\"term\" data-term=\"scaling\"><b>缩放</b></button>或<button type=\"button\" class=\"term\" data-term=\"clipping\"><b>剪切</b></button>的理想替代方案："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The overall <i>linear</i> relationship between the feature and the <button type=\"button\" class=\"term\" data-term=\"label\"><b>label</b></button> is weak or nonexistent.",
+"zh": "特征与<button type=\"button\" class=\"term\" data-term=\"label\"><b>标签</b></button>之间的总体<i>线性</i>关系较弱或不存在。"
+},
+{
+"en": "When the feature values are clustered.",
+"zh": "当特征值聚类时。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Binning can feel counterintuitive, given that the model in the previous example treats the values 37 and 115 identically. But when a feature appears more <i>clumpy</i> than linear, binning is a much better way to represent the data.",
+"zh": "鉴于上例中的模型将值 37 和 115 视为相同的值，分箱可能看起来有悖直觉。但如果某个特征的分布比线性分布更<i>集中</i>，那么分箱是表示数据的更好方式。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Binning example: number of shoppers versus temperature",
+"zh": "分箱示例：购物者数量与温度"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you are creating a model that predicts the number of shoppers by the outside temperature for that day. Here's a plot of the temperature versus the number of shoppers:",
+"zh": "假设您要创建一个模型，根据当天的室外温度预测购物者人数。下图显示了温度与购物者数量之间的关系："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/binning_temperature_vs_shoppers.png",
+"alt": {
+"en": "Figure 9. A scatter plot of 45 points. The 45 points naturally\n            cluster into three groups.",
+"zh": "图 9. 由 45 个点构成的散点图。这 45 个点自然聚类为三组。"
+},
+"caption": {
+"en": "<b>Figure 9.</b> A scatter plot of 45 points.",
+"zh": "<b>图 9.</b> 由 45 个点构成的散点图。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The plot shows, not surprisingly, that the number of shoppers was highest when the temperature was most comfortable.",
+"zh": "该图显示，毫不意外的是，当温度最舒适时，购物者数量最多。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You could represent the feature as raw values: a temperature of 35.0 in the dataset would be 35.0 in the feature vector. Is that the best idea?",
+"zh": "您可以将特征表示为原始值：数据集中的温度 35.0 在特征向量中将为 35.0。这是最好的主意吗？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "During training, a linear regression model learns a single weight for each feature. Therefore, if temperature is represented as a single feature, then a temperature of 35.0 would have five times the influence (or one-fifth the influence) in a prediction as a temperature of 7.0. However, the plot doesn't really show any sort of linear relationship between the label and the feature value.",
+"zh": "在训练期间，线性回归模型会为每个特征学习一个权重。因此，如果温度表示为单个特征，那么 35.0 的温度在预测中的影响力将是 7.0 的温度的五倍（或五分之一）。不过，该图并未真正显示标签与特征值之间的任何线性关系。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The graph suggests three clusters in the following subranges:",
+"zh": "该图表显示了以下子范围内的三个聚类："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Bin 1 is the temperature range 4-11.",
+"zh": "箱 1 是温度范围 4-11。"
+},
+{
+"en": "Bin 2 is the temperature range 12-26.",
+"zh": "箱 2 是指温度范围 12-26。"
+},
+{
+"en": "Bin 3 is the temperature range 27-36.",
+"zh": "箱 3 是温度范围 27-36。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/binning_temperature_vs_shoppers_divided_into_3_bins.png",
+"alt": {
+"en": "Figure 10. The same scatter plot of 45 points as in the previous\n            figure, but with vertical lines to make the bins more obvious.",
+"zh": "图 10。与上图相同的 45 点散点图，但添加了竖线以使箱更明显。"
+},
+"caption": {
+"en": "<b>Figure 10.</b> The scatter plot divided into three bins.",
+"zh": "<b>图 10.</b> 分为三个箱的散点图。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The model learns separate weights for each bin.",
+"zh": "模型会为每个箱学习单独的权重。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "While it's possible to create more than three bins, even a separate bin for each temperature reading, this is often a bad idea for the following reasons:",
+"zh": "虽然可以创建三个以上的箱，甚至为每个温度读数创建一个单独的箱，但出于以下原因，这通常不是一个好主意："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A model can only learn the association between a bin and a label if there are enough examples in that bin. In the given example, each of the 3 bins contains at least 10 examples, which <i>might</i> be sufficient for training. With 33 separate bins, none of the bins would contain enough examples for the model to train on.",
+"zh": "只有当某个箱中有足够的示例时，模型才能学习箱与标签之间的关联。在给定的示例中，3 个箱中每个箱都包含至少 10 个示例，这<i>可能</i>足以用于训练。如果使用 33 个单独的箱，则没有一个箱会包含足够的样本供模型进行训练。"
+},
+{
+"en": "A separate bin for each temperature results in 33 separate temperature features. However, you typically should <i>minimize</i> the number of features in a model.",
+"zh": "每个温度都使用单独的箱，这样会产生 33 个单独的温度特征。不过，您通常应<i>尽量减少</i>模型中的特征数量。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The following plot shows the median home price for each 0.2 degrees of latitude for the mythical country of Freedonia:",
+"zh": "下图显示了虚构国家弗里多尼亚每 0.2 度纬度的住宅价格中位数："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/MedianHouseValueByLatitude.png",
+"alt": {
+"en": "Figure 11. A plot of home values per latitude. The lowest house\n            value is about 327 and the highest is 712. The latitudes span 41.0\n            to 44.8, with a dot representing the median house value for every\n            0.2 degrees of latitude. The pattern is highly irregular, but with\n            two distinct clusters (one cluster between latitude 41.0 and 41.8,\n            and another cluster between latitude 42.6 and 43.4).",
+"zh": "图 11. 每个纬度的住宅价值曲线图。最低房屋价值约为 327，最高约为 712。纬度范围为 41.0 到 44.8，每个点表示每 0.2 度纬度的房屋价值中位数。该模式非常不规则，但有两个明显的聚类（一个聚类位于纬度 41.0 到 41.8 之间，另一个聚类位于纬度 42.6 到 43.4 之间）。"
+},
+"caption": {
+"en": "<b>Figure 11.</b> Median home value per 0.2 degrees latitude.",
+"zh": "<b>图 11.</b> 每 0.2 度纬度的住宅价值中位数。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The graphic shows a nonlinear pattern between home value and latitude, so representing latitude as its floating-point value is unlikely to help a model make good predictions. Perhaps bucketing latitudes would be a better idea?",
+"zh": "该图显示了房屋价值与纬度之间的非线性关系，因此将纬度表示为浮点值不太可能有助于模型做出良好的预测。或许对纬度进行分桶处理会更好？"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "What would be the best bucketing strategy?",
+"zh": "哪种分桶策略最好？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Don't bucket.",
+"zh": "不进行分桶。"
+},
+"why": {
+"en": "Given the randomness of most of the plot, this is probably the best strategy.",
+"zh": "鉴于大多数情节的随机性，这可能是最好的策略。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Create four buckets: <ul><li>41.0 to 41.8</li><li>42.0 to 42.6</li><li>42.8 to 43.4</li><li>43.6 to 44.8</li></ul>",
+"zh": "创建四个分桶： <ul><li>41.0 至 41.8</li><li>42.0 至 42.6</li><li>42.8 至 43.4</li><li>43.6 至 44.8</li></ul>"
+},
+"why": {
+"en": "It would be hard for a model to find a single predictive weight for all the homes in the second bin or the fourth bin, which contain few examples.",
+"zh": "对于包含少量示例的第二个箱或第四个箱中的所有住宅，模型很难找到一个预测性权重。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Make each data point its own bucket.",
+"zh": "将每个数据点都放在自己的分桶中。"
+},
+"why": {
+"en": "This would only be helpful if the training set contains enough examples for each 0.2 degrees of latitude. In general, homes tend to cluster near cities and be relatively scarce in other places.",
+"zh": "只有当训练集包含足够多的纬度（每 0.2 度）示例时，这种方法才有用。一般来说，住宅往往聚集在城市附近，而在其他地方则相对稀疏。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Quantile Bucketing",
+"zh": "分位数分桶"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Quantile bucketing</b> creates bucketing boundaries such that the number of examples in each bucket is exactly or nearly equal. Quantile bucketing mostly hides the outliers.",
+"zh": "<b>分位数分桶</b>会创建分桶边界，使每个桶中的样本数量完全或几乎相等。分位数分桶主要用于隐藏离群值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To illustrate the problem that quantile bucketing solves, consider the equally spaced buckets shown in the following figure, where each of the ten buckets represents a span of exactly 10,000 dollars. Notice that the bucket from 0 to 10,000 contains dozens of examples but the bucket from 50,000 to 60,000 contains only 5 examples. Consequently, the model has enough examples to train on the 0 to 10,000 bucket but not enough examples to train on for the 50,000 to 60,000 bucket.",
+"zh": "为了说明分位数分桶解决的问题，请考虑下图所示的等间距分桶，其中每个桶代表的范围正好是 10,000 美元。请注意，0 到 10,000 的区间包含数十个示例，而 50,000 到 60,000 的区间仅包含 5 个示例。因此，模型有足够的示例来训练 0 到 10,000 区间，但没有足够的示例来训练 50,000 到 60,000 区间。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/NeedsQuantileBucketing.png",
+"alt": {
+"en": "Figure 13. A plot of car price versus the number of cars sold at\n            that price. The number of cars sold peaks at a price of 6,000.\n            Above a price of 6,000, the number of cars sold generally\n            decreases, with very few cars sold between a price of 40,000 to\n            60,000. The plot is divided into 6 equally-sized buckets, each with\n            a range of 10,000. So, the first bucket contains all the cars sold\n            between a price of 0 and a price of 10,000, the second\n            bucket contains all the cars sold between a price of 10,001 and\n            20,000, and so on. The first bucket contain many examples; each\n            subsequent bucket contains fewer examples.",
+"zh": "图 13。汽车价格与以该价格售出的汽车数量的对比图。汽车销量在价格为 6,000 时达到峰值。\n            价格高于 6,000 时，汽车销量通常会下降，价格在 40,000 到 60,000 之间的汽车销量非常少。该图表分为 6 个大小相等的分桶，每个分桶的范围为 10,000。因此，第一个分桶包含所有售价介于 0 到 10,000 之间的汽车，第二个分桶包含所有售价介于 10,001 到 20,000 之间的汽车，依此类推。第一个分桶包含许多示例；每个后续分桶包含的示例数量都较少。"
+},
+"caption": {
+"en": "<b>Figure 13.</b> Some buckets contain a lot of cars; other buckets contain very few cars.",
+"zh": "<b>图 13.</b> 有些分桶包含的汽车数量很多，而有些分桶包含的汽车数量很少。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, the following figure uses quantile bucketing to divide car prices into bins with approximately the same number of examples in each bucket. Notice that some of the bins encompass a narrow price span while others encompass a very wide price span.",
+"zh": "相比之下，下图使用分位数分桶将汽车价格划分为若干个箱，每个箱中包含的样本数量大致相同。请注意，有些箱涵盖的价格范围较窄，而有些箱涵盖的价格范围非常广。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/QuantileBucketing.png",
+"alt": {
+"en": "Figure 14. Same as previous figure, except with quantile buckets.\n            That is, the buckets now have different sizes. The first bucket\n            contains the cars sold from 0 to 4,000, the second bucket contains\n            the cars sold from 4,001 to 6,000. The sixth bucket contains the\n            cars sold from 25,001 to 60,000. The number of cars in each bucket\n            is now about the same.",
+"zh": "图 14.与上图相同，但采用分位数分桶。\n            也就是说，各个分桶的大小现在各不相同。第一个分桶包含销量为 0 到 4,000 的汽车，第二个分桶包含销量为 4,001 到 6,000 的汽车。第六个分桶包含售出 25,001 至 60,000 辆的汽车。现在，每个分桶中的车辆数量大致相同。"
+},
+"caption": {
+"en": "<b>Figure 14.</b> Quantile bucketing gives each bucket about the same number of cars.",
+"zh": "<b>图 14.</b> 分位数分桶可确保每个桶中的汽车数量大致相同。"
+}
+},
+{
+"type": "note",
+"kind": "key",
+"html": {
+"en": "Bucketing with equal intervals works for many data distributions. For skewed data, however, try quantile bucketing. Equal intervals give extra information space to the long tail while compacting the large torso into a single bucket. Quantile buckets give extra information space to the large torso while compacting the long tail into a single bucket.",
+"zh": "等间隔分桶适用于许多数据分布。不过，对于倾斜数据，请尝试分位数分桶。等间距可为长尾提供额外的信息空间，同时将大躯干压缩到单个桶中。分位数分桶为大躯干提供了额外的信息空间，同时将长尾压缩到单个桶中。"
+}
+}
+]
+},
+{
+"id": "scrubbing",
+"path": "/machine-learning/crash-course/numerical-data/scrubbing",
+"min": 5,
+"heading": {
+"en": "Numerical data: Scrubbing",
+"zh": "数值数据：擦除"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/scrubbing",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/scrubbing?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Like sorting good apples from bad, ML engineers spend significant time cleaning data by removing or fixing bad examples to improve dataset quality.",
+"zh": null
+},
+{
+"en": "Common data problems include omitted values, duplicate examples, out-of-range values, and incorrect labels, which can negatively impact model performance.",
+"zh": null
+},
+{
+"en": "You can use programs or scripts to identify and handle data issues such as omitted values, duplicates, and out-of-range feature values by removing or correcting them.",
+"zh": null
+},
+{
+"en": "When multiple individuals label data, it's important to check for consistency and identify potential biases to ensure label quality.",
+"zh": null
+},
+{
+"en": "Addressing data quality issues before training a model leads to better model accuracy and overall performance.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Apple trees produce a mixture of great fruit and wormy messes. Yet the apples in high-end grocery stores display 100% perfect fruit. Between orchard and grocery, someone spends significant time removing the bad apples or spraying a little wax on the salvageable ones. As an ML engineer, you'll spend enormous amounts of your time tossing out bad examples and cleaning up the salvageable ones. Even a few bad apples can spoil a large dataset.",
+"zh": "苹果树结出的果实有美味的果实，还有臭虫的滋生。 而高端杂货店的苹果是 100% 完美的水果。 在果园和杂货店之间，有人花费大量时间 或者给可挽救的苹果喷蜡。 作为一名机器学习工程师，您将花费大量时间 丢弃不良样本，清理可挽救的样本。 即使是几个坏苹果也可能会破坏大型数据集。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Many examples in datasets are unreliable due to one or more of the following problems:",
+"zh": "由于存在一个或多个 以下问题："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Problem category",
+"zh": "问题类别"
+},
+{
+"en": "Example",
+"zh": "示例"
+}
+],
+"rows": [
+[
+{
+"en": "Omitted values",
+"zh": "省略的值"
+},
+{
+"en": "A census taker fails to record a resident's age.",
+"zh": "人口普查员未能记录居民的年龄。"
+}
+],
+[
+{
+"en": "Duplicate examples",
+"zh": "重复示例"
+},
+{
+"en": "A server uploads the same logs twice.",
+"zh": "服务器会将相同的日志上传两次。"
+}
+],
+[
+{
+"en": "Out-of-range feature values.",
+"zh": "超出范围的特征值。"
+},
+{
+"en": "A human accidentally types an extra digit.",
+"zh": "有人不小心输入了额外的数字。"
+}
+],
+[
+{
+"en": "Bad labels",
+"zh": "标签有误"
+},
+{
+"en": "A human evaluator mislabels a picture of an oak tree as a maple.",
+"zh": "一名人工评估员误将一张橡树的图片标记为 枫树。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You can write a program or script to detect any of the following problems:",
+"zh": "您可以编写程序或脚本来检测以下任何问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Omitted values",
+"zh": "省略的值"
+},
+{
+"en": "Duplicate examples",
+"zh": "重复示例"
+},
+{
+"en": "Out-of-range feature values",
+"zh": "超出范围的特征值"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the following dataset contains six repeated values:",
+"zh": "例如，以下数据集包含六个重复值："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/ScrubDuplicateValues.png",
+"alt": {
+"en": "Figure 15. The first six values are repeated. The final eight\n            values are not.",
+"zh": "图 15前六个值会重复。8 强赛\n            值不能。"
+},
+"caption": {
+"en": "<b>Figure 15.</b> The first six values are repeated.",
+"zh": "<b>图 15.</b> 前六个值是重复的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As another example, suppose the temperature range for a certain feature must be between 10 and 30 degrees, inclusive. But accidents happen—perhaps a thermometer is temporarily exposed to the sun which causes a bad outlier. Your program or script must identify temperature values less than 10 or greater than 30:",
+"zh": "再举一个例子，假设某个特征的温度范围 介于 10 度（含）和 30 度（含）之间。但意外还是会发生——也许是 温度计暂时暴露在阳光下，会导致不良的离群值。 您的程序或脚本必须识别小于 10 或更大的温度值 超过 30 个字符："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/ScrubOutofRangeValues.png",
+"alt": {
+"en": "Figure 16. Nineteen in-range values and one out-of-range value.",
+"zh": "图 16.19 个在范围内的值和一个超出范围的值。"
+},
+"caption": {
+"en": "<b>Figure 16.</b> An out-of-range value.",
+"zh": "<b>图 16.</b> 超出范围的值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When labels are generated by multiple people, we recommend statistically determining whether each rater generated equivalent sets of labels. Perhaps one rater was a harsher grader than the other raters or used a different set of grading criteria?",
+"zh": "如果标签由多人生成，我们建议您 确定每个标注者是否生成了等效的标签集。 某个评分者可能比其他评分者更加严格，或 使用一组不同的评分标准？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Once detected, you typically \"fix\" examples that contain bad features or bad labels by removing them from the dataset or imputing their values. For details, see the <a href=\"#/ch/c07/data-characteristics\">Data characteristics</a> section of the <a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a> module.",
+"zh": "一旦检测到，您通常需要“修正”包含不良特征的示例 从数据集中移除或输入值来调整标签或不良标签。 有关详情，请参阅 <a href=\"#/ch/c07/data-characteristics\">数据特征</a> 部分中 <a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a> 模块。"
+}
+}
+]
+},
+{
+"id": "qualities-of-good-numerical-features",
+"path": "/machine-learning/crash-course/numerical-data/qualities-of-good-numerical-features",
+"min": 5,
+"heading": {
+"en": "Numerical data: Qualities of good numerical features",
+"zh": "数值数据：良好数值特征的特性"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/qualities-of-good-numerical-features",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/qualities-of-good-numerical-features?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Good feature vectors require features that are clearly named and have obvious meanings to anyone on the project.",
+"zh": null
+},
+{
+"en": "Data should be checked and tested for bad data or outliers like inappropriate values before being used for training.",
+"zh": null
+},
+{
+"en": "Features should be sensible, avoiding \"magic values\" that create discontinuities; instead, use separate boolean features or new discrete values to indicate missing data.",
+"zh": null
+},
+{
+"en": "Continuous features should not have magic values representing the absence of measurement, but rather use separate Boolean features or discrete values.",
+"zh": null
+},
+{
+"en": "Discrete numerical features with missing values should be assigned a new value within the finite set, enabling the model to learn weights for each value including missing features.",
+"zh": null
+}
+],
+"terms": [
+"outliers",
+"feature",
+"feature_vector"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This unit has explored ways to map raw data into suitable <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vectors</b></button>. Good numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button> share the qualities described in this section.",
+"zh": "本单元探讨了将原始数据映射到合适<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>的方法。优质的数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>具有本部分中所述的特性。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Clearly named",
+"zh": "名称明确"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Each feature should have a clear, sensible, and obvious meaning to any human on the project. For example, the meaning of the following feature value is confusing:",
+"zh": "每个功能都应对项目中的任何人都有清晰、合理且明显的含义。例如，以下地图项值的含义令人困惑："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Not recommended",
+"zh": "✘ 不建议"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "house_age: 851472000",
+"zh": "house_age: 851472000"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, the following feature name and value are far clearer:",
+"zh": "相比之下，以下地图项名称和值要清晰得多："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Recommended",
+"zh": "✔︎ 建议"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "house_age_years: 27",
+"zh": "house_age_years: 27"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b> Although your co-workers will rebel against confusing feature and label names, the model won't care (assuming you normalize values properly).",
+"zh": "<b>注意</b>：虽然您的同事会反对混淆的特征和标签名称，但模型不会在意（假设您已正确归一化值）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Checked or tested before training",
+"zh": "在训练前已检查或测试"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Although this module has devoted a lot of time to <button type=\"button\" class=\"term\" data-term=\"outliers\"><b>outliers</b></button>, the topic is important enough to warrant one final mention. In some cases, bad data (rather than bad engineering choices) causes unclear values. For example, the following <code>user_age_in_years</code> came from a source that didn't check for appropriate values:",
+"zh": "虽然本单元花了大量时间来介绍<button type=\"button\" class=\"term\" data-term=\"outliers\"><b>离群值</b></button>，但这个主题非常重要，因此我们还要再提及一次。在某些情况下，不良数据（而非不良的工程设计选择）会导致值不明确。例如，以下 <code>user_age_in_years</code> 来自未检查是否有适当值的来源："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Not recommended",
+"zh": "✘ 不建议"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "user_age_in_years: 224",
+"zh": "user_age_in_years: 224"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "But people <i>can</i> be 24 years old:",
+"zh": "但<i>可以</i>是 24 周岁的人："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Recommended",
+"zh": "✔︎ 建议"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "user_age_in_years: 24",
+"zh": "user_age_in_years: 24"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Check your data!",
+"zh": "查看您的数据！"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Sensible",
+"zh": "明智"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A \"magic value\" is a purposeful discontinuity in an otherwise continuous feature. For example, suppose a continuous feature named <code>watch_time_in_seconds</code> can hold any floating-point value between 0 and 30 but represents the <i>absence</i> of a measurement with the magic value -1:",
+"zh": "“魔法值”是指在原本连续的特征中刻意设置的断点。例如，假设名为 <code>watch_time_in_seconds</code> 的连续特征可以存储介于 0 到 30 之间的任何浮点值，但使用魔法值 -1 表示测量值的<i>缺失</i>："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Not recommended",
+"zh": "✘ 不建议"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "watch_time_in_seconds: -1",
+"zh": "watch_time_in_seconds: -1"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A <code>watch_time_in_seconds</code> of -1 would force the model to try to figure out what it means to watch a movie backwards in time. The resulting model would probably not make good predictions.",
+"zh": "如果 <code>watch_time_in_seconds</code> 为 -1，则会迫使模型尝试弄清楚“向后观看电影”的含义。生成的模型可能无法做出准确的预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A better technique is to create a separate Boolean feature that indicates whether or not a <code>watch_time_in_seconds</code> value is supplied. For example:",
+"zh": "更好的方法是创建一个单独的布尔地图项，用于指示是否提供了 <code>watch_time_in_seconds</code> 值。例如："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Recommended",
+"zh": "✔︎ 建议"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "watch_time_in_seconds: 4.82<br> is_watch_time_in_seconds_defined=True<br> watch_time_in_seconds: 0<br> is_watch_time_in_seconds_defined=False",
+"zh": "watch_time_in_seconds: 4.82<br> is_watch_time_in_seconds_defined=True<br> watch_time_in_seconds: 0<br> is_watch_time_in_seconds_defined=False"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This is a way to handle a continuous dataset with missing values. Now consider a <button type=\"button\" class=\"term\" data-term=\"discrete_feature\"><b>discrete</b></button> numerical feature, like <code>product_category</code>, whose values must belong to a finite set of values. In this case, when a value is missing, signify that missing value using a new value in the finite set. With a discrete feature, the model will learn different weights for each value, including original weights for missing features.",
+"zh": "这是处理包含缺失值的连续数据集的方法。现在，我们来考虑一个<button type=\"button\" class=\"term\" data-term=\"discrete_feature\"><b>离散</b></button>数字特征（例如 <code>product_category</code>），其值必须属于一组有限的值。在这种情况下，如果缺少某个值，请使用有限集合中的新值来表示该缺失值。对于离散特征，模型会为每个值学习不同的权重，包括缺失特征的原始权重。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, we can imagine possible values fitting in the set:",
+"zh": "例如，我们可以想象符合该集合的可能值："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "{0: 'electronics', 1: 'books', 2: 'clothing', 3: 'missing_category'}.",
+"zh": "{0: 'electronics', 1: 'books', 2: 'clothing', 3: 'missing_category'}。"
+}
+}
+]
+},
+{
+"id": "polynomial-transforms",
+"path": "/machine-learning/crash-course/numerical-data/polynomial-transforms",
+"min": 5,
+"heading": {
+"en": "Numerical data: Polynomial transforms",
+"zh": "数值数据：多项式转换"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/polynomial-transforms",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/polynomial-transforms?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Synthetic features, like polynomial transforms, enable linear models to represent non-linear relationships by introducing new features based on existing ones.",
+"zh": null
+},
+{
+"en": "Polynomial transforms involve raising an existing feature to a power, often informed by domain knowledge, such as physical laws involving squared terms.",
+"zh": null
+},
+{
+"en": "By incorporating synthetic features, linear regression models can effectively separate data points that are not linearly separable using curves instead of straight lines.",
+"zh": null
+},
+{
+"en": "This approach maintains the simplicity of linear regression while expanding its capacity to capture complex patterns within the data.",
+"zh": null
+},
+{
+"en": "Feature crosses, a related concept for categorical data, synthesize new features by combining existing features, further enhancing model flexibility.",
+"zh": null
+}
+],
+"terms": [
+"categorical_data",
+"feature",
+"feature_cross",
+"gradient_descent",
+"linear_regression",
+"synthetic_feature",
+"weight"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Sometimes, when the ML practitioner has domain knowledge suggesting that one variable is related to the square, cube, or other power of another variable, it's useful to create a <button type=\"button\" class=\"term\" data-term=\"synthetic_feature\"><b>synthetic feature</b></button> from one of the existing numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button>.",
+"zh": "有时，当机器学习从业者拥有的领域知识表明一个变量与另一个变量的平方、立方或其他幂相关时，从现有的某个数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>中创建<button type=\"button\" class=\"term\" data-term=\"synthetic_feature\"><b>合成特征</b></button>会很有用。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following spread of data points, where pink circles represent one class or category (for example, a species of tree) and green triangles another class (or species of tree):",
+"zh": "请考虑以下数据点分布，其中粉色圆圈代表一个类或类别（例如某种树），绿色三角形代表另一个类（或树种）："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/ft_cross2.png",
+"alt": {
+"en": "Figure 17. y=x^2 spread of data points, with triangles below the\n            curve and circles above the curve.",
+"zh": "图 17. y=x^2 数据点分布，曲线下方是三角形，曲线上方是圆圈。"
+},
+"caption": {
+"en": "<b>Figure 17.</b> Two classes that can't be separated by a line.",
+"zh": "<b>图 17.</b> 两个无法用线条分隔的类。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It's not possible to draw a straight line that cleanly separates the two classes, but it <i>is</i> possible to draw a curve that does so:",
+"zh": "我们无法绘制一条能清晰区分这两个类的直线，但<i>可以</i>绘制一条能做到这一点的曲线："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/ft_cross1.png",
+"alt": {
+"en": "Figure 18. Same image as Figure 17, only this time with y=x^2\n            overlaid to create a clear boundary between the triangles and\n            circles.",
+"zh": "图 18. 与图 17 相同的图片，只是这次叠加了 y=x^2 以在三角形和圆形之间创建清晰的边界。"
+},
+"caption": {
+"en": "<b>Figure 18.</b> Separating the classes with <i>y = x<sup>2</sup></i>.",
+"zh": "<b>图 18.</b> 使用 <i>y = x<sup>2</sup></i> 分隔类。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As discussed in the <a href=\"#/ch/c02/linear-regression\">Linear regression module</a>, a linear model with one feature, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, is described by the linear equation:",
+"zh": "如<a href=\"#/ch/c02/linear-regression\">线性回归模块</a>中所述，具有一个特征 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 的线性模型由线性方程描述："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Additional features are handled by the addition of terms <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, etc.",
+"zh": "通过添加术语 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>等来处理其他功能。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"gradient_descent\"><b>Gradient descent</b></button> finds the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> (or weights <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, in the case of additional features) that minimizes the loss of the model. But the data points shown cannot be separated by a line. What can be done?",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"gradient_descent\"><b>梯度下降法</b></button>会找到可最大限度地减少模型损失的<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>（如果有其他特征，则为权重<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>）。但显示的数据点不能用线条分隔。该怎么办？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It's possible to keep both the linear equation <i>and</i> allow nonlinearity by defining a new term, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, that is simply <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> squared:",
+"zh": "通过定义一个新术语 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>（即 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 的平方）来同时保留线性方程<i>和</i>允许非线性："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1111em;vertical-align:-0.247em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1111em;vertical-align:-0.247em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This synthetic feature, called a polynomial transform, is treated like any other feature. The previous linear formula becomes:",
+"zh": "此合成特征（称为多项式转换）会像任何其他特征一样处理。之前的线性公式变为："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This can still be treated like a <button type=\"button\" class=\"term\" data-term=\"linear_regression\"><b>linear regression</b></button> problem, and the weights determined through gradient descent, as usual, despite containing a hidden squared term, the polynomial transform. Without changing how the linear model trains, the addition of a polynomial transform allows the model to separate the data points using a curve of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9641em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>.",
+"zh": "尽管包含隐藏的平方项（多项式转换），但这仍然可以视为<button type=\"button\" class=\"term\" data-term=\"linear_regression\"><b>线性回归</b></button>问题，并且权重可以像往常一样通过梯度下降确定。添加多项式转换后，无需更改线性模型的训练方式，模型便可使用形式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9641em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span> 的曲线来分隔数据点。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Usually the numerical feature of interest is multiplied by itself, that is, raised to some power. Sometimes an ML practitioner can make an informed guess about the appropriate exponent. For example, many relationships in the physical world are related to squared terms, including acceleration due to gravity, the attenuation of light or sound over distance, and elastic potential energy.",
+"zh": "通常，我们会将感兴趣的数值特征乘以自身，即将其升到某个幂。有时，机器学习从业者可以根据经验对适当的指数做出合理的猜测。例如，物理世界中的许多关系都与平方项相关，包括重力加速度、光或声音随距离衰减以及弹性势能。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If you transform a feature in a way that changes its scale, you should consider experimenting with normalizing it as well. Normalizing after transforming might make the model perform better. For more information, see <a href=\"#/ch/c05/normalization\">Numerical Data: Normalization</a>.",
+"zh": "如果您以会更改其尺度的形式转换地图项，则应考虑尝试对其进行归一化处理。在转换后进行标准化可能会使模型的效果更好。如需了解详情，请参阅<a href=\"#/ch/c05/normalization\">数值数据：标准化</a>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A related concept in <button type=\"button\" class=\"term\" data-term=\"categorical_data\"><b>categorical data</b></button> is the <button type=\"button\" class=\"term\" data-term=\"feature_cross\"><b>feature cross</b></button>, which more frequently synthesizes two different features.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"categorical_data\"><b>分类数据</b></button>中的一个相关概念是<button type=\"button\" class=\"term\" data-term=\"feature_cross\"><b>特征交叉</b></button>，它更常用于合成两个不同的特征。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/numerical-data/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Numerical data: Test your knowledge",
+"zh": "数值数据：测试您的知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/quiz?hl=zh-cn"
+}
+}
+]
+},
+{
+"id": "conclusion",
+"path": "/machine-learning/crash-course/numerical-data/conclusion",
+"min": 2,
+"heading": {
+"en": "Numerical data: Conclusion",
+"zh": "数值数据：总结"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/numerical-data/conclusion",
+"zh": "https://developers.google.com/machine-learning/crash-course/numerical-data/conclusion?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "A machine learning model's predictive ability is directly dependent on the quality of data it's trained on.",
+"zh": null
+},
+{
+"en": "Numerical features often benefit from normalization or binning to improve model performance.",
+"zh": null
+},
+{
+"en": "Data validation through verification tests and visualizations is crucial for identifying and addressing potential issues.",
+"zh": null
+},
+{
+"en": "Understanding data distribution through statistics on both the entire dataset and its subsets is essential for identifying hidden problems.",
+"zh": null
+},
+{
+"en": "Maintaining thorough documentation of all data transformations ensures reproducibility and facilitates model understanding.",
+"zh": null
+}
+],
+"terms": [
+"binning",
+"bucketing",
+"dataset",
+"feature",
+"feature_vector",
+"normalization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "A machine learning (ML) model's health is determined by its data. Feed your model healthy data and it will thrive; feed your model junk and its predictions will be worthless.",
+"zh": "机器学习 (ML) 模型的运行状况取决于其数据。向模型提供优质数据，模型就会茁壮成长；向模型提供垃圾数据，其预测结果将毫无价值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Best practices for working with numerical data:",
+"zh": "处理数值数据的最佳实践："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Remember that your ML model interacts with the data in the <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vector</b></button>, not the data in the <button type=\"button\" class=\"term\" data-term=\"dataset\"><b>dataset</b></button>.",
+"zh": "请注意，机器学习模型与<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>中的数据进行交互，而不是与<button type=\"button\" class=\"term\" data-term=\"dataset\"><b>数据集</b></button>中的数据进行交互。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"normalization\"><b>Normalize</b></button> most numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button>.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"normalization\"><b>归一化</b></button>大多数数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>。"
+},
+{
+"en": "If your first normalization strategy doesn't succeed, consider a different way to normalize your data.",
+"zh": "如果您的第一种归一化策略不成功，请考虑采用其他方式来归一化数据。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"binning\"><b>Binning</b></button>, also referred to as <button type=\"button\" class=\"term\" data-term=\"bucketing\"><b>bucketing</b></button>, is sometimes better than normalizing.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"binning\"><b>分箱</b></button>（也称为<button type=\"button\" class=\"term\" data-term=\"bucketing\"><b>分桶</b></button>）有时比标准化更有效。"
+},
+{
+"en": "Considering what your data <i>should</i> look like, write verification tests to validate those expectations. For example: <ul><li>The absolute value of latitude should never exceed 90. You can write a test to check if a latitude value greater than 90 appears in your data.</li><li>If your data is restricted to the state of Florida, you can write tests to check that the latitudes fall between 24 through 31, inclusive.</li></ul>",
+"zh": "考虑一下您的数据<i>应该</i>是什么样子，编写验证测试来验证这些预期。例如：<ul><li>纬度的绝对值不得超过 90。您可以编写一个测试，检查数据中是否出现大于 90 的纬度值。</li><li>如果您的数据仅限于佛罗里达州，您可以编写测试来检查纬度是否介于 24 到 31 之间（包括这两个数值）。</li></ul>"
+},
+{
+"en": "Visualize your data with scatter plots and histograms. Look for anomalies.",
+"zh": "使用散点图和直方图直观呈现数据。查找异常。"
+},
+{
+"en": "Gather statistics not only on the entire dataset but also on smaller subsets of the dataset. That's because aggregate statistics sometimes obscure problems in smaller sections of a dataset.",
+"zh": "您不仅可以收集整个数据集的统计信息，还可以收集数据集的较小子集的统计信息。这是因为汇总统计数据有时会掩盖数据集中较小部分存在的问题。"
+},
+{
+"en": "Document all your data transformations.",
+"zh": "记录所有数据转换。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Data is your most valuable resource, so treat it with care.",
+"zh": "数据是您最宝贵的资源，因此请妥善处理。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Additional Information",
+"zh": "其他信息"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The <i>Rules of Machine Learning</i> guide contains a valuable <a href=\"https://developers.google.com/machine-learning/rules-of-ml/#ml_phase_ii_feature_engineering\" target=\"_blank\" rel=\"noopener\">Feature Engineering</a> section.",
+"zh": "<i>机器学习规则</i>指南包含一个实用的<a href=\"https://developers.google.com/machine-learning/rules-of-ml/?hl=zh-cn#ml_phase_ii_feature_engineering\" target=\"_blank\" rel=\"noopener\">特征工程</a>部分。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c06/categorical-data\">Representing categorical data</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度，探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照建议的顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c06/categorical-data\">表示分类数据</a></b>。"
+}
+}
+]
+}
+]
+}

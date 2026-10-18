@@ -1,0 +1,1785 @@
+{
+"id": "c06",
+"num": 6,
+"stage": 2,
+"title": {
+"en": "Working with categorical data",
+"zh": "处理分类数据"
+},
+"minutes": 50,
+"sections": [
+{
+"id": "categorical-data",
+"path": "/machine-learning/crash-course/categorical-data",
+"min": 5,
+"heading": {
+"en": "Working with categorical data",
+"zh": "处理分类数据"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module focuses on differentiating between categorical and numerical data within machine learning.",
+"zh": null
+},
+{
+"en": "You will learn how to represent categorical data using one-hot vectors and address common issues associated with it.",
+"zh": null
+},
+{
+"en": "The module covers encoding techniques for converting categorical data into numerical vectors suitable for model training.",
+"zh": null
+},
+{
+"en": "Feature crosses, a method for combining categorical features to capture interactions, are also discussed.",
+"zh": null
+},
+{
+"en": "It is assumed you have prior knowledge of introductory machine learning and working with numerical data.",
+"zh": null
+}
+],
+"terms": [
+"categorical-data",
+"numerical-data"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Distinguish categorical data from numerical data.</li><li>Represent categorical data with one-hot vectors.</li><li>Address common issues with categorical data.</li><li>Create feature crosses.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>区分分类数据与数值数据。</li><li>用独热矢量表示分类数据。</li><li>解决分类数据的常见问题。</li><li>创建特征组合。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c05/numerical-data\">Working with numerical data</a></li></ul>",
+"zh": "<b>前提条件：</b> 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c05/numerical-data\">处理数值数据</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>Categorical data</b></button> has a <i>specific set</i> of possible values. For example:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>分类数据</b></button>具有 <i>一组特定的可能值</i>。例如："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The different species of animals in a national park",
+"zh": "国家公园内的不同物种"
+},
+{
+"en": "The names of streets in a particular city",
+"zh": "特定城市的街道名称"
+},
+{
+"en": "Whether or not an email is spam",
+"zh": "电子邮件是否为垃圾邮件"
+},
+{
+"en": "The colors that house exteriors are painted",
+"zh": "房屋外部的颜色是绘制的"
+},
+{
+"en": "Binned numbers, which are described in the <a href=\"#/ch/c05/numerical-data\">Working with Numerical Data</a> module",
+"zh": "分箱数字，具体说明请参阅<a href=\"#/ch/c05/numerical-data\">使用数值 Data</a> 模块"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Numbers can also be categorical data",
+"zh": "数字也可以是分类数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "True <button type=\"button\" class=\"term\" data-term=\"numerical-data\"><b>numerical data</b></button> can be meaningfully multiplied. For example, consider a model that predicts the value of a house based on its area. Note that a useful model for evaluating house prices typically relies on hundreds of features. That said, all else being equal, a house of 200 square meters should be roughly twice as valuable as an identical house of 100 square meters.",
+"zh": "可以对真实的<button type=\"button\" class=\"term\" data-term=\"numerical-data\"><b>数值数据</b></button>进行有意义的乘法运算。例如，假设有一个模型，用于根据房屋的面积预测其价值。请注意，一个有用的房价评估模型通常取决于 数百项功能。尽管如此，在其他条件相同的情况下， 只有 200 平方块的房屋 约为 100 平方米的相同房屋价值的两倍 米。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Oftentimes, you should represent features that contain integer values as categorical data instead of numerical data. For example, consider a postal code feature in which the values are integers. If you represent this feature numerically rather than categorically, you're asking the model to find a numeric relationship between different postal codes. That is, you're telling the model to treat postal code 20004 as twice (or half) as large a signal as postal code 10002. Representing postal codes as categorical data lets the model weight each individual postal code separately.",
+"zh": "通常，您应将包含整数值的特征表示为分类数据，而不是数值数据。例如，假设有一个邮政编码地图项，其中值为整数。如果您以数值（而非分类）来表示此特征，则表示您要求模型找出不同邮政编码之间的数值关系。也就是说，您可以指示模型 将邮政编码 20004 视为邮政编码的两倍（或一半） 10002。将邮政编码表示为分类数据可让模型 并单独计算每个邮政编码的权重。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Encoding",
+"zh": "编码"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Encoding</b> means converting categorical or other data to numerical vectors that a model can train on. This conversion is necessary because models can only train on floating-point values; models can't train on strings such as <code>\"dog\"</code> or <code>\"maple\"</code>. This module explains different encoding methods for categorical data.",
+"zh": "<b>编码</b>是指将分类数据或其他数据转换为数值向量 可用于训练的模型。必须进行这种转换，因为模型 仅使用浮点值进行训练；模型无法基于字符串进行训练， <code>\"dog\"</code> 或 <code>\"maple\"</code>。本单元将介绍 编码方法。"
+}
+}
+]
+},
+{
+"id": "one-hot-encoding",
+"path": "/machine-learning/crash-course/categorical-data/one-hot-encoding",
+"min": 10,
+"heading": {
+"en": "Categorical data: Vocabulary and one-hot encoding",
+"zh": "分类数据：词汇和独热编码"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data/one-hot-encoding",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data/one-hot-encoding?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Dimension refers to the number of elements in a feature vector, and some categorical features have low dimensionality.",
+"zh": null
+},
+{
+"en": "Machine learning models require numerical input; therefore, categorical data like strings must be converted to numerical representations.",
+"zh": null
+},
+{
+"en": "One-hot encoding transforms categorical values into numerical vectors where each category is represented by a unique element with a value of 1.",
+"zh": null
+},
+{
+"en": "For high-dimensional categorical features with numerous categories, one-hot encoding might be inefficient, and embeddings or hashing are recommended.",
+"zh": null
+},
+{
+"en": "Sparse representation efficiently stores one-hot encoded data by only recording the position of the '1' value to reduce memory usage.",
+"zh": null
+}
+],
+"terms": [
+"categorical_data",
+"dimensions",
+"discrete_feature",
+"feature_cross",
+"feature_vector",
+"hashing",
+"one-hot_encoding",
+"sparse-feature",
+"sparse-representation"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The term <b>dimension</b> is a synonym for the number of elements in a <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vector</b></button>. Some categorical features are low dimensional. For example:",
+"zh": "<b>维度</b>一词是<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>中元素数量的同义词。 有些分类特征是低维的。例如："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Feature name",
+"zh": "特征名称"
+},
+{
+"en": "# of categories",
+"zh": "类别数"
+},
+{
+"en": "Sample categories",
+"zh": "示例类别"
+}
+],
+"rows": [
+[
+{
+"en": "snowed_today",
+"zh": "snowed_today"
+},
+{
+"en": "2",
+"zh": "2"
+},
+{
+"en": "True, False",
+"zh": "True、False"
+}
+],
+[
+{
+"en": "skill_level",
+"zh": "skill_level"
+},
+{
+"en": "3",
+"zh": "3"
+},
+{
+"en": "Beginner, Practitioner, Expert",
+"zh": "初级、实操人员、专家"
+}
+],
+[
+{
+"en": "season",
+"zh": "season"
+},
+{
+"en": "4",
+"zh": "4"
+},
+{
+"en": "Winter, Spring, Summer, Autumn",
+"zh": "冬季、春季、夏季、秋季"
+}
+],
+[
+{
+"en": "day_of_week",
+"zh": "day_of_week"
+},
+{
+"en": "7",
+"zh": "7"
+},
+{
+"en": "Monday, Tuesday, Wednesday",
+"zh": "周一、周二、周三"
+}
+],
+[
+{
+"en": "planet",
+"zh": "星球"
+},
+{
+"en": "8",
+"zh": "8"
+},
+{
+"en": "Mercury, Venus, Earth",
+"zh": "水星、金星、地球"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When a categorical feature has a low number of possible categories, you can encode it as a <b>vocabulary</b>. With a vocabulary encoding, the model treats each possible categorical value as a <i>separate feature</i>. During training, the model learns different weights for each category.",
+"zh": "如果分类特征的可能类别数量较少，您可以将其编码为<b>词汇</b>。使用词汇表编码时，模型会将每个可能的分类值视为一个<i>单独的特征</i>。在训练期间，模型会为每个类别学习不同的权重。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose you are creating a model to predict a car's price based, in part, on a categorical feature named <code>car_color</code>. Perhaps red cars are worth more than green cars. Since manufacturers offer a limited number of exterior colors, <code>car_color</code> is a low-dimensional categorical feature. The following illustration suggests a vocabulary (possible values) for <code>car_color</code>:",
+"zh": "例如，假设您要创建一个模型，根据部分分类特征（名为 <code>car_color</code>）来预测汽车的价格。也许红车的价值高于绿车。 由于制造商提供的外观颜色数量有限，因此 <code>car_color</code> 属于低维分类特征。下图显示了 <code>car_color</code> 的词汇（可能的值）："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/categorical-netview.svg",
+"alt": {
+"en": "Figure 1. Each color in the palette is represented as a separate\n      feature. That is, each color is a separate feature in the feature vector.\n      For instance, 'Red' is a feature, 'Orange' is a separate feature,\n      and so on.",
+"zh": "图 1. 调色板中的每种颜色都表示为一个单独的特征。也就是说，每种颜色都是特征向量中的一个单独特征。\n      例如，“红色”是一种特征，“橙色”是另一种特征，依此类推。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> A unique feature for each category.",
+"zh": "<b>图 1.</b> 每个类别的独特特征。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Index numbers",
+"zh": "指数"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Machine learning models can only manipulate floating-point numbers. Therefore, you must convert each string to a unique index number, as in the following illustration:",
+"zh": "机器学习模型只能处理浮点数。因此，您必须将每个字符串转换为唯一的索引号，如下例所示："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/categorical-netview-indexed.svg",
+"alt": {
+"en": "Figure 2. Each color is associated with a unique integer value. For\n      example, 'Red' is associated with the integer 0, 'Orange' with the\n      integer 1, and so on.",
+"zh": "图 2. 每种颜色都与一个唯一的整数值相关联。例如，“红色”与整数 0 相关联，“橙色”与整数 1 相关联，依此类推。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> Indexed features.",
+"zh": "<b>图 2.</b> 编入索引的功能。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "After converting strings to unique index numbers, you'll need to process the data further to represent it in ways that help the model learn meaningful relationships between the values. If the categorical feature data is left as indexed integers and loaded into a model, the model would treat the indexed values as continuous floating-point numbers. The model would then consider \"purple\" six times more likely than \"orange.\"",
+"zh": "将字符串转换为唯一索引号后，您需要进一步处理数据，以有助于模型学习值之间有意义的关系。如果分类特征数据保留为索引整数并加载到模型中，模型会将索引值视为连续的浮点数。然后，模型会认为“紫色”的可能性是“橙色”的 6 倍。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "One-hot encoding",
+"zh": "独热编码"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The next step in building a vocabulary is to convert each index number to its <button type=\"button\" class=\"term\" data-term=\"one-hot_encoding\"><b>one-hot encoding</b></button>. In a one-hot encoding:",
+"zh": "构建词汇表的下一步是将每个索引号转换为其<button type=\"button\" class=\"term\" data-term=\"one-hot_encoding\"><b>独热编码</b></button>。 在独热编码中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Each category is represented by a vector (array) of N elements, where N is the number of categories. For example, if <code>car_color</code> has eight possible categories, then the one-hot vector representing will have eight elements.",
+"zh": "每个类别都由一个包含 N 个元素（其中 N 是类别数量）的向量（数组）表示。例如，如果 <code>car_color</code> 有 8 个可能的类别，则表示它的独热向量将有 8 个元素。"
+},
+{
+"en": "Exactly <i>one</i> of the elements in a one-hot vector has the value 1.0; all the remaining elements have the value 0.0.",
+"zh": "独热向量中<i>一个</i>元素的值为 1.0，其余所有元素的值均为 0.0。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the following table shows the one-hot encoding for each color in <code>car_color</code>:",
+"zh": "例如，下表显示了 <code>car_color</code> 中每种颜色的独热编码："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Feature",
+"zh": "功能"
+},
+{
+"en": "Red",
+"zh": "红色"
+},
+{
+"en": "Orange",
+"zh": "Orange"
+},
+{
+"en": "Blue",
+"zh": "蓝色"
+},
+{
+"en": "Yellow",
+"zh": "黄色"
+},
+{
+"en": "Green",
+"zh": "绿色"
+},
+{
+"en": "Black",
+"zh": "黑色"
+},
+{
+"en": "Purple",
+"zh": "紫色"
+},
+{
+"en": "Brown",
+"zh": "棕色"
+}
+],
+"rows": [
+[
+{
+"en": "<code>\"Red\"</code>",
+"zh": "<code>“红色”</code>"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Orange\"</code>",
+"zh": "<code>“Orange”</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Blue\"</code>",
+"zh": "<code>\"蓝色\"</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Yellow\"</code>",
+"zh": "<code>“黄色”</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Green\"</code>",
+"zh": "<code>\"绿色\"</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Black\"</code>",
+"zh": "<code>“黑色”</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Purple\"</code>",
+"zh": "<code>\"Purple\"</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+}
+],
+[
+{
+"en": "<code>\"Brown\"</code>",
+"zh": "<code>“棕色”</code>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "1",
+"zh": "1"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It is the one-hot vector, not the string or the index number, that gets passed to the feature vector. The model learns a separate weight for each element of the feature vector.",
+"zh": "传递给特征向量的是独热向量，而不是字符串或索引号。模型会为特征向量的每个元素学习单独的权重。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>In a true one-hot encoding, only one element has the value 1.0. In a variant known as <b>multi-hot encoding</b>, multiple values can be 1.0.",
+"zh": "<b>注意</b>：在真正的 one-hot 编码中，只有一个元素的值为 1.0。在一种称为<b>多热编码</b>的变体中，多个值可以为 1.0。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following illustration suggests the various transformations in the vocabulary representation:",
+"zh": "下图显示了词汇表示形式的各种转换："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/vocabulary-index-sparse-feature.svg",
+"alt": {
+"en": "Figure 3. Diagram of the end-to-end process to map categories to\n      feature vectors. In the diagram, the input features are 'Yellow',\n      'Orange', 'Blue', and 'Blue' a second time.  The system uses a stored\n      vocabulary ('Red' is 0, 'Orange' is 1, 'Blue' is 2, 'Yellow' is 3, and\n      so on) to map the input value to an ID. Thus, the system maps 'Yellow',\n      'Orange', 'Blue', and 'Blue' to 3, 1, 2, 2. The system then converts\n      those values to a one-hot feature vector. For example, given a system\n      with eight possible colors, 3 becomes 0, 0, 0, 1, 0, 0, 0, 0.",
+"zh": "图 3. 将类别映射到特征向量的端到端流程图。在该图中，输入特征为“黄色”“橙色”“蓝色”和“蓝色”（第二次）。系统使用存储的词汇表（“红色”为 0，“橙色”为 1，“蓝色”为 2，“黄色”为 3，依此类推）将输入值映射到 ID。因此，系统会将“黄色”“橙色”“蓝色”和“蓝色”分别映射为 3、1、2、2。然后，系统会将这些值转换为独热特征向量。例如，如果系统有 8 种可能的颜色，则 3 会变为 0、0、0、1、0、0、0、0。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> The end-to-end process to map categories to feature vectors.",
+"zh": "<b>图 3.</b> 将类别映射到特征向量的端到端流程。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Sparse representation",
+"zh": "稀疏表示法"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "A feature whose values are predominantly zero (or empty) is termed a <button type=\"button\" class=\"term\" data-term=\"sparse-feature\"><b>sparse feature</b></button>. Many categorical features, such as <code>car_color</code>, tend to be sparse features. <button type=\"button\" class=\"term\" data-term=\"sparse-representation\"><b>Sparse representation</b></button> means storing the <i>position</i> of the 1.0 in a sparse vector. For example, the one-hot vector for <code>\"Blue\"</code> is:",
+"zh": "如果某个特征的值主要为零（或为空），则该特征称为<button type=\"button\" class=\"term\" data-term=\"sparse-feature\"><b>稀疏特征</b></button>。许多分类特征（例如 <code>car_color</code>）往往是稀疏特征。<button type=\"button\" class=\"term\" data-term=\"sparse-representation\"><b>稀疏表示法</b></button>是指在稀疏向量中存储 1.0 的<i>位置</i>。例如，<code>\"Blue\"</code> 的独热向量为："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "[0, 0, 1, 0, 0, 0, 0, 0]",
+"zh": "[0, 0, 1, 0, 0, 0, 0, 0]"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Since the <code>1</code> is in position 2 (when starting the count at 0), the sparse representation for the preceding one-hot vector is:",
+"zh": "由于 <code>1</code> 位于位置 2（从 0 开始计数），因此上述独热向量的稀疏表示形式为："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "2",
+"zh": "2"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice that the sparse representation consumes far less memory than the eight-element one-hot vector. Importantly, the model must <i>train</i> on the one-hot vector, not the sparse representation.",
+"zh": "请注意，稀疏表示法占用的内存远少于八元素独热向量。重要的是，模型必须使用 one-hot 向量进行<i>训练</i>，而不是使用稀疏表示形式。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>The sparse representation of a multi-hot encoding stores the positions of <i>all</i> the nonzero elements. For example, the sparse representation of a car that is both <code>\"Blue\"</code> and <code>\"Black\"</code> is <code>2, 5</code>.",
+"zh": "<b>注意</b>：多热编码的稀疏表示法会存储<i>所有</i>非零元素的位置。例如，既是 <code>\"Blue\"</code> 又是 <code>\"Black\"</code> 的汽车的稀疏表示形式为 <code>2, 5</code>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Outliers in categorical data",
+"zh": "分类数据中的离群值"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Like numerical data, categorical data also contains outliers. Suppose <code>car_color</code> contains not only the popular colors, but also some rarely used outlier colors, such as <code>\"Mauve\"</code> or <code>\"Avocado\"</code>. Rather than giving each of these outlier colors a separate category, you can lump them into a single \"catch-all\" category called <i>out-of-vocabulary (OOV)</i>. In other words, all the outlier colors are binned into a single outlier bucket. The system learns a single weight for that outlier bucket.",
+"zh": "与数值数据一样，分类数据也包含离群值。假设 <code>car_color</code> 不仅包含常用颜色，还包含一些很少使用的离群颜色，例如 <code>\"Mauve\"</code> 或 <code>\"Avocado\"</code>。 您可以将这些离群颜色归入一个名为<i>词汇表外 (OOV)</i> 的“包罗万象”类别，而不是为每种离群颜色单独设置一个类别。换句话说，所有离群颜色都会归入一个离群分桶。系统会为该离群值分箱学习单个权重。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Encoding high-dimensional categorical features",
+"zh": "对高维分类特征进行编码"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Some categorical features have a high number of dimensions, such as those in the following table:",
+"zh": "某些分类特征具有大量维度，例如下表中的特征："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Feature name",
+"zh": "特征名称"
+},
+{
+"en": "# of categories",
+"zh": "类别数"
+},
+{
+"en": "Sample categories",
+"zh": "示例类别"
+}
+],
+"rows": [
+[
+{
+"en": "words_in_english",
+"zh": "words_in_english"
+},
+{
+"en": "~500,000",
+"zh": "~500,000"
+},
+{
+"en": "\"happy\", \"walking\"",
+"zh": "“happy”“walking”"
+}
+],
+[
+{
+"en": "US_postal_codes",
+"zh": "US_postal_codes"
+},
+{
+"en": "~42,000",
+"zh": "~42,000"
+},
+{
+"en": "\"02114\", \"90301\"",
+"zh": "“02114”“90301”"
+}
+],
+[
+{
+"en": "last_names_in_Germany",
+"zh": "last_names_in_Germany"
+},
+{
+"en": "~850,000",
+"zh": "~850,000"
+},
+{
+"en": "\"Schmidt\", \"Schneider\"",
+"zh": "“施密特”“施耐德”"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When the number of categories is high, one-hot encoding is usually a bad choice. <i>Embeddings</i>, detailed in a separate <a href=\"#/ch/c09/embeddings\">Embeddings module</a>, are usually a much better choice. Embeddings substantially reduce the number of dimensions, which benefits models in two important ways:",
+"zh": "当类别数量较多时，独热编码通常不是一个好的选择。 <i>嵌入</i>（在单独的<a href=\"#/ch/c09/embeddings\">嵌入模块</a>中有详细介绍）通常是更好的选择。嵌入可大幅减少维度数量，从而在两个重要方面使模型受益："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The model typically trains faster.",
+"zh": "模型训练速度通常更快。"
+},
+{
+"en": "The built model typically infers predictions more quickly. That is, the model has lower latency.",
+"zh": "构建的模型通常可以更快地推理预测结果。也就是说，模型的延迟时间更短。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"hashing\"><b>Hashing</b></button> (also called the <i>hashing trick</i>) is a less common way to reduce the number of dimensions.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"hashing\"><b>哈希</b></button>（也称为<i>哈希技巧</i>）是一种不太常用的降维方法。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here to learn about hashing</b>",
+"zh": "<b>点击此处了解哈希处理</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In brief, hashing maps a category (for example, a color) to a small integer—the number of the \"bucket\" that will hold that category.",
+"zh": "简而言之，哈希会将类别（例如颜色）映射到一个较小的整数，即用于存放相应类别的“桶”的编号。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In detail, you implement a hashing algorithm as follows:",
+"zh": "具体而言，您可以按如下方式实现哈希算法："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Set the number of bins in the vector of categories to N, where N is less than the total number of remaining categories. As an arbitrary example, say N = 100.",
+"zh": "将类别向量中的箱数设置为 N，其中 N 小于剩余类别的总数。 举个任意示例，假设 N = 100。"
+},
+{
+"en": "Choose a hash function. (Often, you will choose the range of hash values as well.)",
+"zh": "选择一个哈希函数。（通常，您还会选择哈希值的范围。）"
+},
+{
+"en": "Pass each category (for example, a particular color) through that hash function, generating a hash value, say 89237.",
+"zh": "通过该哈希函数传递每个类别（例如，特定颜色），生成一个哈希值，例如 89237。"
+},
+{
+"en": "Assign each bin an index number of the output hash value modulo N. In this case, where N is 100 and the hash value is 89237, the modulo result is 37 because 89237 % 100 is 37.",
+"zh": "为每个箱分配一个索引号，该索引号为输出哈希值模 N。 在本例中，N 为 100，哈希值为 89237，因此模运算结果为 37，因为 89237 % 100 为 37。"
+},
+{
+"en": "Create a one-hot encoding for each bin with these new index numbers.",
+"zh": "使用这些新索引号为每个箱创建独热编码。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For more details about hashing data, see the <a href=\"#/ch/c11/monitoring\">Randomization</a> section of the <a href=\"#/ch/c11/monitoring\">Production machine learning systems</a> module.",
+"zh": "如需详细了解如何对数据进行哈希处理，请参阅<a href=\"#/ch/c11/monitoring\">生产环境中的机器学习系统</a>模块的<a href=\"#/ch/c11/monitoring\">随机化</a>部分。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "True or False: A machine learning model can train <i>directly</i> on raw string values, like <code>\"Red\"</code> and <code>\"Black\"</code>, without converting these values to numerical vectors.",
+"zh": "对还是错：机器学习模型可以直接基于原始字符串值（例如“红色”和“黑色”）进行训练，而无需将这些值转换为数值向量。<code></code><code></code>"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "True",
+"zh": "正确"
+},
+"why": {
+"en": "During training, a model can only manipulate floating-point numbers. The string <code>\"Red\"</code> is not a floating-point number. You must convert strings like <code>\"Red\"</code> to floating-point numbers.",
+"zh": "在训练期间，模型只能处理浮点数。 字符串 <code>\"Red\"</code> 不是浮点数。您必须将 <code>\"Red\"</code> 等字符串转换为浮点数。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "False",
+"zh": "错误"
+},
+"why": {
+"en": "A machine learning model can only train on features with floating-point values, so you'll need to convert those strings to floating-point values before training.",
+"zh": "机器学习模型只能基于具有浮点值的特征进行训练，因此您需要在训练之前将这些字符串转换为浮点值。"
+},
+"correct": true
+}
+]
+}
+]
+},
+{
+"id": "issues",
+"path": "/machine-learning/crash-course/categorical-data/issues",
+"min": 5,
+"heading": {
+"en": "Categorical data: Common issues",
+"zh": "分类数据：常见问题"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data/issues",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data/issues?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Categorical data quality hinges on how categories are defined and labeled, impacting data reliability.",
+"zh": null
+},
+{
+"en": "Human-labeled data, known as \"gold labels,\" is generally preferred for training due to its higher quality, but it's essential to check for human errors and biases.",
+"zh": null
+},
+{
+"en": "Machine-labeled data, or \"silver labels,\" can introduce biases or inaccuracies, necessitating careful quality checks and awareness of potential common-sense violations.",
+"zh": null
+},
+{
+"en": "High-dimensionality in categorical data increases training complexity and costs, leading to techniques like embeddings for dimensionality reduction.",
+"zh": null
+}
+],
+"terms": [
+"inter-rater-agreement"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Numerical data is often recorded by scientific instruments or automated measurements. Categorical data, on the other hand, is often categorized by human beings or by machine learning (ML) models. <i>Who</i> decides on categories and labels, and <i>how</i> they make those decisions, affects the reliability and usefulness of that data.",
+"zh": "数值数据通常由科学仪器或自动化测量记录。另一方面，分类数据通常按人类或机器学习 (ML) 模型进行分类。决定类别和标签的人员以及他们做出这些决定的方式会影响这些数据的可靠性和实用性。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Human raters",
+"zh": "人工评分员"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Data manually labeled by human beings is often referred to as <i>gold labels</i>, and is considered more desirable than machine-labeled data for training models, due to relatively better data quality.",
+"zh": "由人工手动标记的数据通常称为<i>标准答案</i>，由于数据质量相对较高，因此在训练模型时，标准答案数据比机器标记的数据更受欢迎。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This doesn't necessarily mean that any set of human-labeled data is of high quality. Human errors, bias, and malice can be introduced at the point of data collection or during data cleaning and processing. Check for them before training.",
+"zh": "这并不一定意味着任何一组人工标记的数据都是高质量的。人为错误、偏见和恶意行为可能会在数据收集时或数据清理和处理过程中引入。请在训练前检查是否存在这些问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Any two human beings may label the same example differently. The difference between human raters' decisions is called <button type=\"button\" class=\"term\" data-term=\"inter-rater-agreement\"><b>inter-rater agreement</b></button>. You can get a sense of the variance in raters' opinions by using multiple raters per example and measuring inter-rater agreement.",
+"zh": "任何两个人对同一示例的标签可能都不一样。人工评价者之间评价结果的差异称为<button type=\"button\" class=\"term\" data-term=\"inter-rater-agreement\"><b>评价者间一致性</b></button>。您可以为每个示例使用多名评估员，并衡量评估员之间的一致性，从而了解评估员意见的差异。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click to learn about inter-rater agreement metrics</b>",
+"zh": "<b>点击即可了解评分者间一致性信度指标</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The following are ways to measure inter-rater agreement:",
+"zh": "以下是衡量评分者间一致性的方法："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Cohen's kappa and variants",
+"zh": "Cohen 的 kappa 和变异片段"
+},
+{
+"en": "Intra-class correlation (ICC)",
+"zh": "类别内相关性 (ICC)"
+},
+{
+"en": "Krippendorff's alpha",
+"zh": "Krippendorff 的 alpha"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For details on Cohen's kappa and intra-class correlation, see <a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3402032/\" target=\"_blank\" rel=\"noopener\">Hallgren 2012</a>. For details on Krippendorff's alpha, see <a href=\"https://www.asc.upenn.edu/sites/default/files/2021-03/Computing%20Krippendorff%27s%20Alpha-Reliability.pdf\" target=\"_blank\" rel=\"noopener\">Krippendorff 2011</a>.",
+"zh": "如需详细了解 Cohen 的 kappa 和类内相关系数，请参阅 <a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3402032/\" target=\"_blank\" rel=\"noopener\">Hallgren 2012</a>。如需详细了解 Krippendorff 的 Alpha 版，请参阅 <a href=\"https://www.asc.upenn.edu/sites/default/files/2021-03/Computing%20Krippendorff%27s%20Alpha-Reliability.pdf\" target=\"_blank\" rel=\"noopener\">Krippendorff 2011</a>。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Machine raters",
+"zh": "机器评分者"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Machine-labeled data, where categories are automatically determined by one or more classification models, is often referred to as <i>silver labels</i>. Machine-labeled data can vary widely in quality. Check it not only for accuracy and biases but also for violations of common sense, reality, and intention. For example, if a computer-vision model mislabels a photo of a <a href=\"https://www.freecodecamp.org/news/chihuahua-or-muffin-my-search-for-the-best-computer-vision-api-cbda4d6b425d/\" target=\"_blank\" rel=\"noopener\">chihuahua as a muffin</a>, or a photo of a muffin as a chihuahua, models trained on that labeled data will be of lower quality.",
+"zh": "机器标记的数据（类别由一个或多个分类模型自动确定）通常称为<i>银标签</i>。机器标注的数据在质量方面可能会有很大差异。不仅要检查准确性和偏见，还要检查是否违反常识、现实和意图。例如，如果计算机视觉模型将一张柴犬照片<a href=\"https://www.freecodecamp.org/news/chihuahua-or-muffin-my-search-for-the-best-computer-vision-api-cbda4d6b425d/\" target=\"_blank\" rel=\"noopener\">误标为杯状小松糕</a>，或者将一张杯状小松糕照片误标为柴犬，那么基于这些标记数据训练的模型质量会较低。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Similarly, a sentiment analyzer that scores neutral words as -0.25, when 0.0 is the neutral value, might be scoring all words with an additional negative bias that is not actually present in the data. An oversensitive toxicity detector may falsely flag many neutral statements as toxic. Try to get a sense of the quality and biases of machine labels and annotations in your data before training on it.",
+"zh": "同样，如果情感分析器将中性词语评分为 -0.25（0.0 是中性值），则可能会对所有词语评分时额外加入数据中实际上不存在的负偏差。过于敏感的毒性检测器可能会错误地将许多中性陈述标记为毒性内容。在对数据进行训练之前，请先了解数据中机器标签和注释的质量和偏差。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "High dimensionality",
+"zh": "高维度"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Categorical data tends to produce high-dimensional feature vectors; that is, feature vectors having a large number of elements. High dimensionality increases training costs and makes training more difficult. For these reasons, ML experts often seek ways to reduce the number of dimensions prior to training.",
+"zh": "分类数据往往会产生高维特征向量，即包含大量元素的特征向量。高维度会增加训练费用，并增加训练难度。因此，机器学习专家通常会寻找在训练之前减少维度数量的方法。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For natural-language data, the main method of reducing dimensionality is to convert feature vectors to embedding vectors. This is discussed in the <a href=\"#/ch/c09/embeddings\">Embeddings module</a> later in this course.",
+"zh": "对于自然语言数据，降维的主要方法是将特征向量转换为嵌入向量。本课程稍后的<a href=\"#/ch/c09/embeddings\">“嵌入”模块</a>中将对此进行讨论。"
+}
+}
+]
+},
+{
+"id": "feature-crosses",
+"path": "/machine-learning/crash-course/categorical-data/feature-crosses",
+"min": 5,
+"heading": {
+"en": "Categorical data: Feature crosses",
+"zh": "分类数据：特征组合"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data/feature-crosses",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data/feature-crosses?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Feature crosses are created by combining two or more categorical or bucketed features to capture interactions and nonlinearities within a dataset.",
+"zh": null
+},
+{
+"en": "They enable linear models to handle nonlinearities similar to polynomial transforms, but feature crosses work with categorical data while polynomial transforms are applied to numerical data.",
+"zh": null
+},
+{
+"en": "Feature crosses can be particularly effective when guided by domain expertise, but using neural networks can automate the process of discovering valuable combinations.",
+"zh": null
+},
+{
+"en": "Overuse of feature crosses with sparse features should be avoided, as it can lead to excessive sparsity in the resulting feature set.",
+"zh": null
+}
+],
+"terms": [
+"feature-cross",
+"neural_network"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"feature-cross\"><b>Feature crosses</b></button> are created by crossing (taking the Cartesian product of) two or more categorical or bucketed features of the dataset. Like <a href=\"#/ch/c05/polynomial-transforms\">polynomial transforms</a>, feature crosses allow linear models to handle nonlinearities. Feature crosses also encode interactions between features.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"feature-cross\"><b>特征组合</b></button>是通过对数据集中两个或更多分类特征或分桶特征进行组合（取笛卡尔积）而创建的。与<a href=\"#/ch/c05/polynomial-transforms\">多项式转换</a>一样，特征组合可让线性模型处理非线性问题。特征组合还会编码特征之间的互动。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, consider a leaf dataset with the categorical features:",
+"zh": "例如，假设有一个包含以下分类特征的叶子数据集："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<code>edges</code>, containing values <code>smooth</code>, <code>toothed</code>, and <code>lobed</code>",
+"zh": "<code>edges</code>，包含值 <code>smooth</code>、<code>toothed</code> 和 <code>lobed</code>"
+},
+{
+"en": "<code>arrangement</code>, containing values <code>opposite</code> and <code>alternate</code>",
+"zh": "<code>arrangement</code>，包含值 <code>opposite</code> 和 <code>alternate</code>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Assume the order above is the order of the feature columns in a one-hot representation, so that a leaf with <code>smooth</code> edges and <code>opposite</code> arrangement is represented as <code>{(1, 0, 0), (1, 0)}</code>.",
+"zh": "假设上述顺序是 one-hot 表示法中特征列的顺序，因此具有 <code>smooth</code> 个边缘和 <code>opposite</code> 个排列方式的叶子表示为 <code>{(1, 0, 0), (1, 0)}</code>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The feature cross, or Cartesian product, of these two features would be:",
+"zh": "这两个地图项的交叉项（即笛卡尔积）为："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<code>{Smooth_Opposite, Smooth_Alternate, Toothed_Opposite, Toothed_Alternate, Lobed_Opposite, Lobed_Alternate}</code>",
+"zh": "<code>{Smooth_Opposite, Smooth_Alternate, Toothed_Opposite, Toothed_Alternate, Lobed_Opposite, Lobed_Alternate}</code>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "where the value of each term is the product of the base feature values, such that:",
+"zh": "其中每个项的值为基准地图项值的乘积，即："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<code>Smooth_Opposite = edges[0] * arrangement[0]</code>",
+"zh": "<code>Smooth_Opposite = edges[0] * arrangement[0]</code>"
+},
+{
+"en": "<code>Smooth_Alternate = edges[0] * arrangement[1]</code>",
+"zh": "<code>Smooth_Alternate = edges[0] * arrangement[1]</code>"
+},
+{
+"en": "<code>Toothed_Opposite = edges[1] * arrangement[0]</code>",
+"zh": "<code>Toothed_Opposite = edges[1] * arrangement[0]</code>"
+},
+{
+"en": "<code>Toothed_Alternate = edges[1] * arrangement[1]</code>",
+"zh": "<code>Toothed_Alternate = edges[1] * arrangement[1]</code>"
+},
+{
+"en": "<code>Lobed_Opposite = edges[2] * arrangement[0]</code>",
+"zh": "<code>Lobed_Opposite = edges[2] * arrangement[0]</code>"
+},
+{
+"en": "<code>Lobed_Alternate = edges[2] * arrangement[1]</code>",
+"zh": "<code>Lobed_Alternate = edges[2] * arrangement[1]</code>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, if a leaf has a <code>lobed</code> edge and an <code>alternate</code> arrangement, the feature-cross vector will have a value of 1 for <code>Lobed_Alternate</code>, and a value of 0 for all other terms:",
+"zh": "例如，如果叶子具有 <code>lobed</code> 边和 <code>alternate</code> 排列方式，则特征交叉矢量将为 <code>Lobed_Alternate</code> 的值为 1，所有其他项的值为 0："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<code>{0, 0, 0, 0, 0, 1}</code>",
+"zh": "<code>{0, 0, 0, 0, 0, 1}</code>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This dataset could be used to classify leaves by tree species, since these characteristics do not vary within a species.",
+"zh": "由于这些特征在同一树种中不会发生变化，因此此数据集可用于按树种对叶子进行分类。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here to compare polynomial transforms with feature crosses</b>",
+"zh": "<b>点击此处比较多项式转换与特征交叉</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Feature crosses are somewhat analogous to <a href=\"#/ch/c05/polynomial-transforms\">Polynomial transforms</a>. Both combine multiple features into a new synthetic feature that the model can train on to learn nonlinearities. Polynomial transforms typically combine numerical data, while feature crosses combine categorical data.",
+"zh": "特征交叉有点类似于<a href=\"#/ch/c05/polynomial-transforms\">多项式转换</a>。这两种方法都会将多个特征组合成一个新的合成特征，以便模型进行训练以学习非线性特征。多项式转换通常会组合数字数据，而特征交叉会组合分类数据。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "When to use feature crosses",
+"zh": "何时使用特征交叉"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Domain knowledge can suggest a useful combination of features to cross. Without that domain knowledge, it can be difficult to determine effective feature crosses or polynomial transforms by hand. It's often possible, if computationally expensive, to use <a href=\"#/ch/c08/neural-networks\">neural networks</a> to <i>automatically</i> find and apply useful feature combinations during training.",
+"zh": "领域知识可以提供有用的特征组合建议。如果没有这些领域知识，很难手动确定有效的特征交叉或多项式转换。如果计算成本较高，通常可以使用<a href=\"#/ch/c08/neural-networks\">神经网络</a>在训练期间<i>自动</i>发现并应用有用的特征组合。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Be careful—crossing two sparse features produces an even sparser new feature than the two original features. For example, if feature A is a 100-element sparse feature and feature B is a 200-element sparse feature, a feature cross of A and B yields a 20,000-element sparse feature.",
+"zh": "请注意，对两个稀疏特征进行交叉会产生比这两个原始特征更稀疏的新特征。例如，如果特征 A 是 100 个元素的稀疏特征，特征 B 是 200 个元素的稀疏特征，则 A 和 B 的特征交叉会产生 2 万个元素的稀疏特征。"
+}
+}
+]
+},
+{
+"id": "feature-cross-exercises",
+"path": "/machine-learning/crash-course/categorical-data/feature-cross-exercises",
+"min": 15,
+"heading": {
+"en": "Categorical data: Feature cross exercises",
+"zh": "分类数据：特征组合练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data/feature-cross-exercises",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data/feature-cross-exercises?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Playground is an interactive tool for experimenting with machine learning models by adjusting features and hyperparameters to observe their impact.",
+"zh": null
+},
+{
+"en": "Exercise 1 focuses on feature crosses and manipulating feature weights to achieve accurate model predictions of sick and healthy trees.",
+"zh": null
+},
+{
+"en": "Exercise 2 explores model training, the influence of features and learning rate on model performance, and minimizing test loss for better predictions.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Playground is an interactive application that lets you manipulate various aspects of training and testing a machine learning model. With Playground, you can select features and adjust hyperparameters, and then discover how your choices influence a model.",
+"zh": "Playground 是一款交互式应用，可让您操纵机器学习模型训练和测试的各个方面。借助 Playground，您可以选择特征并调整超参数，然后了解您的选择对模型有何影响。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This page contains two exercises using the embedded Playground widgets below the instructions.",
+"zh": "本页包含两项练习，您可以使用说明下方的嵌入式 Playground widget 完成这些练习。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 1: A basic feature cross",
+"zh": "练习 1：基本特征组合"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "For this exercise, focus on the following parts of the Playground user interface:",
+"zh": "在此练习中，请重点关注 Playground 界面中的以下部分："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Underneath FEATURES, notice the three potential model features: <ul><li>x<sub>1</sub></li><li>x<sub>2</sub></li><li>x<sub>1</sub>x<sub>2</sub></li></ul>",
+"zh": "在“FEATURES”下方，您会看到三个潜在的模型特征： <ul><li>x<sub>1</sub></li><li>x<sub>2</sub></li><li>x<sub>1</sub>x<sub>2</sub></li></ul>"
+},
+{
+"en": "Underneath OUTPUT, you'll see a square containing orange and blue dots. Imagine that you're looking at a square forest, where orange dots mark the position of sick trees and blue dots mark the position of healthy trees.",
+"zh": "在“输出”下方，您会看到一个包含橙点和蓝点的正方形。假设您正在查看一个正方形森林，其中橙点表示病树的位置，蓝点表示健康树的位置。"
+},
+{
+"en": "Between FEATURES and OUTPUT, if you look very closely, you'll see three faint dashed lines connecting each feature to the output. The width of each dashed line symbolizes the weight currently associated with each feature. These lines are very faint because the starting weight for each feature is initialized to 0. As the weight grows or shrinks, so will the thickness of these lines.",
+"zh": "在 FEATURES 和 OUTPUT 之间，如果您仔细观察，会看到三条细虚线将每个特征连接到输出。 每条虚线的宽度表示当前与每个特征关联的权重。这些线的颜色非常浅，因为每个特征的初始权重都初始化为 0。随着权重增大或减小，这些线条的粗细也会随之变化。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task 1:</b> Explore Playground by doing the following:",
+"zh": "<b>任务 1</b>：通过执行以下操作来探索 Playground："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Click on the faint line that connects feature x<sub>1</sub> to the output. A popup appears.",
+"zh": "点击将特征 x<sub>1</sub> 连接到输出的细线。 系统会显示一个弹出式窗口。"
+},
+{
+"en": "In the popup, enter the weight <code>1.0</code>.",
+"zh": "在弹出式窗口中，输入权重 <code>1.0</code>。"
+},
+{
+"en": "Press Enter.",
+"zh": "按 Enter 键。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Notice the following:",
+"zh": "请注意以下几点："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The dashed line for x<sub>1</sub> becomes thicker as the weight increases from 0 to 1.0.",
+"zh": "随着权重从 0 增加到 1.0，x<sub>1</sub> 的虚线会变粗。"
+},
+{
+"en": "An orange and blue background now appears. <ul><li>The orange background is the model's guesses as to where the sick trees are.</li><li>The blue background is the model's guesses as to where the healthy trees are. The model is doing a terrible job; about half of the model's guesses are wrong.</li></ul>",
+"zh": "现在，系统会显示橙色和蓝色背景。 <ul><li>橙色背景表示模型猜测的病树位置。</li><li>蓝色背景是模型对健康树木位置的猜测。 该模型的表现非常糟糕；大约一半的猜测都是错误的。</li></ul>"
+},
+{
+"en": "Because the weight is 1.0 for x<sub>1</sub> and 0 for the other features, the model matches x<sub>1</sub>'s values exactly.",
+"zh": "由于 x<sub>1</sub> 的权重为 1.0，其他特征的权重为 0，因此模型与 x<sub>1</sub> 的值完全匹配。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task 2:</b> Change the weights of any or all of the three features so that the model (the background colors) successfully predicts sick and healthy trees. The solution appears just below Playground.",
+"zh": "<b>任务 2</b>：更改任意或全部三个特征的权重，使模型（背景颜色）能够成功预测病树和健康树。解决方案会显示在 Playground 下方。"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/machine-learning/crash-course/playground/?utm_source=engedu&utm_medium=ss&utm_campaign=mlcc#activation=linear&batchSize=1&dataset=xor&regDataset=reg-plane&learningRate=3&regularizationRate=0&noise=10&networkShape=&seed=0.87460&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=true&problem=classification&initZero=true&hideText=true&dataset_hide=true&percTrainData_hide=true&noise_hide=true&batchSize_hide=true&xTimesY_hide=false&xSquared_hide=true&ySquared_hide=true&sinX_hide=true&sinY_hide=true&activation_hide=true&learningRate_hide=true&regularization_hide=true&regularizationRate_hide=true&numHiddenLayers_hide=true&problem_hide=true&resetButton_hide=true&playButton_hide=true&stepButton_hide=true&tutorial=dp-feature-crosses-intro&outputMetrics_hide=true",
+"zh": "https://developers.google.com/machine-learning/crash-course/playground/?utm_source=engedu&utm_medium=ss&utm_campaign=mlcc&hl=zh-cn#activation=linear&batchSize=1&dataset=xor&regDataset=reg-plane&learningRate=3&regularizationRate=0&noise=10&networkShape=&seed=0.87460&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=true&problem=classification&initZero=true&hideText=true&dataset_hide=true&percTrainData_hide=true&noise_hide=true&batchSize_hide=true&xTimesY_hide=false&xSquared_hide=true&ySquared_hide=true&sinX_hide=true&sinY_hide=true&activation_hide=true&learningRate_hide=true&regularization_hide=true&regularizationRate_hide=true&numHiddenLayers_hide=true&problem_hide=true&resetButton_hide=true&playButton_hide=true&stepButton_hide=true&tutorial=dp-feature-crosses-intro&outputMetrics_hide=true"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for the solution to Task 2</b>",
+"zh": "<b>点击此处查看任务 2 的解决方案</b>"
+},
+"blocks": [
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<i>w<sub>1</sub></i> = 0",
+"zh": "<i>w<sub>1</sub></i> = 0"
+},
+{
+"en": "<i>w<sub>2</sub></i> = 0",
+"zh": "<i>w<sub>2</sub></i> = 0"
+},
+{
+"en": "<i>x<sub>1</sub></i> <i>x<sub>2</sub></i> = any positive value",
+"zh": "<i>x<sub>1</sub></i> <i>x<sub>2</sub></i> = 任何正值"
+}
+]
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 2: A more sophisticated feature cross",
+"zh": "练习 2：更复杂的特征组合"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "For the second exercise, look at the arrangement of orange dots (sick trees) and blue dots (healthy trees) in the output model, noticing the following:",
+"zh": "对于第二项练习，请查看输出模型中橙色点（病树）和蓝色点（健康树）的排列，并注意以下几点："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The dots form roughly spherical patterns.",
+"zh": "这些点大致呈球形图案。"
+},
+{
+"en": "The arrangement of dots is noisy; for example, notice the occasional blue dots in the outer sphere of orange dots. Consequently, even a great model is unlikely to correctly predict each dot.",
+"zh": "点排列得比较杂乱；例如，请注意橙色点外球体中偶尔出现的蓝色点。因此，即使是出色的模型，也不太可能正确预测每个点。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task 1:</b> Explore the Playground UI by doing the following:",
+"zh": "<b>任务 1</b>：执行以下操作，探索 Playground 界面："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Click the Run/Pause button, which is a white triangle inside a black circle. Playground will begin training the model; observe the Epochs counter increasing.",
+"zh": "点击“运行/暂停”按钮，该按钮是一个黑色圆圈内的白色三角形。Playground 将开始训练模型；请注意“周期”计数器是否在增加。"
+},
+{
+"en": "After the system has trained for at least 300 epochs, press that same Run/Pause button to pause the training.",
+"zh": "在系统训练至少 300 个周期后，按同一“运行/暂停”按钮暂停训练。"
+},
+{
+"en": "Look at the model. Is the model making good predictions? In other words, are the blue dots generally surrounded by a blue background, and are the orange dots generally surrounded by an orange background?",
+"zh": "查看模型。模型是否能做出良好的预测？换句话说，蓝点周围是否通常是蓝色背景，而橙点周围是否通常是橙色背景？"
+},
+{
+"en": "Examine the value of Test loss, which appears just below OUTPUT. Is this value closer to 1.0 (higher loss) or closer to 0 (lower loss)?",
+"zh": "检查“OUTPUT”正下方的“Test loss”值。此值是更接近 1.0（损失较高）还是更接近 0（损失较低）？"
+},
+{
+"en": "Reset Playground by pressing the curvy arrow to the left of the Run/Pause button.",
+"zh": "按“跑/暂停”按钮左侧的弯曲箭头，重置“游乐场”。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task 2:</b> Build a better model by doing the following:",
+"zh": "<b>任务 2</b>：通过执行以下操作来构建更好的模型："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Select or deselect any combination of the five possible features.",
+"zh": "选择或取消选择五种可能的功能的任意组合。"
+},
+{
+"en": "Adjust the learning rate.",
+"zh": "调整学习速率。"
+},
+{
+"en": "Train the system for at least 500 epochs.",
+"zh": "至少训练 500 个周期。"
+},
+{
+"en": "Examine the value of Test loss. Can you get a Test loss less than 0.2?",
+"zh": "检查测试损失的值。能否将测试损失降至 0.2 以下？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Solutions appear below Playground.",
+"zh": "解决方案显示在 Playground 下方。"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/machine-learning/crash-course/playground/?utm_source=engedu&utm_medium=ss&utm_campaign=mlcc#activation=linear&batchSize=1&dataset=circle&regDataset=reg-plane&learningRate=0.1&regularizationRate=0&noise=35&networkShape=&seed=0.68707&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=true&problem=classification&initZero=false&hideText=true&dataset_hide=true&percTrainData_hide=false&noise_hide=false&batchSize_hide=false&xTimesY_hide=false&xSquared_hide=false&ySquared_hide=false&sinX_hide=true&sinY_hide=true&activation_hide=true&learningRate_hide=false&regularization_hide=true&regularizationRate_hide=true&numHiddenLayers_hide=true&problem_hide=true&tutorial=dp-feature-crosses-complex&goalTestLossMinThresholdFirst=0.2&goalTestLossMinThresholdSecond=0.173",
+"zh": "https://developers.google.com/machine-learning/crash-course/playground/?utm_source=engedu&utm_medium=ss&utm_campaign=mlcc&hl=zh-cn#activation=linear&batchSize=1&dataset=circle&regDataset=reg-plane&learningRate=0.1&regularizationRate=0&noise=35&networkShape=&seed=0.68707&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=true&problem=classification&initZero=false&hideText=true&dataset_hide=true&percTrainData_hide=false&noise_hide=false&batchSize_hide=false&xTimesY_hide=false&xSquared_hide=false&ySquared_hide=false&sinX_hide=true&sinY_hide=true&activation_hide=true&learningRate_hide=false&regularization_hide=true&regularizationRate_hide=true&numHiddenLayers_hide=true&problem_hide=true&tutorial=dp-feature-crosses-complex&goalTestLossMinThresholdFirst=0.2&goalTestLossMinThresholdSecond=0.173"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for the solution to Task 1</b>",
+"zh": "<b>点击此处查看任务 1 的解决方案</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The model is terrible. Notice, for example, that many of the orange dots are swimming in a sea of blue. Furthermore, Test loss is very high.",
+"zh": "该模型很糟糕。例如，您会注意到，许多橙点都漂浮在蓝色海洋中。此外，测试损失非常高。"
+}
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for the solution to Task 2</b>",
+"zh": "<b>点击此处查看任务 2 的解决方案</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "You can improve model performance by doing the following:",
+"zh": "您可以通过以下方式来提高模型性能："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Select both polynomial transforms (x<sub>1</sub><sup>2</sup> and x<sub>2</sub><sup>2</sup>) and unselect the other three possible features.",
+"zh": "同时选择两个多项式转换（x<sub>1</sub><sup>2</sup> 和 x<sub>2</sub><sup>2</sup>），并取消选择其他三个可能的功能。"
+},
+{
+"en": "Reduce the learning rate to <code>0.001</code> or lower.",
+"zh": "将学习速率降低到 <code>0.001</code> 或更低。"
+}
+]
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "Learn more about Playground at <a href=\"https://playground.tensorflow.org\" target=\"_blank\" rel=\"noopener\">playground.tensorflow.org</a>.",
+"zh": "如需详细了解 Playground，请访问 <a href=\"https://playground.tensorflow.org?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">playground.tensorflow.org</a>。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/categorical-data/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Categorical data: Test your knowledge",
+"zh": "分类数据：测试您的知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/categorical-data/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/categorical-data/quiz?hl=zh-cn"
+},
+"only": "en"
+},
+{
+"type": "p",
+"html": {
+"en": "参加此测验可检验您的分类数据知识。",
+"zh": "参加此测验可检验您的分类数据知识。"
+},
+"only": "zh"
+},
+{
+"type": "p",
+"html": {
+"en": "&lt;ph type=\"x-smartling-placeholder\"&gt;",
+"zh": "&lt;ph type=\"x-smartling-placeholder\"&gt;"
+},
+"only": "zh"
+},
+{
+"type": "p",
+"html": {
+"en": "&lt;/ph&gt;",
+"zh": "&lt;/ph&gt;"
+},
+"only": "zh"
+},
+{
+"type": "p",
+"html": {
+"en": "打开测验",
+"zh": "打开测验"
+},
+"only": "zh"
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元的学习！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c07/overfitting\">Datasets, generalization and overfitting</a></b>.",
+"zh": "我们建议您探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a> 自己的节奏和兴趣如果您想遵循建议顺序 我们建议您接下来学习以下单元： <b><a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a></b>。"
+}
+}
+]
+}
+]
+}

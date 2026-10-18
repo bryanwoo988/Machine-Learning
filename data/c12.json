@@ -1,0 +1,643 @@
+{
+"id": "c12",
+"num": 12,
+"stage": 2,
+"title": {
+"en": "Automated machine learning",
+"zh": "自动化机器学习 (AutoML)"
+},
+"minutes": 30,
+"sections": [
+{
+"id": "automl",
+"path": "/machine-learning/crash-course/automl",
+"min": 10,
+"heading": {
+"en": "Automated Machine Learning (AutoML)",
+"zh": "自动化机器学习 (AutoML)"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/automl",
+"zh": "https://developers.google.com/machine-learning/crash-course/automl?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "AutoML automates tasks in the machine learning workflow, like feature engineering, algorithm selection, and hyperparameter tuning, making model building faster and easier.",
+"zh": null
+},
+{
+"en": "While manual training involves writing code and iteratively adjusting it, AutoML reduces repetitive work and the need for specialized skills.",
+"zh": null
+},
+{
+"en": "AutoML empowers users to focus on the core machine learning problem and data instead of getting bogged down in manual tasks within the model development cycle.",
+"zh": null
+},
+{
+"en": "This module explores the benefits and limitations of using AutoML, common patterns, and how to apply them to machine learning projects, assuming prior knowledge of basic machine learning concepts.",
+"zh": null
+}
+],
+"terms": [
+"automl"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Automate tasks in a machine learning workflow.</li><li>Determine the benefits and limitations of using AutoML with your machine learning model.</li><li>Enumerate the common AutoML patterns and apply them to your ML projects.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>自动执行机器学习工作流中的任务。</li><li>确定将 AutoML 与机器学习模型搭配使用的好处和局限性。</li><li>枚举常见的 AutoML 模式，并将其应用于您的机器学习项目。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c05/numerical-data\">Working with numerical data</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li><li><a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a></li></ul>",
+"zh": "<b>前提条件</b>： 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c05/numerical-data\">处理数值数据</a></li><li><a href=\"#/ch/c06/categorical-data\">处理分类数据</a></li><li><a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If you are starting a new machine learning (ML) project, you may be wondering if manual training is your only option to build a machine learning model. With manual training, you write code using an ML framework to create a model. During this process, you choose which algorithms to explore and iteratively tune hyperparameters to find the right model.",
+"zh": "如果您要着手进行新的机器学习 (ML) 项目，可能会想知道手动训练是否是构建机器学习模型的唯一选项。在手动训练中，您使用机器学习框架编写代码来创建模型。在此过程中，您可以选择要探索的算法，并迭代调整超参数，以找到合适的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Of course, model training is not the only thing you need to think about. In practice, building a machine learning model from prototype to production involves repetitive tasks and specialized skills. A simple exploratory ML workflow looks something like this:",
+"zh": "当然，模型训练并不是您需要考虑的唯一事项。实际上，从原型设计到投入生产阶段构建机器学习模型需要重复性任务和专业技能。简单的探索性机器学习工作流程如下所示："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/automl/images/ml-workflow.png",
+"alt": {
+"en": "Figure 1. A simple machine learning workflow.",
+"zh": "图 1. 简单的机器学习工作流。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> Simple machine learning exploration workflow.",
+"zh": "<b>图 1.</b> 简单的机器学习探索工作流。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Repetitive tasks</b> - The ML workflow can involve repetitive work and experimentation. For example, during model development you typically need to explore different combinations of algorithms and hyperparameters to identify the most appropriate model. With manual training, you write specialized code to train the model and then adjust the code to run experiments with different ML algorithms and hyperparameters to find the best model. For small or exploratory projects this manual process may not be a problem, but for larger projects these repetitive tasks can be time consuming.",
+"zh": "<b>重复性任务</b> - 机器学习工作流可能涉及重复性工作和实验。例如，在模型开发过程中，您通常需要探索算法和超参数的不同组合，以确定最合适的模型。在手动训练中，您需要编写专用代码来训练模型，然后调整代码以使用不同的机器学习算法和超参数运行实验，以便找到最佳模型。对于小型或探索性项目，此手动流程可能不是问题，但对于大型项目，这些重复性任务可能会非常耗时。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Specialized Skills</b> - Manually developing an ML model involves specialized skills. In practice, not every team planning to develop a machine learning model may have these skills. If a team does not have a dedicated data scientist, doing this work manually might not even be feasible.",
+"zh": "<b>专业技能</b> - 手动开发机器学习模型需要具备专业技能。在实践中，并非每个计划开发机器学习模型的团队都具备这些技能。如果团队没有专职的数据科学家，手动执行此类工作可能根本不可行。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Luckily, certain steps in model development can be automated to reduce the burden of repetitive work and the need for specialized skills. Automating these tasks is the subject of this module on automated machine learning (AutoML).",
+"zh": "幸运的是，模型开发中的某些步骤可以自动执行，从而减少重复性工作负担，并降低对专业技能的需求。本自动化机器学习 (AutoML) 模块将介绍如何自动执行这些任务。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What is AutoML?",
+"zh": "什么是 AutoML？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"automl\"><b>AutoML</b></button> is a process of automating certain tasks in a machine learning workflow. You can think of AutoML as a set of tools and technologies that make building machine learning models faster and more accessible to a wider group of users. Though automation can help throughout the ML workflow, the tasks that are often associated with AutoML are the ones included in the model development cycle shown in Figure 1. These repetitive tasks include:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"automl\"><b>AutoML</b></button> 是一种自动执行机器学习工作流中特定任务的过程。您可以将 AutoML 视为一系列工具和技术，它们可以让更多用户更快地构建机器学习模型，并更轻松地使用这些模型。虽然自动化功能可以在整个机器学习工作流中提供帮助，但与 AutoML 相关的任务是指图 1 所示模型开发周期中包含的任务。这些重复性任务包括："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Data Engineering</b> <ul><li>Feature engineering.</li><li>Feature selection.</li></ul>",
+"zh": "<b>数据工程</b> <ul><li>特征工程。</li><li>特征选择。</li></ul>"
+},
+{
+"en": "<b>Training</b> <ul><li>Identifying an appropriate ML algorithm.</li><li>Selecting the best hyperparameters.</li></ul>",
+"zh": "<b>培训</b> <ul><li>确定合适的机器学习算法。</li><li>选择最佳超参数。</li></ul>"
+},
+{
+"en": "<b>Analysis</b> <ul><li>Evaluating metrics generated during training based on test and validation datasets.</li></ul>",
+"zh": "<b>分析</b> <ul><li>根据测试数据集和验证数据集评估训练期间生成的指标。</li></ul>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "With AutoML, you can focus on your ML problem and data rather than on feature selection, tuning hyperparameters, and choosing the right algorithm.",
+"zh": "借助 AutoML，您可以专注于机器学习问题和数据，而无需考虑特征选择、超参数调优和选择合适的算法。"
+}
+}
+]
+},
+{
+"id": "benefits-limitations",
+"path": "/machine-learning/crash-course/automl/benefits-limitations",
+"min": 10,
+"heading": {
+"en": "AutoML: Benefits and limitations",
+"zh": "AutoML：优势和限制"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/automl/benefits-limitations",
+"zh": "https://developers.google.com/machine-learning/crash-course/automl/benefits-limitations?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "AutoML helps save time and improve the quality of machine learning models by automating the model selection and training process.",
+"zh": null
+},
+{
+"en": "AutoML democratizes ML by enabling users without specialized skills to build models and is useful for dataset evaluation and enforcing best practices.",
+"zh": null
+},
+{
+"en": "AutoML may have limitations such as potentially lower model quality compared to manual training, limited customization during training, and opacity in the model search process.",
+"zh": null
+},
+{
+"en": "Large amounts of data are generally required for AutoML, although specialized systems utilizing transfer learning can reduce this need.",
+"zh": null
+},
+{
+"en": "AutoML is suitable for teams with limited ML experience or those seeking productivity gains without customization needs, while manual training is preferred when model quality and customization are paramount.",
+"zh": null
+}
+],
+"terms": [
+"automl",
+"transfer-learning"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This section discusses some of the benefits and limitations of <button type=\"button\" class=\"term\" data-term=\"automl\"><b>AutoML</b></button> and can help you decide if AutoML is right for your project.",
+"zh": "本部分探讨了 Cloud Storage 的一些优势和限制， <button type=\"button\" class=\"term\" data-term=\"automl\"><b>AutoML</b></button>， 可帮助您确定 AutoML 是否适合您的项目。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Benefits",
+"zh": "优势"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Some of the most common reasons you might choose to use AutoML include:",
+"zh": "您可以选择使用 AutoML 的一些最常见原因包括："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>To save time</b>: Many people choose AutoML to save time by avoiding extensive manual experimentation to find the best model.",
+"zh": "<b>节省时间</b>：许多人选择使用 AutoML 来节省时间，是避免 大量手动实验来找到最佳模型。"
+},
+{
+"en": "<b>To improve quality of ML model</b>: AutoML tools can comprehensively search for the highest quality model.",
+"zh": "<b>提高机器学习模型质量</b>：AutoML 工具可以全面搜索 以获得最高质量的模型。"
+},
+{
+"en": "<b>To build an ML model without needing specialized skills</b>: A side effect of automating ML tasks is that it democratizes ML. Users don't need to have a deep understanding of machine learning algorithms or programming to develop an ML model.",
+"zh": "<b>构建机器学习模型时无需具备专业技能</b>：附带效应 是实现机器学习的普及。用户无需 对机器学习算法或编程有深入了解， 开发机器学习模型。"
+},
+{
+"en": "<b>To smoke test a dataset</b>: Even if you're an expert model builder, AutoML can quickly give you a baseline estimate for whether a dataset has enough signal in all of its noise. If the AutoML tool can't build even a mediocre model, it might not be worth spending your time trying to build a good model by hand.",
+"zh": "<b>对数据集进行冒烟测试</b>：即使是专家级模型构建人员，AutoML 可快速为您提供基准估算，了解数据集是否有足够的 所有噪声。如果 AutoML 工具无法构建平平无奇的工具， 那么花时间构建一个良好的模型可能并不值得 手动更改。"
+},
+{
+"en": "<b>To evaluate a dataset</b>: Many AutoML systems help you evaluate not just the models they produce but also help evaluate the features that go into training those models. Even if you don't use the resulting model, AutoML tools may help you determine which of your features might not be worth gathering and including in your final dataset.",
+"zh": "<b>评估数据集</b>：许多 AutoML 系统不仅可以帮助您评估数据集， 也有助于评估输入到模型中的 训练这些模型的方法。即使您不使用生成的模型，AutoML 工具可以帮助您确定哪些特征可能不值得 并将其包含在最终数据集中。"
+},
+{
+"en": "<b>To enforce best practices</b>: Automation includes built-in support to apply ML best practices to each model search",
+"zh": "<b>为了落实最佳做法</b>：自动化功能提供内置支持，方便您采纳 每次模型搜索的机器学习最佳实践"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Limitations",
+"zh": "限制"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "However, before choosing AutoML there are some limitations you should consider:",
+"zh": "但是，在选择 AutoML 之前，您应该考虑一些限制："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Model quality may not be as good as manual training.</b> Using a generalized optimization algorithm to find the best combination of architecture, hyperparameters, and feature engineering for any random dataset often means that a motivated expert with enough time can create a model with better prediction quality.",
+"zh": "<b>模型质量可能不如手动训练。</b>使用通用化的 优化算法找到最佳架构组合， 超参数和特征工程，这通常意味着 积极主动、有充足时间的专家创建出质量更高的模型， 预测质量。"
+},
+{
+"en": "<b>Model search and complexity can be opaque.</b> With AutoML, it is difficult to have insight into how the tool arrived at the best model. In fact, the output models themselves may be made from different architectures, hyperparameters, and feature engineering strategies. Models generated with AutoML are difficult to reproduce manually.",
+"zh": "<b>模型搜索和复杂性可能是不透明的。</b>有了 AutoML， 深入了解该工具如何得出最佳模型。事实上， 输出模型本身可能由不同的架构组成， 超参数和特征工程策略。使用 AutoML 很难手动重现。"
+},
+{
+"en": "<b>Multiple AutoML runs may show more variance</b>: Because of how the optimization algorithm iteratively finds what it thinks are the best values for building the model, different AutoML runs may search different portions of the space and wind up in moderately (or even possibly significantly) different places. Retuning with AutoML to create a new model architecture may show more variance than simply retraining the previous output model architecture.",
+"zh": "<b>多次 AutoML 运行可能会显示更大的方差</b>：由于 优化算法以迭代方式找出其认为的最佳值 不同的 AutoML 运行可能会搜索模型的不同部分， 并适度（甚至可能显著）结束 不同位置。使用 AutoML 进行重新调整以创建新的模型架构 与简单地重新训练上一个输出模型相比，差异可能更大 架构。"
+},
+{
+"en": "<b>Models can't be customized during training.</b> If your use case requires customization or tweaking during the training process, AutoML may not be the right choice for you.",
+"zh": "<b>模型在训练期间无法自定义。</b>如果您的用例需要 自定义或调整，AutoML 可能并不是 适合您的选择。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Data requirements",
+"zh": "数据要求"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Whether you're using custom training or an AutoML system, one thing you can count on when you are building a model from scratch is that you need large amounts of data. The advantage with AutoML is that you can mostly ignore the architecture and hyperparameters search and focus primarily on the quality of your data.",
+"zh": "无论您是使用自定义训练还是 AutoML 系统，您都可以 从零开始构建模型时需要考虑的一点是， 数据量。AutoML 的优势在于，您大多可以忽略 架构和超参数搜索并主要关注 数据。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "There are also specialized AutoML systems that can train models with significantly less data because they use <button type=\"button\" class=\"term\" data-term=\"transfer-learning\"><b>transfer learning</b></button>. For example, instead of requiring hundreds of thousands of examples to build an image classification model, these specialized AutoML systems can use only a few hundred labeled images along with transfer learning from an existing image classification framework model.",
+"zh": "还有一些专门的 AutoML 系统可以使用 会显著减少数据 <button type=\"button\" class=\"term\" data-term=\"transfer-learning\"><b>迁移学习</b></button>。对于 而无需使用数十万个样本来构建 一个图片分类模型，那么这些专门的 AutoML 系统只能使用 数百张已加标签的图片以及从现有图片中 图片分类框架模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Is AutoML right for your project?",
+"zh": "AutoML 适合您的项目吗？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "AutoML can help anyone—from novices to experts—use ML to build products and solve problems. If you are trying to decide if AutoML is right for your project, consider these trade offs:",
+"zh": "AutoML 可以帮助任何人（从新手到专家）使用机器学习来构建产品和 解决问题。如果您想确定 AutoML 是否适合您的项目， 请考虑以下权衡因素："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>AutoML</b> is a great choice for a team with limited experience building ML models or experienced teams that are looking for productivity gains and don't have customization requirements.",
+"zh": "如果团队在机器学习构建方面经验有限，<b>AutoML</b> 是理想之选 希望提高工作效率并拥有丰富的经验的团队 则没有自定义要求"
+},
+{
+"en": "<b>Custom (manual) training</b> is more appropriate when model quality is important and the team needs to be able to customize their model. In these cases, manual training may require more time for experimentation and building a solution, but the team can often achieve a higher quality model than with an AutoML solution.",
+"zh": "如果模型质量较高，选择<b>自定义（手动）训练</b>更为合适。 团队需要能够自定义他们的模型。在这些 手动训练可能需要更多时间进行实验和 构建解决方案，但团队通常可以实现质量更高的模型， 与 AutoML 解决方案相比。"
+}
+]
+}
+]
+},
+{
+"id": "getting-started",
+"path": "/machine-learning/crash-course/automl/getting-started",
+"min": 10,
+"heading": {
+"en": "AutoML: Getting started",
+"zh": "AutoML：使用入门"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/automl/getting-started",
+"zh": "https://developers.google.com/machine-learning/crash-course/automl/getting-started?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "AutoML automates the process of developing machine learning models, requiring minimal coding for some tools while others offer more flexibility through APIs and CLIs for advanced users.",
+"zh": null
+},
+{
+"en": "The AutoML workflow follows similar steps to traditional machine learning, including problem definition, data gathering, preparation, model development, evaluation, and potential retraining.",
+"zh": null
+},
+{
+"en": "Data preparation remains crucial for AutoML, involving labeling, cleaning, formatting, and potentially feature transformations to ensure optimal model training.",
+"zh": null
+},
+{
+"en": "No-code AutoML tools guide users through model development with steps like data import, analysis, refinement, and configuration of training parameters before initiating the automated training process.",
+"zh": null
+},
+{
+"en": "After training, users can evaluate model performance, feature importance, and underlying architecture, with some AutoML systems even supporting model deployment and retraining.",
+"zh": null
+}
+],
+"terms": [
+"automl"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "If you are thinking about using AutoML, you may have questions about how it works and what steps you should take to get started. This section dives deeper into common AutoML patterns, explores how AutoML works, and examines what steps you may need to take before you begin using AutoML for your project.",
+"zh": "如果您正在考虑使用 AutoML，可能会对其运作方式以及开始使用时应执行哪些步骤存有疑问。本部分将深入探讨常见的 AutoML 模式，探索 AutoML 的工作原理，并审视您在开始为项目使用 AutoML 之前可能需要执行的步骤。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "AutoML tools",
+"zh": "AutoML 工具"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "AutoML tools fall into two main categories:",
+"zh": "AutoML 工具主要分为两类："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Tools that require no coding</b> typically take the form of web applications that let you configure and run experiments through a user interface to find the best model for your data without writing any code.",
+"zh": "<b>无需编码的工具</b>通常采用 Web 应用的形式，可让您通过界面配置和运行实验，从而为您的数据找到最合适的模型，而无需编写任何代码。"
+},
+{
+"en": "<b>API and CLI tools</b> provide advanced automation features, but require more (sometimes significantly more) programming and ML expertise.",
+"zh": "<b>API 和 CLI 工具</b>提供高级自动化功能，但需要更多（有时要多得多）的编程和机器学习专业知识。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "AutoML tools that require coding can be more powerful and more flexible than no-code tools, but they can also be more difficult to use. This module focuses on the no-code options for model development, but be aware that API and CLI options can help if you require customized automation.",
+"zh": "需要编码的 AutoML 工具可能比无代码工具更强大、更灵活，但也可能更难使用。本单元重点介绍了无代码模型开发选项，但请注意，如果您需要自定义自动化，API 和 CLI 选项会很有帮助。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "AutoML workflow",
+"zh": "AutoML 工作流"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Let's walk through a typical ML workflow and see how things work when you use AutoML. The high level steps in the workflow are the same as those you use for custom training; the main difference is that AutoML handles some tasks for you.",
+"zh": "我们来详细了解一下典型的机器学习工作流，看看使用 AutoML 时会发生什么情况。该工作流中的高级步骤与您用于自定义训练的步骤相同；主要区别在于 AutoML 会为您处理一些任务。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Problem definition",
+"zh": "问题定义"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The first step in any ML workflow is to define your problem. When you are using AutoML, ensure that the tool you choose can support the objectives of your ML project. Most AutoML tools support a variety of supervised machine learning algorithms and input data types.",
+"zh": "任何机器学习工作流的第一步都是定义问题。使用 AutoML 时，请确保您选择的工具可以支持机器学习项目的目标。大多数 AutoML 工具都支持各种监督式机器学习算法和输入数据类型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For more information about problem framing, take a look at the module on <a href=\"#/ch/c14/intro\">Introduction to Machine Learning Problem Framing</a>.",
+"zh": "如需详细了解问题框架，请参阅<a href=\"#/ch/c14/intro\">机器学习问题框架简介</a>模块。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Data gathering",
+"zh": "数据收集"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Before you can start working with an AutoML tool, you need to collect your data into a single data source. Check the product documentation to make sure that your tool supports: your data source, the data types in your dataset, the size of your dataset.",
+"zh": "在开始使用 AutoML 工具之前，您需要将数据收集到单个数据源中。查看产品文档，确保您的工具支持您的数据源、数据集中的数据类型和数据集的大小。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Data preparation",
+"zh": "数据准备"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Data preparation is an area where AutoML tools can help you, but no tool can do everything automatically, so expect to do some work before you can import your data into the tool. Data preparation for AutoML is similar to what you would need to do to train a model manually. If you need to know more about how to prepare your data for training, take a look at the Data Preparation section.",
+"zh": "AutoML 工具可以帮助您完成数据准备工作，但没有任何工具可以自动完成所有工作，因此您需要先完成一些工作，然后才能将数据导入到该工具中。为 AutoML 准备数据与手动训练模型所需执行的操作类似。如需详细了解如何准备数据以进行训练，请参阅“数据准备”部分。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For more information on preparing your data, see the <a href=\"#/ch/c05/numerical-data\">working with numerical data</a> and <a href=\"#/ch/c06/categorical-data\">working with categorical data</a> modules.",
+"zh": "如需详细了解如何准备数据，请参阅<a href=\"#/ch/c05/numerical-data\">使用数值数据</a>和<a href=\"#/ch/c06/categorical-data\">使用分类数据</a>模块。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Before importing your data</b> for AutoML training, you need to complete these steps:",
+"zh": "<b>在导入数据</b>以进行 AutoML 训练之前，您需要完成以下步骤："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Label your data</b><br> Every example in your dataset needs a label.",
+"zh": "<b>为数据加标签</b><br> 数据集中的每个示例都需要标签。"
+},
+{
+"en": "<b>Clean and format data</b><br> Real-world data tends to be messy, so expect to clean your data before using it. Even with AutoML you need to determine the best treatments for your particular dataset and problem. This might require some exploration and potentially multiple AutoML runs before you get the best results.",
+"zh": "<b>清理和设置数据格式</b><br> 现实世界中的数据往往很杂乱，因此您需要先清理数据，然后再使用。即使使用 AutoML，您也需要确定最适合您的特定数据集和问题的处理方法。这可能需要进行一些探索，并且可能需要多次运行 AutoML 才能获得最佳结果。"
+},
+{
+"en": "<b>Perform feature transformations</b><br> Some AutoML tools handle certain feature transformations for you. But, if the tool you are using does not support a feature transform that you need or does not support it well, you may need to perform the transformations ahead of time.",
+"zh": "<b>执行特征转换</b><br> 某些 AutoML 工具会为您处理某些特征转换。但是，如果您使用的工具不支持您需要的特征转换，或者支持不佳，您可能需要提前执行转换。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Model development (with a no-code AutoML)",
+"zh": "模型开发（使用无代码 AutoML）"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "AutoML does the work for you during training. However, before you start training, you need to configure your experiment. To set up an AutoML training run, you typically need to specify these high level steps:",
+"zh": "AutoML 会在训练期间为您完成工作。不过，在开始训练之前，您需要先配置实验。如需设置 AutoML 训练作业，您通常需要指定以下概要步骤："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "<b>Import your data</b><br> To import your data, specify your data source. During the import process, the AutoML tool assigns a semantic data type to each data value.",
+"zh": "<b>导入数据</b><br> 如需导入数据，请指定数据源。在导入过程中，AutoML 工具会为每个数据值分配一个语义数据类型。"
+},
+{
+"en": "<b>Analyze your data</b><br> AutoML products usually provide tools to analyze your dataset before and after training. As a best practice, you may want to use these analysis tools to understand and verify your data before starting an AutoML run.",
+"zh": "<b>分析数据</b><br> AutoML 产品通常会提供在训练前后分析数据集的工具。最佳实践是，在开始运行 AutoML 之前，使用这些分析工具了解和验证数据。"
+},
+{
+"en": "<b>Refine your data</b><br> AutoML tools often provide mechanisms to help you refine your data after importing and before training. Here are a few tasks you may want to complete to refine your data:<br> <ul><li><b>Semantic Checking:</b> During import, AutoML tools try to determine the correct semantic type for each feature, but these are only guesses. You should check the types designated to all features and change them if they were assigned incorrectly.<br> For example, you may have postal codes stored as numbers in a column in your database. Most AutoML systems would detect the data as continuous numeric data. This would be incorrect for a postal code and the user would probably want to change the semantic type to categorical rather than continuous for this feature column.</li><li><b>Transformations:</b> Some tools allow users to customize data transformations as part of the refinement process. Sometimes this is needed when a dataset has potentially predictive features that need to be transformed or combined in a way that is difficult for AutoML tools to determine without help.<br> For example, consider a housing dataset that you are using to predict the sale price for a house. Suppose there is feature that represents the description for a house listing called <code>description</code> and you would like to use this data to create a new feature called <code>description_length</code>. Some AutoML systems offer ways to use custom transformations. For this example, there might be a <code>LENGTH</code> function to generate a new description length feature like this: <code>LENGTH(description)</code>.</li></ul>",
+"zh": "<b>优化数据</b><br> AutoML 工具通常会提供一些机制，帮助您在导入数据后和训练前优化数据。以下是您可能需要完成的一些任务，以优化数据：<br> <ul><li><b>语义检查</b>：在导入过程中，AutoML 工具会尝试确定每个特征的正确语义类型，但这些只是猜测。您应检查为所有地图项指定的类型，如果分配的类型不正确，请进行更改。<br> 例如，您可以将邮政编码存储为数据库中某个列中的数字。大多数 AutoML 系统都会将此类数据检测为连续数值数据。对于邮政编码，这种做法是不正确的，用户可能希望将此地图项列的语义类型更改为分类类型，而不是连续类型。</li><li><b>转换</b>：某些工具允许用户在优化流程中自定义数据转换。有时，当数据集包含可能具有预测性的特征，且需要以 AutoML 工具难以确定的方式进行转换或组合时，就需要使用此方法。<br> 例如，假设您有一个房屋数据集，用于预测房屋的销售价格。假设有一个名为 <code>description</code> 的地产信息地图项，表示房源的说明，并且您希望使用此数据创建一个名为 <code>description_length</code> 的新地图项。某些 AutoML 系统提供了使用自定义转换的方法。在本示例中，可能有一个 <code>LENGTH</code> 函数用于生成新的说明长度特征，如下所示：<code>LENGTH(description)</code>。</li></ul>"
+},
+{
+"en": "<b>Configure AutoML run parameters</b><br> The last step before running your training experiment is to choose a few configuration settings to tell the tool how you want it to train your model. Though each AutoML tool has its own unique set of configuration options, here are a few of the significant configuration tasks you may need to complete:<br> <ul><li>Select the ML problem type you plan to solve. For example, are you solving a classification or regression problem?</li><li>Select which column in your dataset is the label.</li><li>Select the set of features to use to train the model.</li><li>Select the set of ML algorithms AutoML considers in the model search.</li><li>Select the evaluation metric AutoML uses to choose the best model.</li></ul>",
+"zh": "<b>配置 AutoML 运行参数</b><br> 在运行训练实验之前，最后一步是选择一些配置设置，以告知该工具您希望其如何训练模型。虽然每种 AutoML 工具都有自己的一组独特配置选项，但以下是您可能需要完成的一些重要配置任务：<br> <ul><li>选择您打算解决的机器学习问题类型。例如，您是要解决分类问题还是回归问题？</li><li>选择数据集中哪一列是标签。</li><li>选择要用于训练模型的一组特征。</li><li>选择 AutoML 在模型搜索中要考虑的一组机器学习算法。</li><li>选择 AutoML 用于选择最佳模型的评估指标。</li></ul>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "After configuring your AutoML experiment, you are ready to start the training run. Training may take a while to complete (on the order of hours).",
+"zh": "配置 AutoML 实验后，您就可以开始运行训练了。训练可能需要一段时间才能完成（大约需要数小时）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Evaluate model",
+"zh": "评估模型"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "After training, you can examine the results by using the tools your AutoML product provides to help you:",
+"zh": "训练完成后，您可以使用 AutoML 产品提供的工具来检查结果，以便："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Evaluate your features by examining feature importance metrics.",
+"zh": "通过检查特征重要性指标来评估特征。"
+},
+{
+"en": "Understand your model by examining the architecture and hyperparameters used to build it.",
+"zh": "通过检查用于构建模型的架构和超参数来了解模型。"
+},
+{
+"en": "Evaluate top-level model performance with plots and metrics collected during training for the output model.",
+"zh": "使用输出模型训练期间收集的图表和指标评估顶级模型性能。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Productionization",
+"zh": "生产化"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Though it is outside the scope of this module, some AutoML systems can help you test and deploy your model.",
+"zh": "虽然这超出了本单元的范围，但某些 AutoML 系统可以帮助您测试和部署模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Retrain model",
+"zh": "重新训练模型"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "You might need to retrain the model with new data. This might happen after you evaluate your AutoML training run or after your model is in production for some time. Either way, AutoML systems can help with retraining too. It is not uncommon to take another look at your data after an AutoML run, and retrain with an improved dataset.",
+"zh": "您可能需要使用新数据重新训练模型。在评估 AutoML 训练运行作业或模型在生产环境中运行一段时间后，就可能会出现这种情况。无论是哪种情况，AutoML 系统都可以帮助您重新训练。在 AutoML 运行后，再次查看数据并使用经过改进的数据集进行重新训练，这种做法并不少见。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c13/fairness\">ML Fairness</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度，探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照建议的顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c13/fairness\">机器学习公平性</a></b>。"
+}
+}
+]
+}
+]
+}

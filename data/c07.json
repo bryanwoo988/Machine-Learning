@@ -1,0 +1,3577 @@
+{
+"id": "c07",
+"num": 7,
+"stage": 2,
+"title": {
+"en": "Datasets, generalization, and overfitting",
+"zh": "数据集、泛化和过拟合"
+},
+"minutes": 105,
+"sections": [
+{
+"id": "overfitting",
+"path": "/machine-learning/crash-course/overfitting",
+"min": 5,
+"heading": {
+"en": "Datasets, generalization, and overfitting",
+"zh": "数据集、泛化和过拟合"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module emphasizes the critical role of data quality in machine learning projects, highlighting that it significantly impacts model performance more than algorithm choice.",
+"zh": null
+},
+{
+"en": "Machine learning practitioners typically dedicate a substantial portion of their project time (around 80%) to data preparation and transformation, including tasks like dataset construction and feature engineering.",
+"zh": null
+},
+{
+"en": "The module covers key concepts in data preparation, such as identifying data characteristics, handling unreliable data, understanding data labels, and splitting datasets for training and evaluation.",
+"zh": null
+},
+{
+"en": "Learners will gain insights into techniques for improving data quality, mitigating issues like overfitting, and interpreting loss curves to assess model performance.",
+"zh": null
+},
+{
+"en": "This module builds upon foundational machine learning concepts, assuming familiarity with topics like linear regression, numerical and categorical data handling, and basic machine learning principles.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Identify four different characteristics of data and datasets.</li><li>Identify at least four different causes of data unreliability.</li><li>Determine when to discard missing data and when to impute it.</li><li>Differentiate between direct and derived labels.</li><li>Identify two different ways to improve the quality of human-rated labels.</li><li>Explain why to subdivide a dataset into a training set, validation set, and test set; identify a potential problem in data splits.</li><li>Explain overfitting and identify three possible causes for it.</li><li>Explain the concept of regularization. In particular, explain the following: <ul><li>Bias versus variance (adaptation to outliers…)</li><li>L<sub>2</sub> regularization, including Lambda (regularization rate)</li><li>Early stopping</li></ul></li><li>Interpret different kinds of loss curves; detect convergence and overfitting in loss curves.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>识别数据和数据集的四个不同特征。</li><li>找出至少四种导致数据不可靠性的不同原因。</li><li>确定何时舍弃缺失数据以及何时对其进行估算。</li><li>区分直接标签和派生标签。</li><li>指出提高人工评分质量的两种不同方法 标签。</li><li>解释为什么将数据集细分为训练集、验证集 和测试集；识别数据拆分中的潜在问题。</li><li>解释过拟合并确定其三个可能的原因。</li><li>解释正则化的概念。具体来说，请说明以下各项： <ul><li>偏差与方差（适应离群值...）</li><li>L<sub>2</sub> 正则化，包括 Lambda（正则化） 利率）</li><li>早停法</li></ul></li><li>解读不同类型的损失曲线；检测收敛和 出现过拟合。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c05/numerical-data\">Working with numerical data</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li></ul>",
+"zh": "<b>前提条件：</b> 本单元假定您熟悉 以下模块：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c05/numerical-data\">处理数值数据</a></li><li><a href=\"#/ch/c06/categorical-data\">使用分类数据</a></li></ul>"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Introduction",
+"zh": "简介"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "This module begins with a leading question. Choose one of the following answers:",
+"zh": "本单元以一个引导性问题开头。请从以下选项中选择一项："
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you had to prioritize improving one of the following areas in your machine learning project, which would have the most impact?",
+"zh": "如果您必须优先改进机器学习项目中的以下某个方面，哪个方面的影响最大？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Improving the quality of your dataset",
+"zh": "提高数据集的质量"
+},
+"why": {
+"en": "Data trumps all. The quality and size of the dataset matters much more than which shiny algorithm you use to build your model.",
+"zh": "数据胜过一切。 数据集的质量和大小比 用于构建模型的闪亮算法。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Applying a more clever loss function to training your model",
+"zh": "对模型训练应用更巧妙的损失函数"
+},
+"why": {
+"en": "True, a better loss function can help a model train faster, but it's still a distant second to another item in this list.",
+"zh": "没错，更好的损失函数可以帮助模型更快地训练，但与此列表中的另一项相比，它仍然远远落后。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "And here's an even more leading question:",
+"zh": "还有一个更重要的问题："
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Take a guess: In your machine learning project, how much time do you typically spend on data preparation and transformation?",
+"zh": "猜猜看：在您的机器学习项目中， 您通常花在数据准备和转换上吗？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "More than half of the project time",
+"zh": "超过项目时间的一半"
+},
+"why": {
+"en": "Yes, ML practitioners spend the majority of their time constructing datasets and doing feature engineering.",
+"zh": "是的，机器学习从业者会花费大部分时间构建数据集和进行特征工程。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Less than half of the project time",
+"zh": "不到项目时间的一半"
+},
+"why": {
+"en": "Plan for more! Typically, 80% of the time on a machine learning project is spent constructing datasets and transforming data.",
+"zh": "制定更多计划！通常情况下，80% 的时间用于机器学习 用于构建数据集和转换数据。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In this module, you'll learn more about the characteristics of machine learning datasets, and how to prepare your data to ensure high-quality results when training and evaluating your model.",
+"zh": "在本单元中，您将详细了解机器学习 以及如何准备数据，以确保在 来训练和评估模型。"
+}
+}
+]
+},
+{
+"id": "data-characteristics",
+"path": "/machine-learning/crash-course/overfitting/data-characteristics",
+"min": 10,
+"heading": {
+"en": "Datasets: Data characteristics",
+"zh": "数据集：数据特征"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/data-characteristics",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/data-characteristics?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "A machine learning model's performance is heavily reliant on the quality and quantity of the dataset it's trained on, with larger, high-quality datasets generally leading to better results.",
+"zh": null
+},
+{
+"en": "Datasets can contain various data types, including numerical, categorical, text, multimedia, and embedding vectors, each requiring specific handling for optimal model training.",
+"zh": null
+},
+{
+"en": "Maintaining data quality involves addressing issues like label errors, noisy features, and proper filtering to ensure the reliability of the dataset for accurate predictions.",
+"zh": null
+},
+{
+"en": "Incomplete examples with missing feature values should be handled by either deletion or imputation to avoid negatively impacting model training.",
+"zh": null
+},
+{
+"en": "When imputing missing values, use reliable methods like mean/median imputation and consider adding an indicator column to signal imputed values to the model.",
+"zh": null
+}
+],
+"terms": [
+"dataset",
+"embedding-vector",
+"example",
+"feature",
+"model",
+"value-imputation",
+"z-score-normalization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "A <button type=\"button\" class=\"term\" data-term=\"dataset\"><b>dataset</b></button> is a collection of <button type=\"button\" class=\"term\" data-term=\"example\"><b>examples</b></button>.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"dataset\"><b>数据集</b></button>是一组<button type=\"button\" class=\"term\" data-term=\"example\"><b>示例</b></button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Many datasets store data in tables (grids), for example, as comma-separated values (CSV) or directly from spreadsheets or database tables. Tables are an intuitive input format for machine learning <button type=\"button\" class=\"term\" data-term=\"model\"><b>models</b></button>. You can imagine each row of the table as an example and each column as a potential feature or label. That said, datasets may also be derived from other formats, including log files and protocol buffers.",
+"zh": "许多数据集会以表格（网格）的形式存储数据，例如以逗号分隔值 (CSV) 格式存储，或直接从电子表格或数据库表中存储。表格是一种直观的机器学习<button type=\"button\" class=\"term\" data-term=\"model\"><b>模型</b></button>输入格式。您可以将表格的每一行视为一个示例，将每一列视为一个潜在的特征或标签。不过，数据集也可以从其他格式（包括日志文件和协议缓冲区）派生而来。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Regardless of the format, your ML model is only as good as the data it trains on. This section examines key data characteristics.",
+"zh": "无论格式如何，机器学习模型的效果取决于其训练数据的质量。本部分将介绍关键数据特征。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Types of data",
+"zh": "数据类型"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A dataset could contain many kinds of datatypes, including but certainly not limited to:",
+"zh": "数据集可以包含多种类型的数据，包括但不限于："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "numerical data, which is covered in a <a href=\"#/ch/c05/numerical-data\">separate unit</a>",
+"zh": "数值数据，详见<a href=\"#/ch/c05/numerical-data\">单独的单元</a>"
+},
+{
+"en": "categorical data, which is covered in a <a href=\"#/ch/c06/categorical-data\">separate unit</a>",
+"zh": "分类数据（详见<a href=\"#/ch/c06/categorical-data\">单独的单元</a>）"
+},
+{
+"en": "human language, including individual words and sentences, all the way up to entire text documents",
+"zh": "人类语言，包括单个字词和句子，甚至整个文本文档"
+},
+{
+"en": "multimedia (such as images, videos, and audio files)",
+"zh": "多媒体内容（例如图片、视频和音频文件）"
+},
+{
+"en": "outputs from other ML systems",
+"zh": "其他机器学习系统的输出"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"embedding-vector\"><b>embedding vectors</b></button>, which are covered in a later unit",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"embedding-vector\"><b>嵌入向量</b></button>，将在后面的单元中介绍"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Quantity of data",
+"zh": "数据数量"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "As a rough rule of thumb, your model should train on at least an order of magnitude (or two) more examples than trainable parameters. However, good models generally train on <i>substantially</i> more examples than that.",
+"zh": "一般而言，模型的训练样本数量应至少比可训练参数多一个数量级（或两个数量级）。不过，优质模型通常会使用比这<i>多得多</i>的示例进行训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Models trained on large datasets with few <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button> generally outperform models trained on small datasets with a lot of features. Google has historically had great success training simple models on large datasets.",
+"zh": "在<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>较少的大型数据集上训练的模型通常比在特征较多的较小数据集上训练的模型效果更好。过去，Google 在使用大型数据集训练简单模型方面取得了巨大成功。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Different datasets for different machine learning programs may require wildly different amounts of examples to build a useful model. For some relatively simple problems, a few dozen examples might be sufficient. For other problems, a trillion examples might be insufficient.",
+"zh": "不同机器学习程序的数据集可能需要大量不同的示例才能构建实用的模型。对于一些相对简单的问题，几十个示例可能就足够了。对于其他问题，一万亿个示例可能还不够。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It's possible to get good results from a small dataset if you are adapting an existing model already trained on large quantities of data from the same schema.",
+"zh": "如果您要调整已使用来自同一架构的大量数据训练的现有模型，则有可能使用小型数据集获得良好的结果。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Quality and reliability of data",
+"zh": "数据的质量和可靠性"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Everyone prefers high quality to low quality, but quality is such a vague concept that it could be defined many different ways. This course defines <b>quality</b> pragmatically:",
+"zh": "每个人都喜欢优质内容，但质量是一个非常模糊的概念，可以用很多不同的方式来定义。本课程以实用的方式定义了<b>质量</b>："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "A high-quality dataset helps your model accomplish its goal. A low quality dataset inhibits your model from accomplishing its goal.",
+"zh": "高质量的数据集有助于模型实现其目标。质量较低的数据集会妨碍模型实现其目标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A high-quality dataset is usually also reliable. <b>Reliability</b> refers to the degree to which you can <i>trust</i> your data. A model trained on a reliable dataset is more likely to yield useful predictions than a model trained on unreliable data.",
+"zh": "优质的数据集通常也比较可靠。<b>可靠性</b>是指您对数据的<i>信任度</i>。与基于不可靠数据训练的模型相比，基于可靠数据集训练的模型更有可能做出有用的预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In <i>measuring</i> reliability, you must determine:",
+"zh": "在<i>衡量</i>可靠性时，您必须确定："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "How common are label errors? For example, if your data is labeled by humans, how often did your human raters make mistakes?",
+"zh": "标签错误有多常见？例如，如果您的数据由人工标注，人工评分员出错的频率是多少？"
+},
+{
+"en": "Are your features <i>noisy</i>? That is, do the values in your features contain errors? Be realistic—you can't purge your dataset of all noise. Some noise is normal; for example, GPS measurements of any location always fluctuate a little, week to week.",
+"zh": "您的特征是否<i>噪声过大</i>？也就是说，特征中的值是否包含错误？请务实一点，您无法从数据集中清除所有噪声。出现一些噪声是正常的；例如，任何位置的 GPS 测量值每周都会略有波动。"
+},
+{
+"en": "Is the data properly filtered for your problem? For example, should your dataset include search queries from bots? If you're building a spam-detection system, then likely the answer is yes. However, if you're trying to improve search results for humans, then no.",
+"zh": "数据是否已针对您的问题进行了适当过滤？例如，您的数据集是否应包含来自聊天机器人的搜索查询？如果您要构建垃圾内容检测系统，那么答案可能为是。但是，如果您想为用户改进搜索结果，则不可以。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The following are common causes of unreliable data in datasets:",
+"zh": "以下是导致数据集中数据不可靠的常见原因："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Omitted values. For example, a person forgot to enter a value for a house's age.",
+"zh": "遗漏值。例如，有人忘记输入某个房龄。"
+},
+{
+"en": "Duplicate examples. For example, a server mistakenly uploaded the same log entries twice.",
+"zh": "重复示例。例如，服务器错误地将同一条日志条目上传了两次。"
+},
+{
+"en": "Bad feature values. For example, someone typed an extra digit, or a thermometer was left out in the sun.",
+"zh": "不良特征值。例如，有人多输入了一位数，或者温度计被遗落在太阳底下。"
+},
+{
+"en": "Bad labels. For example, a person mistakenly labeled a picture of an oak tree as a maple tree.",
+"zh": "不良标签。例如，有人误将一颗橡树的图像标记为枫树。"
+},
+{
+"en": "Bad sections of data. For example, a certain feature is very reliable, except for that one day when the network kept crashing.",
+"zh": "数据有部分损坏。例如，某项功能非常可靠，但在网络不断崩溃的那一天除外。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "We recommend using automation to flag unreliable data. For example, unit tests that define or rely on an external formal data schema can flag values that fall outside of a defined range.",
+"zh": "我们建议使用自动化功能标记不可靠的数据。例如，定义或依赖于外部正式数据架构的单元测试可以标记超出定义范围的值。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Any sufficiently large or diverse dataset almost certainly contains <button type=\"button\" class=\"term\" data-term=\"outliers\"><b>outliers</b></button> that fall outside your data schema or unit test bands. Determining how to handle outliers is an important part of machine learning. The <a href=\"#/ch/c05/numerical-data\"><b>Numerical data unit</b></a> details how to handle numeric outliers.",
+"zh": "<b>注意</b>：任何足够大或多样化的数据集几乎肯定都包含超出数据架构或单元测试范围的<button type=\"button\" class=\"term\" data-term=\"outliers\"><b>离群值</b></button>。确定如何处理离群值是机器学习的重要组成部分。<a href=\"#/ch/c05/numerical-data\"><b>数字数据单元</b></a>详细介绍了如何处理数字离群值。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Complete vs. incomplete examples",
+"zh": "完整示例与不完整示例"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In a perfect world, each example is <b>complete</b>; that is, each example contains a value for each feature.",
+"zh": "在理想情况下，每个示例都是<b>完整</b>的；也就是说，每个示例都包含每个特征的值。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/complete_example.svg",
+"alt": {
+"en": "Figure 1. An example containing values for all five of its\n       features.",
+"zh": "图 1. 一个示例，其中包含其所有五个特征的值。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> A complete example.",
+"zh": "<b>图 1.</b> 完整示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Unfortunately, real-world examples are often <b>incomplete</b>, meaning that at least one feature value is missing.",
+"zh": "遗憾的是，现实世界的示例通常<b>不完整</b>，也就是说，至少缺少一个特征值。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/incomplete_example.svg",
+"alt": {
+"en": "Figure 2. An example containing values for four of its five\n            features. One feature is marked missing.",
+"zh": "图 2. 一个示例，其中包含其五个特征中的四个特征的值。有一个地图项被标记为缺失。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> An incomplete example.",
+"zh": "<b>图 2.</b> 不完整的示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Don't train a model on incomplete examples. Instead, fix or eliminate incomplete examples by doing one of the following:",
+"zh": "请勿使用不完整的示例训练模型。请改为执行以下操作之一，修正或移除不完整的示例："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Delete incomplete examples.",
+"zh": "删除未完成的示例。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"value-imputation\"><b>Impute</b></button> missing values; that is, convert the incomplete example to a complete example by providing well-reasoned guesses for the missing values.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"value-imputation\"><b>Impute</b></button>缺失值；即，通过为缺失值提供合理的猜测，将不完整的示例转换为完整的示例。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/delete_incomplete_examples.svg",
+"alt": {
+"en": "Figure 3. A dataset containing three examples, two of which are\n            incomplete examples. Someone has stricken these two incomplete\n            examples from the dataset.",
+"zh": "图 3. 一个包含三个示例的数据集，其中两个示例是不完整的示例。有人已从数据集中移除这两个不完整的示例。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> Deleting incomplete examples from the dataset.",
+"zh": "<b>图 3.</b>从数据集中删除未完成的示例。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/impute_missing_values.svg",
+"alt": {
+"en": "Figure 4. A dataset containing three examples, two of which were\n            incomplete examples containing missing data. Some entity (a human\n            or imputation software) has imputed values that replaced the\n            missing data.",
+"zh": "图 4. 一个包含三个示例的数据集，其中两个示例不完整，包含缺失的数据。某个实体（人工或插值软件）已插入值来替换缺失的数据。"
+},
+"caption": {
+"en": "<b>Figure 4.</b> Imputing missing values for incomplete examples.",
+"zh": "<b>图 4.</b> 为不完整示例估算缺失值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If the dataset contains enough complete examples to train a useful model, then consider deleting the incomplete examples. Similarly, if only one feature is missing a significant amount of data and that one feature probably can't help the model much, then consider deleting that feature from the model inputs and seeing how much quality is lost by its removal. If the model works just or almost as well without it, that's great. Conversely, if you don't have enough complete examples to train a useful model, then you might consider imputing missing values.",
+"zh": "如果数据集包含足够的完整示例来训练实用的模型，请考虑删除不完整的示例。同样，如果只有一个特征缺少大量数据，并且该特征可能对模型帮助不大，那么不妨考虑从模型输入中删除该特征，看看移除该特征会导致质量下降多少。如果模型在没有该特征的情况下也能正常运行或几乎能正常运行，那就太棒了。 反之，如果您没有足够的完整示例来训练有用的模型，则可以考虑对缺失值进行插值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It's fine to delete useless or redundant examples, but it's bad to delete important examples. Unfortunately, it can be difficult to differentiate between useless and useful examples. If you can't decide whether to delete or impute, consider building two datasets: one formed by deleting incomplete examples and the other by imputing. Then, determine which dataset trains the better model.",
+"zh": "删除无用或冗余的示例是可以的，但删除重要的示例则不太好。遗憾的是，很难区分无用示例和有用示例。如果您无法确定是删除还是插值，不妨考虑构建两个数据集：一个通过删除不完整的示例构建，另一个通过插值构建。然后，确定哪个数据集训练出的模型更好。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon to learn more about imputation handling.",
+"zh": "点击该图标可详细了解如何处理插值。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Clever algorithms can impute some pretty good missing values; however, imputed values are rarely as good as the actual values. Therefore, a good dataset tells the model which values are imputed and which are actual. One way to do this is to add an extra Boolean column to the dataset that indicates whether a particular feature's value is imputed. For example, given a feature named <code>temperature</code>, you could add an extra Boolean feature named something like <code>temperature_is_imputed</code>. Then, during training, the model will probably gradually learn to trust examples containing imputed values for feature <code>temperature</code> <i>less</i> than examples containing actual (non-imputed) values.",
+"zh": "巧妙的算法可以推断出一些相当不错的缺失值；不过，推断出的值很少能与实际值一样好。因此，良好的数据集可告知模型哪些值是经过插值的，哪些值是实际值。实现此目的的一种方法是向数据集中添加一个额外的布尔值列，用于指示是否对特定地图项的值进行了插值。例如，如果有一个名为 <code>temperature</code> 的特征，您可以添加一个名为 <code>temperature_is_imputed</code> 的额外布尔特征。然后，在训练过程中，模型可能会逐渐学习，对包含特征 <code>temperature</code> 的插值值的示例的<i>信任度</i>低于对包含实际（非插值）值的示例的信任度。"
+}
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "Imputation is the process of generating well-reasoned data, not random or deceptive data. Be careful: good imputation can improve your model; bad imputation can hurt your model.",
+"zh": "插值是生成合理数据（而非随机数据或欺骗性数据）的过程。请注意：良好的插值可以改进模型；不当的插值可能会损害模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "One common algorithm is to use the mean or median as the imputed value. Consequently, when you represent a numerical feature with <button type=\"button\" class=\"term\" data-term=\"z-score-normalization\"><b>Z-scores</b></button>, then the imputed value is typically 0 (because 0 is generally the mean Z-score).",
+"zh": "一种常见的算法是使用平均值或中位数作为插值值。因此，如果您使用<button type=\"button\" class=\"term\" data-term=\"z-score-normalization\"><b>Z 得分</b></button>来表示数值特征，则插入的值通常为 0（因为 0 通常是平均 Z 得分）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "note",
+"kind": "warning",
+"html": {
+"en": "A sorted dataset, like the one in the following exercise, can sometimes simplify imputation. However, it is a bad idea to train on a sorted dataset. So, after imputation, randomize the order of examples in the training set.",
+"zh": "有时，排序的数据集（如以下练习中的数据集）可以简化插值。不过，在已排序的数据集上进行训练是个不错的主意。因此，在插补后，请随机排列训练集中示例的顺序。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Here are two columns of a dataset sorted by <code>Timestamp</code>.",
+"zh": "下面是按 <code>Timestamp</code> 排序的数据集的两个列。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Timestamp",
+"zh": "时间戳"
+},
+{
+"en": "Temperature",
+"zh": "温度"
+}
+],
+"rows": [
+[
+{
+"en": "June 8, 2023 09:00",
+"zh": "2023 年 6 月 8 日 09:00"
+},
+{
+"en": "12",
+"zh": "12"
+}
+],
+[
+{
+"en": "June 8, 2023 10:00",
+"zh": "2023 年 6 月 8 日 10:00"
+},
+{
+"en": "18",
+"zh": "18"
+}
+],
+[
+{
+"en": "June 8, 2023 11:00",
+"zh": "2023 年 6 月 8 日 11:00"
+},
+{
+"en": "missing",
+"zh": "缺失"
+}
+],
+[
+{
+"en": "June 8, 2023 12:00",
+"zh": "2023 年 6 月 8 日 12:00"
+},
+{
+"en": "24",
+"zh": "24"
+}
+],
+[
+{
+"en": "June 8, 2023 13:00",
+"zh": "2023 年 6 月 8 日 13:00"
+},
+{
+"en": "38",
+"zh": "38"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following would be a reasonable value to impute for the missing value of <code>Temperature</code>?",
+"zh": "以下哪个值适合用来对缺失的<code>温度</code>值进行插值？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "23",
+"zh": "23"
+},
+"why": {
+"en": "Probably. 23 is the mean of the adjacent values (12, 18, 24, and 38). However, we aren't seeing the rest of the dataset, so it is possible that 23 would be an outlier for 11:00 on other days.",
+"zh": "可能。23 是相邻值（12、18、24 和 38）的平均值。 不过，我们看不到数据集的其余部分，因此 23 可能只是其他日期 11:00 的离群值。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "31",
+"zh": "31"
+},
+"why": {
+"en": "Unlikely. The limited part of the dataset that we can see suggests that 31 is much too high for the 11:00 <code>Temperature</code>. However, we can't be sure without basing the imputation on a larger number of examples.",
+"zh": "不太可能。我们可以看到的数据集的有限部分表明，11:00 的<code>温度</code>为 31 度实在太高了。不过，如果没有基于更多示例进行插值，我们无法确定这一点。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "51",
+"zh": "51"
+},
+"why": {
+"en": "Very unlikely. 51 is much higher than any of the displayed values (and, therefore, much higher than the mean).",
+"zh": "可能性不大。51 远高于任何显示的值（因此也远高于平均值）。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "labels",
+"path": "/machine-learning/crash-course/overfitting/labels",
+"min": 10,
+"heading": {
+"en": "Datasets: Labels",
+"zh": "数据集：标签"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/labels",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/labels?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This document explains the differences between direct and proxy labels for machine learning models, highlighting that direct labels are preferred but often unavailable.",
+"zh": null
+},
+{
+"en": "It emphasizes the importance of carefully evaluating proxy labels to ensure they are a suitable approximation of the target prediction.",
+"zh": null
+},
+{
+"en": "Human-generated data, while offering flexibility and nuanced understanding, can be expensive and prone to errors, requiring careful quality control.",
+"zh": null
+},
+{
+"en": "Machine learning models can utilize a combination of automated and human-generated labels, but the added complexity of maintaining human-generated labels often outweighs the benefits.",
+"zh": null
+},
+{
+"en": "Regardless of the label source, manual data inspection and comparison with human ratings are crucial for identifying potential issues and ensuring data quality.",
+"zh": null
+}
+],
+"terms": [
+"label",
+"feature-vector"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This section focuses on <button type=\"button\" class=\"term\" data-term=\"label\"><b>labels</b></button>.",
+"zh": "本部分重点介绍<button type=\"button\" class=\"term\" data-term=\"label\"><b>标签</b></button>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Direct versus proxy labels",
+"zh": "直接标签与代理标签"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Consider two different kinds of labels:",
+"zh": "考虑两种不同的标签："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Direct labels</b>, which are labels identical to the prediction your model is trying to make. That is, the prediction your model is trying to make is exactly present as a column in your dataset. For example, a column named <code>bicycle owner</code> would be a direct label for a binary classification model that predicts whether or not a person owns a bicycle.",
+"zh": "<b>直接标签</b>，即与模型尝试做出的预测完全相同的标签。也就是说，模型尝试做出的预测恰好以列的形式存在于数据集中。例如，名为 <code>bicycle owner</code> 的列将是二元分类模型的直接标签，该模型用于预测某人是否拥有自行车。"
+},
+{
+"en": "<b>Proxy labels</b>, which are labels that are similar—but not identical—to the prediction your model is trying to make. For example, a person subscribing to Bicycle Bizarre magazine probably—but not definitely—owns a bicycle.",
+"zh": "<b>代理标签</b>，即与模型尝试做出的预测相似但不完全相同的标签。例如，订阅《Bicycle Bizarre》杂志的人可能（但不一定）拥有自行车。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Direct labels are generally better than proxy labels. If your dataset provides a possible direct label, you should probably use it. Oftentimes though, direct labels aren't available.",
+"zh": "直接标签通常比代理标签更好。如果您的数据集提供了可能的直接标签，您可能应该使用它。不过，直接标签通常无法使用。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Proxy labels are always a compromise—an imperfect approximation of a direct label. However, some proxy labels are close enough approximations to be useful. Models that use proxy labels are only as useful as the connection between the proxy label and the prediction.",
+"zh": "代理标签始终是一种折衷方案，是对直接标签的不完美近似。不过，有些代理标签的近似程度足以发挥作用。使用代理标签的模型的效果取决于代理标签与预测之间的关联。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Recall that every label must be represented as a floating-point number, similar to the <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vector</b></button> (because machine learning is fundamentally just a collection of mathematical operations). Sometimes, a direct label exists but can't be easily represented as a floating-point number. In this case, use a proxy label.",
+"zh": "请注意，每个标签都必须表示为浮点数，类似于<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>（因为机器学习从根本上来说只是一系列数学运算）。有时，存在直接标签，但无法轻松表示为浮点数。在这种情况下，请使用代理标签。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Your company wants to do the following:",
+"zh": "贵公司希望执行以下操作："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "Mail coupons (\"Get 15% off a new bicycle helmet\") to bicycle owners.",
+"zh": "向自行车车主邮寄优惠券（“购买新自行车头盔可享 15% 折扣”）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "So, your model must do the following:",
+"zh": "因此，您的模型必须执行以下操作："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "Predict which people own a bicycle.",
+"zh": "预测哪些人拥有自行车。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Unfortunately, the dataset doesn't contain a column named <code>bike owner</code>. However, the dataset does contain a column named <code>recently bought a bicycle</code>.",
+"zh": "很遗憾，该数据集不包含名为 <code>bike owner</code> 的列。 不过，该数据集确实包含一个名为 <code>recently bought a bicycle</code> 的列。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Would <code>recently bought a bicycle</code> be a good proxy label or a poor proxy label for this model?",
+"zh": "对于此模型，<code>recently bought a bicycle</code> 是一个好的代理标签还是一个差的代理标签？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Good proxy label",
+"zh": "良好的代理标签"
+},
+"why": {
+"en": "The column <code>recently bought a bicycle</code> is a relatively good proxy label. After all, most of the people who buy bicycles now own bicycles. Nevertheless, like all proxy labels, even very good ones, <code>recently bought a bicycle</code> is imperfect. After all, the person buying an item isn't always the person using (or owning) that item. For example, people sometimes buy bicycles as a gift.",
+"zh": "列 <code>recently bought a bicycle</code> 是一个相对较好的代理标签。毕竟，现在购买自行车的人大多已经拥有自行车。不过，与所有代理标签（即使是非常好的代理标签）一样，<code>recently bought a bicycle</code> 并不完美。毕竟，购买商品的人并不总是使用（或拥有）该商品的人。 例如，人们有时会购买自行车作为礼物。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Poor proxy label",
+"zh": "代理标签不当"
+},
+"why": {
+"en": "Like all proxy labels, <code>recently bought a bicycle</code> is imperfect (some bicycles are bought as gifts and given to others). However, <code>recently bought a bicycle</code> is still a relatively good indicator that someone owns a bicycle.",
+"zh": "与所有代理标签一样，<code>recently bought a bicycle</code> 并不完美（有些自行车是作为礼物购买并送给别人的）。不过，<code>recently bought a bicycle</code> 仍然是表明某人拥有自行车的相对较好的指标。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Human-generated data",
+"zh": "人工生成的数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Some data is <b>human-generated</b>; that is, one or more humans examine some information and provide a value, usually for the label. For example, one or more meteorologists could examine pictures of the sky and identify cloud types.",
+"zh": "有些数据是<b>人工生成</b>的，也就是说，一个或多个人检查某些信息并提供一个值（通常是标签）。例如，一位或多位气象学家可以检查天空照片并识别云的类型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Alternatively, some data is <b>automatically-generated</b>. That is, software (possibly, another machine learning model) determines the value. For example, a machine learning model could examine sky pictures and automatically identify cloud types.",
+"zh": "或者，某些数据是<b>自动生成的</b>。也就是说，由软件（可能是另一个机器学习模型）确定该值。例如，机器学习模型可以检查天空图片并自动识别云类型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This section explores the advantages and disadvantages of human-generated data.",
+"zh": "本部分探讨了人工生成数据的优势和劣势。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Advantages",
+"zh": "✔︎ 优势"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Human raters can perform a wide range of tasks that even sophisticated machine learning models may find difficult.",
+"zh": "人工评估者可以执行各种任务，即使是复杂的机器学习模型也可能难以完成这些任务。"
+},
+{
+"en": "The process forces the owner of the dataset to develop clear and consistent criteria.",
+"zh": "此流程可促使数据集的所有者制定清晰一致的标准。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Disadvantages",
+"zh": "✘ 缺点"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "You typically pay human raters, so human-generated data can be expensive.",
+"zh": "您通常需要向人工评估者付费，因此人工生成的数据可能很昂贵。"
+},
+{
+"en": "To err is human. Therefore, multiple human raters might have to evaluate the same data.",
+"zh": "人非圣贤，孰能无过。因此，可能需要多个人工评估者来评估同一数据。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Think through these questions to determine your needs:",
+"zh": "请仔细考虑以下问题，以确定您的需求："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "How skilled must your raters be? (For example, must the raters know a specific language? Do you need linguists for dialogue or NLP applications?)",
+"zh": "评分员必须具备哪些技能？（例如，评分员是否必须会说某种特定语言？您是否需要语言学家来处理对话或 NLP 应用？)"
+},
+{
+"en": "How many labeled examples do you need? How soon do you need them?",
+"zh": "您需要多少个带标签的示例？您多久之后需要这些商品？"
+},
+{
+"en": "What's your budget?",
+"zh": "您的预算是多少？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Always double-check your human raters</b>. For example, label 1000 examples yourself, and see how your results match other raters' results. If discrepancies surface, don't assume your ratings are the correct ones, especially if a value judgment is involved. If human raters have introduced errors, consider adding instructions to help them and try again.",
+"zh": "<b>务必仔细检查人工评估员的评估结果</b>。例如，您可以自行为 1,000 个示例添加标签，然后查看您的结果与其他评估者的结果是否一致。 如果出现差异，请不要认为您的评分是正确的，尤其是在涉及价值判断时。如果人工评估员引入了错误，请考虑添加说明来帮助他们，然后重试。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to learn more about human-generated data.",
+"zh": "点击加号图标可详细了解人工生成的数据。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Looking at your data by hand is a good exercise regardless of how you obtained your data. Andrej Karpathy did this on <a href=\"http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet\" target=\"_blank\" rel=\"noopener\">ImageNet and wrote about the experience</a>.",
+"zh": "无论您以何种方式获取数据，手动查看数据都是一项很好的练习。Andrej Karpathy 在 <a href=\"http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet\" target=\"_blank\" rel=\"noopener\">ImageNet 上进行了这项实验，并撰写了相关文章</a>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Models can train on a mix of automated and human-generated labels. However, for most models, an extra set of human-generated labels (which can become stale) are generally not worth the extra complexity and maintenance. That said, sometimes the human-generated labels can provide extra information not available in the automated labels.",
+"zh": "模型可以基于自动生成的标签和人工生成的标签的混合数据进行训练。不过，对于大多数模型而言，额外的一组人工生成的标签（可能会过时）通常不值得付出额外的复杂性和维护成本。 不过，有时人工生成的标签可以提供自动生成的标签中没有的额外信息。"
+}
+}
+]
+}
+]
+},
+{
+"id": "imbalanced-datasets",
+"path": "/machine-learning/crash-course/overfitting/imbalanced-datasets",
+"min": 10,
+"heading": {
+"en": "Datasets: Class-imbalanced datasets",
+"zh": "数据集：类别不平衡的数据集"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/imbalanced-datasets",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/imbalanced-datasets?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Imbalanced datasets occur when one label (majority class) is significantly more frequent than another (minority class), potentially hindering model training on the minority class.",
+"zh": null
+},
+{
+"en": "Downsampling the majority class and upweighting it can improve model performance by balancing class representation and reducing prediction bias.",
+"zh": null
+},
+{
+"en": "Experimenting with rebalancing ratios is crucial for optimal performance, ensuring batches contain enough minority class examples for effective training.",
+"zh": null
+},
+{
+"en": "Upweighting the minority class is simpler but may increase prediction bias compared to downsampling and upweighting the majority class.",
+"zh": null
+},
+{
+"en": "Downsampling offers benefits like faster convergence and less disk space usage but requires manual effort, especially for large datasets.",
+"zh": null
+}
+],
+"terms": [
+"batch",
+"class-balanced-dataset",
+"class_imbalanced_data_set",
+"dataset",
+"downsampling",
+"hyperparameter",
+"majority_class",
+"minority_class",
+"prediction-bias",
+"upweighting"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This section explores the following three questions:",
+"zh": "本部分将探讨以下三个问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "What's the difference between class-balanced datasets and class-imbalanced datasets?",
+"zh": "类平衡数据集与类不平衡数据集有何区别？"
+},
+{
+"en": "Why is training an imbalanced dataset difficult?",
+"zh": "为什么训练不平衡的数据集很困难？"
+},
+{
+"en": "How can you overcome the problems of training imbalanced datasets?",
+"zh": "如何克服训练不平衡数据集的问题？"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Class-balanced datasets versus class-imbalanced datasets",
+"zh": "类别平衡的数据集与类别不平衡的数据集"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Consider a dataset containing a <button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>categorical</b></button> label whose value is either the positive class or the negative class. In a <button type=\"button\" class=\"term\" data-term=\"class-balanced-dataset\"><b>class-balanced dataset</b></button>, the number of <button type=\"button\" class=\"term\" data-term=\"positive-class\"><b>positive classes</b></button> and <button type=\"button\" class=\"term\" data-term=\"negative-class\"><b>negative classes</b></button> is about equal. For example, a dataset containing 235 positive classes and 247 negative classes is a balanced dataset.",
+"zh": "假设有一个数据集包含一个<button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>分类</b></button>标签，其值为正类别或负类别。在<button type=\"button\" class=\"term\" data-term=\"class-balanced-dataset\"><b>类别平衡的数据集</b></button>中，<button type=\"button\" class=\"term\" data-term=\"positive-class\"><b>正类别</b></button>和<button type=\"button\" class=\"term\" data-term=\"negative-class\"><b>负类别</b></button>的数量大致相等。例如，包含 235 个正类和 247 个负类的数据集就是平衡数据集。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In a <button type=\"button\" class=\"term\" data-term=\"class-imbalanced-dataset\"><b>class-imbalanced dataset</b></button>, one label is considerably more common than the other. In the real world, class-imbalanced datasets are far more common than class-balanced datasets. For example, in a dataset of credit card transactions, fraudulent purchases might make up less than 0.1% of the examples. Similarly, in a medical diagnosis dataset, the number of patients with a rare virus might be less than 0.01% of the total examples. In a class-imbalanced dataset:",
+"zh": "在<button type=\"button\" class=\"term\" data-term=\"class-imbalanced-dataset\"><b>类别不平衡的数据集</b></button>中，一个标签比另一个标签常见得多。在现实世界中，类别不平衡的数据集远比类别平衡的数据集常见。例如，在信用卡交易数据集中，欺诈性购买行为可能仅占样本的不到 0.1%。同样，在医疗诊断数据集中，患有某种罕见病毒的患者数量可能不到总样本数的 0.01%。在类别不平衡的数据集中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The <i>more</i> common label is called the <button type=\"button\" class=\"term\" data-term=\"majority_class\"><b>majority class</b></button>.",
+"zh": "<i>较</i>常见的标签称为<button type=\"button\" class=\"term\" data-term=\"majority_class\"><b>多数类</b></button>。"
+},
+{
+"en": "The <i>less</i> common label is called the <button type=\"button\" class=\"term\" data-term=\"minority_class\"><b>minority class</b></button>.",
+"zh": "<i>较不</i>常见的标签称为<button type=\"button\" class=\"term\" data-term=\"minority_class\"><b>少数类</b></button>。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "The difficulty of training severely class-imbalanced datasets",
+"zh": "训练严重类别不平衡的数据集的难度"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Training aims to create a model that successfully distinguishes the positive class from the negative class. To do so, <button type=\"button\" class=\"term\" data-term=\"batch\"><b>batches</b></button> need a sufficient number of <i>both</i> positive classes and negative classes. That's not a problem when training on a mildly class-imbalanced dataset since even small batches typically contain sufficient examples of both the positive class and the negative class. However, a severely class-imbalanced dataset might not contain enough minority class examples for proper training.",
+"zh": "训练旨在创建一个能够成功区分正类别和负类别的模型。为此，<button type=\"button\" class=\"term\" data-term=\"batch\"><b>批次</b></button>需要有足够数量的<i>正面</i>类和负面类。在轻度分类不平衡的数据集上训练时，这并不是问题，因为即使是小批次通常也包含足够的正类和负类示例。不过，如果数据集的类别严重不平衡，可能无法包含足够的少数类示例来支持适当的训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, consider the class-imbalanced dataset illustrated in Figure 6 in which:",
+"zh": "例如，假设有一个如图 6 所示的分类不平衡的数据集，其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "200 labels are in the majority class.",
+"zh": "200 个标签属于多数类。"
+},
+{
+"en": "2 labels are in the minority class.",
+"zh": "2 个标签属于少数类。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/overfitting/images/FloralDataset200Sunflowers2Roses.png",
+"alt": {
+"en": "Figure 6. A dataset with a 202 examples. 200 of the examples have\n                      a sunflower label and 2 of the examples have a\n                      rose label.",
+"zh": "图 6. 包含 202 个示例的数据集。其中 200 个示例的标签为“向日葵”，2 个示例的标签为“玫瑰”。"
+},
+"caption": {
+"en": "<b>Figure 6.</b> A highly imbalanced floral dataset containing far more sunflowers than roses.",
+"zh": "<b>图 6.</b> 一个高度不平衡的花卉数据集，其中包含的向日葵比玫瑰多得多。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If the batch size is 20, most batches won't contain any examples of the minority class. If the batch size is 100, each batch will contain an average of only one minority class example, which is insufficient for proper training. Even a much larger batch size will still yield such an imbalanced proportion that the model might not train properly.",
+"zh": "如果批次大小为 20，则大多数批次不会包含任何少数类别的样本。如果批次大小为 100，则每个批次平均只包含一个少数类示例，这不足以进行适当的训练。即使批次大小大得多，仍会产生如此不平衡的比例，以至于模型可能无法正常训练。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b><button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>Accuracy</b></button> is usually a poor metric for assessing a model trained on a class-imbalanced dataset. See <a href=\"#/ch/c04/accuracy-precision-recall\">Classification: Accuracy, recall, precision, and related metrics</a> for details.",
+"zh": "<b>注意</b>：<button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>准确率</b></button>通常是评估在类别不平衡的数据集上训练的模型的较差指标。如需了解详情，请参阅<a href=\"#/ch/c04/accuracy-precision-recall\">分类：准确率、召回率、精确率和相关指标</a>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Training a class-imbalanced dataset",
+"zh": "训练类别不平衡的数据集"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "During training, a model should learn two things:",
+"zh": "在训练期间，模型应学习两件事："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "What each class looks like; that is, what feature values correspond to what class?",
+"zh": "每个类别的外观；也就是说，哪些特征值对应于哪些类别？"
+},
+{
+"en": "How common each class is; that is, what is the relative distribution of the classes?",
+"zh": "每个类别的常见程度；也就是说，类别的相对分布情况如何？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Standard training conflates these two goals. In contrast, the following two-step technique called <b>downsampling and upweighting the majority class</b> separates these two goals, enabling the model to achieve <i>both</i> goals.",
+"zh": "标准训练会混淆这两个目标。相比之下，以下两步技术（称为<b>对多数类进行下采样和上调权重</b>）会分离这两个目标，使模型能够实现<i>这两个</i>目标。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Many students read the following section and say some variant of, \"That just can't be right.\" Be warned that downsampling and upweighting the majority class is somewhat counterintuitive.",
+"zh": "<b>注意</b>：许多学生在阅读以下部分后，会说出“这肯定不对”之类的变体。请注意，对多数类进行降采样和上调权重在某种程度上是违反直觉的。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Step 1: Downsample the majority class",
+"zh": "第 1 步：对多数类进行下采样"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"downsampling\"><b>Downsampling</b></button> means training on a disproportionately low percentage of majority class examples. That is, you artificially force a class-imbalanced dataset to become somewhat more balanced by omitting many of the majority class examples from training. Downsampling greatly increases the probability that each batch contains enough examples of the minority class to train the model properly and efficiently.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"downsampling\"><b>降采样</b></button>是指使用占比异常低的多数类样本进行训练。也就是说，您可以通过从训练中省略许多多数类示例，人为地强制使类不平衡的数据集变得更加平衡。下采样可大幅提高每个批次包含足够少数类示例的概率，从而能够正确高效地训练模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the class-imbalanced dataset shown in Figure 6 consists of 99% majority class and 1% minority class examples. Downsampling the majority class by a factor of 25 artificially creates a more balanced training set (80% majority class to 20% minority class) suggested in Figure 7:",
+"zh": "例如，图 6 中显示的不平衡类数据集包含 99% 的多数类示例和 1% 的少数类示例。将多数类降采样 25 倍，人为地创建一个更平衡的训练集（多数类占 80%，少数类占 20%），如图 7 所示："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/overfitting/images/FloralDatasetDownsampling.png",
+"alt": {
+"en": "Figure 7. 10 examples, 8 of which are sunflowers and 2 of which\n                      are roses.",
+"zh": "图 7. 10 个示例，其中 8 个是向日葵，2 个是玫瑰。"
+},
+"caption": {
+"en": "<b>Figure 7.</b> Downsampling the majority class by a factor of 25.",
+"zh": "<b>图 7.</b> 将多数类降采样 25 倍。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Step 2: Upweight the downsampled class",
+"zh": "第 2 步：增加下采样后类别的权重"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Downsampling introduces a <button type=\"button\" class=\"term\" data-term=\"prediction-bias\"><b>prediction bias</b></button> by showing the model an artificial world where the classes are more balanced than in the real world. To correct this bias, you must \"upweight\" the majority classes by the factor to which you downsampled. Upweighting means treating the loss on a majority class example more harshly than the loss on a minority class example.",
+"zh": "下采样会向模型展示一个类比现实世界更平衡的人工世界，从而引入<button type=\"button\" class=\"term\" data-term=\"prediction-bias\"><b>预测偏差</b></button>。为了修正这种偏差，您必须按降采样所依据的因子“上调”多数类别的权重。上调权重是指与少数类示例的损失相比，更严厉地处理多数类示例的损失。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, we downsampled the majority class by a factor of 25, so we must upweight the majority class by a factor of 25. That is, when the model mistakenly predicts the majority class, treat the loss as if it were 25 errors (multiply the regular loss by 25).",
+"zh": "例如，我们将多数类下采样了 25 倍，因此必须将多数类上调权重 25 倍。也就是说，当模型错误地预测了多数类时，将损失视为 25 个错误（将常规损失乘以 25）。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/overfitting/images/FloralDatasetUpweighting.png",
+"alt": {
+"en": "Figure 8. The loss for a bad prediction on the minority class\n                      is treated normally. However, the loss for a bad\n                      prediction on the majority class is treated 25 times\n                      more harshly.",
+"zh": "图 8. 少数类别的错误预测的损失会正常处理。不过，对于多数类别的错误预测，损失会受到 25 倍的惩罚。"
+},
+"caption": {
+"en": "<b>Figure 8.</b> Upweighting the majority class by a factor of 25.",
+"zh": "<b>图 8.</b> 将多数类的权重提高 25 倍。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "How much should you downsample and upweight to rebalance your dataset? To determine the answer, you should experiment with different downsampling and upweighting factors just as you would experiment with other <button type=\"button\" class=\"term\" data-term=\"hyperparameter\"><b>hyperparameters</b></button>.",
+"zh": "您应该下采样多少和上调权重多少才能重新平衡数据集？ 为了确定答案，您应该尝试不同的下采样和上调权重系数，就像尝试其他<button type=\"button\" class=\"term\" data-term=\"hyperparameter\"><b>超参数</b></button>一样。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Benefits of this technique",
+"zh": "此技巧的优势"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Downsampling and upweighting the majority class brings the following benefits:",
+"zh": "对多数类进行降采样和上调权重可带来以下好处："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Better model:</b> The resultant model \"knows\" both of the following: <ul><li>The connection between features and labels</li><li>The true distribution of the classes</li></ul>",
+"zh": "<b>更好的模型</b>：生成的模型“知道”以下两点： <ul><li>特征与标签之间的关联</li><li>类别的真实分布</li></ul>"
+},
+{
+"en": "<b>Faster convergence:</b> During training, the model sees the minority class more often, which helps the model converge faster.",
+"zh": "<b>更快收敛</b>：在训练期间，模型会更频繁地看到少数类，这有助于模型更快地收敛。"
+}
+]
+}
+]
+},
+{
+"id": "dividing-datasets",
+"path": "/machine-learning/crash-course/overfitting/dividing-datasets",
+"min": 10,
+"heading": {
+"en": "Datasets: Dividing the original dataset",
+"zh": "数据集：拆分原始数据集"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning models should be tested against a separate dataset, called the test set, to ensure accurate predictions on unseen data.",
+"zh": null
+},
+{
+"en": "It's recommended to split the dataset into three subsets: training, validation, and test sets, with the validation set used for initial testing during training and the test set used for final evaluation.",
+"zh": null
+},
+{
+"en": "The validation and test sets can \"wear out\" with repeated use, requiring fresh data to maintain reliable evaluation results.",
+"zh": null
+},
+{
+"en": "A good test set is statistically significant, representative of the dataset and real-world data, and contains no duplicates from the training set.",
+"zh": null
+},
+{
+"en": "It's crucial to address discrepancies between the dataset used for training and testing and the real-world data the model will encounter to achieve satisfactory real-world performance.",
+"zh": null
+}
+],
+"terms": [
+"test-set",
+"training-set",
+"validation_set"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "All good software engineering projects devote considerable energy to <i>testing</i> their apps. Similarly, we strongly recommend testing your ML model to determine the correctness of its predictions.",
+"zh": "所有优秀的软件工程项目都会投入大量精力来<i>测试</i>其应用。同样，我们强烈建议您测试 ML 模型，以确定其预测的正确性。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Training, validation, and test sets",
+"zh": "训练集、验证集和测试集"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You should test a model against a <i>different</i> set of examples than those used to train the model. As you'll learn a little later, testing on different examples is stronger proof of your model's fitness than testing on the same set of examples. Where do you get those different examples? Traditionally in machine learning, you get those different examples by splitting the original dataset. You might assume, therefore, that you should split the original dataset into two subsets:",
+"zh": "您应使用与训练模型所用示例不同的示例来测试模型。正如您将在稍后了解到的那样，与对同一组示例进行测试相比，对不同的示例进行测试更能证明模型的适用性。您从哪里找到这些不同的示例？在传统的机器学习中，您可以通过拆分原始数据集来获取这些不同的示例。因此，您可能会假设应将原始数据集拆分为两个子集："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A <button type=\"button\" class=\"term\" data-term=\"training-set\"><b>training set</b></button> that the model trains on.",
+"zh": "模型进行训练的<button type=\"button\" class=\"term\" data-term=\"training-set\"><b>训练集</b></button>。"
+},
+{
+"en": "A <button type=\"button\" class=\"term\" data-term=\"test-set\"><b>test set</b></button> for evaluation of the trained model.",
+"zh": "用于评估训练好的模型的<button type=\"button\" class=\"term\" data-term=\"test-set\"><b>测试集</b></button>。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/PartitionTwoSets.png",
+"alt": {
+"en": "Figure 8. A horizontal bar divided into two pieces: ~80% of which\n            is the training set and ~20% is the test set.",
+"zh": "图 8. 水平条分为两段：约 80% 属于训练集，约 20% 属于测试集。"
+},
+"caption": {
+"en": "<b>Figure 8.</b> Not an optimal split.",
+"zh": "<b>图 8.</b> 这不是最佳拆分。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your intuition",
+"zh": "练习：检查您的直觉"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Suppose you train on the training set and evaluate on the test set over multiple rounds. In each round, you use the test set results to guide how to update hyperparameters and the feature set. Can you see anything wrong with this approach? Pick only one answer.",
+"zh": "假设您在训练集中进行训练，并在多个回合中对测试集进行评估。在每一轮中，您都可以使用测试集结果来指导如何更新超参数和特征集。您能否发现此方法有什么问题？请仅选择一个答案。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Doing many rounds of this procedure might cause the model to implicitly fit the peculiarities of the test set.",
+"zh": "多次重复执行该流程可能导致模型不知不觉地拟合测试集的特性。"
+},
+"why": {
+"en": "Yes! The more often you use the same test set, the more likely the model closely fits the test set. Like a teacher \"teaching to the test,\" the model inadvertently fits the test set, which might make it harder for the model to fit real-world data.",
+"zh": "是的！使用同一测试集的频率越高，模型与测试集的拟合度就越高。 就像老师“因考试而教”一样，模型会无意中拟合测试集，这可能会使模型更难拟合真实数据。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "This approach is fine. After all, you're training on the training set and evaluating on a separate test set.",
+"zh": "这种方法没问题。毕竟，您是使用训练集进行训练，并使用单独的测试集进行评估。"
+},
+"why": {
+"en": "Actually, there's a subtle issue here. Think about what might gradually go wrong.",
+"zh": "实际上有一个小问题。想想可能会逐渐出现什么问题。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "This approach is computationally inefficient. Don't change hyperparameters or feature sets after each round of testing.",
+"zh": "这种方法的计算效率较低。不要在每轮测试后更改超参数或特征集。"
+},
+"why": {
+"en": "Frequent testing is expensive but critical. However, frequent testing is far less expensive than additional training. Optimizing hyperparameters and the feature set can dramatically improve model quality, so always budget time and computational resources to work on these.",
+"zh": "频繁测试费用高昂，但至关重要。不过，频繁测试的费用远远低于额外训练的费用。优化超参数和特征集可以显著提高模型质量，因此请务必预留时间和计算资源来进行优化。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Dividing the dataset into two sets is a decent idea, but a better approach is to divide the dataset into <i>three</i> subsets. In addition to the training set and the test set, the third subset is:",
+"zh": "将数据集划分为两组是一个不错的主意，但更好的方法是将数据集划分为 <i>三个</i>子集。除了训练集和测试集之外，第三个子集是："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A <button type=\"button\" class=\"term\" data-term=\"validation-set\"><b>validation set</b></button> performs the initial testing on the model as it is being trained.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"validation-set\"><b>验证集</b></button>会在模型训练期间对其进行初始测试。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/PartitionThreeSets.png",
+"alt": {
+"en": "Figure 9. A horizontal bar divided into three pieces: 70% of which\n            is the training set, 15% the validation set, and 15%\n            the test set",
+"zh": "图 9. 水平条分为三段：70% 属于训练集，15% 属于验证集，15% 属于测试集"
+},
+"caption": {
+"en": "<b>Figure 9.</b> A much better split.",
+"zh": "<b>图 9.</b> 效果要好得多。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Use the <b>validation set</b> to evaluate results from the training set. After repeated use of the validation set suggests that your model is making good predictions, use the test set to double-check your model.",
+"zh": "使用<b>验证集</b>评估训练集中的结果。反复使用验证集后，如果模型的预测结果良好，请使用测试集仔细检查模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following figure suggests this workflow. In the figure, \"Tweak model\" means adjusting anything about the model —from changing the learning rate, to adding or removing features, to designing a completely new model from scratch.",
+"zh": "下图展示了此工作流。在该图中，“调整模型”是指调整模型的任何方面，从更改学习速率、添加或移除特征，到从头设计全新的模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/workflow_with_validation_set.svg",
+"alt": {
+"en": "Figure 10. A workflow diagram consisting of the following stages:\n            1. Train model on the training set.\n            2. Evaluate model on the validation set.\n            3. Tweak model according to results on the validation set.\n            4. Iterate on 1, 2, and 3, ultimately picking the model that does\n               best on the validation set.\n            5. Confirm the results on the test set.",
+"zh": "图 10。包含以下阶段的工作流程图：\n            1. 使用训练集训练模型。\n            2. 在验证集上评估模型。\n            3. 根据验证集上的结果调整模型。\n            4. 迭代 1、2 和 3，最终选择在验证集中表现最佳的模型。\n            5. 确认测试集的结果。"
+},
+"caption": {
+"en": "<b>Figure 10.</b> A good workflow for development and testing.",
+"zh": "<b>图 10.</b> 良好的开发和测试工作流程。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>When you transform a feature in your training set, you must make the <i>same</i> transformation in the validation set, test set, and real-world dataset.",
+"zh": "<b>注意</b>：在训练集中转换特征时，您必须在验证集、测试集和真实数据集中进行<i>相同</i>的转换。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The workflow shown in Figure 10 is optimal, but even with that workflow, test sets and validation sets still \"wear out\" with repeated use. That is, the more you use the same data to make decisions about hyperparameter settings or other model improvements, the less confidence that the model will make good predictions on new data. For this reason, it's a good idea to collect more data to \"refresh\" the test set and validation set. Starting anew is a great reset.",
+"zh": "图 10 中显示的工作流是最佳实践，但即使采用该工作流，测试集和验证集在反复使用后仍会“磨损”。也就是说，您越是使用相同的数据来做出超参数设置或其他模型改进方面的决策，模型对新数据做出准确预测的信心就越小。因此，最好收集更多数据来“刷新”测试集和验证集。重新开始是一次很好的重置。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your intuition",
+"zh": "练习：检查您的直觉"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You shuffled all the examples in the dataset and divided the shuffled examples into training, validation, and test sets. However, the loss value on your test set is so staggeringly low that you suspect a mistake. What might have gone wrong?",
+"zh": "您已对数据集中的所有示例进行打乱，并将打乱后的示例划分为训练集、验证集和测试集。但是，测试集上的损失值非常低，因此您怀疑自己出错了。可能出现了什么问题？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Many of the examples in the test set are duplicates of examples in the training set.",
+"zh": "测试集中的许多示例与训练集中的示例重复。"
+},
+"why": {
+"en": "Yes. This can be a problem in a dataset with a lot of redundant examples. We strongly recommend deleting duplicate examples from the test set before testing.",
+"zh": "可以。如果数据集中包含大量冗余示例，就可能会出现这种问题。我们强烈建议您在测试前从测试集中删除重复示例。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Training and testing are nondeterministic. Sometimes, by chance, your test loss is incredibly low. Rerun the test to confirm the result.",
+"zh": "训练和测试是非确定性的。有时，测试损失率可能会出于偶然原因而非常低。重新运行测试以确认结果。"
+},
+"why": {
+"en": "Although loss does vary a little on each run, it shouldn't vary so much that you think you won the machine learning lottery.",
+"zh": "虽然每次运行时损失确实会略有不同，但不应相差太大，否则您可能会认为自己中了机器学习彩票。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "By chance, the test set just happened to contain examples that the model performed well on.",
+"zh": "测试集恰好包含模型表现出色的示例。"
+},
+"why": {
+"en": "The examples were well shuffled, so this is extremely unlikely.",
+"zh": "示例已被充分打乱，因此这种情况极不可能发生。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Additional problems with test sets",
+"zh": "测试集的其他问题"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "As the previous question illustrates, duplicate examples can affect model evaluation. After splitting a dataset into training, validation, and test sets, delete any examples in the validation set or test set that are duplicates of examples in the training set. The only fair test of a model is against new examples, not duplicates.",
+"zh": "如前面的问题所示，重复示例可能会影响模型评估。将数据集拆分为训练集、验证集和测试集后，请删除验证集或测试集中与训练集中的示例重复的所有示例。对模型进行公平测试的唯一方法是使用新示例，而不是重复示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, consider a model that predicts whether an email is spam, using the subject line, email body, and sender's email address as features. Suppose you divide the data into training and test sets, with an 80-20 split. After training, the model achieves 99% precision on both the training set and the test set. You'd probably expect a lower precision on the test set, so you take another look at the data and discover that many of the examples in the test set are duplicates of examples in the training set. The problem is that you neglected to scrub duplicate entries for the same spam email from your input database before splitting the data. You've inadvertently trained on some of your test data.",
+"zh": "例如，假设有一个模型，它使用主题行、电子邮件正文和发件人的电子邮件地址作为特征来预测某封电子邮件是否为垃圾邮件。假设您将数据划分为训练集和测试集，按 80-20 的比例进行拆分。训练完成后，该模型在训练集和测试集上的准确率均达到 99%。您可能预计测试集的精确率会较低，因此您再次查看数据，发现测试集中的许多示例与训练集中的示例重复。问题在于，您在拆分数据之前，忘记从输入数据库中清除同一垃圾邮件的重复条目。您无意中使用了部分测试数据进行训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In summary, a good test set or validation set meets all of the following criteria:",
+"zh": "总而言之，一组好的测试集或验证集应满足以下所有条件："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Large enough to yield statistically significant testing results.",
+"zh": "足够大，能够得出具有统计显著性的测试结果。"
+},
+{
+"en": "Representative of the dataset as a whole. In other words, don't pick a test set with different characteristics than the training set.",
+"zh": "能代表整个数据集。换言之，挑选的测试集的特征应该与训练集的特征相同。"
+},
+{
+"en": "Representative of the real-world data that the model will encounter as part of its business purpose.",
+"zh": "代表模型在履行其业务用途时会遇到的真实数据。"
+},
+{
+"en": "Zero examples duplicated in the training set.",
+"zh": "训练集中没有重复的示例。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercises: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Given a single dataset with a fixed number of examples, which of the following statements is true?",
+"zh": "假设有一个包含固定数量示例的单个数据集，以下哪个陈述是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Every example used in testing the model is one less example used in training the model.",
+"zh": "在测试模型时使用的每个示例都会减少模型训练时使用的示例数量。"
+},
+"why": {
+"en": "Dividing examples into train/test/validation sets is a zero-sum game. This is the central trade-off.",
+"zh": "将示例划分为训练集/测试集/验证集是一场零和游戏。 这是核心的权衡。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The number of examples in the test set must be greater than the number of examples in the validation set.",
+"zh": "测试集中的示例数必须大于验证集中的示例数。"
+},
+"why": {
+"en": "In theory, the validation set and test test should contain the same number of examples or nearly so.",
+"zh": "从理论上讲，验证集和测试集应包含相同数量（或几乎相同数量）的示例。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The number of examples in the test set must be greater than the number of examples in the validation set or training set.",
+"zh": "测试集中的示例数必须大于验证集或训练集中的示例数。"
+},
+"why": {
+"en": "The number of examples in the training set is usually greater than the number of examples in the validation set or test set; however, there are no percentage requirements for the different sets.",
+"zh": "训练集中的示例数量通常多于验证集或测试集中的示例数量；不过，不同集没有百分比要求。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Suppose your test set contains enough examples to perform a statistically significant test. Furthermore, testing against the test set yields low loss. However, the model performed poorly in the real world. What should you do?",
+"zh": "假设您的测试集包含足够的示例来执行具有统计显著性的测试。此外，针对测试集进行测试可获得较低的损失。不过，该模型在实际环境中的表现不佳。您该怎么做？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Determine how the original dataset differs from real-life data.",
+"zh": "确定原始数据集与真实数据的差异。"
+},
+"why": {
+"en": "Yes. Even the best datasets are only a snapshot of real-life data; the underlying <button type=\"button\" class=\"term\" data-term=\"ground-truth\">ground truth</button> tends to change over time. Although your test set matched your training set well enough to suggest good model quality, your dataset probably doesn't adequately match real-world data. You might have to retrain and retest against a new dataset.",
+"zh": "可以。即使是最好的数据集也只是真实数据的快照；底层<button type=\"button\" class=\"term\" data-term=\"ground-truth\">标准答案</button>往往会随时间而变化。虽然您的测试集与训练集的匹配度足够高，表明模型质量较高，但您的数据集可能与真实数据不完全匹配。 您可能需要针对新数据集重新训练和重新测试。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Retest on the same test set. The test results might have been an anomaly.",
+"zh": "对同一测试集重新测试。测试结果可能属于异常情况。"
+},
+"why": {
+"en": "Although retesting might yield slightly different results, this tactic probably isn't very helpful.",
+"zh": "虽然重新测试可能会产生略有不同的结果，但这种做法可能没有多大帮助。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "How many examples should the test set contain?",
+"zh": "测试集应包含多少个示例？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Enough examples to yield a statistically significant test.",
+"zh": "足够的示例，可获得具有统计显著性的测试结果。"
+},
+"why": {
+"en": "Yes. How many examples is that? You'll need to experiment.",
+"zh": "可以。有多少个示例？您需要进行实验。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "At least 15% of the original dataset.",
+"zh": "至少占原始数据集的 15%。"
+},
+"why": {
+"en": "15% may or may not be enough examples.",
+"zh": "15% 的示例数量可能不够，也可能足够。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "transforming-data",
+"path": "/machine-learning/crash-course/overfitting/transforming-data",
+"min": 5,
+"heading": {
+"en": "Datasets: Transforming data",
+"zh": "数据集：转换数据"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/transforming-data",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/transforming-data?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning models require all data, including features like street names, to be transformed into numerical (floating-point) representations for training.",
+"zh": null
+},
+{
+"en": "Normalization is crucial for optimizing model training by converting existing floating-point features to a specific range.",
+"zh": null
+},
+{
+"en": "When dealing with large datasets, selecting a relevant subset of data for training is essential for model performance.",
+"zh": null
+},
+{
+"en": "Protecting user privacy by excluding Personally Identifiable Information (PII) from datasets is a critical consideration.",
+"zh": null
+}
+],
+"terms": [
+"normalization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Machine learning models can only train on floating-point values. However, many dataset features are <i>not</i> naturally floating-point values. Therefore, one important part of machine learning is transforming non-floating-point features to floating-point representations.",
+"zh": "机器学习模型只能基于浮点值进行训练。不过，许多数据集特征本身<i>不是</i>浮点值。因此，机器学习的一个重要部分是将非浮点特征转换为浮点表示法。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose <code>street names</code> is a feature. Most street names are strings, such as \"Broadway\" or \"Vilakazi\". Your model can't train on \"Broadway\", so you must transform \"Broadway\" to a floating-point number. The <a href=\"#/ch/c06/categorical-data\">Categorical Data module</a> explains how to do this.",
+"zh": "例如，假设 <code>street names</code> 是地图项。大多数街道名称都是字符串，例如“Broadway”或“Vilakazi”。您的模型无法使用“Broadway”进行训练，因此您必须将“Broadway”转换为浮点数。<a href=\"#/ch/c06/categorical-data\">“分类数据”模块</a>介绍了具体操作。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Additionally, you should even transform most floating-point features. This transformation process, called <button type=\"button\" class=\"term\" data-term=\"normalization\"><b>normalization</b></button>, converts floating-point numbers to a constrained range that improves model training. The <a href=\"#/ch/c05/numerical-data\">Numerical Data module</a> explains how to do this.",
+"zh": "此外，您还应转换大多数浮点地图项。此转换过程称为<button type=\"button\" class=\"term\" data-term=\"normalization\"><b>标准化</b></button>，可将浮点数转换为受限范围，从而改进模型训练。<a href=\"#/ch/c05/numerical-data\">“数值数据”模块</a>介绍了如何执行此操作。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Sample data when you have too much of it",
+"zh": "对数据进行采样（如果数据量过多）"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Some organizations are blessed with an abundance of data. When the dataset contains too many examples, you must select a <i>subset</i> of examples for training. When possible, select the subset that is most relevant to your model's predictions.",
+"zh": "有些组织拥有丰富的数据。 如果数据集包含的示例过多，您必须选择一组<i>子集</i>进行训练。请尽可能选择与模型预测最相关的子集。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Filter examples containing PII",
+"zh": "包含个人身份信息的过滤条件示例"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Good datasets omit examples containing Personally Identifiable Information (PII). This policy helps safeguard privacy but can influence the model.",
+"zh": "优质数据集会省略包含个人身份信息 (PII) 的示例。此政策有助于保护隐私，但可能会影响模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "See the Safety and Privacy module later in the course for more on these topics.",
+"zh": "如需详细了解这些主题，请参阅本课程稍后的“安全和隐私”模块。"
+}
+}
+]
+},
+{
+"id": "generalization",
+"path": "/machine-learning/crash-course/overfitting/generalization",
+"min": 5,
+"heading": {
+"en": "Generalization",
+"zh": "泛化"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/generalization",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/generalization?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Watch the video below to learn about a common problem ML practitioners face when training a model on their training dataset.",
+"zh": "观看以下视频，了解机器学习从业者在使用训练数据集训练模型时会遇到的常见问题。"
+}
+},
+{
+"type": "video",
+"id": "TyT8i8YIcwI"
+}
+]
+},
+{
+"id": "overfitting-2",
+"path": "/machine-learning/crash-course/overfitting/overfitting",
+"min": 10,
+"heading": {
+"en": "Overfitting",
+"zh": "过拟合"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/overfitting",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/overfitting?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Overfitting occurs when a model performs well on training data but poorly on new, unseen data.",
+"zh": null
+},
+{
+"en": "A model is considered to generalize well if it accurately predicts on new data, indicating it hasn't overfit.",
+"zh": null
+},
+{
+"en": "Overfitting can be detected by observing diverging loss curves for training and validation sets on a generalization curve.",
+"zh": null
+},
+{
+"en": "Common causes of overfitting include unrepresentative training data and overly complex models.",
+"zh": null
+},
+{
+"en": "Dataset conditions for good generalization include examples being independent, identically distributed, and stationary, with similar distributions across partitions.",
+"zh": null
+}
+],
+"terms": [
+"feedback-loop",
+"generalization",
+"generalization-curve",
+"independently-and-identically-distributed-i",
+"loss-curve",
+"overfitting",
+"stationarity",
+"training-set",
+"underfitting"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"overfitting\"><b>Overfitting</b></button> means creating a model that matches (<i>memorizes</i>) the <button type=\"button\" class=\"term\" data-term=\"training-set\"><b>training set</b></button> so closely that the model fails to make correct predictions on new data. An overfit model is analogous to an invention that performs well in the lab but is worthless in the real world.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"overfitting\"><b>过拟合</b></button>是指创建的模型与<button type=\"button\" class=\"term\" data-term=\"training-set\"><b>训练集</b></button>过于匹配（<i>记忆</i>），以致于模型无法根据新数据做出正确的预测。过拟合模型类似于在实验室中表现出色但在现实世界中毫无用处的发明。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Tip:</b> Overfitting is a common problem in machine learning, not an academic hypothetical.",
+"zh": "<b>提示</b>：过拟合是机器学习中的常见问题，而非学术假设。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In Figure 11, imagine that each geometric shape represents a tree's position in a square forest. The blue diamonds mark the locations of healthy trees, while the orange circles mark the locations of sick trees.",
+"zh": "在图 11 中，假设每个几何图形都代表方形森林中的一棵树的位置。蓝色菱形标记健康树木的位置，而橙色圆圈标记病树的位置。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/TreesTrainingSet.svg",
+"alt": {
+"en": "Figure 11. This figure contains about 60 dots, half of which are\n            healthy trees and the other half sick trees.\n            The healthy trees are mainly in the northeast quadrant, though a few\n            healthy trees sneak into the northwest quadrants. The sick trees\n            are mainly in the southeast quadrant, but a few of the sick trees\n            spill into other quadrants.",
+"zh": "图 11. 该图包含约 60 个点，其中一半为健康树，另一半为病树。\n            健康的树木主要位于东北象限，但也有一些健康的树木位于西北象限。受病树主要位于东南象限，但少数受病树也蔓延到了其他象限。"
+},
+"caption": {
+"en": "<b>Figure 11.</b> Training set: locations of healthy and sick trees in a square forest.",
+"zh": "<b>图 11.</b> 训练集：方形森林中健康树木和病树的位置。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Mentally draw any shapes—lines, curves, ovals...anything—to separate the healthy trees from the sick trees. Then, expand the next line to examine one possible separation.",
+"zh": "在脑海中画出任何形状（线条、曲线、椭圆形...任何形状）来将健康的树与生病的树分开。然后，展开下一行，检查其中一个可能的分离。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Expand to see one possible solution (Figure 12).",
+"zh": "展开可查看一种可能的解决方案（图 12）。"
+},
+"blocks": [
+{
+"type": "figure",
+"src": "img/crash-course/images/TreesTrainingSetComplexModel.svg",
+"alt": {
+"en": "Figure 12. The same arrangement of healthy and sick trees as in\n            Figure 11. However, a model of complex geometric shapes separates\n            nearly all of the healthy trees from the sick trees.",
+"zh": "图 12. 健康树和受病树的排列方式与图 11 中相同。但是，复杂几何图形模型可以将几乎所有健康树与患病树区分开来。"
+},
+"caption": {
+"en": "<b>Figure 12.</b> A complex model for distinguishing sick from healthy trees.",
+"zh": "<b>图 12.</b> 用于区分患病树木和健康树木的复杂模型。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The complex shapes shown in Figure 12 successfully categorized all but two of the trees. If we think of the shapes as a model, then this is a fantastic model.",
+"zh": "图 12 中显示的复杂形状成功对除两棵树以外的所有树进行了分类。如果我们将这些形状视为模型，那么这是一个非常棒的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Or is it? A truly excellent model successfully categorizes <i>new</i> examples. Figure 13 shows what happens when that same model makes predictions on new examples from the test set:",
+"zh": "或者说有可能？真正出色的模型能够成功对<i>新</i>示例进行分类。图 13 显示了当同一模型对测试集中的新示例进行预测时会发生的情况："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/TreesTestSetComplexModel.svg",
+"alt": {
+"en": "Figure 13. A new batch of healthy and sick trees overlaid on the\n            model shown in Figure 12. The model miscategorizes many of the\n            trees.",
+"zh": "图 13。一批新的健康和受病树木叠加在图 12 所示的模型上。模型对许多树进行了错误分类。"
+},
+"caption": {
+"en": "<b>Figure 13.</b>Test set: a complex model for distinguishing sick from healthy trees.",
+"zh": "<b>图 13.</b> 测试集：用于区分健康树木和患病树木的复杂模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "So, the complex model shown in Figure 12 did a great job on the training set but a pretty bad job on the test set. This is a classic case of a model <i>overfitting</i> to the training set data.",
+"zh": "因此，图 12 中显示的复杂模型在训练集中的表现非常出色，但在测试集中的表现非常糟糕。这是模型对训练集数据<i>过拟合</i>的典型示例。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Fitting, overfitting, and underfitting",
+"zh": "拟合、过拟合和欠拟合"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A model must make good predictions on <i>new</i> data. That is, you're aiming to create a model that \"fits\" new data.",
+"zh": "模型必须能对<i>新</i>数据做出良好的预测。也就是说，您要创建一个能“拟合”新数据的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As you've seen, an overfit model makes excellent predictions on the training set but poor predictions on new data. An <button type=\"button\" class=\"term\" data-term=\"underfitting\"><b>underfit</b></button> model doesn't even make good predictions on the training data. If an overfit model is like a product that performs well in the lab but poorly in the real world, then an underfit model is like a product that doesn't even do well in the lab.",
+"zh": "如您所见，过拟合模型在训练集上可以做出出色的预测，但在新数据上做出的预测却不准确。<button type=\"button\" class=\"term\" data-term=\"underfitting\"><b>欠拟合</b></button>模型甚至无法对训练数据做出准确的预测。如果过拟合模型就像在实验室中表现出色但在现实世界中表现不佳的产品，那么欠拟合模型就像在实验室中表现不佳的产品。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/underfit_fit_overfit.svg",
+"alt": {
+"en": "Figure 14. Cartesian plot. X-axis is labeled 'quality of predictions\n            on training set.' Y-axis is labeled 'quality of predictions on\n            real-world data.' A curve starts at the origin and rises gradually,\n            but then falls just as quickly. The lower-left portion of the curve\n            (low quality of predictions on real-world data and low quality of\n            predictions on training set) is labeled 'underfit models.' The\n            lower-right portion of the curve (low quality of predictions on\n            real-world data but high quality of predictions on training set)\n            is labeled 'overfit models.' The peak of the curve (high quality\n            of predictions on real-world data and medium quality of predictions\n            on training set) is labeled 'fit models.'",
+"zh": "图 14.笛卡尔图。x 轴标签为“训练集上的预测质量”。y 轴标签为“对真实数据的预测质量”。曲线从原点开始，逐渐上升，但随后又以同样的速度下降。曲线的左下角部分（对真实数据的预测质量较低，对训练集的预测质量较低）标记为“模型过度拟合”。曲线的右下角部分（对真实数据的预测质量较低，但对训练集的预测质量较高）标记为“过拟合模型”。曲线的峰值（对真实数据的预测质量较高，对训练集的预测质量较低）标记为“适合模型”。"
+},
+"caption": {
+"en": "<b>Figure 14.</b> Underfit, fit, and overfit models.",
+"zh": "<b>图 14.</b> 欠拟合、拟合和过拟合模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"generalization\"><b>Generalization</b></button> is the opposite of overfitting. That is, a model that <i>generalizes well</i> makes good predictions on new data. Your goal is to create a model that generalizes well to new data.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"generalization\"><b>泛化</b></button>与过拟合相反。也就是说，<i>泛化能力强</i>的模型可以对新数据做出良好的预测。您的目标是创建一个能够很好地泛化到新数据的模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Detecting overfitting",
+"zh": "检测过拟合"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The following curves help you detect overfitting:",
+"zh": "以下曲线可帮助您检测过拟合："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "loss curves",
+"zh": "损失曲线"
+},
+{
+"en": "generalization curves",
+"zh": "泛化曲线"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "A <button type=\"button\" class=\"term\" data-term=\"loss-curve\"><b>loss curve</b></button> plots a model's loss against the number of training iterations. A graph that shows two or more loss curves is called a <button type=\"button\" class=\"term\" data-term=\"generalization-curve\"><b>generalization curve</b></button>. The following generalization curve shows two loss curves:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"loss-curve\"><b>损失曲线</b></button>会将模型的损失与训练迭代次数绘制在图表中。显示两个或更多损失曲线的图表称为<button type=\"button\" class=\"term\" data-term=\"generalization-curve\"><b>泛化曲线</b></button>。以下泛化曲线显示了两个损失曲线："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/RegularizationTwoLossFunctions.png",
+"alt": {
+"en": "Figure 15. The loss function for the training set gradually\n            declines. The loss function for the validation set also declines,\n            but then it starts to rise after a certain number of iterations.",
+"zh": "图 15. 训练集的损失函数逐渐下降。验证集的损失函数也会下降，但在经过一定次数的迭代后，会开始上升。"
+},
+"caption": {
+"en": "<b>Figure 15.</b> A generalization curve that strongly implies overfitting.",
+"zh": "<b>图 15.</b> 泛化曲线，强烈暗示过拟合。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice that the two loss curves behave similarly at first and then diverge. That is, after a certain number of iterations, loss declines or holds steady (converges) for the training set, but increases for the validation set. This suggests overfitting.",
+"zh": "请注意，这两个损失曲线最初的行为类似，然后开始分歧。也就是说，经过一定次数的迭代后，训练集的损失会下降或保持稳定（收敛），但验证集的损失会增加。这表明模型过拟合。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, a generalization curve for a well-fit model shows two loss curves that have similar shapes.",
+"zh": "相比之下，适合度较高的模型的泛化曲线会显示两个形状相似的损失曲线。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What causes overfitting?",
+"zh": "什么会导致过拟合？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Very broadly speaking, overfitting is caused by one or both of the following problems:",
+"zh": "一般来说，过拟合是由以下一种或两种问题导致的："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The training set doesn't adequately represent real life data (or the validation set or test set).",
+"zh": "训练集不能充分代表真实数据（或验证集或测试集）。"
+},
+{
+"en": "The model is too complex.",
+"zh": "模型过于复杂。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Generalization conditions",
+"zh": "泛化条件"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A model trains on a training set, but the real test of a model's worth is how well it makes predictions on new examples, particularly on real-world data. While developing a model, your test set serves as a proxy for real-world data. Training a model that generalizes well implies the following dataset conditions:",
+"zh": "模型在训练集中进行训练，但真正检验模型价值的标准是它对新示例（尤其是真实数据）的预测效果如何。在开发模型时，测试集可用作真实数据的替代项。训练能够很好地泛化到新数据的模型，需要满足以下数据集条件："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Examples must be <button type=\"button\" class=\"term\" data-term=\"independently-and-identically-distributed-i\"><b>independently and identically distributed</b></button>, which is a fancy way of saying that your examples can't influence each other.",
+"zh": "示例必须<button type=\"button\" class=\"term\" data-term=\"independently-and-identically-distributed-i\"><b>独立且等概率分布</b></button>，这是一种巧妙的方式，表示您的示例不能相互影响。"
+},
+{
+"en": "The dataset is <button type=\"button\" class=\"term\" data-term=\"stationarity\"><b>stationary</b></button>, meaning the dataset doesn't change significantly over time.",
+"zh": "数据集是<button type=\"button\" class=\"term\" data-term=\"stationarity\"><b>平稳的</b></button>，这意味着数据集不会随时间的推移而发生显著变化。"
+},
+{
+"en": "The dataset partitions have the same distribution. That is, the examples in the training set are statistically similar to the examples in the validation set, test set, and real-world data.",
+"zh": "数据集分区具有相同的分布。也就是说，训练集中的示例在统计上与验证集、测试集和真实数据中的示例相似。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Explore the preceding conditions through the following exercises.",
+"zh": "通过以下练习探索上述条件。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercises: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Consider the following dataset partitions. What should you do to ensure that the examples in the training set have a similar statistical distribution to the examples in the validation set and the test set?",
+"zh": "请考虑以下数据集分区。 What should you do to ensure that the examples in the training set have a similar statistical distribution to the examples in the validation set and the test set?"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Shuffle the examples in the dataset extensively before partitioning them.",
+"zh": "在对数据集中的示例进行分区之前，请对其进行广泛的随机排列。"
+},
+"why": {
+"en": "Yes. Good shuffling of examples makes partitions much more likely to be statistically similar.",
+"zh": "可以。良好的示例随机排序会使分区在统计上更有可能相似。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Sort the examples from earliest to most recent.",
+"zh": "将示例按时间从早到晚排序。"
+},
+"why": {
+"en": "If the examples in the dataset are not stationary, then sorting makes the partitions <i>less</i> similar.",
+"zh": "如果数据集中的示例不稳定，则排序会使分区<i>不太</i>相似。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Do nothing. Given enough examples, the law of averages naturally ensures that the distributions will be statistically similar.",
+"zh": "什么也不做。在有足够的示例的情况下，平均法则自然会确保分布在统计上是相似的。"
+},
+"why": {
+"en": "Unfortunately, this is not the case. The examples in certain sections of the dataset may differ from those in other sections.",
+"zh": "很遗憾，事实并非如此。数据集的某些部分中的示例可能与其他部分中的示例不同。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "A streaming service is developing a model to predict the popularity of potential new television shows for the next three years. The streaming service plans to train the model on a dataset containing hundreds of millions of examples, spanning the previous ten years. Will this model encounter a problem?",
+"zh": "一家在线播放服务正在开发一个模型，以预测未来三年可能推出的新电视节目的受欢迎程度。该在线播放服务计划使用包含过去十年数亿个示例的数据集来训练模型。此模型会遇到问题吗？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Probably. Viewers' tastes change in ways that past behavior can't predict.",
+"zh": "可能。观看者的口味会发生变化，而过去的行为无法预测这种变化。"
+},
+"why": {
+"en": "Yes. Viewer tastes are not stationary. They constantly change.",
+"zh": "可以。观看者的口味不会一成不变。这些政策会不断变化。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Definitely not. The dataset is large enough to make good predictions.",
+"zh": "绝对不会。数据集足够大，可以做出准确的预测。"
+},
+"why": {
+"en": "Unfortunately, viewers' tastes are nonstationary.",
+"zh": "遗憾的是，观看者的口味是动态变化的。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Probably not. Viewers' tastes change in predictably cyclical ways. Ten years of data will enable the model to make good predictions on future trends.",
+"zh": "一般不会。观看者的口味会以可预测的周期性方式发生变化。 借助 10 年的数据，该模型可以对未来趋势做出准确的预测。"
+},
+"why": {
+"en": "Although certain aspects of entertainment are somewhat cyclical, a model trained from past entertainment history will almost certainly have trouble making predictions about the next few years.",
+"zh": "虽然娱乐业的某些方面具有一定周期性，但根据过去的娱乐历史训练的模型几乎肯定无法对未来几年做出预测。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "A model aims to predict the time it takes for people to walk a mile based on weather data (temperature, dew point, and precipitation) collected over one year in a city whose weather varies significantly by season. Can you build and test a model from this dataset, even though the weather readings change dramatically by season?",
+"zh": "一个模型旨在根据某个季节性变化明显的城市在一年中收集的天气数据（温度、和降水量）来预测人们步行一英里所需的时间。即使天气读数会因季节而发生巨大变化，您能否根据此数据集构建和测试模型？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Yes",
+"zh": "是"
+},
+"why": {
+"en": "Yes, it is possible to build and test a model from this dataset. You just have to ensure that the data is partitioned equally, so that data from all four seasons is distributed equally into the different partitions.",
+"zh": "可以，您可以根据此数据集构建和测试模型。 您只需确保数据均匀分区，以便将所有四个季节的数据均匀分布到不同的分区中。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "No",
+"zh": "否"
+},
+"why": {
+"en": "Assuming this dataset contains enough examples of temperature, dew point, and precipitation, then you can build and test a model from this dataset. You just have to ensure that the data is partitioned equally, so that data from all four seasons is distributed equally into the different partitions.",
+"zh": "假设该数据集包含足够的温度、露水示例 点和降水量，然后您可以构建并测试模型 这个数据集。 您只需确保数据均匀分区，以便将所有四个季节的数据均匀分布到不同的分区中。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Challenge exercise",
+"zh": "挑战练习"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "You are creating a model that predicts the ideal date for riders to buy a train ticket for a particular route. For example, the model might recommend that users buy their ticket on July 8 for a train that departs July 23. The train company updates prices hourly, basing their updates on a variety of factors but mainly on the current number of available seats. That is:",
+"zh": "您要创建一个模型，用于预测乘客购买特定路线火车票的理想日期。例如，该模型可能会建议用户在 7 月 8 日购买 7 月 23 日出发的火车票。火车公司每小时更新一次价格，更新依据多种因素，但主要取决于当前的空余座位数。具体来说："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "If a lot of seats are available, ticket prices are typically low.",
+"zh": "如果有大量空座，票价通常较低。"
+},
+{
+"en": "If very few seats are available, ticket prices are typically high.",
+"zh": "如果空座非常少，票价通常较高。"
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Your model exhibits low loss on the validation set and the test set but sometimes makes terrible predictions on real-world data. Why?",
+"zh": "您的模型在验证集和测试集上的损失较低，但有时在真实数据上做出的预测非常糟糕。为什么？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "Click here to see the answer",
+"zh": "点击此处查看答案"
+},
+"why": {
+"en": "Click here to see the answer <b>Answer:</b> The real world model is struggling with a <b><button type=\"button\" class=\"term\" data-term=\"feedback-loop\">feedback loop</button></b>.<br> For example, suppose the model recommends that users buy tickets on July 8. Some riders who use the model's recommendation buy their tickets at 8:30 in the morning on July 8. At 9:00, the train company raises prices because fewer seats are now available. Riders using the model's recommendation have altered prices. By evening, ticket prices might be much higher than in the morning.",
+"zh": "点击此处查看答案 <b>答案</b>：真实模型在处理<b><button type=\"button\" class=\"term\" data-term=\"feedback-loop\">反馈环</button></b>方面存在问题。<br> 例如，假设模型建议用户在 7 月 8 日购买票券。 一些乘客根据模型的建议，于 7 月 8 日上午 8:30 购买了票券。9:00 时，火车公司上调了价格，因为此时有售的座位数量较少。使用模型建议的乘客更改了价格。到了晚上，票价可能会比早上高出很多。"
+},
+"correct": null
+}
+]
+}
+]
+},
+{
+"id": "model-complexity",
+"path": "/machine-learning/crash-course/overfitting/model-complexity",
+"min": 10,
+"heading": {
+"en": "Overfitting: Model complexity",
+"zh": "过拟合：模型复杂性"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/model-complexity",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/model-complexity?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Simpler models often generalize better to new data than complex models, even if they perform slightly worse on training data.",
+"zh": null
+},
+{
+"en": "Occam's Razor favors simpler explanations and models, prioritizing them over more complex ones.",
+"zh": null
+},
+{
+"en": "Regularization techniques help prevent overfitting by penalizing model complexity during training.",
+"zh": null
+},
+{
+"en": "Model training aims to minimize both loss (errors on training data) and complexity for optimal performance on new data.",
+"zh": null
+},
+{
+"en": "Model complexity can be quantified using functions of model weights, like L1 and L2 regularization.",
+"zh": null
+}
+],
+"terms": [
+"L1_regularization",
+"L2_regularization",
+"regularization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The previous unit introduced the following model, which miscategorized a lot of trees in the test set:",
+"zh": "上单元介绍了以下模型，该模型将测试集中的许多树误分类了："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/TreesTestSetComplexModel.svg",
+"alt": {
+"en": "Figure 16. The same image as Figure 13. This is a complex shape that\n            miscategorizes many trees.",
+"zh": "图 16. 与图 13 相同的图片。这是一个复杂的形状，会错误地对许多树进行分类。"
+},
+"caption": {
+"en": "<b>Figure 16.</b> The misbehaving complex model from the previous unit.",
+"zh": "<b>图 16.</b> 上单元中行为异常的复杂模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The preceding model contains a lot of complex shapes. Would a simpler model handle new data better? Suppose you replace the complex model with a ridiculously simple model--a straight line.",
+"zh": "上述模型包含许多复杂的形状。更简单的模型能否更好地处理新数据？假设您将复杂的模型替换为一个非常简单的模型：一条直线。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/TreesTestSetSimpleModel.svg",
+"alt": {
+"en": "Figure 17. A straight line model that does an excellent job\n            separating the sick trees from the healthy trees.",
+"zh": "图 17. 一条直线模型，非常有效地将患病树与健康树区分开来。"
+},
+"caption": {
+"en": "<b>Figure 17.</b> A much simpler model.",
+"zh": "<b>图 17.</b> 一个更简单的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The simple model generalizes better than the complex model on new data. That is, the simple model made better predictions on the test set than the complex model.",
+"zh": "在对新数据进行泛化时，简单模型比复杂模型的效果更好。也就是说，简单模型在测试集上的预测结果比复杂模型更好。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Simplicity has been beating complexity for a long time. In fact, the preference for simplicity dates back to ancient Greece. Centuries later, a fourteenth-century friar named William of Occam formalized the preference for simplicity in a philosophy known as <a href=\"https://wikipedia.org/wiki/Occam%27s_razor\" target=\"_blank\" rel=\"noopener\">Occam's razor</a>. This philosophy remains an essential underlying principle of many sciences, including machine learning.",
+"zh": "简单一直以来都胜过复杂。事实上，人们对简约的偏好可以追溯到古希腊。几个世纪后，14 世纪的一位修士奥卡姆的威廉将这种对简单性的偏好正式化为一种哲学，称为“奥卡姆剃刀”。<a href=\"https://wikipedia.org/wiki/Occam%27s_razor\" target=\"_blank\" rel=\"noopener\"></a>这一哲学仍然是许多科学（包括机器学习）的基本原理。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Complex models typically outperform simple models on the training set. However, simple models typically outperform complex models on the test set (which is more important).",
+"zh": "<b>注意</b>：复杂模型在训练集中的表现通常优于简单模型。不过，简单的模型在测试集上的表现通常优于复杂的模型（这更重要）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercises: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You are developing a physics equation. Which of the following formulas conform more closely to Occam's Razor?",
+"zh": "您正在推导一个物理方程。以下哪个公式更符合奥卡姆剃刀原则？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A formula with three variables.",
+"zh": "包含三个变量的公式。"
+},
+"why": {
+"en": "Three variables is more Occam-friendly than twelve variables.",
+"zh": "三个变量比十二个变量更符合奥卡姆剃刀原则。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "A formula with twelve variables.",
+"zh": "包含十二个变量的公式。"
+},
+"why": {
+"en": "Twelve variables seems overly complicated, doesn't it? The two most famous physics formulas of all time (F=ma and E=mc<sup>2</sup>) each involve only three variables.",
+"zh": "十二个变量似乎过于复杂，对吗？ 史上最著名的两个物理公式（F=ma 和 E=mc<sup>2</sup>）各包含三个变量。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "You're on a brand-new machine learning project, about to select your first features. How many features should you pick?",
+"zh": "您正在着手一个全新的机器学习项目，即将选择您的第一个特征。您应选择多少个地图项？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Pick 1–3 features that seem to have strong predictive power.",
+"zh": "选择 1-3 个似乎具有强大预测力的特征。"
+},
+"why": {
+"en": "It's best for your data collection pipeline to start with only one or two features. This will help you confirm that the ML model works as intended. Also, when you build a baseline from a couple of features, you'll feel like you're making progress!",
+"zh": "数据收集流水线最好先从一两个特征开始。这有助于您确认机器学习模型是否按预期运行。 此外，当您根据几个功能构建基准后，就会感觉自己在不断进步！"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Pick 4–6 features that seem to have strong predictive power.",
+"zh": "选择 4-6 个似乎具有强大预测力的特征。"
+},
+"why": {
+"en": "You might eventually use this many features, but it's still better to start with fewer. Fewer features usually means fewer unnecessary complications.",
+"zh": "您最终可能会使用这么多功能，但最好还是先从少量功能开始。功能越少，不必要的复杂功能就越少。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Pick as many features as you can, so you can start observing which features have the strongest predictive power.",
+"zh": "选择尽可能多的特征，以便开始观察哪些特征具有最强的预测能力。"
+},
+"why": {
+"en": "Start smaller. Every new feature adds a new dimension to your training dataset. When the dimensionality increases, the volume of the space increases so fast that the available training data become sparse. The sparser your data, the harder it is for a model to learn the relationship between the features that actually matter and the label. This phenomenon is called \"the curse of dimensionality.\"",
+"zh": "先从小规模开始。每个新特征都会为训练数据集添加一个新维度。维度增加时，空间体积会快速增加，以至于可用的训练数据变得稀疏。数据越稀疏，模型就越难学习实际重要的特征与标签之间的关系。这种现象称为“维度诅咒”。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Regularization",
+"zh": "正则化"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Machine learning models must simultaneously meet two conflicting goals:",
+"zh": "机器学习模型必须同时满足两个相互冲突的目标："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Fit data well.",
+"zh": "能很好地拟合数据。"
+},
+{
+"en": "Fit data as simply as possible.",
+"zh": "尽可能简单地拟合数据。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "One approach to keeping a model simple is to penalize complex models; that is, to force the model to become simpler during training. Penalizing complex models is one form of <b>regularization</b>.",
+"zh": "为了让模型保持简单，一种方法是惩罚复杂的模型；也就是说，在训练过程中强制模型变得更简单。对复杂模型进行惩罚是一种<b>正则化</b>。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>A regularization analogy:</b> Suppose every student in a lecture hall had a little buzzer that emitted a sound that annoyed the professor. Students would press the buzzer whenever the professor's lecture became too complicated. Annoyed, the professor would be forced to simplify the lecture. The professor would complain, \"When I simplify, I'm not being precise enough.\" The students would counter with, \"The only goal is to explain it simply enough that I understand it.\" Gradually, the buzzers would train the professor to give an appropriately simple lecture, even if the simpler lecture isn't as sufficiently precise.",
+"zh": "<b>正则化示例</b>：假设讲堂中的每位学生都有一个小闹钟，发出的声音会让教授感到烦躁。每当教授的讲座变得过于复杂时，学生就会按下蜂鸣器。教授会因此感到不快，并被迫简化讲课内容。 教授会抱怨：“在简化时，我没有做到足够精确。” 学生会反驳说：“唯一的目标是用简单易懂的方式解释，让自己能够理解。”渐渐地，这些蜂鸣器会训练教授讲授适当简单的讲座，即使讲座内容不够精确也是如此。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Loss and complexity",
+"zh": "丢失和复杂性"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "So far, this course has suggested that the only goal when training was to minimize loss; that is:",
+"zh": "到目前为止，本课程已表明训练的唯一目标是尽量减少损失；即："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss)</span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss)</span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As you've seen, models focused solely on minimizing loss tend to overfit. A better training optimization algorithm minimizes some combination of loss and complexity:",
+"zh": "如您所见，仅专注于最大限度地减少损失的模型往往会过拟合。更好的训练优化算法可最大限度地减少损失和复杂性的某种组合："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss + complexity)</span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss + complexity)</span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Unfortunately, loss and complexity are typically inversely related. As complexity increases, loss decreases. As complexity decreases, loss increases. You should find a reasonable middle ground where the model makes good predictions on both the training data and real-world data. That is, your model should find a reasonable compromise between loss and complexity.",
+"zh": "遗憾的是，损失和复杂性通常成反比。随着复杂性的增加，损失会降低。复杂性越低，损失就越大。您应找到一个合理的中间点，使模型对训练数据和真实数据都能做出良好的预测。也就是说，您的模型应在损失和复杂性之间找到合理的折衷。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What is complexity?",
+"zh": "什么是复杂性？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You've already seen a few different ways of quantifying loss. How would you quantify complexity? Start your exploration through the following exercise:",
+"zh": "您已经了解了几种量化损失的方法。您如何量化复杂性？通过以下练习开始探索："
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your intuition",
+"zh": "练习：检查您的直觉"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "So far, we've been pretty vague about what <i>complexity</i> actually is. Which of the following ideas do you think would be reasonable complexity metrics?",
+"zh": "到目前为止，我们对<i>复杂性</i>的实际含义还不甚明了。您认为以下哪个想法是合理的复杂性指标？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Complexity is a function of the model's weights.",
+"zh": "复杂度是模型权重的函数。"
+},
+"why": {
+"en": "Yes, this is one way to measure some models' complexity. This metric is called <button type=\"button\" class=\"term\" data-term=\"L1_regularization\"><b>L<sub>1</sub> regularization.</b></button>",
+"zh": "是的，这是衡量某些模型复杂性的一种方法。 此指标称为 <button type=\"button\" class=\"term\" data-term=\"L1_regularization\"><b>L<sub>1</sub> 正则化。</b></button>"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Complexity is a function of the square of the model's weights.",
+"zh": "复杂度是模型权重的平方的函数。"
+},
+"why": {
+"en": "Yes, you can measure some models' complexity this way. This metric is called <button type=\"button\" class=\"term\" data-term=\"L2_regularization\"><b>L<sub>2</sub> regularization</b></button>.",
+"zh": "可以，您可以通过这种方式衡量某些模型的复杂性。此指标称为 <button type=\"button\" class=\"term\" data-term=\"L2_regularization\"><b>L<sub>2</sub> 正则化</b></button>。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Complexity is a function of the biases of all the features in the model.",
+"zh": "复杂度是模型中所有特征的偏差的函数。"
+},
+"why": {
+"en": "Bias doesn't measure complexity.",
+"zh": "偏差无法衡量复杂性。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "regularization",
+"path": "/machine-learning/crash-course/overfitting/regularization",
+"min": 10,
+"heading": {
+"en": "Overfitting: L2 regularization",
+"zh": "过拟合：L2 正则化"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/regularization",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/regularization?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "L2 regularization is a technique used to reduce model complexity and prevent overfitting by penalizing large weights.",
+"zh": null
+},
+{
+"en": "A regularization rate (lambda) controls the strength of regularization, with higher values leading to simpler models and lower values increasing the risk of overfitting.",
+"zh": null
+},
+{
+"en": "Early stopping is an alternative regularization method that involves ending training before the model fully converges to prevent overfitting.",
+"zh": null
+},
+{
+"en": "Finding the right balance between learning rate and regularization rate is crucial for optimal model performance, as they influence weights in opposite directions.",
+"zh": null
+}
+],
+"terms": [
+"early-stopping",
+"L1_regularization",
+"L2_regularization",
+"learning-rate",
+"regularization",
+"regularization-rate"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"l2-regularization\"><b>L<sub>2</sub> regularization</b></button> is a popular regularization metric, which uses the following formula:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"l2-regularization\"><b>**L<sub>2</sub> 正则化** 是一种常用的正则化指标，其公式如下</b>：</button>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8889em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">L</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord text\"><span class=\"mord\"> regularization </span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1111em;vertical-align:-0.247em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\">...</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8889em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">L</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord text\"><span class=\"mord\"> regularization </span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1111em;vertical-align:-0.247em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\">...</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8641em;\"><span style=\"top:-2.453em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.247em;\"><span></span></span></span></span></span></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the following table shows the calculation of L<sub>2</sub> regularization for a model with six weights:",
+"zh": "例如，下表显示了针对具有六个权重的模型计算 L<sub>2</sub> 正则化的过程："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Value",
+"zh": "值"
+},
+{
+"en": "Squared value",
+"zh": "平方值"
+}
+],
+"rows": [
+[
+{
+"en": "w<sub>1</sub>",
+"zh": "w<sub>1</sub>"
+},
+{
+"en": "0.2",
+"zh": "0.2"
+},
+{
+"en": "0.04",
+"zh": "0.04"
+}
+],
+[
+{
+"en": "w<sub>2</sub>",
+"zh": "w<sub>2</sub>"
+},
+{
+"en": "-0.5",
+"zh": "-0.5"
+},
+{
+"en": "0.25",
+"zh": "0.25"
+}
+],
+[
+{
+"en": "w<sub>3</sub>",
+"zh": "w<sub>3</sub>"
+},
+{
+"en": "5.0",
+"zh": "5.0"
+},
+{
+"en": "25.0",
+"zh": "25.0"
+}
+],
+[
+{
+"en": "w<sub>4</sub>",
+"zh": "w<sub>4</sub>"
+},
+{
+"en": "-1.2",
+"zh": "-1.2"
+},
+{
+"en": "1.44",
+"zh": "1.44"
+}
+],
+[
+{
+"en": "w<sub>5</sub>",
+"zh": "w<sub>5</sub>"
+},
+{
+"en": "0.3",
+"zh": "0.3"
+},
+{
+"en": "0.09",
+"zh": "0.09"
+}
+],
+[
+{
+"en": "w<sub>6</sub>",
+"zh": "w<sub>6</sub>"
+},
+{
+"en": "-0.1",
+"zh": "-0.1"
+},
+{
+"en": "0.01",
+"zh": "0.01"
+}
+],
+[
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "<b>26.83</b> = total",
+"zh": "<b>26.83</b> = 总和"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice that weights close to zero don't affect L<sub>2</sub> regularization much, but large weights can have a huge impact. For example, in the preceding calculation:",
+"zh": "请注意，接近于零的权重对 L<sub>2</sub> 正则化 的影响不大，但较大的权重可能会产生巨大影响。例如，在上述计算中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A single weight (w<sub>3</sub>) contributes about 93% of the total complexity.",
+"zh": "单个权重 (w<sub>3</sub>) 约占 总复杂度的 93%。"
+},
+{
+"en": "The other five weights collectively contribute only about 7% of the total complexity.",
+"zh": "其他五个权重共同仅占总复杂度的 7% 左右。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "L<sub>2</sub> regularization encourages weights <i>toward</i> 0, but never pushes weights all the way to zero.",
+"zh": "L<sub>2</sub> 正则化会使权重 <i>接近</i> 于 0，但绝不会使权重完全为零。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercises: Check your understanding",
+"zh": "练习：检验您的掌握情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you use L<sub>2</sub> regularization while training a model, what will typically happen to the overall complexity of the model?",
+"zh": "如果您在训练模型时使用 L<sub>2</sub> 正则化，模型 的总体复杂度通常会发生什么变化？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The overall complexity of the system will probably drop.",
+"zh": "系统的总体复杂度可能会下降。"
+},
+"why": {
+"en": "Since L<sub>2</sub> regularization encourages weights towards 0, the overall complexity will probably drop.",
+"zh": "由于 L<sub>2</sub> 正则化会使权重接近于 0， 总体复杂度可能会下降。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The overall complexity of the model will probably stay constant.",
+"zh": "模型的总体复杂度可能会保持 不变。"
+},
+"why": {
+"en": "This is very unlikely.",
+"zh": "这种情况不太可能发生。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The overall complexity of the model will probably increase.",
+"zh": "模型的总体复杂度可能会增加。"
+},
+"why": {
+"en": "This is unlikely. Remember that L<sub>2</sub> regularization encourages weights towards 0.",
+"zh": "这种情况不太可能发生。请注意，L<sub>2</sub> 正则化 会使权重接近于 0。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you use L<sub>2</sub> regularization while training a model, some features will be removed from the model.",
+"zh": "如果您在训练模型时使用 L<sub>2</sub> 正则化， 系统会从模型中移除一些特征。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "True",
+"zh": "正确"
+},
+"why": {
+"en": "Although L<sub>2</sub> regularization may make some weights very small, it will never push any weights all the way to zero. Consequently, all features will still contribute something to the model.",
+"zh": "虽然 L<sub>2</sub> 正则化可能会使某些权重非常 小，但绝不会使任何权重完全为零。因此，所有特征仍会对模型做出贡献。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "False",
+"zh": "错误"
+},
+"why": {
+"en": "L<sub>2</sub> regularization never pushes weights all the way to zero.",
+"zh": "L<sub>2</sub> 正则化绝不会使权重完全为 零。"
+},
+"correct": true
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Regularization rate (lambda)",
+"zh": "正则化率 (lambda)"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "As noted, training attempts to minimize some combination of loss and complexity:",
+"zh": "如前所述，训练会尝试最大限度地减少损失和复杂度的某种组合："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss</span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\"> complexity)</span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss</span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\"> complexity)</span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Model developers tune the overall impact of complexity on model training by multiplying its value by a scalar called the <button type=\"button\" class=\"term\" data-term=\"regularization-rate\"><b>regularization rate</b></button>. The Greek character lambda typically symbolizes the regularization rate.",
+"zh": "模型开发者可以通过将复杂度的值乘以一个称为<button type=\"button\" class=\"term\" data-term=\"regularization-rate\"><b>正则化率</b></button>的标量，来调整复杂度对模型训练的总体影响。希腊字母 lambda 通常表示正则化率。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "That is, model developers aim to do the following:",
+"zh": "也就是说，模型开发者旨在执行以下操作："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss</span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">λ</span><span class=\"mord text\"><span class=\"mord\"> complexity)</span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord text\"><span class=\"mord\">minimize(loss</span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">λ</span><span class=\"mord text\"><span class=\"mord\"> complexity)</span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A high regularization rate:",
+"zh": "较高的正则化率："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Strengthens the influence of regularization, thereby reducing the chances of overfitting.",
+"zh": "增强正则化的影响，从而降低过拟合的可能性。"
+},
+{
+"en": "Tends to produce a histogram of model weights having the following characteristics: <ul><li>a normal distribution</li><li>a mean weight of 0.</li></ul>",
+"zh": "往往会生成具有以下特征的模型权重直方图： <ul><li>正态分布</li><li>平均权重为 0。</li></ul>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "A low regularization rate:",
+"zh": "较低的正则化率："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Lowers the influence of regularization, thereby increasing the chances of overfitting.",
+"zh": "降低正则化的影响，从而增加过拟合的可能性。"
+},
+{
+"en": "Tends to produce a histogram of model weights with a flat distribution.",
+"zh": "往往会生成具有平坦分布的模型权重直方图。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the histogram of model weights for a high regularization rate might look as shown in Figure 18.",
+"zh": "例如，对于较高的正则化率，模型权重的直方图可能如图 18 所示。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/HighLambda.svg",
+"alt": {
+"en": "Figure 18. Histogram of a model's weights with a mean of zero and\n            a normal distribution.",
+"zh": "图 18. 模型权重的平均值为 0 且权重呈正态分布的直方图。"
+},
+"caption": {
+"en": "<b>Figure 18.</b> Weight histogram for a high regularization rate. Mean is zero. Normal distribution.",
+"zh": "<b>图 18.</b>正则化率较高时的权重直方图。 平均值为零。正态分布。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, a low regularization rate tends to yield a flatter histogram, as shown in Figure 19.",
+"zh": "相比之下，较低的正则化率往往会生成更平坦的直方图，如图 19 所示。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/LowLambda.svg",
+"alt": {
+"en": "Figure 19. Histogram of a model's weights with a mean of zero that\n            is somewhere between a flat distribution and a normal\n            distribution.",
+"zh": "图 19. 模型权重的平均值为 0 且权重分布介于平坦分布和正态分布之间的直方图。"
+},
+"caption": {
+"en": "<b>Figure 19.</b> Weight histogram for a low regularization rate. Mean may or may not be zero.",
+"zh": "<b>图 19.</b>正则化率较低时的权重直方图。 平均值可能为零，也可能不为零。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Setting the regularization rate to zero removes regularization completely. In this case, training focuses exclusively on minimizing loss, which poses the highest possible overfitting risk.",
+"zh": "<b>**注意**</b>：将正则化率设为零可彻底取消正则化。 在这种情况下，训练会完全专注于最大限度地减少损失，这会带来最高的过拟合风险。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Picking the regularization rate",
+"zh": "选择正则化率"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The ideal regularization rate produces a model that generalizes well to new, previously unseen data. Unfortunately, that ideal value is data-dependent, so you must do some tuning.",
+"zh": "理想的正则化率会生成一个能够很好地泛化到以前未见过的新数据的模型。 遗憾的是，该理想值取决于数据， 因此您必须进行一些 调整。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Early stopping: an alternative to complexity-based regularization",
+"zh": "早停法：基于复杂度的正则化的替代方法"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"early-stopping\"><b>Early stopping</b></button> is a regularization method that doesn't involve a calculation of complexity. Instead, early stopping simply means ending training before the model fully converges. For example, you end training when the loss curve for the validation set starts to increase (slope becomes positive).",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"early-stopping\"><b>早停法</b></button> 是一种 正则化方法，不涉及复杂度的计算。 相反，早停法只是意味着在模型完全收敛之前结束训练。例如，当验证集的损失曲线开始增加（斜率变为正值）时，您结束训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Although early stopping usually increases training loss, it can decrease test loss.",
+"zh": "虽然早停法通常会增加训练损失，但它可以减少测试损失。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Early stopping is a quick, but rarely optimal, form of regularization. The resulting model is very unlikely to be as good as a model trained thoroughly on the ideal regularization rate.",
+"zh": "早停法是一种快速但很少是最佳的正则化形式。生成的模型不太可能像在理想正则化率下经过彻底训练的模型那样好。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Finding equilibrium between learning rate and regularization rate",
+"zh": "在学习速率和正则化率之间找到平衡点"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"learning-rate\"><b>Learning rate</b></button> and regularization rate tend to move weights in opposite directions. A high learning rate often pulls weights <i>away from</i> zero; a high regularization rate pushes weights <i>towards</i> zero.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"learning-rate\"><b>学习速率</b></button> 和 正则化率往往会使权重朝着相反的 方向移动。较高的学习速率通常会使权重 <i>远离</i> 零；较高的正则化率会使权重 <i>接近</i> 于零。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If the regularization rate is high with respect to the learning rate, the weak weights tend to produce a model that makes poor predictions. Conversely, if the learning rate is high with respect to the regularization rate, the strong weights tend to produce an overfit model.",
+"zh": "如果正则化率相对于学习速率较高，则较弱的权重往往会生成预测效果较差的模型。 相反，如果学习速率相对于正则化率较高，则较强的权重往往会生成过拟合模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Your goal is to find the equilibrium between learning rate and regularization rate. This can be challenging. Worst of all, once you find that elusive balance, you may have to ultimately change the learning rate. And, when you change the learning rate, you'll again have to find the ideal regularization rate.",
+"zh": "您的目标是在学习速率和正则化率之间找到平衡点。这可能具有挑战性。最糟糕的是，一旦找到这种难以捉摸的平衡，您可能最终不得不更改学习速率。并且，当您更改学习速率时，您将不得不再次找到理想的正则化率。"
+}
+}
+]
+},
+{
+"id": "interpreting-loss-curves",
+"path": "/machine-learning/crash-course/overfitting/interpreting-loss-curves",
+"min": 10,
+"heading": {
+"en": "Overfitting: Interpreting loss curves",
+"zh": "过拟合：解读损失曲线"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/interpreting-loss-curves",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/interpreting-loss-curves?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This document helps you understand and interpret Machine Learning loss curves through a series of exercises and visual examples.",
+"zh": null
+},
+{
+"en": "You will learn how to identify common issues like oscillating loss, exploding loss, overfitting, and erratic behavior in your models.",
+"zh": null
+},
+{
+"en": "Solutions are provided for each exercise, along with explanations for various loss curve patterns.",
+"zh": null
+},
+{
+"en": "Techniques to address these issues are discussed, including adjusting learning rate, cleaning training data, and applying regularization.",
+"zh": null
+},
+{
+"en": "A glossary of key Machine Learning terminology related to loss curves and model training is included for quick reference.",
+"zh": null
+}
+],
+"terms": [
+"batch",
+"example",
+"feature",
+"learning-rate",
+"loss_curve",
+"outliers",
+"overfitting",
+"regularization",
+"regularization-rate",
+"test-set",
+"training-set",
+"validation_set"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Machine learning would be much simpler if all your <button type=\"button\" class=\"term\" data-term=\"loss_curve\"><b>loss curves</b></button> looked like this the first time you trained your model:",
+"zh": "如果您在首次训练模型时，所有<button type=\"button\" class=\"term\" data-term=\"loss_curve\"><b>损失曲线</b></button>都如下所示，机器学习会变得简单得多："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/metric-curve-ideal.svg",
+"alt": {
+"en": "Figure 20. A plot showing the ideal loss curve when training a\n            machine learning model. The loss curve plots loss on the y-axis\n            against the number of training steps on the x-axis. As the number\n            of training steps increases, loss begins high, then decreases\n            exponentially, and ultimately flattens out to reach a minimum\n            loss.",
+"zh": "图 20. 一张图，显示了训练机器学习模型时的理想损失曲线。损失曲线会在 y 轴上绘制损失，并在 x 轴上绘制训练步骤数。随着训练步骤数的增加，损失开始较高，然后呈指数级下降，最终趋于平稳，达到最小损失。"
+},
+"caption": {
+"en": "<b>Figure 20.</b> An ideal loss curve.",
+"zh": "<b>图 20.</b> 理想的损失曲线。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Unfortunately, loss curves are often challenging to interpret. Use your intuition about loss curves to solve the exercises on this page.",
+"zh": "遗憾的是，损失曲线通常很难解读。利用您对损失曲线的直觉来解答本页中的练习。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 1: Oscillating loss curve",
+"zh": "练习 1：振荡的损失曲线"
+},
+"level": 2
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/metric-curve-ex03.svg",
+"alt": {
+"en": "Figure 21. A loss curve (loss on the y-axis; number of training\n            steps on the x-axis) in which the loss doesn't flatten out.\n            Instead, loss oscillates erratically.",
+"zh": "图 21. 损失曲线（y 轴为损失；x 轴为训练步数），其中损失不会趋于平缓。\n            而是会不稳定地振荡。"
+},
+"caption": {
+"en": "<b>Figure 21.</b> Oscillating loss curve.",
+"zh": "<b>图 21.</b> 振荡损失曲线。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "What <b>three</b> things could you do to try improve the loss curve shown in Figure 21?",
+"zh": "您可以采取哪 <b>3</b> 项措施来尝试改进图 21 中显示的损失曲线？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Check your data against a data schema to detect bad examples, and then remove the bad examples from the training set.",
+"zh": "将您的数据与数据架构进行对比，以检测不良示例，然后从训练集中移除不良示例。"
+},
+"why": {
+"en": "Yes, this is a good practice for all models.",
+"zh": "是的，这是适用于所有模型的良好做法。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Reduce the learning rate.",
+"zh": "降低学习速率。"
+},
+"why": {
+"en": "Yes, reducing learning rate is often a good idea when debugging a training problem.",
+"zh": "是的，在调试训练问题时，通常最好降低学习率。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Reduce the training set to a tiny number of trustworthy examples.",
+"zh": "将训练集缩减为少量可信的示例。"
+},
+"why": {
+"en": "Although this technique sounds artificial, it is actually a good idea. Assuming that the model converges on the small set of trustworthy examples, you can then gradually add more examples, perhaps discovering which examples cause the loss curve to oscillate.",
+"zh": "虽然这种做法听起来很不自然，但实际上是一个好主意。假设模型在少量可信示例上收敛，那么您可以逐步添加更多示例，或许可以发现是哪些示例导致损失曲线出现波动。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Increase the number of examples in the training set.",
+"zh": "增加训练集中的示例数量。"
+},
+"why": {
+"en": "This is a tempting idea, but it is extremely unlikely to fix the problem.",
+"zh": "这是一个诱人的想法，但极不可能解决问题。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Increase the learning rate.",
+"zh": "提高学习速率。"
+},
+"why": {
+"en": "In general, avoid increasing the learning rate when a model's learning curve indicates a problem.",
+"zh": "通常，如果模型的学习曲线显示存在问题，请避免提高学习速率。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 2. Loss curve with a sharp jump",
+"zh": "练习 2. 损失曲线出现急剧跳跃"
+},
+"level": 2
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/metric-curve-ex02.svg",
+"alt": {
+"en": "Figure 22. A loss curve plot that shows the loss decreasing up to a\n            certain number of training steps and then suddenly increasing\n            with further training steps.",
+"zh": "图 22. 损失曲线图，显示损失在达到一定数量的训练步骤后会下降，然后随着进一步的训练步骤突然增加。"
+},
+"caption": {
+"en": "<b>Figure 22.</b> Sharp rise in loss.",
+"zh": "<b>图 22.</b> 损失急剧增加。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>two</b> of the following statements identify possible reasons for the exploding loss shown in Figure 22?",
+"zh": "以下哪<b>两</b>个陈述指出了图 22 中所示损失激增的可能原因？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The input data contains one or more NaNs—for example, a value caused by a division by zero.",
+"zh": "输入数据包含一个或多个 NaN，例如因除零而导致的值。"
+},
+"why": {
+"en": "This is more common than you might expect.",
+"zh": "这种情况比您想象的要常见。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The input data contains a burst of outliers.",
+"zh": "输入数据包含大量离群值。"
+},
+"why": {
+"en": "Sometimes, due to improper shuffling of batches, a batch might contain a lot of outliers.",
+"zh": "有时，由于批处理的随机排序不当，一个批处理可能包含大量离群值。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The learning rate is too low.",
+"zh": "学习率过低。"
+},
+"why": {
+"en": "A very low learning rate might increase training time, but it is not the cause of the strange loss curve.",
+"zh": "学习率非常低可能会增加训练时间，但不是导致损失曲线异常的原因。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The regularization rate is too high.",
+"zh": "正则化率过高。"
+},
+"why": {
+"en": "True, a very high regularization could prevent a model from converging; however, it won't cause the strange loss curve shown in Figure 22.",
+"zh": "确实，正则化系数过高可能会导致模型无法收敛；但不会导致图 22 中显示的奇怪损失曲线。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 3. Test loss diverges from training loss",
+"zh": "练习 3. 测试损失与训练损失不一致"
+},
+"level": 2
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/metric-curve-ex01.svg",
+"alt": {
+"en": "Figure 23. The training loss curve appears to converge, but the\n            validation loss begins to rise after a certain number of training\n            steps.",
+"zh": "图 23. 训练损失曲线似乎会收敛，但在经过一定数量的训练步骤后，验证损失开始上升。"
+},
+"caption": {
+"en": "<b>Figure 23.</b> Sharp rise in validation loss.",
+"zh": "<b>图 23.</b> 验证损失大幅增加。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>one</b> of the following statements best identifies the reason for this difference between the loss curves of the training and test sets?",
+"zh": "以下哪一项陈述最能说明训练集和测试集的损失曲线之间存在这种差异的原因？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The model is overfitting the training set.",
+"zh": "模型对训练集过拟合。"
+},
+"why": {
+"en": "Yes, it probably is. Possible solutions: <ul><li>Make the model simpler, possibly by reducing the number of features.</li><li>Increase the regularization rate.</li><li>Ensure that the training set and test set are statistically equivalent.</li></ul>",
+"zh": "是的，很可能确实是陷阱。可能的解决方案： <ul><li>简化模型，可能需要减少特征数量。</li><li>提高正则化率。</li><li>确保训练集和测试集在统计上等效。</li></ul>"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The learning rate is too high.",
+"zh": "学习速率过高。"
+},
+"why": {
+"en": "If the learning rate were too high, the loss curve for the training set would likely not have behaved as it did.",
+"zh": "如果学习率过高，训练集的损失曲线可能不会像这样。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 4. Loss curve gets stuck",
+"zh": "练习 4. 损失曲线卡住"
+},
+"level": 2
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/metric-curve-ex05.svg",
+"alt": {
+"en": "Figure 24. A plot of a loss curve showing the loss beginning to\n            converge with training but then displaying repeated patterns that\n            look like a rectangular wave.",
+"zh": "图 24. 损失曲线图，显示损失开始随着训练而收敛，但随后显示看起来像矩形波的重复模式。"
+},
+"caption": {
+"en": "<b>Figure 24.</b> Chaotic loss after a certain number of steps.",
+"zh": "<b>图 24.</b> 在特定步数后出现混乱的损失。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>one</b> of the following statements is the most likely explanation for the erratic loss curve shown in Figure 24?",
+"zh": "以下哪<b>一</b>个说法最有可能解释图 24 中显示的异常损失曲线？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The training set is not shuffled well.",
+"zh": "训练集未充分打乱。"
+},
+"why": {
+"en": "This is a possibility. For example, a training set that contains 100 images of dogs followed by 100 images of cats may cause loss to oscillate as the model trains. Ensure that you shuffle examples sufficiently.",
+"zh": "这有可能。例如，如果训练集包含 100 张狗的图片，后跟 100 张猫的图片，则可能会导致在模型训练过程中损失值出现波动。确保充分打乱示例。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The regularization rate is too high.",
+"zh": "正则化率过高。"
+},
+"why": {
+"en": "This is unlikely to be the cause.",
+"zh": "这不太可能是原因。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The training set contains too many features.",
+"zh": "训练集包含的特征过多。"
+},
+"why": {
+"en": "This is unlikely to be the cause.",
+"zh": "这不太可能是原因。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/overfitting/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Datasets, generalization, and overfitting: Test your knowledge",
+"zh": "数据集、泛化和过拟合：测试知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/overfitting/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/overfitting/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元的学习！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c08/neural-networks\">Neural networks</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照建议的顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c08/neural-networks\">神经网络</a></b>。"
+}
+}
+]
+}
+]
+}

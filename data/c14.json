@@ -1,0 +1,2135 @@
+{
+"id": "c14",
+"num": 14,
+"stage": 3,
+"title": {
+"en": "Problem Framing",
+"zh": "问题构建"
+},
+"minutes": null,
+"sections": [
+{
+"id": "intro",
+"path": "/machine-learning/problem-framing",
+"min": null,
+"heading": {
+"en": "Introduction to Machine Learning Problem Framing",
+"zh": "机器学习问题构建简介"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/problem-framing",
+"zh": "https://developers.google.com/machine-learning/problem-framing?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<i>Introduction to Machine Learning Problem Framing</i> teaches you how to determine if machine learning (ML) is a good approach for a problem and explains how to outline an ML solution.",
+"zh": "<i>机器学习问题构建简介</i>介绍了如何确定机器学习 (ML) 是否为解决问题的好方法，并说明了如何规划机器学习解决方案。"
+}
+},
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Objectives:</b> <ul><li>Identify if ML is a good solution for a problem.</li><li>Learn how to frame an ML problem.</li><li>Understand how to pick the right model and define success metrics.</li></ul>",
+"zh": "<b>目标</b>： <ul><li>确定机器学习是否适合解决问题。</li><li>了解如何构建机器学习问题。</li><li>了解如何选择合适的模型并定义成功指标。</li></ul>"
+}
+}
+]
+},
+{
+"id": "intro",
+"path": "/machine-learning/problem-framing/problem-framing",
+"min": null,
+"heading": {
+"en": "Overview",
+"zh": "概览"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/problem-framing/problem-framing",
+"zh": "https://developers.google.com/machine-learning/problem-framing/problem-framing?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<b>Problem framing</b> is the process of analyzing a problem to isolate the individual elements that need to be addressed to solve it. Problem framing helps determine your project's technical feasibility and provides a clear set of goals and success criteria. When considering an ML solution, effective problem framing can determine whether or not your product ultimately succeeds.",
+"zh": "“问题框架”是分析问题以分离出需要解决的问题单个元素的过程。问题框架有助于确定项目的技术可行性，并提供一套明确的目标和成功标准。在考虑机器学习解决方案时，有效的问题构建可以决定您的产品最终能否成功。"
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "Formal problem framing is the critical beginning for solving an ML problem, as it forces us to better understand both the problem and the data in order to design and build a bridge between them. - <i>TensorFlow engineer</i>",
+"zh": "正式问题构建是解决机器学习问题的关键起点，因为它迫使我们更好地了解问题和数据，以便在两者之间设计和构建一座桥梁。- <i>TensorFlow 工程师</i>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "At a high level, ML problem framing consists of two distinct steps:",
+"zh": "概括来讲，机器学习问题构建包括以下两个不同的步骤："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Determining whether ML is the right approach for solving a problem.",
+"zh": "确定机器学习是否适合解决问题。"
+},
+{
+"en": "Framing the problem in ML terms.",
+"zh": "使用机器学习术语来限定问题。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Why is problem framing important?",
+"zh": "为什么问题构图至关重要？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Problem framing ensures that an ML approach is a good solution to the problem before beginning to work with data and train a model.",
+"zh": "在开始处理数据和训练模型之前，问题框架可确保机器学习方法是有效的解决方案。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Problem framing helps diagnose problems with existing ML models and uncovers issues with data.",
+"zh": "问题框架有助于诊断现有机器学习模型存在的问题，并发现数据问题。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "problem",
+"path": "/machine-learning/problem-framing/problem",
+"min": null,
+"heading": {
+"en": "Understand the problem",
+"zh": "了解问题"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/problem-framing/problem",
+"zh": "https://developers.google.com/machine-learning/problem-framing/problem?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Define a clear, non-ML goal for your product or feature before considering machine learning solutions.",
+"zh": null
+},
+{
+"en": "Evaluate whether predictive ML, generative AI, or a simpler non-ML approach is the most effective solution for your goal.",
+"zh": null
+},
+{
+"en": "Ensure you have abundant, reliable, and representative data with predictive features if pursuing a predictive ML approach.",
+"zh": null
+},
+{
+"en": "Verify that your product can take actionable steps based on the predictions of the ML model to provide user value.",
+"zh": null
+},
+{
+"en": "Use a non-ML solution or heuristic as a benchmark to assess the potential improvements and cost-effectiveness of implementing an ML solution.",
+"zh": null
+}
+],
+"terms": [
+"data-set-or-dataset",
+"feature",
+"heuristic",
+"label",
+"prediction"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "To understand the problem, perform the following tasks:",
+"zh": "如需了解问题，请执行以下任务："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "State the goal for the product you are developing or refactoring.",
+"zh": "说明您正在开发或重构的产品的目标。"
+},
+{
+"en": "Determine whether the goal is best solved using predictive ML, generative AI, or a non-ML solution.",
+"zh": "确定使用预测性机器学习、生成式 AI 还是非机器学习解决方案最能有效实现目标。"
+},
+{
+"en": "Verify you have the data required to train a model if you're using a predictive ML approach.",
+"zh": "如果您使用的是预测性机器学习方法，请验证您是否拥有训练模型所需的数据。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "State the goal",
+"zh": "陈述目标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Begin by stating your goal in non-ML terms. The goal is the answer to the question, \"What am I trying to accomplish?\"",
+"zh": "首先，用非机器学习术语陈述您的目标。目标是回答“我要达成什么目标？”这个问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following table clearly states goals for hypothetical apps:",
+"zh": "下表清楚地说明了假设应用的目标："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Application</b>",
+"zh": "<b>应用</b>"
+},
+{
+"en": "<b>Goal</b>",
+"zh": "<b>目标</b>"
+}
+],
+"rows": [
+[
+{
+"en": "Weather app",
+"zh": "天气应用"
+},
+{
+"en": "Calculate precipitation in six-hour increments for a geographic region.",
+"zh": "计算某个地理区域每 6 小时的降水量。"
+}
+],
+[
+{
+"en": "Fashion app",
+"zh": "时尚应用"
+},
+{
+"en": "Generate a variety of shirt designs.",
+"zh": "生成各种衬衫设计。"
+}
+],
+[
+{
+"en": "Video app",
+"zh": "视频应用"
+},
+{
+"en": "Recommend useful videos.",
+"zh": "推荐实用视频。"
+}
+],
+[
+{
+"en": "Mail app",
+"zh": "邮件应用"
+},
+{
+"en": "Detect spam.",
+"zh": "检测垃圾内容。"
+}
+],
+[
+{
+"en": "Financial app",
+"zh": "财务应用"
+},
+{
+"en": "Summarize financial information from multiple news sources.",
+"zh": "总结来自多个新闻来源的财经信息。"
+}
+],
+[
+{
+"en": "Map app",
+"zh": "地图应用"
+},
+{
+"en": "Calculate travel time.",
+"zh": "计算行程时间。"
+}
+],
+[
+{
+"en": "Banking app",
+"zh": "银行应用"
+},
+{
+"en": "Identify fraudulent transactions.",
+"zh": "识别欺诈性交易。"
+}
+],
+[
+{
+"en": "Dining app",
+"zh": "餐饮应用"
+},
+{
+"en": "Identify cuisine by a restaurant's menu.",
+"zh": "根据餐厅的菜单识别菜系。"
+}
+],
+[
+{
+"en": "Ecommerce app",
+"zh": "电子商务应用"
+},
+{
+"en": "Reply to reviews with helpful answers.",
+"zh": "用实用解答回复评价。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Clear use case for ML",
+"zh": "明确机器学习的用例"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Some view ML as a universal tool that can be applied to all problems. In reality, ML is a specialized tool suitable only for particular problems. You don't want to implement a complex ML solution when a simpler non-ML solution will work.",
+"zh": "有些人认为机器学习是一种可应用于所有问题的通用工具。事实上，机器学习是一种专用工具，仅适用于特定问题。当更简单的非机器学习解决方案可行时，您不应实施复杂的机器学习解决方案。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "ML systems can be divided into two broad categories: <button type=\"button\" class=\"term\" data-term=\"predictive-ml\"><b>predictive ML</b></button> and <button type=\"button\" class=\"term\" data-term=\"generative-ai\"><b>generative AI</b></button>. The following table lists their defining characteristics:",
+"zh": "机器学习系统可分为两大类：<button type=\"button\" class=\"term\" data-term=\"predictive-ml\"><b>预测性机器学习</b></button>和<button type=\"button\" class=\"term\" data-term=\"generative-ai\"><b>生成式 AI</b></button>。下表列出了它们的定义特征："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "<b>Input</b>",
+"zh": "<b>输入</b>"
+},
+{
+"en": "<b>Output</b>",
+"zh": "<b>输出</b>"
+},
+{
+"en": "<b>Training technique</b>",
+"zh": "<b>训练方法</b>"
+}
+],
+"rows": [
+[
+{
+"en": "<b>Predictive ML</b>",
+"zh": "<b>预测性机器学习</b>"
+},
+{
+"en": "Text<br> Image<br> Audio<br> Video<br> Numerical",
+"zh": "文本<br> 图片<br> 音频<br> 视频<br> 数值"
+},
+{
+"en": "Makes a prediction, for example, classifying an email as spam or not spam, guessing tomorrow's rainfall, or predicting the price of a stock. The output can typically be verified against reality.",
+"zh": "进行预测，例如将电子邮件分类为垃圾邮件或非垃圾邮件、预测明天的降雨量或预测股票价格。 通常，可以通过实际情况来验证输出。"
+},
+{
+"en": "Typically uses lots of data to train a supervised, unsupervised, or reinforcement learning model to perform a specific task.",
+"zh": "通常使用大量数据来训练监督式、非监督式或强化学习模型，以执行特定任务。"
+}
+],
+[
+{
+"en": "<b>Generative AI</b>",
+"zh": "<b>生成式 AI</b>"
+},
+{
+"en": "Text<br> Image<br> Audio<br> Video<br> Numerical",
+"zh": "文本<br> 图片<br> 音频<br> 视频<br> 数值"
+},
+{
+"en": "Generates output based on the user's intent, for example, summarizing an article, or producing an audio clip or short video.",
+"zh": "根据用户的意图生成输出，例如，总结文章，或制作音频剪辑或短视频。"
+},
+{
+"en": "Typically uses lots of unlabeled data to train a large language model or image generator to fill in missing data. The model can then be used for tasks that can be framed as fill-in-the-blank tasks, or it can be fine-tuned by training it on labeled data for some specific task, like classification.",
+"zh": "通常使用大量无标签数据训练大型语言模型或图片生成器，以填充缺失的数据。然后，该模型可用于可构建为填空任务的任务，也可以通过针对某些特定任务（例如分类）使用标记数据对其进行训练来进行微调。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To confirm that ML is the right approach, first verify that your current non-ML solution is optimized. If you don't have a non-ML solution implemented, try solving the problem manually using a <button type=\"button\" class=\"term\" data-term=\"heuristic\"><b>heuristic</b></button>.",
+"zh": "如需确认机器学习是正确的方法，请先验证您当前的非机器学习解决方案是否已优化。如果您尚未实现非机器学习解决方案，请尝试使用<button type=\"button\" class=\"term\" data-term=\"heuristic\"><b>启发词语</b></button>手动解决问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The non-ML solution is the benchmark you'll use to determine whether ML is a good use case for your problem. Consider the following questions when comparing a non-ML approach to an ML one:",
+"zh": "非机器学习解决方案是您用来确定机器学习是否适合解决您的问题的基准。在将非机器学习方法与机器学习方法进行比较时，请考虑以下问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Quality</b>. How much better do you think an ML solution can be? If you think an ML solution might be only a small improvement, that might indicate the current solution is the best one.",
+"zh": "<b>质量</b>。您认为机器学习解决方案能带来多大的改进？如果您认为机器学习解决方案可能只会带来小幅改进，这可能表明当前解决方案是最佳方案。"
+},
+{
+"en": "<b>Cost and maintenance</b>. How expensive is the ML solution in both the short- and long-term? In some cases, it costs significantly more in terms of compute resources and time to implement ML. Consider the following questions:<br> <ul><li>Can the ML solution justify the increase in cost? Note that small improvements in large systems can easily justify the cost and maintenance of implementing an ML solution.</li><li>How much maintenance will the solution require? In many cases, ML implementations need dedicated long-term maintenance.</li><li>Does your product have the resources to support training or hiring people with ML expertise?</li></ul>",
+"zh": "<b>费用和维护</b>。机器学习解决方案在短期和长期内需要投入多少费用？在某些情况下，实现机器学习所需的计算资源和时间会显著增加。请考虑以下问题：<br> <ul><li>机器学习解决方案能否证明增加费用是值得的？请注意，大型系统中进行小幅改进，就可以轻松证明实现机器学习解决方案的费用和维护工作是值得的。</li><li>该解决方案需要多少维护工作？在许多情况下，机器学习实现需要专门的长期维护。</li><li>您的产品是否有资源来支持培训或聘用具有机器学习专业知识的人员？</li></ul>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Why is it important to have a non-ML solution or heuristic in place before analyzing an ML solution?",
+"zh": "为什么在分析机器学习解决方案之前，先确定非机器学习解决方案或启用启发词语很重要？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A non-ML solution is the benchmark to measure an ML solution against.",
+"zh": "非机器学习解决方案是衡量机器学习解决方案的基准。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Non-ML solutions help you determine how much an ML solution will cost.",
+"zh": "非机器学习解决方案有助于您确定机器学习解决方案的费用。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Predictive ML and data",
+"zh": "预测性机器学习和数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Data is the driving force of predictive ML. To make good <button type=\"button\" class=\"term\" data-term=\"prediction\"><b>predictions</b></button>, you need data that contains <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button> with predictive power. Your data should have the following characteristics:",
+"zh": "数据是预测性机器学习的推动力。若要做出准确的<button type=\"button\" class=\"term\" data-term=\"prediction\"><b>预测</b></button>，您需要的数据中包含具有预测能力的<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>。您的数据应具有以下特征："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Abundant</b>. The more relevant and useful examples in your <button type=\"button\" class=\"term\" data-term=\"data-set-or-dataset\"><b>dataset</b></button>, the better your model will be.",
+"zh": "<b>丰富</b>。<button type=\"button\" class=\"term\" data-term=\"data-set-or-dataset\"><b>数据集</b></button>中的相关示例越多、越实用，模型就越好。"
+},
+{
+"en": "<b>Consistent and reliable</b>. Having data that's consistently and reliably collected will produce a better model. For example, an ML-based weather model will benefit from data gathered over many years from the same reliable instruments.",
+"zh": "<b>一致且可靠</b>。收集一致且可靠的数据有助于构建更好的模型。例如，基于机器学习的气象模型将受益于多年来使用同一可靠仪器收集的数据。"
+},
+{
+"en": "<b>Trusted</b>. Understand where your data will come from. Will the data be from trusted sources you control, like logs from your product, or will it be from sources you don't have much insight into, like the output from another ML system?",
+"zh": "<b>受信任</b>。了解您的数据将来自哪里。数据是来自您控制的可信来源（例如产品日志），还是来自您不太了解的来源（例如其他机器学习系统的输出）？"
+},
+{
+"en": "<b>Available</b>. Make sure all inputs are available at prediction time in the correct format. If it will be difficult to obtain certain feature values at prediction time, omit those features from your datasets.",
+"zh": "<b>可用</b>。确保所有输入在预测时均采用正确的格式。如果在预测时难以获取某些特征值，请从数据集中省略这些特征。"
+},
+{
+"en": "<b>Correct</b>. In large datasets, it's inevitable that some <button type=\"button\" class=\"term\" data-term=\"label\"><b>labels</b></button> will have incorrect values, but if more than a small percentage of labels are incorrect, the model will produce poor predictions.",
+"zh": "<b>正确</b>。在大型数据集中，部分<button type=\"button\" class=\"term\" data-term=\"label\"><b>标签</b></button>值不正确是不可避免的，但如果有超过一小部分标签不正确，模型将会产生不准确的预测结果。"
+},
+{
+"en": "<b>Representative</b>. The datasets should be as representative of the real world as possible. In other words, the datasets should accurately reflect the events, user behaviors, and/or the phenomena of the real world being modeled. Training on unrepresentative datasets can cause poor performance when the model is asked to make real-world predictions.",
+"zh": "<b>代表性</b>。数据集应尽可能代表真实世界。换句话说，数据集应准确反映要建模的事件、用户行为和/或现实世界现象。如果使用不具代表性的数据集进行训练，当模型被要求进行实际预测时，可能会导致性能不佳。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "If you can't get the data you need in the required format, your model will make poor predictions.",
+"zh": "如果您无法以所需格式获取所需数据，模型的预测结果将不准确。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Predictive power",
+"zh": "预测能力"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "For a model to make good predictions, the features in your dataset should have predictive power. The more correlated a feature is with a label, the more likely it is to predict it.",
+"zh": "为了让模型做出准确的预测，数据集中的特征应具有预测能力。特征与标签的相关性越高，预测该标签的可能性就越大。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Some features will have more predictive power than others. For example, in a weather dataset, features such as <code>cloud_coverage</code>, <code>temperature</code>, and <code>dew_point</code> would be better predictors of rain than <code>moon_phase</code> or <code>day_of_week</code>. For the video app example, you could hypothesize that features such as <code>video_description</code>, <code>length</code> and <code>views</code> might be good predictors for which videos a user would want to watch.",
+"zh": "有些特征的预测能力会比其他特征更强。例如，在天气数据集中，<code>cloud_coverage</code>、<code>temperature</code> 和 <code>dew_point</code> 等特征比 <code>moon_phase</code> 或 <code>day_of_week</code> 更能预测降雨。对于视频应用示例，您可以假设 <code>video_description</code>、<code>length</code> 和 <code>views</code> 等特征可能是用户想要观看的视频的良好预测指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Determining which features have predictive power can be a time consuming process. You can manually explore a feature's predictive power by removing and adding it while training a model. You can automate finding a feature's predictive power by using algorithms such as <a href=\"https://wikipedia.org/wiki/Pearson_correlation_coefficient\" target=\"_blank\" rel=\"noopener\">Pearson correlation</a>, <a href=\"https://wikipedia.org/wiki/Adjusted_mutual_information\" target=\"_blank\" rel=\"noopener\">Adjusted mutual information (AMI)</a>, and <a href=\"https://wikipedia.org/wiki/Shapley_value#In_machine_learning\" target=\"_blank\" rel=\"noopener\">Shapley value</a>, which provide a numerical assessment for analyzing the predictive power of a feature.",
+"zh": "确定哪些特征具有预测能力可能是一个耗时的过程。您可以在训练模型时移除和添加特征，以手动探索特征的预测能力。您可以使用 <a href=\"https://wikipedia.org/wiki/Pearson_correlation_coefficient\" target=\"_blank\" rel=\"noopener\">Pearson 相关系数</a>、<a href=\"https://wikipedia.org/wiki/Adjusted_mutual_information\" target=\"_blank\" rel=\"noopener\">调整互信息 (AMI)</a> 和 <a href=\"https://wikipedia.org/wiki/Shapley_value#In_machine_learning\" target=\"_blank\" rel=\"noopener\">Shapley 值</a>等算法自动查找特征的预测能力，这些算法可提供用于分析特征预测能力的数值评估。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "When analyzing your datasets, what are three key attributes you should look for?",
+"zh": "在分析数据集时，您应该关注哪三个关键属性？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Representative of the real world.",
+"zh": "代表真实世界。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Contains correct values.",
+"zh": "包含正确的值。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Features have predictive power for the label.",
+"zh": "特征对标签具有预测能力。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Small enough to load onto a local machine.",
+"zh": "足够小，可以加载到本地计算机上。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "Gathered from a variety of unpredictable sources.",
+"zh": "从各种不可预测的来源收集。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For more guidance on analyzing and preparing your datasets, see <a href=\"https://developers.google.com/machine-learning/data-prep\" target=\"_blank\" rel=\"noopener\">Data Preparation and Feature Engineering for Machine Learning</a>.",
+"zh": "如需有关分析和准备数据集的更多指导，请参阅<a href=\"https://developers.google.com/machine-learning/data-prep?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">机器学习的数据准备和特征工程</a>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Predictions vs. actions",
+"zh": "预测与操作"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "There's no value in predicting something if you can't turn the prediction into an action that helps users. That is, your product should take action from the model's output.",
+"zh": "如果您无法将预测结果转化为有助于用户的操作，那么预测就没有价值。也就是说，您的产品应根据模型的输出采取行动。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, a model that predicts whether a user will find a video useful should feed into an app that recommends useful videos. A model that predicts whether it will rain should feed into a weather app.",
+"zh": "例如，用于预测用户是否会觉得某个视频有用的实用模型应馈送给推荐实用视频的应用。用于预测是否会下雨的模型应馈送到天气应用。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Based on the following scenario, determine if using ML is the best approach to the problem.<br> An engineering team at a large organization is responsible for managing incoming phone calls.<br> <b>The goal</b>: To inform callers how long they'll wait on hold given the current call volume.<br> They don't have any solution in place, but they think a heuristic would be to divide the current number of customers on hold by the number of employees answering phones, and then multiply by 10 minutes. However, they know that some customers have their issues resolved in two minutes, while others can take up to 45 minutes or longer.<br> Their heuristic probably won't get them a precise enough number. They can create a dataset with the following columns: <code>number_of_callcenter_phones</code>, <code>user_issue</code>, <code>time_to_resolve</code>, <code>call_time</code>, <code>time_on_hold</code>.",
+"zh": "根据以下场景，确定使用机器学习是否是解决问题的最佳方法。<br> 某大型组织的工程团队负责管理来电。<br> <b>目标</b>：根据当前通话量，告知来电者他们需要等待多长时间。<br> 他们目前还没有任何解决方案，但他们认为一个启发词语是：将当前的等待客户数量除以接听电话的员工数量，然后乘以 10 分钟。不过，他们知道有些客户的问题会在 2 分钟内得到解决，而有些客户的问题则可能需要长达 45 分钟或更长时间才能解决。<br> 他们的启发词语可能无法获得足够精确的数字。它们可以创建包含以下列的数据集：<code>number_of_callcenter_phones</code>、<code>user_issue</code>、<code>time_to_resolve</code>、<code>call_time</code>、<code>time_on_hold</code>。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "<b>Use ML</b>. The engineering team has a clearly defined goal. Their heuristic won't be good enough for their use case. The dataset appears to have predictive features for the label, <code>time_on_hold</code>.",
+"zh": "<b>使用机器学习</b>。工程团队的目标明确。他们的启发词语对于他们的用例来说不够好。数据集似乎具有标签 <code>time_on_hold</code> 的预测特征。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "<b>Don't use ML</b>. Although they have a clearly defined goal, they should implement and optimize a non-ML solution first. Also, their dataset doesn't appear to contain enough features with predictive power.",
+"zh": "<b>请勿使用机器学习</b>。虽然他们已明确定义了目标，但应先实现和优化非机器学习解决方案。此外，他们的数据集似乎不包含足够具有预测能力的特征。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "ml-framing",
+"path": "/machine-learning/problem-framing/ml-framing",
+"min": null,
+"heading": {
+"en": "Framing an ML problem",
+"zh": "对机器学习问题进行框架处理"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/problem-framing/ml-framing",
+"zh": "https://developers.google.com/machine-learning/problem-framing/ml-framing?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Framing machine learning problems involves defining the desired outcome, identifying the model's output (classification, regression, or generation), and establishing success metrics.",
+"zh": null
+},
+{
+"en": "Generative AI models can be customized through techniques like distillation, fine-tuning, and prompt engineering to achieve specific tasks.",
+"zh": null
+},
+{
+"en": "Success metrics should reflect the desired business outcome of the ML implementation and be distinct from model evaluation metrics.",
+"zh": null
+},
+{
+"en": "Regularly measuring success, analyzing failures, and understanding model improvement potential are crucial for effective ML solutions.",
+"zh": null
+},
+{
+"en": "When implementing ML solutions, consider problem constraints, proxy labels, and the type of model output needed for the specific task.",
+"zh": null
+}
+],
+"terms": [
+"accuracy",
+"area-under-the-pr-curve",
+"classification-model",
+"precision",
+"proxy-label",
+"regression-model"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "After verifying that your problem is best solved using either a predictive ML or a generative AI approach, you're ready to frame your problem in ML terms. You frame a problem in ML terms by completing the following tasks:",
+"zh": "在验证使用预测性预测功能 机器学习或生成式 AI 方法，就可以用机器学习术语来阐述您的问题。 您可以通过完成以下任务来用机器学习术语来表示问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Define the ideal outcome and the model's goal.",
+"zh": "定义理想的结果和模型的目标。"
+},
+{
+"en": "Identify the model's output.",
+"zh": "识别模型的输出。"
+},
+{
+"en": "Define success metrics.",
+"zh": "定义成效指标。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Define the ideal outcome and the model's goal",
+"zh": "定义理想的结果和模型的目标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Independent of the ML model, what's the ideal outcome? In other words, what is the exact task you want your product or feature to perform? This is the same statement you previously defined in the <a href=\"#/ch/c14/problem\">State the goal</a> section.",
+"zh": "不依赖机器学习模型，理想结果是什么？也就是说， 您希望自己的产品或功能执行的具体任务。这与 <a href=\"#/ch/c14/problem\">陈述目标</a> 部分。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Connect the model's goal to the ideal outcome by explicitly defining what you want the model to do. The following table states the ideal outcomes and the model's goal for hypothetical apps:",
+"zh": "通过明确定义要达成的目标，将模型的目标与理想的结果联系起来 希望模型执行的操作。下表说明了理想的结果和 模型对于假设应用的目标："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>App</b>",
+"zh": "<b>应用广告系列</b>"
+},
+{
+"en": "<b>Ideal outcome</b>",
+"zh": "<b>理想结果</b>"
+},
+{
+"en": "<b>Model's goal</b>",
+"zh": "<b>模型的目标</b>"
+}
+],
+"rows": [
+[
+{
+"en": "Weather app",
+"zh": "天气应用"
+},
+{
+"en": "Calculate precipitation in six hour increments for a geographic region.",
+"zh": "以六小时为增量计算一个地理区域的降水量。"
+},
+{
+"en": "Predict six-hour precipitation amounts for specific geographic regions.",
+"zh": "预测特定地理区域六小时的降水量。"
+}
+],
+[
+{
+"en": "Fashion app",
+"zh": "时尚应用"
+},
+{
+"en": "Generate a variety of shirt designs.",
+"zh": "生成各种衬衫设计。"
+},
+{
+"en": "Generate three varieties of a shirt design from text and an image, where the text states the style and color and the image is the type of shirt (t-shirt, button-up, polo).",
+"zh": "根据文本和图片生成三种类型的衬衫设计， 其中，文本说明样式和颜色，而图片则是 衬衫（T 恤、纽扣、Polo）。"
+}
+],
+[
+{
+"en": "Video app",
+"zh": "视频应用"
+},
+{
+"en": "Recommend useful videos.",
+"zh": "推荐实用视频。"
+},
+{
+"en": "Predict whether a user will click on a video.",
+"zh": "预测用户是否会点击视频。"
+}
+],
+[
+{
+"en": "Mail app",
+"zh": "“邮件”应用"
+},
+{
+"en": "Detect spam.",
+"zh": "检测垃圾邮件。"
+},
+{
+"en": "Predict whether or not an email is spam.",
+"zh": "预测电子邮件是否为垃圾邮件。"
+}
+],
+[
+{
+"en": "Financial app",
+"zh": "金融应用"
+},
+{
+"en": "Summarize financial information from multiple news sources.",
+"zh": "总结多个新闻媒体的财经信息。"
+},
+{
+"en": "Generate 50-word summaries of the major financial trends from the previous seven days.",
+"zh": "生成 50 个字的总结，了解主要财务趋势 前七天。"
+}
+],
+[
+{
+"en": "Map app",
+"zh": "地图应用"
+},
+{
+"en": "Calculate travel time.",
+"zh": "计算行程时间。"
+},
+{
+"en": "Predict how long it will take to travel between two points.",
+"zh": "预测两点之间行程所需的时间。"
+}
+],
+[
+{
+"en": "Banking app",
+"zh": "银行应用"
+},
+{
+"en": "Identify fraudulent transactions.",
+"zh": "识别欺诈性交易。"
+},
+{
+"en": "Predict if a transaction was made by the card holder.",
+"zh": "预测某笔交易是否是持卡人完成的。"
+}
+],
+[
+{
+"en": "Dining app",
+"zh": "餐饮应用"
+},
+{
+"en": "Identify cuisine by a restaurant's menu.",
+"zh": "根据餐厅菜单识别菜肴。"
+},
+{
+"en": "Predict the type of restaurant.",
+"zh": "预测餐馆类型。"
+}
+],
+[
+{
+"en": "Ecommerce app",
+"zh": "电子商务应用"
+},
+{
+"en": "Generate customer support replies about the company's products.",
+"zh": "生成有关公司产品的客户支持回复。"
+},
+{
+"en": "Generate replies using sentiment analysis and the organization's knowledge base.",
+"zh": "根据情感分析和组织的情感分析生成回复 知识库。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Identify the output you need",
+"zh": "确定您需要的输出"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Your choice of model type depends upon the specific context and constraints of your problem. The model's output should accomplish the task defined in the ideal outcome. Thus, the first question to answer is \"What type of output do I need to solve my problem?\"",
+"zh": "模型类型的选择取决于具体的上下文和 您遇到的问题。模型的输出应完成 理想结果。因此，要回答的第一个问题是 “解决我的问题需要哪种类型的输出？”"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If you need to classify something or make a numeric prediction, you'll probably use predictive ML. If you need to generate new content or produce output related to natural language understanding, you'll probably use generative AI.",
+"zh": "如果您需要对数据进行分类或进行数字预测， 使用预测性机器学习。如果您需要生成新内容或生成输出内容 自然语言理解相关任务，您可能会使用生成式 AI。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following tables list predictive ML and generative AI outputs:",
+"zh": "下表列出了预测性机器学习和生成式 AI 的输出结果："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "ML system",
+"zh": "机器学习系统"
+},
+{
+"en": "Example output",
+"zh": "输出示例"
+}
+],
+"rows": [
+[
+{
+"en": "Classification",
+"zh": "分类"
+},
+{
+"en": "Binary",
+"zh": "二进制"
+},
+{
+"en": "Classify an email as spam or not spam.",
+"zh": "将电子邮件归类为垃圾邮件或非垃圾邮件。"
+}
+],
+[
+{
+"en": "Multiclass single-label",
+"zh": "多类别单标签"
+},
+{
+"en": "Classify an animal in an image.",
+"zh": "对图片中的动物进行分类。"
+}
+],
+[
+{
+"en": "Multiclass multi-label",
+"zh": "多类别多标签"
+},
+{
+"en": "Classify all the animals in an image.",
+"zh": "对图片中的所有动物进行分类。"
+}
+],
+[
+{
+"en": "Numerical",
+"zh": "数值"
+},
+{
+"en": "Unidimensional regression",
+"zh": "一维回归"
+},
+{
+"en": "Predict the number of views a video will get.",
+"zh": "预测视频将获得的观看次数。"
+}
+],
+[
+{
+"en": "Multidimensional regression",
+"zh": "多维回归"
+},
+{
+"en": "Predict blood pressure, heart rate, and cholesterol levels for an individual.",
+"zh": "预测血压、心率和胆固醇水平 一个人。"
+}
+]
+],
+"caption": {
+"en": "<b>Table 1.</b> Predictive ML",
+"zh": "<b>表 1.</b> 预测性机器学习"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Model type",
+"zh": "模型类型"
+},
+{
+"en": "Example output",
+"zh": "输出示例"
+}
+],
+"rows": [
+[
+{
+"en": "Text",
+"zh": "文本"
+},
+{
+"en": "Summarize an article.<br> Reply to customer reviews.<br> Translate documents from English to Mandarin.<br> Write product descriptions.<br> Analyze legal documents.",
+"zh": "总结文章。<br> 回复客户评价。<br> 将文档从英语翻译成普通话。<br> 撰写产品说明。<br> 分析法律文件。"
+}
+],
+[
+{
+"en": "Image",
+"zh": "图片"
+},
+{
+"en": "Produce marketing images.<br> Apply visual effects to photos.<br> Generate product design variations.",
+"zh": "生成营销图片。<br> 对照片应用视觉效果。<br> 生成产品设计变体。"
+}
+],
+[
+{
+"en": "Audio",
+"zh": "音频"
+},
+{
+"en": "Generate dialogue in a specific accent.<br> Generate a short musical composition in a specific genre, like jazz.",
+"zh": "以特定口音生成对话。<br> 生成特定流派的短乐曲，例如 爵士乐。"
+}
+],
+[
+{
+"en": "Video",
+"zh": "视频"
+},
+{
+"en": "Generate realistic-looking videos.<br> Analyze video footage and apply visual effects.",
+"zh": "生成逼真的视频。<br> 分析视频片段并应用视觉效果。"
+}
+],
+[
+{
+"en": "Multimodal",
+"zh": "多模态"
+},
+{
+"en": "Produce multiple types of output, like a video with text captions.",
+"zh": "生成多种类型的输出，例如带有文字说明的视频。"
+}
+]
+],
+"caption": {
+"en": "<b>Table 2.</b> Generative AI",
+"zh": "<b>表格 2.</b> 生成式 AI"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Classification",
+"zh": "分类"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "A <button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>classification model</b></button> predicts what category the input data belongs to, for example, whether an input should be classified as A, B, or C.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>分类模型</b></button> 预测输入数据属于哪个类别，例如， 应归类为 A、B 或 C。"
+}
+},
+{
+"type": "figure",
+"src": "img/problem-framing/images/classification-model.png",
+"alt": {
+"en": "A classification model is making predictions.",
+"zh": "分类模型正在进行预测。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 1.</b> A classification model making predictions.",
+"zh": "<b>图 1.</b> 进行预测的分类模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Based on the model's prediction, your app might make a decision. For example, if the prediction is category A, then do X; if the prediction is category B, then do, Y; if the prediction is category C, then do Z. In some cases, the prediction <i>is</i> the app's output.",
+"zh": "根据模型的预测，您的应用可能会做出决策。例如，如果 则预测为 A 类，则 X；如果预测结果是 B 类，则 do、Y；如果预测属于 C 类，则执行 Z。在某些情况下， <i>是</i>应用的输出。"
+}
+},
+{
+"type": "figure",
+"src": "img/problem-framing/images/class-product-code.png",
+"alt": {
+"en": "The product code uses model's output to make a decision.",
+"zh": "商品代码会根据模型的输出内容来做出决策。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 2.</b> A classification model's output being used in the product code to make a decision.",
+"zh": "<b>图 2.</b> 分类模型的输出，用于商品代码 做出决定。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Regression",
+"zh": "回归"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "A <button type=\"button\" class=\"term\" data-term=\"regression-model\"><b>regression model</b></button> predicts a numerical value.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"regression-model\"><b>回归模型</b></button>可 数值。"
+}
+},
+{
+"type": "figure",
+"src": "img/problem-framing/images/regression-model.png",
+"alt": {
+"en": "A regression model is making a prediction.",
+"zh": "回归模型正在进行预测。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 3.</b> A regression model making a numeric prediction.",
+"zh": "<b>图 3.</b> 进行数值预测的回归模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Based on the model's prediction, your app might make a decision. For example, if the prediction falls within range A, do X; if the prediction falls within range B, do Y; if the prediction falls within range C, do Z. In some cases, the prediction <i>is</i> the app's output.",
+"zh": "根据模型的预测，您的应用可能会做出决策。例如，如果 预测值在 A 区间内，做 X；如果预测值在 B，执行 Y；如果预测结果在 C 范围内，则执行 Z。在某些情况下， 预测<i>就是</i>应用的输出。"
+}
+},
+{
+"type": "figure",
+"src": "img/problem-framing/images/regression-decision.png",
+"alt": {
+"en": "The product code uses the model's output to make a decision.",
+"zh": "商品代码会根据模型的输出内容来做出决策。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 4.</b> A regression model's output being used in the product code to make a decision.",
+"zh": "<b>图 4.</b> 产品代码中使用的回归模型输出 做出决定。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following scenario:",
+"zh": "请考虑以下场景："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You want to <a href=\"https://wikipedia.org/wiki/Cache_(computing)\" target=\"_blank\" rel=\"noopener\">cache</a> videos based on their predicted popularity. In other words, if your model predicts that a video will be popular, you want to quickly serve it to users. To do so, you'll use the more effective and expensive cache. For other videos, you'll use a different cache. Your caching criteria is the following:",
+"zh": "您想要<a href=\"https://wikipedia.org/wiki/Cache_(computing)\" target=\"_blank\" rel=\"noopener\">缓存</a> 根据视频的预计热门程度预测视频。换句话说，如果您的模型 预测视频会很受欢迎，您想要快速向用户提供该视频。接收者 那么可以使用更有效、更昂贵的缓存。对于其他视频 将使用不同的缓存您的缓存条件如下："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "If a video is predicted to get 50 or more views, you'll use the expensive cache.",
+"zh": "如果预计视频会获得 50 次或更多观看次数， 缓存。"
+},
+{
+"en": "If a video is predicted to get between 30 and 50 views, you'll use the cheap cache.",
+"zh": "如果视频预计会获得 30 到 50 次观看，则您可以使用价格较低的 缓存。"
+},
+{
+"en": "If the video is predicted to get less than 30 views, you won't cache the video.",
+"zh": "如果预测视频的观看次数少于 30 次，则系统不会缓存 视频。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "You think a regression model is the right approach because you'll be predicting a numeric value—the number of views. However, when training the regression model, you realize that it produces the same <button type=\"button\" class=\"term\" data-term=\"loss-function\">loss</button> for a prediction of 28 and 32 for videos that have 30 views. In other words, although your app will have very different behavior if the prediction is 28 versus 32, the model considers both predictions equally good.",
+"zh": "您认为回归模型是正确的方法， 数值—观看次数。不过，在训练回归模型时， 就会发现它会产生 <button type=\"button\" class=\"term\" data-term=\"loss-function\">loss</button>：预测值为 28 和 32 为观看次数达到 30 次的视频换言之，虽然您的应用 如果预测结果为 28 与 32，则模型会同时考虑两者 预测效果也一样出色。"
+}
+},
+{
+"type": "figure",
+"src": "img/problem-framing/images/training.png",
+"alt": {
+"en": "A model being trained and its loss evaluated.",
+"zh": "一个正在训练的模型及其损失评估结果。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 5.</b> Training a regression model.",
+"zh": "<b>图 5.</b> 训练回归模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Regression models are unaware of product-defined thresholds. Therefore, if your app's behavior changes significantly because of small differences in a regression model's predictions, you should consider implementing a classification model instead.",
+"zh": "回归模型不了解产品定义的阈值。因此，如果您的 应用的行为 回归模型的预测，您应该考虑实现一个 分类模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In this scenario, a classification model would produce the correct behavior because a classification model would produce a higher loss for a prediction of 28 than 32. In a sense, classification models produce thresholds by default.",
+"zh": "在这种情况下，分类模型将产生正确的行为 因为分类模型对预测 28 比 32。从某种意义上说，分类模型默认会生成阈值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This scenario highlights two important points:",
+"zh": "此方案强调了两个要点："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Predict the decision</b>. When possible, predict the decision your app will take. In the video example, a classification model would predict the decision if the categories it classified videos into were \"no cache,\" \"cheap cache,\" and \"expensive cache.\" Hiding your app's behavior from the model can cause your app to produce the wrong behavior.",
+"zh": "<b>预测决策</b>。尽可能预测您的应用将会做出的决策 。在视频示例中，分类模型会预测 从而决定视频是否归入“无缓存”的类别，\"便宜 缓存”以及“昂贵的缓存”在模型中隐藏应用行为 导致应用出现错误的行为。"
+},
+{
+"en": "<b>Understand the problem's constraints</b>. If your app takes different actions based on different thresholds, determine if those thresholds are fixed or dynamic.<br> <ul><li>Dynamic thresholds: If thresholds are dynamic, use a regression model and set the thresholds limits in your app's code. This lets you easily update the thresholds while still having the model make reasonable predictions.</li><li>Fixed thresholds: If thresholds are fixed, use a classification model and label your datasets based on the threshold limits.</li></ul> In general, most cache provisioning is dynamic and the thresholds change over time. Therefore, because this is specifically a caching problem, a regression model is the best choice. However, for many problems, the thresholds will be fixed, making a classification model the best solution.",
+"zh": "<b>了解问题的限制</b>。如果您的应用 根据不同的阈值确定这些阈值是否 是固定的还是动态的<br> <ul><li>动态阈值：如果阈值是动态的，请使用回归模型 并在应用的代码中设置阈值。这样，您就可以 更新阈值，同时让模型 预测。</li><li>固定阈值：如果阈值是固定的，请使用分类模型 并根据阈值限制为数据集添加标签。</li></ul> 一般来说，大多数缓存预配是动态的，并且阈值会发生变化 。因此，由于这具体是缓存问题， 是最佳选择。不过，对于许多问题， 因此分类模型是最佳解决方案。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Let's take a look at another example. If you're building a weather app whose ideal outcome is to tell users how much it will rain in the next six hours, you could use a regression model that predicts the label <code>precipitation_amount.</code>",
+"zh": "我们再来看一个示例。如果您正在构建一款天气应用，该应用 理想的结果是告知用户未来 6 小时内的雨量， 则可以使用回归模型来预测标签“<code>precipitation_amount.</code>”"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Ideal outcome</b>",
+"zh": "<b>理想结果</b>"
+},
+{
+"en": "<b>Ideal label</b>",
+"zh": "<b>理想标签</b>"
+}
+],
+"rows": [
+[
+{
+"en": "Tell users how much it will rain in their area in the next six hours.",
+"zh": "告知用户其所在区域的降雨量 接下来的六个小时"
+},
+{
+"en": "<code>precipitation_amount</code>",
+"zh": "<code>precipitation_amount</code>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the weather app example, the label directly addresses the ideal outcome. However, in some cases, a one-to-one relationship isn't apparent between the ideal outcome and the label. For example, in the video app, the ideal outcome is to recommend useful videos. However, there's no label in the dataset called <code>useful_to_user.</code>",
+"zh": "在天气应用示例中，标签直接指明了理想的结果。 但在某些情况下，这两者之间的一对一关系并不明显 理想结果和标签。例如，在视频应用中，理想结果是 来推荐实用视频但是，数据集中没有名为 <code>useful_to_user.</code>"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Ideal outcome</b>",
+"zh": "<b>理想结果</b>"
+},
+{
+"en": "<b>Ideal label</b>",
+"zh": "<b>理想标签</b>"
+}
+],
+"rows": [
+[
+{
+"en": "<i>Recommend useful videos.</i>",
+"zh": "<i>推荐实用视频。</i>"
+},
+{
+"en": "<code>?</code>",
+"zh": "<code>?</code>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Therefore, you must find a proxy label.",
+"zh": "因此，您必须找到一个代理标签。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Proxy labels",
+"zh": "代理标签"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"proxy-labels\"><b>Proxy labels</b></button> substitute for labels that aren't in the dataset. Proxy labels are necessary when you can't directly measure what you want to predict. In the video app, we can't directly measure whether or not a user will find a video useful. It would be great if the dataset had a <code>useful</code> feature, and users marked all the videos that they found useful, but because the dataset doesn't, we'll need a proxy label that substitutes for usefulness.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"proxy-labels\"><b>代理标签</b></button>替换为 标签。无法使用代理标签时 直接衡量您想要预测的内容。在视频应用中，我们无法 衡量用户是否认为视频有用。如果 数据集具有 <code>useful</code> 特征，用户标记了他们找到的所有视频 有用，但由于数据集没有用，因此我们需要一个"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A proxy label for usefulness might be whether or not the user will share or like the video.",
+"zh": "实用性的替代标签可以是用户是否愿意分享或点赞 视频。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Ideal outcome</b>",
+"zh": "<b>理想结果</b>"
+},
+{
+"en": "<b>Proxy label</b>",
+"zh": "<b>代理标签</b>"
+}
+],
+"rows": [
+[
+{
+"en": "<i>Recommend useful videos.</i>",
+"zh": "<i>推荐实用视频。</i>"
+},
+{
+"en": "<code>shared OR liked</code>",
+"zh": "<code>shared OR liked</code>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Be cautious with proxy labels because they don't directly measure what you want to predict. For example, the following table outlines issues with potential proxy labels for <i>Recommend useful videos</i>:",
+"zh": "请谨慎使用代理标签，因为它们不会直接衡量您需要的内容 要预测的内容。例如，下表概述了 <i>推荐实用视频</i>的代理标签："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Proxy label</b>",
+"zh": "<b>代理标签</b>"
+},
+{
+"en": "<b>Issue</b>",
+"zh": "<b>问题</b>"
+}
+],
+"rows": [
+[
+{
+"en": "Predict whether the user will click the \"like\" button.",
+"zh": "预测用户是否会点击“赞”按钮。"
+},
+{
+"en": "Most users never click \"like.\"",
+"zh": "大多数用户从不点击“顶”。"
+}
+],
+[
+{
+"en": "Predict whether a video will be popular.",
+"zh": "预测某个视频是否会热门。"
+},
+{
+"en": "Not personalized. Some users might not like popular videos.",
+"zh": "不是个性化结果。某些用户可能不喜欢热门视频。"
+}
+],
+[
+{
+"en": "Predict whether the user will share the video.",
+"zh": "预测用户是否会分享视频。"
+},
+{
+"en": "Some users don't share videos. Sometimes, people share videos because they <b>don't</b> like them.",
+"zh": "部分用户不分享视频。有时，人们分享视频的原因 不喜欢。"
+}
+],
+[
+{
+"en": "Predict whether the user will click play.",
+"zh": "预测用户是否会点击播放。"
+},
+{
+"en": "Maximizes clickbait.",
+"zh": "最大限度地增加点击诱饵。"
+}
+],
+[
+{
+"en": "Predict how long they watch the video.",
+"zh": "预测观看者观看视频的时长。"
+},
+{
+"en": "Favors long videos differentially over short videos.",
+"zh": "相比短视频，用户更喜欢长视频。"
+}
+],
+[
+{
+"en": "Predict how many times the user will rewatch the video.",
+"zh": "预测用户会再次观看视频的次数。"
+},
+{
+"en": "Favors \"rewatchable\" videos over video genres that aren't rewatchable.",
+"zh": "偏向于“可重复观看”无法重复观看的视频类型。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "No proxy label can be a perfect substitute for your ideal outcome. All will have potential problems. Pick the one that has the least problems for your use case.",
+"zh": "没有代理标签可以完美替代您的理想结果。所有将 可能存在问题请选择与您的问题 应用场景。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "A company wants to use ML in their health and well-being app to help people feel better. Do you think they'll need to use proxy labels to accomplish their goals?",
+"zh": "一家公司希望在其健康和保健应用中使用机器学习技术来帮助 让人感觉更好。他们是否需要使用代理标签 实现其目标？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Yes, the company will need to find proxy labels. Categories like happiness and well-being can't be measured directly. Instead, they need to be approximated with respect to some other feature, like hours spent exercising per week, or time spent engaged in hobbies or with friends.",
+"zh": "是的，该公司需要查找代理标签。类似类别 幸福感和幸福感是无法直接衡量的，相反，他们需要 与一些其他特征（例如花费的小时数）的近似值 锻炼时间，或者花在爱好上或与朋友在一起的时间长度。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "No, the company won't need to use proxy labels. Happiness and well-being can be directly measured.",
+"zh": "否，该公司不需要使用代理标签。幸福与健康 可以直接衡量广告效果"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Generation",
+"zh": "生成"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "In most cases, you won't train your own generative model because doing so requires massive amounts of training data and computational resources. Instead, you'll customize a pre-trained generative model. To get a generative model to produce your desired output, you might need to use one or more of the following techniques:",
+"zh": "在大多数情况下，您不会训练自己的生成模型，因为这样做 需要大量的训练数据和计算资源。相反， 您将自定义预训练的生成模型。要使用生成模型 生成所需的输出，您可能需要使用以下一种或多种方式 方法："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"distillation\"><b>Distillation</b></button>. To create a smaller version of a larger model, you generate a synthetic labeled dataset from the larger model that you use to train the smaller model. Generative models are typically gigantic and consume substantial resources (like memory and electricity). Distillation allows the smaller, less resource-intensive model to approximate the performance of the larger model.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"distillation\"><b>蒸馏</b></button>。要创建 与大型模型相比，您可以生成合成的加标签数据集 从用于训练较小模型的较大模型中生成新数据。生成式 模型通常很大，并且会消耗大量资源（例如 和电力）。蒸馏可带来较小、较少的资源密集型 来粗略估算较大模型的性能。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"fine-tuning\"><b>Fine-tuning</b></button> or <button type=\"button\" class=\"term\" data-term=\"parameter-efficient-tuning\"><b>parameter-efficient tuning</b></button>. To improve the performance of a model on a specific task, you need to further train the model on a dataset that contains examples of the type of output you want to produce.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"fine-tuning\"><b>微调</b></button>或 <button type=\"button\" class=\"term\" data-term=\"parameter-efficient-tuning\">参数高效微调</button>。 要提高模型在特定任务上的表现，您需要进一步 使用一个数据集来训练模型，该数据集包含您需要的 想要生成的内容。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"prompt-engineering\"><b>Prompt engineering</b></button>. To get the model to perform a specific task or produce output in a specific format, you tell the model the task you want it to do or explain how you want the output formatted. In other words, the prompt can include natural language instructions for how to perform the task or illustrative examples with the desired outputs.<br> For example, if you want short summaries of articles, you might input the following:<br> <code>Produce 100-word summaries for each article. </code> If you want the model to generate text for a specific reading level, you might input the following:<br> <code>All the output should be at a reading level for a 12-year-old. </code> If you want the model to provide its output in a specific format, you might explain how the output should be formatted—for example, \"format the results in a table\"—or you could demonstrate the task by giving it examples. For instance, you could input the following:<br> <code>Translate words from English to Spanish. English: Car Spanish: Auto English: Airplane Spanish: Avión English: Home Spanish:______ </code>",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"prompt-engineering\"><b>提示工程</b></button>。接收者 让模型执行特定任务，或 以特定格式生成输出，您可以告诉模型想要完成的任务， 或说明您希望如何对输出设置格式换言之， 提示可以包含有关如何执行此任务的自然语言说明 或具有所需输出的说明性示例。<br> 例如，如果您想查找简短的文章摘要，可以输入 以下：<br> <code>Produce 100-word summaries for each article. </code> 如果您想让模型针对特定阅读水平生成文本， 您可以输入以下内容：<br> <code>All the output should be at a reading level for a 12-year-old. </code> 如果您希望模型以特定格式提供其输出， 解释应如何设置输出格式，例如“设置 以表格形式显示结果”- 或者，您也可以演示如何 来生成模型。例如，您可以输入以下内容：<br> <code>Translate words from English to Spanish. English: Car Spanish: Auto English: Airplane Spanish: Avión English: Home Spanish:______ </code>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Distillation and fine-tuning update the model's <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameters</b></button>. Prompt engineering doesn't update the model's parameters. Instead, prompt engineering helps the model learn how to produce a desired output from the context of the prompt.",
+"zh": "蒸馏和微调会更新模型的 <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameters</b></button>。提示工程 不会更新模型的参数。相反，提示工程可以帮助 并学习如何根据提示的上下文产生期望的输出。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In some cases, you'll also need a <button type=\"button\" class=\"term\" data-term=\"test-set\"><b>test dataset</b></button> to evaluate a generative model's output against known values, for example, checking that the model's summaries are similar to human-generated ones, or that humans rate the model's summaries as good.",
+"zh": "在某些情况下，您还需要一个 <button type=\"button\" class=\"term\" data-term=\"test-set\"><b>测试数据集</b></button>，用于评估 对照已知值生成模型的输出，例如 模型总结与人工生成的摘要类似， 非常好。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Generative AI can also be used to implement a predictive ML solution, like classification or regression. For example, because of their deep knowledge of natural language, <button type=\"button\" class=\"term\" data-term=\"large-language-model\"><b>large language models (LLMs)</b></button> can frequently perform text classification tasks better than predictive ML trained for the specific task.",
+"zh": "生成式 AI 还可用于实现预测性机器学习 例如分类或回归。 例如，由于他们对自然语言有深入的了解， <button type=\"button\" class=\"term\" data-term=\"large-language-model\"><b>大型语言模型 (LLM)</b></button> 执行文本分类任务往往比预测性机器学习更出色 针对特定任务进行训练。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Define the success metrics",
+"zh": "定义成效指标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Define the metrics you'll use to determine whether or not the ML implementation is successful. Success metrics define what you care about, like engagement or helping users take appropriate action, such as watching videos that they'll find useful. Success metrics differ from the model's evaluation metrics, like <button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>accuracy</b></button>, <button type=\"button\" class=\"term\" data-term=\"precision\"><b>precision</b></button>, <button type=\"button\" class=\"term\" data-term=\"recall\"><b>recall</b></button>, or <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\"><b>AUC</b></button>.",
+"zh": "定义您将用来确定机器学习实现是否实现的指标 请求成功。成效指标界定了您关注的方面，例如互动度或 帮助用户采取适当的操作，例如观看他们认为 实用。成功指标与模型的评估指标不同，例如 <button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>accuracy</b></button>、 <button type=\"button\" class=\"term\" data-term=\"precision\"><b>精确率</b></button>、 <button type=\"button\" class=\"term\" data-term=\"recall\"><b>召回</b></button>，或 <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\"><b>AUC</b></button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the weather app's success and failure metrics might be defined as the following:",
+"zh": "例如，天气应用的成功和失败指标可定义为 以下："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Success</b>",
+"zh": "<b>成功</b>"
+},
+{
+"en": "Users open the \"Will it rain?\" feature 50 percent more often than they did before.",
+"zh": "用户将打开“会下雨吗？”增加 50% 提升工作效率"
+}
+],
+"rows": [
+[
+{
+"en": "<b>Failure</b>",
+"zh": "<b>失败</b>"
+},
+{
+"en": "Users open the \"Will it rain?\" feature no more often than before.",
+"zh": "用户将打开“会下雨吗？”功能最多 。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The video app metrics might be defined as the following:",
+"zh": "视频应用指标可定义如下："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "<b>Success</b>",
+"zh": "<b>成功</b>"
+},
+{
+"en": "Users spend on average 20 percent more time on the site.",
+"zh": "用户在网站上停留的时间平均增加了 20%。"
+}
+],
+"rows": [
+[
+{
+"en": "<b>Failure</b>",
+"zh": "<b>失败</b>"
+},
+{
+"en": "Users spend on average no more time on site than before.",
+"zh": "平均而言，用户在网站上停留的时间不会比以前更长。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We recommend defining ambitious success metrics. High ambitions can cause gaps between success and failure though. For example, users spending on average 10 percent more time on the site than before is neither success nor failure. The undefined gap is not what's important.",
+"zh": "我们建议定义雄心勃勃的成功指标。抱负远大可能会造成差距 成功与失败之间例如，平均支出用户 网站停留时间比以前增加 10%，既不是成功也不失败。 未定义的差距并不重要。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "What's important is your model's capacity to move closer—or exceed—the definition of success. For instance, when analyzing the model's performance, consider the following question: Would improving the model get you closer to your defined success criteria? For example, a model might have great evaluation metrics, but not move you closer to your success criteria, indicating that even with a perfect model, you wouldn't meet the success criteria you defined. On the other hand, a model might have poor evaluation metrics, but get you closer to your success criteria, indicating that improving the model would get you closer to success.",
+"zh": "重要的是模型有足够大的距离， 超过 — 成功的定义。例如，在分析模型的 请考虑以下问题：改进模型是否让您 更接近您定义的成功标准？例如，一个模型可能 评估指标，但不会让您离成功标准更近一步， 即使有完美的模型，您也达不到 。另一方面，模型的评估指标可能较差， 更接近成功标准，这表明改进模型 让您离成功更近一步"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following are dimensions to consider when determining if the model is worth improving:",
+"zh": "以下是确定模型是否值得考虑的维度 改善："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Not good enough, but continue</b>. The model shouldn't be used in a production environment, but over time it might be significantly improved.",
+"zh": "<b>做得不够好，但继续</b>。该模型不应 但随着时间的推移，它可能会得到显著改善。"
+},
+{
+"en": "<b>Good enough, and continue</b>. The model could be used in a production environment, and it might be further improved.",
+"zh": "<b>做得不错，继续努力</b>。该模型可用于生产环境 环境，它可能会进一步改进。"
+},
+{
+"en": "<b>Good enough, but can't be made better</b>. The model is in a production environment, but it is probably as good as it can be.",
+"zh": "<b>足够好，但我们无法不断改进</b>。该模型处于生产环境 但其质量很可能要好一些"
+},
+{
+"en": "<b>Not good enough, and never will be</b>. The model shouldn't be used in a production environment and no amount of training will probably get it there.",
+"zh": "<b>不够好，永远不会</b>。该模型不应 那么再多的训练可能就无法实现这一点。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "When deciding to improve the model, re-evaluate if the increase in resources, like engineering time and compute costs, justify the predicted improvement of the model.",
+"zh": "在决定改进模型时，请重新评估增加的资源， 例如工程时间和计算成本，证明 模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "After defining the success and failure metrics, you need to determine how often you'll measure them. For instance, you could measure your success metrics six days, six weeks, or six months after implementing the system.",
+"zh": "定义成功和失败指标后，您需要确定 都会对您进行衡量例如，你可以衡量以下六个成功指标： 天、六周或六个月后。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When analyzing failure metrics, try to determine why the system failed. For example, the model might be predicting which videos users will click, but the model might start recommending clickbait titles that cause user engagement to drop off. In the weather app example, the model might accurately predict when it will rain but for too large of a geographic region.",
+"zh": "在分析故障指标时，尝试确定系统发生故障的原因。对于 模型可能会预测用户会点击哪些视频， 模型可能会开始推荐可吸引用户互动的点击诱饵标题 。在天气应用示例中，模型可能会准确预测 会下雨，但是覆盖的地理区域过大。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "A fashion firm wants to sell more clothes. Someone suggests using ML to determine which clothes the firm should manufacture. They think they can train a model to determine which type of clothes are in fashion. After they train the model, they want to apply it to their catalog to decide which clothes to make.<br> How should they frame their problem in ML terms?",
+"zh": "一家时尚公司希望提高服装销量。有人建议使用机器学习 确定该公司应制造哪些服装。他们认为自己可以 训练模型以确定哪种类型的服装时尚。更新后 他们希望将该模型应用于他们的目录， 要制作什么样的衣服<br> 他们应该如何用机器学习术语来描述自己的问题？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "<b>Ideal outcome</b>: Determine which products to manufacture.<br> <b>Model's goal</b>: Predict which articles of clothing are in fashion.<br> <b>Model output</b>: Binary classification, <code>in_fashion</code>, <code>not_in_fashion</code><br> <b>Success metrics</b>: Sell seventy percent or more of the clothes made.",
+"zh": "<b>理想结果</b>：确定要制造的商品。<br> <b>模特的目标</b>：预测展示哪些服饰 。<br> <b>模型输出</b>：二元分类、<code>in_fashion</code>、 <code>not_in_fashion</code><br> <b>成功指标</b>：售出 70% 或以上的服装 。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "<b>Ideal outcome</b>: Determine how much fabric and supplies to order.<br> <b>Model's goal</b>: Predict how much of each item to manufacture.<br> <b>Model output</b>: Binary classification, <code>make</code>, <code>do_not_make</code><br> <b>Success metrics</b>: Sell seventy percent or more of the clothes made.",
+"zh": "<b>理想结果</b>：确定要订购的面料和用品数量。<br> <b>模型目标</b>：预测每件商品的生产量。<br> <b>模型输出</b>：二元分类、<code>make</code>、 <code>do_not_make</code><br> <b>成功指标</b>：售出 70% 或以上的服装 。"
+},
+"why": {
+"en": "The ideal outcome isn't to determine how much fabric and supplies to order. It's to determine if an item should be manufactured. Thus, the model's goal addresses the wrong objective.",
+"zh": "理想的结果不是确定需要多少面料和物资 订单。用于确定某件商品是否应制造出来。因此， 模型的目标解决了错误的目标。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "implement-model",
+"path": "/machine-learning/problem-framing/implement-model",
+"min": null,
+"heading": {
+"en": "Implementing a model",
+"zh": "实现模型"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/problem-framing/implement-model",
+"zh": "https://developers.google.com/machine-learning/problem-framing/implement-model?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Begin with a simple model and prioritize data pipeline setup before complex model iterations.",
+"zh": null
+},
+{
+"en": "Simple models offer valuable baselines and help assess the necessity of complex models.",
+"zh": null
+},
+{
+"en": "Consider utilizing pre-trained models or their subsections when applicable, particularly for generative AI.",
+"zh": null
+},
+{
+"en": "Implement monitoring and alerting systems for model deployment, training-serving skew, and inference servers.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "When implementing a model, start simple. Most of the work in ML is on the data side, so getting a full pipeline running for a complex model is harder than iterating on the model itself. After setting up your data pipeline and implementing a simple model that uses a few features, you can iterate on creating a better model.",
+"zh": "实现模型时，请从简单开始。机器学习中的大部分工作都在数据端完成，因此，让复杂模型的完整流水线正常运行比迭代模型本身更难。设置数据流水线并实现使用少量特征的简单模型后，您可以迭代创建更好的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Simple models provide a good baseline, even if you don't end up launching them. In fact, using a simple model is probably better than you think. Starting simple helps you determine whether or not a complex model is even justified.",
+"zh": "简单的模型可以提供良好的基准，即使您最终未发布这些模型也是如此。事实上，使用简单模型的效果可能比您想象的要好。从简单开始有助于您确定复杂模型是否有必要。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Train your own model versus using an already trained model",
+"zh": "训练自己的模型与使用已训练的模型"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Trained models exist for a variety of use cases and offer many advantages. However, trained models only really work when the label and features match your dataset exactly. For example, if a trained model uses 25 features and your dataset only includes 24 of them, the trained model will most likely make bad predictions.",
+"zh": "训练好的模型适用于各种用例，并具有许多优势。不过，只有当标签和特征与您的数据集完全匹配时，训练好的模型才会真正发挥作用。例如，如果训练好的模型使用了 25 个特征，而您的数据集仅包含其中 24 个，那么训练好的模型很可能会做出错误的预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Commonly, ML practitioners use matching subsections of inputs from a trained model for fine-tuning or transfer learning. If a trained model doesn't exist for your particular use case, consider using subsections from a trained model when training your own.",
+"zh": "通常，机器学习从业者会使用训练模型中匹配的输入子部分进行微调或迁移学习。如果不存在适用于您的特定用例的训练模型，请考虑在训练自己的模型时使用训练好的模型的子部分。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>If your solution is a generative AI model, you'll almost always fine-tune a <button type=\"button\" class=\"term\" data-term=\"pre-trained-model\">pre-trained model</button> instead of training your own.",
+"zh": "<b>注意</b>：如果您的解决方案是生成式 AI 模型，您几乎总是需要微调<button type=\"button\" class=\"term\" data-term=\"pre-trained-model\">预训练模型</button>，而不是训练自己的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For information on trained models, see",
+"zh": "如需了解训练好的模型，请参阅"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://www.tensorflow.org/hub\" target=\"_blank\" rel=\"noopener\">Trained models from TensorFlow Hub</a>",
+"zh": "<a href=\"https://www.tensorflow.org/hub?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">TensorFlow Hub 中经过训练的模型</a>"
+},
+{
+"en": "<a href=\"https://www.kaggle.com/models\" target=\"_blank\" rel=\"noopener\">Trained models from Kaggle</a>",
+"zh": "<a href=\"https://www.kaggle.com/models\" target=\"_blank\" rel=\"noopener\">Kaggle 中的训练模型</a>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Monitoring",
+"zh": "监控"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "During problem framing, consider the monitoring and alerting infrastructure your ML solution needs.",
+"zh": "在构建问题框架时，请考虑您的机器学习解决方案需要的监控和提醒基础架构。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Model deployment",
+"zh": "模型部署"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "In some cases, a newly trained model might be worse than the model currently in production. If it is, you'll want to prevent it from being released into production and get an alert that your automated deployment has failed.",
+"zh": "在某些情况下，新训练的模型的效果可能会不如当前在生产环境中使用的模型。如果是，您需要阻止其发布到生产环境，并收到自动部署失败的提醒。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Training-serving skew",
+"zh": "训练-应用偏差"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "If any of the incoming features used for inference have values that fall outside the distribution range of the data used in training, you'll want to be alerted because it's likely the model will make poor predictions. For example, if your model was trained to predict temperatures for equatorial cities at sea level, then your serving system should alert you of incoming data with latitudes and longitudes, and/or altitudes outside the range the model was trained on. Conversely, the serving system should alert you if the model is making predictions that are outside the distribution range that was seen during training.",
+"zh": "如果用于推理的任何传入特征的值超出了训练中所用数据的分布范围，您需要收到提醒，因为模型可能会做出不准确的预测。例如，如果您的模型经过训练可预测海平面上赤道城市的温度，那么您的服务系统应在有纬度、经度和/或海拔超出模型训练范围的传入数据时提醒您。反之，如果模型的预测结果超出了训练期间出现的分布范围，服务系统应向您发出提醒。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Inference server",
+"zh": "推理服务器"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "If you're providing inferences through an RPC system, you'll want to monitor the RPC server itself and get an alert if it stops providing inferences.",
+"zh": "如果您通过 RPC 系统提供推理，则需要监控 RPC 服务器本身，并在 RPC 服务器停止提供推理时收到提醒。"
+}
+}
+]
+},
+{
+"id": "summary",
+"path": "/machine-learning/problem-framing/summary",
+"min": null,
+"heading": {
+"en": "Summary",
+"zh": "摘要"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/problem-framing/summary",
+"zh": "https://developers.google.com/machine-learning/problem-framing/summary?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Framing a problem in terms of ML is a two-step process:",
+"zh": "从机器学习的角度构建问题是一个两步流程："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Verify that ML is a good approach by doing the following:<br> <ul><li>Understand the problem.</li><li>Identify a clear use case.</li><li>Understand the data.</li></ul>",
+"zh": "通过执行以下操作来验证机器学习是否是一种好的方法：<br> <ul><li>了解问题。</li><li>确定明确的应用场景。</li><li>了解数据。</li></ul>"
+},
+{
+"en": "Frame the problem in ML terms by doing the following:<br> <ul><li>Define the ideal outcome and the model's goal.</li><li>Identify the model's output.</li><li>Define success metrics.</li></ul>",
+"zh": "通过执行以下操作，以机器学习术语来描述问题：<br> <ul><li>定义理想结果和模型的目标。</li><li>确定模型的输出。</li><li>定义成功指标。</li></ul>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "These steps can save time and resources by setting clear goals and providing a shared framework for working with other ML practitioners.",
+"zh": "通过设定明确的目标并提供与机器学习从业者协作的共享框架，这些步骤可以节省时间和资源。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Use the following exercises to frame an ML problem and formulate a solution:",
+"zh": "请完成以下练习，以确定机器学习问题并制定解决方案："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://developers.google.com/machine-learning/problem-framing/try-it/framing-exercise\" target=\"_blank\" rel=\"noopener\">Framing an ML problem</a>",
+"zh": "<a href=\"https://developers.google.com/machine-learning/problem-framing/try-it/framing-exercise?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">确定机器学习问题的框架</a>"
+},
+{
+"en": "<a href=\"https://developers.google.com/machine-learning/problem-framing/try-it/formulate-exercise\" target=\"_blank\" rel=\"noopener\">Formulating a solution</a>",
+"zh": "<a href=\"https://developers.google.com/machine-learning/problem-framing/try-it/formulate-exercise?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">制定解决方案</a>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Responsible AI",
+"zh": "Responsible AI"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "When implementing ML solutions, always follow <a href=\"https://ai.google/responsibility/principles\" target=\"_blank\" rel=\"noopener\">Google's Responsible AI Principles</a>.",
+"zh": "在实施机器学习解决方案时，请务必遵循 <a href=\"https://ai.google/responsibility/principles?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Google 的 Responsible AI 原则</a>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For a hands-on introduction for improving fairness and mitigating bias in ML, see the <a href=\"#/ch/c13/fairness\">MLCC Fairness module</a>.",
+"zh": "如需获取有关如何通过实践来提高机器学习公平性和缓解偏差的入门介绍，请参阅 <a href=\"#/ch/c13/fairness\">MLCC 公平性模块</a>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Keep learning",
+"zh": "不断改进"
+},
+"level": 2
+},
+{
+"type": "h",
+"html": {
+"en": "More ML learning resources",
+"zh": "更多机器学习学习资源"
+},
+"level": 3
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://developers.google.com/machine-learning/data-prep\" target=\"_blank\" rel=\"noopener\">Data Preparation and Feature Engineering</a>",
+"zh": "<a href=\"https://developers.google.com/machine-learning/data-prep?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">数据准备和特征工程</a>"
+},
+{
+"en": "<a href=\"https://developers.google.com/machine-learning/testing-debugging\" target=\"_blank\" rel=\"noopener\">Testing and Debugging in Machine Learning</a>",
+"zh": "<a href=\"https://developers.google.com/machine-learning/testing-debugging?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">机器学习中的测试和调试</a>"
+},
+{
+"en": "<a href=\"https://pair.withgoogle.com/\" target=\"_blank\" rel=\"noopener\">People + AI Research</a>",
+"zh": "<a href=\"https://pair.withgoogle.com/\" target=\"_blank\" rel=\"noopener\">人 + AI 研究</a>"
+}
+]
+}
+]
+}
+]
+}

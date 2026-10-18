@@ -1,0 +1,1725 @@
+{
+"id": "c01",
+"num": 1,
+"stage": 1,
+"title": {
+"en": "Intro to Machine Learning",
+"zh": "机器学习简介"
+},
+"minutes": null,
+"sections": [
+{
+"id": "intro",
+"path": "/machine-learning/intro-to-ml",
+"min": null,
+"heading": {
+"en": "Introduction to Machine Learning",
+"zh": "机器学习简介"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/intro-to-ml",
+"zh": "https://developers.google.com/machine-learning/intro-to-ml?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Welcome to Introduction to Machine Learning. This course introduces <b>machine learning</b> (<b>ML</b>) concepts. This course does not cover how to implement ML or work with data.",
+"zh": "欢迎学习“机器学习简介”。本课程将介绍<b>机器学习</b> (<b>ML</b>) 概念。本课程不涉及如何实现机器学习或处理数据。"
+}
+},
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives:</b> <ul><li>Understand the different types of machine learning.</li><li>Understand the key concepts of supervised machine learning.</li><li>Learn how solving problems with ML is different from traditional approaches.</li></ul>",
+"zh": "<b>学习目标</b>： <ul><li>了解不同类型的机器学习。</li><li>了解监督式机器学习的关键概念。</li><li>了解如何使用机器学习解决问题，以及这种方法与传统方法的不同之处。</li></ul>"
+}
+}
+]
+},
+{
+"id": "what-is-ml",
+"path": "/machine-learning/intro-to-ml/what-is-ml",
+"min": null,
+"heading": {
+"en": "What is Machine Learning?",
+"zh": "什么是机器学习？"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/intro-to-ml/what-is-ml",
+"zh": "https://developers.google.com/machine-learning/intro-to-ml/what-is-ml?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning (ML) is a way to train software, called a model, to make predictions or generate content using data.",
+"zh": null
+},
+{
+"en": "ML systems can be categorized as supervised, unsupervised, reinforcement, or generative AI, each learning differently.",
+"zh": null
+},
+{
+"en": "Supervised learning uses labeled data to make predictions, often for regression (predicting numerical values) or classification (categorizing data).",
+"zh": null
+},
+{
+"en": "Unsupervised learning identifies patterns in unlabeled data, commonly using clustering to group similar data points.",
+"zh": null
+},
+{
+"en": "Generative AI creates new content, such as text, images, or music, by learning patterns from existing data and mimicking them.",
+"zh": null
+}
+],
+"terms": [
+"classification-model",
+"clustering",
+"model",
+"policy",
+"prediction",
+"regression-model",
+"reinforcement-learning-rl",
+"reward",
+"supervised-machine-learning",
+"training",
+"unsupervised-machine-learning"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Machine learning (ML) powers some of the most important technologies we use, from translation apps to autonomous vehicles. This course explains the core concepts behind ML.",
+"zh": "从翻译应用到自动驾驶汽车，我们使用的一些最重要的技术都由机器学习 (ML) 提供支持。本课程将介绍机器学习背后的核心概念。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "ML offers a new way to solve problems, answer complex questions, and create new content. ML can predict the weather, estimate travel times, recommend songs, auto-complete sentences, summarize articles, and generate never-seen-before images.",
+"zh": "机器学习提供了一种解决问题、回答复杂问题和创建新内容的新方式。机器学习可以预测天气、估计出行时间、推荐歌曲、自动补全句子、总结文章，以及生成前所未见的图片。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In basic terms, ML is the process of <button type=\"button\" class=\"term\" data-term=\"training\">training</button> a piece of software, called a <button type=\"button\" class=\"term\" data-term=\"model\">model</button>, to make useful <button type=\"button\" class=\"term\" data-term=\"prediction\">predictions</button> or generate content (like text, images, audio, or video) from data.",
+"zh": "简单来说，机器学习是指<button type=\"button\" class=\"term\" data-term=\"training\">训练</button>一段称为<button type=\"button\" class=\"term\" data-term=\"model\">模型</button>的软件，使其能够根据数据做出有用的<button type=\"button\" class=\"term\" data-term=\"prediction\">预测</button>或生成内容（例如文本、图片、音频或视频）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose we wanted to create an app to predict rainfall. We could use either a traditional approach or an ML approach. Using a traditional approach, we'd create a physics-based representation of the Earth's atmosphere and surface, computing massive amounts of fluid dynamics equations. This is incredibly difficult.",
+"zh": "例如，假设我们想要创建一个用于预测降雨量的应用。我们可以使用传统方法或机器学习方法。如果采用传统方法，我们需要创建地球大气层和地表的基于物理学的表示形式，并计算大量的流体动力学方程。这非常困难。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Using an ML approach, we would give an ML model enormous amounts of weather data until the ML model eventually <i>learned</i> the mathematical relationship between weather patterns that produce differing amounts of rain. We would then give the model the current weather data, and it would predict the amount of rain.",
+"zh": "如果使用机器学习方法，我们会向机器学习模型提供大量天气数据，直到该模型最终<i>学习</i>到产生不同降雨量的天气模式之间的数学关系。然后，我们会向模型提供当前天气数据，让它预测降雨量。"
+}
+},
+{
+"type": "video",
+"id": "RdC7KZ6OFPA"
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What is a \"model\" in machine learning?",
+"zh": "在机器学习中，“模型”是什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A model is a mathematical relationship derived from data that an ML system uses to make predictions",
+"zh": "模型是一种从数据中推导出的数学关系，机器学习系统使用这种关系来进行预测"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "A model is a piece of computer hardware",
+"zh": "模型是一种计算机硬件"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "A model is a smaller representation of the thing you're studying.",
+"zh": "模型是您研究对象的较小表示形式。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Types of ML Systems",
+"zh": "机器学习系统类型"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "ML systems fall into one or more of the following categories based on how they learn to make predictions or generate content:",
+"zh": "根据机器学习系统学习进行预测或生成内容的方式，可将其归入以下一个或多个类别："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Supervised learning",
+"zh": "监督式学习"
+},
+{
+"en": "Unsupervised learning",
+"zh": "非监督式学习"
+},
+{
+"en": "Reinforcement learning",
+"zh": "强化学习"
+},
+{
+"en": "Generative AI",
+"zh": "生成式 AI"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Supervised learning",
+"zh": "监督式学习"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"supervised-machine-learning\">Supervised learning</button> models can make predictions after seeing lots of data with the correct answers and then discovering the connections between the elements in the data that produce the correct answers. This is like a student learning new material by studying old exams that contain both questions and answers. Once the student has trained on enough old exams, the student is well prepared to take a new exam. These ML systems are \"supervised\" in the sense that a human gives the ML system data with the known correct results.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"supervised-machine-learning\">监督学习</button>模型在看到大量包含正确答案的数据后，可以发现数据中产生正确答案的元素之间的关联，从而做出预测。这就像学生通过学习包含问题和答案的旧考试来学习新知识。当学生通过足够多的旧考试进行训练后，便能充分做好准备来参加新考试。 这些机器学习系统是“监督式”的，因为人类会向机器学习系统提供已知正确结果的数据。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Two of the most common use cases for supervised learning are regression and classification.",
+"zh": "监督式学习最常见的两个应用场景是回归和分类。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Regression",
+"zh": "回归"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "A <button type=\"button\" class=\"term\" data-term=\"regression-model\">regression model</button> predicts a numeric value. For example, a weather model that predicts the amount of rain, in inches or millimeters, is a regression model.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"regression-model\">回归模型</button>可预测数值。例如，预测降雨量（以英寸或毫米为单位）的天气模型就是一种回归模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "See the table below for more examples of regression models:",
+"zh": "如需查看更多回归模型示例，请参阅下表："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Scenario",
+"zh": "场景"
+},
+{
+"en": "Possible input data",
+"zh": "可能的输入数据"
+},
+{
+"en": "Numeric prediction",
+"zh": "数值预测"
+}
+],
+"rows": [
+[
+{
+"en": "Future house price",
+"zh": "未来房价"
+},
+{
+"en": "Square footage, zip code, number of bedrooms and bathrooms, lot size, mortgage interest rate, property tax rate, construction costs, and number of homes for sale in the area.",
+"zh": "房屋面积、邮政编码、卧室和浴室数量、地块面积、抵押贷款利率、房产税率、建造成本以及该区域的待售房屋数量。"
+},
+{
+"en": "The price of the home.",
+"zh": "住宅的价格。"
+}
+],
+[
+{
+"en": "Future ride time",
+"zh": "未来行程时间"
+},
+{
+"en": "Historical traffic conditions (gathered from smartphones, traffic sensors, ride-hailing and other navigation applications), distance from destination, and weather conditions.",
+"zh": "历史路况信息（从智能手机、交通传感器、网约车和其他导航应用收集）、与目的地的距离以及天气状况。"
+},
+{
+"en": "The time in minutes and seconds to arrive at a destination.",
+"zh": "到达目的地所需的时间（以分钟和秒为单位）。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Classification",
+"zh": "分类"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"classification-model\">Classification models</button> predict the likelihood that something belongs to a category. Unlike regression models, whose output is a number, classification models output a value that states whether or not something belongs to a particular category. For example, classification models are used to predict if an email is spam or if a photo contains a cat.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"classification-model\">分类模型</button>可预测某事物属于某个类别的可能性。与输出为数值的回归模型不同，分类模型输出的值用于指明某事物是否属于特定类别。例如，分类模型用于预测电子邮件是否为垃圾邮件，或照片中是否包含猫。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Classification models are divided into two groups: binary classification and multiclass classification. Binary classification models output a value from a class that contains only two values, for example, a model that outputs either <code>rain</code> or <code>no rain</code>. Multiclass classification models output a value from a class that contains more than two values, for example, a model that can output either <code>rain</code>, <code>hail</code>, <code>snow</code>, or <code>sleet</code>.",
+"zh": "分类模型分为两组：二元分类和多类别分类。二元分类模型会输出仅包含两个值的类中的一个值，例如，输出 <code>rain</code> 或 <code>no rain</code> 的模型。多类别分类模型会输出一个值，该值来自包含两个以上值的类别，例如，可以输出 <code>rain</code>、<code>hail</code>、<code>snow</code> 或 <code>sleet</code> 的模型。"
+}
+},
+{
+"type": "video",
+"id": "NNue6rkDrws"
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you wanted to use an ML model to predict energy usage for commercial buildings, what type of model would you use?",
+"zh": "如果您想使用机器学习模型来预测商业建筑的能耗，您会使用哪种类型的模型？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Regression",
+"zh": "回归"
+},
+"why": {
+"en": "Energy usage is measured in kilowatt-hours (kWh), which is a number, so you'd want to use a regression model.",
+"zh": "能耗以千瓦时 (kWh) 为单位，是一个数值，因此您需要使用回归模型。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Classification",
+"zh": "分类"
+},
+"why": {
+"en": "Classification models predict whether or not something belongs to a category, while regression models predict a number. Because energy usage is measured in kilowatt-hours (kWh), which is a number, you'd want to use a regression model.",
+"zh": "分类模型可预测某事物是否属于某个类别，而回归模型可预测数值。由于能耗以千瓦时 (kWh) 为单位进行衡量，是一个数值，因此您需要使用回归模型。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Unsupervised learning",
+"zh": "非监督式学习"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "An <button type=\"button\" class=\"term\" data-term=\"unsupervised-machine-learning\">unsupervised learning</button> model aims to identify meaningful patterns in a dataset. For example, many unsupervised learning models rely on a technique called <button type=\"button\" class=\"term\" data-term=\"clustering\">clustering</button> to organize similar data into groups (\"clusters\").",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"unsupervised-machine-learning\">非监督式学习</button>模型旨在识别数据集中的有意义模式。例如，许多非监督式学习模型都依赖于一种称为<button type=\"button\" class=\"term\" data-term=\"clustering\">聚类</button>的技术，将类似的数据整理成组（“聚类”）。"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/clustering-02.png",
+"alt": {
+"en": "An image showing colored dots in clusters.",
+"zh": "一张图片，显示了集群中的彩色圆点。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 1</b>. An ML model clustering similar data points.",
+"zh": "<b>图 1</b>. 一种用于对相似数据点进行聚类的机器学习模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/clustering-04.png",
+"alt": {
+"en": "An image showing colored dots in clusters that are enclosed in a shape and border each other.",
+"zh": "图片：显示了成簇的彩色圆点，这些圆点被一个形状包围，彼此相邻。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 2</b>. Groups of clusters with natural demarcations.",
+"zh": "<b>图 2</b>. 具有自然分界的集群组。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Clustering differs from classification because the categories aren't defined by you. For example, an unsupervised model might cluster a weather dataset based on temperature, revealing segmentations that define the seasons. You might then attempt to name those clusters based on your understanding of the dataset.",
+"zh": "聚类与分类的不同之处在于，聚类中的类别不是由您定义的。例如，非监督式模型可能会根据温度对天气数据集进行聚类，从而揭示定义季节的细分。然后，您可能会尝试根据对数据集的了解来命名这些聚类。"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/clustering-01.png",
+"alt": {
+"en": "An image showing colored dots in clusters that are labeled as snow, rain, hail, and no rain.",
+"zh": "一张图片，显示了成簇的彩色点，分别标记为雪、雨、冰雹和无雨。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 3</b>. An ML model clustering similar weather patterns.",
+"zh": "<b>图 3</b>. 一种用于聚类相似天气模式的机器学习模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/clustering-03.png",
+"alt": {
+"en": "An image showing colored dots in clusters that are labeled as snow, rain, hail, and no rain that are enclosed in a shape and border each other.",
+"zh": "一张图片，显示了成簇的彩色点，这些点被标记为雪、雨、冰雹和无雨，并被一个形状包围，彼此相邻。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 4</b>. Clusters of weather patterns labeled as snow, sleet, rain, and no rain.",
+"zh": "<b>图 4</b>. 标记为下雪、雨夹雪、下雨和不下雨的天气模式聚类。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What distinguishes a supervised approach from an unsupervised approach?",
+"zh": "监督式方法与非监督式方法的区别是什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A supervised approach is given data that contains the correct answer.",
+"zh": "监督式方法会获得包含正确答案的数据。"
+},
+"why": {
+"en": "A supervised approach is given data that contains the correct answer. The model's job is to find connections in the data that produce the correct answer. An unsupervised approach is given data without the correct answer. Its job is to find groupings in the data.",
+"zh": "监督式方法会获得包含正确答案的数据。 模型的工作是找到数据中能够得出正确答案的关联。 非监督式方法会获得没有正确答案的数据。其任务是在数据中查找分组。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "A supervised approach typically uses clustering.",
+"zh": "监督式方法通常使用聚类。"
+},
+"why": {
+"en": "An unsupervised approach uses clustering.",
+"zh": "非监督式方法使用聚类。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "An unsupervised approach knows how to label clusters of data.",
+"zh": "非监督式方法知道如何为数据聚类添加标签。"
+},
+"why": {
+"en": "An unsupervised approach doesn't know what the clusters of data mean. Based on your understanding of the data, it's up to you to define them.",
+"zh": "非监督式方法不知道数据聚类的含义。 您可以根据自己对数据的理解来定义这些变量。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Reinforcement learning",
+"zh": "强化学习"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"reinforcement-learning-rl\">Reinforcement learning</button> models make predictions by getting <button type=\"button\" class=\"term\" data-term=\"reward\">rewards</button> or penalties based on actions performed within an environment. A reinforcement learning system generates a <button type=\"button\" class=\"term\" data-term=\"policy\">policy</button> that defines the best strategy for getting the most rewards.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"reinforcement-learning-rl\">强化学习</button>模型通过根据在环境中执行的操作获得<button type=\"button\" class=\"term\" data-term=\"reward\">奖励</button>或惩罚来进行预测。强化学习系统会生成一项<button type=\"button\" class=\"term\" data-term=\"policy\">政策</button>，用于定义获得最多奖励的最佳策略。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Reinforcement learning is used to train robots to perform tasks, like walking around a room, and software programs like <a href=\"https://deepmind.com/research/case-studies/alphago-the-story-so-far\" target=\"_blank\" rel=\"noopener\">AlphaGo</a> to play the game of Go.",
+"zh": "强化学习用于训练机器人执行任务，例如在房间内走动，以及训练软件程序（例如 <a href=\"https://deepmind.com/research/case-studies/alphago-the-story-so-far?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">AlphaGo</a>）玩围棋。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Generative AI",
+"zh": "生成式 AI"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"generative-ai\">Generative AI</button> is a class of models that creates content from user input. For example, generative AI can create unique images, music compositions, and jokes; it can summarize articles, explain how to perform a task, or edit a photo.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"generative-ai\">生成式 AI</button> 是一类可根据用户输入生成内容的模型。例如，生成式 AI 可以创作独特的图片、音乐作品和笑话；还可以总结文章、说明如何执行任务或编辑照片。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Generative AI can take a variety of inputs and create a variety of outputs, like text, images, audio, and video. It can also take and create combinations of these. For example, a model can take an image as input and create an image and text as output, or take an image and text as input and create a video as output.",
+"zh": "生成式 AI 可以接受各种输入，并生成各种输出，例如文本、图片、音频和视频。它还可以采用这些元素的组合。例如，模型可以接受图片作为输入，并生成图片和文本作为输出；也可以接受图片和文本作为输入，并生成视频作为输出。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We can discuss generative models by their inputs and outputs, typically written as \"type of input\"-to-\"type of output.\" For example, the following is a partial list of some inputs and outputs for generative models:",
+"zh": "我们可以根据生成式模型的输入和输出来讨论它们，通常写为“输入类型”-“输出类型”。例如，以下是生成式模型的部分输入和输出列表："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Text-to-text",
+"zh": "文本到文本"
+},
+{
+"en": "Text-to-image",
+"zh": "文本到图像"
+},
+{
+"en": "Text-to-video",
+"zh": "文本到视频"
+},
+{
+"en": "Text-to-code",
+"zh": "文生代码"
+},
+{
+"en": "Text-to-speech",
+"zh": "文字转语音"
+},
+{
+"en": "Image and text-to-image",
+"zh": "图片和文生图"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The following table contains examples of generative models, their input, and their possible output:",
+"zh": "下表包含生成式模型的示例、它们的输入和可能的输出："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Model",
+"zh": "型号"
+},
+{
+"en": "Input",
+"zh": "输入"
+},
+{
+"en": "Example output",
+"zh": "输出示例"
+}
+],
+"rows": [
+[
+{
+"en": "Text-to-text",
+"zh": "文本到文本"
+},
+{
+"en": "Who invented the Le Mans race?",
+"zh": "勒芒耐力赛是谁创办的？"
+},
+{
+"en": "The 24 Hours of Le Mans was founded by the Automobile Club de l'Ouest (ACO), a motoring organization founded in 1906. The first race was held on 26 and 27 May 1923 on the Sarthe Circuit, a 13.426-kilometre (8.345-mile) road circuit located near the town of Le Mans in France. The race was originally conceived as a way to promote the ACO and the Sarthe region.<br> Source: <a href=\"https://bard.google.com\" target=\"_blank\" rel=\"noopener\">Bard</a>",
+"zh": "勒芒 24 小时耐力赛由 Automobile Club de l'Ouest (ACO) 创办，这是一个成立于 1906 年的汽车组织。首届赛事于 1923 年 5 月 26 日和 27 日在萨尔特赛道举行，该赛道是一条位于法国勒芒镇附近、长 13.426 公里（8.345 英里）的公路赛道。 该赛事最初的设想是推广 ACO 和萨尔特地区。<br> 来源：<a href=\"https://bard.google.com?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Bard</a>"
+}
+],
+[
+{
+"en": "Text-to-image",
+"zh": "文本到图像"
+},
+{
+"en": "An alien octopus floats through a portal while reading a newspaper.",
+"zh": "一只外星章鱼一边看报纸一边漂浮着穿过传送门。"
+},
+{
+"en": "<br> Source: <a href=\"https://imagen.research.google/\" target=\"_blank\" rel=\"noopener\">Imagen</a>",
+"zh": "<br> 来源：<a href=\"https://imagen.research.google/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Imagen</a>"
+}
+],
+[
+{
+"en": "Text-to-video",
+"zh": "文本到视频"
+},
+{
+"en": "A photorealistic teddy bear is swimming in the ocean at San Francisco. The teddy bear goes under water. The teddy bear keeps swimming under the water with colorful fishes. A panda bear is swimming under water.",
+"zh": "一只逼真的泰迪熊正在旧金山的海里游泳。 泰迪熊潜入水中。泰迪熊与五颜六色的鱼儿一起在水下畅游。一只熊猫在水下游泳。"
+},
+{
+"en": "<br> Source: <a href=\"https://phenaki.video/\" target=\"_blank\" rel=\"noopener\">Phenaki</a>",
+"zh": "<br> 来源：<a href=\"https://phenaki.video/\" target=\"_blank\" rel=\"noopener\">Phenaki</a>"
+}
+],
+[
+{
+"en": "Text-to-code",
+"zh": "文生代码"
+},
+{
+"en": "Write a Python loop that loops over a list of numbers and prints the prime numbers.",
+"zh": "编写一个 Python 循环，用于遍历数字列表并输出质数。"
+},
+{
+"en": "for number in numbers: # Check if the number is prime. is_prime = True for i in range(2, number): if number % i == 0: is_prime = False break # If the number is prime, print it. if is_prime: print(number)<br> Source: <a href=\"https://bard.google.com\" target=\"_blank\" rel=\"noopener\">Bard</a>",
+"zh": "for number in numbers: # Check if the number is prime. is_prime = True for i in range(2, number): if number % i == 0: is_prime = False break # If the number is prime, print it. if is_prime: print(number)<br> 来源：<a href=\"https://bard.google.com?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Bard</a>"
+}
+],
+[
+{
+"en": "Image-to-text",
+"zh": "图片转文字"
+},
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "This is a flamingo. They are found in the Caribbean.<br> Source: <a href=\"https://www.deepmind.com/blog/tackling-multiple-tasks-with-a-single-visual-language-model\" target=\"_blank\" rel=\"noopener\">Google DeepMind</a>",
+"zh": "这是火烈鸟。它们分布在加勒比地区。<br> 资料来源：<a href=\"https://www.deepmind.com/blog/tackling-multiple-tasks-with-a-single-visual-language-model?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Google DeepMind</a>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/octopus.png",
+"alt": {
+"en": "Image of a cartoon octopus.",
+"zh": "卡通章鱼的图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/teddy_bear.gif",
+"alt": {
+"en": "Video of a teddy bear swimming underwater.",
+"zh": "泰迪熊在水下游泳的视频。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/flamingo.png",
+"alt": {
+"en": "Image of a flamingo.",
+"zh": "火烈鸟的图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "How does generative AI work? At a high-level, generative models learn patterns in data with the goal to produce new but similar data. Generative models are like the following:",
+"zh": "生成式 AI 如何运作？从宏观层面来看，生成模型会学习数据中的模式，以生成新的但类似的数据。生成式模型如下所示："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Comedians who learn to imitate others by observing people's behaviors and style of speaking",
+"zh": "通过观察他人的行为和说话风格来学习模仿他人的喜剧演员"
+},
+{
+"en": "Artists who learn to paint in a particular style by studying lots of paintings in that style",
+"zh": "通过研究大量特定风格的画作来学习以该风格绘画的艺术家"
+},
+{
+"en": "Cover bands that learn to sound like a specific music group by listening to lots of music by that group",
+"zh": "通过聆听特定音乐团体的众多音乐来学习如何模仿该团体声音的翻唱乐队"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "To produce unique and creative outputs, generative models are initially trained using an unsupervised approach, where the model learns to mimic the data it's trained on. The model is sometimes trained further using supervised or reinforcement learning on specific data related to tasks the model might be asked to perform, for example, summarize an article or edit a photo.",
+"zh": "为了生成独特而富有创意的输出，生成式模型最初采用非监督式方法进行训练，即模型学习模仿其训练所用的数据。有时，模型会使用与模型可能需要执行的任务（例如总结文章或编辑照片）相关的特定数据，通过监督式学习或强化学习进一步训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Generative AI is a quickly evolving technology with new use cases constantly being discovered. For example, generative models are helping businesses refine their ecommerce product images by automatically removing distracting backgrounds or improving the quality of low-resolution images.",
+"zh": "生成式 AI 是一项快速发展的技术，人们不断发现新的应用场景。例如，生成式模型可自动移除分散注意力的背景或提高低分辨率图片的质量，从而帮助企业优化其电子商务商品图片。"
+}
+}
+]
+},
+{
+"id": "supervised",
+"path": "/machine-learning/intro-to-ml/supervised",
+"min": null,
+"heading": {
+"en": "Supervised Learning",
+"zh": "监督式学习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/intro-to-ml/supervised",
+"zh": "https://developers.google.com/machine-learning/intro-to-ml/supervised?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Supervised learning uses labeled data to train models that predict outcomes for new, unseen data.",
+"zh": null
+},
+{
+"en": "The training process involves feeding the model labeled examples, allowing it to learn the relationship between features and labels.",
+"zh": null
+},
+{
+"en": "Models are evaluated by comparing their predictions on unseen data to the actual values, helping to refine their accuracy.",
+"zh": null
+},
+{
+"en": "Once trained and evaluated, models can be used for inference, making predictions on new, unlabeled data in real-world applications.",
+"zh": null
+},
+{
+"en": "The quality of the dataset, including its size and diversity, significantly impacts the model's performance and ability to generalize.",
+"zh": null
+}
+],
+"terms": [
+"example",
+"feature",
+"inference",
+"labeled-example",
+"label",
+"loss",
+"prediction",
+"training"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Supervised learning's tasks are well-defined and can be applied to a multitude of scenarios—like identifying spam or predicting precipitation.",
+"zh": "监督式学习的任务定义明确，可应用于各种场景，例如识别垃圾内容或预测降水量。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Foundational supervised learning concepts",
+"zh": "监督式学习的基础概念"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Supervised machine learning is based on the following core concepts:",
+"zh": "监督式机器学习基于以下核心概念："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Data",
+"zh": "数据"
+},
+{
+"en": "Model",
+"zh": "型号"
+},
+{
+"en": "Training",
+"zh": "培训"
+},
+{
+"en": "Evaluating",
+"zh": "正在评估"
+},
+{
+"en": "Inference",
+"zh": "推理"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Data",
+"zh": "数据"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Data is the driving force of ML. Data comes in the form of words and numbers stored in tables, or as the values of pixels and waveforms captured in images and audio files. We store related data in datasets. For example, we might have a dataset of the following:",
+"zh": "数据是机器学习的推动力。数据以存储在表格中的字词和数字的形式提供，或以图片和音频文件中捕获的像素和波形的值的形式提供。我们会在数据集中存储相关数据。例如，我们可能有以下数据集："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Images of cats",
+"zh": "猫的图片"
+},
+{
+"en": "Housing prices",
+"zh": "房价"
+},
+{
+"en": "Weather information",
+"zh": "天气信息"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Datasets are made up of individual <button type=\"button\" class=\"term\" data-term=\"example\">examples</button> that contain <button type=\"button\" class=\"term\" data-term=\"feature\">features</button> and a <button type=\"button\" class=\"term\" data-term=\"label\">label</button>. You could think of an example as analogous to a single row in a spreadsheet. Features are the values that a supervised model uses to predict the label. The label is the \"answer,\" or the value we want the model to predict. In a weather model that predicts rainfall, the features could be <i>latitude</i>, <i>longitude</i>, <i>temperature</i>, <i>humidity</i>, <i>cloud coverage</i>, <i>wind direction</i>, and <i>atmospheric pressure</i>. The label would be <i>rainfall amount</i>.",
+"zh": "数据集由包含<button type=\"button\" class=\"term\" data-term=\"feature\">特征</button>和<button type=\"button\" class=\"term\" data-term=\"label\">标签</button>的各个<button type=\"button\" class=\"term\" data-term=\"example\">示例</button>组成。您可以将示例视为类似于电子表格中的单行。特征是监督式模型用于预测标签的值。标签是“答案”，即我们希望模型预测的值。在用于预测降雨量的天气模型中，特征可以是<i>纬度</i>、<i>经度</i>、<i>温度</i>、<i>湿度</i>、<i>云量</i>、<i>风向</i>和<i>气压</i>。标签为<i>降雨量</i>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Examples that contain both features and a label are called <button type=\"button\" class=\"term\" data-term=\"labeled-example\">labeled examples</button>.",
+"zh": "同时包含特征和标签的示例称为<button type=\"button\" class=\"term\" data-term=\"labeled-example\">有标签示例</button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Two labeled examples</b>",
+"zh": "<b>两个有标签的示例</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/labeled_example.png",
+"alt": {
+"en": "Placeholder image.",
+"zh": "占位图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, unlabeled examples contain features, but no label. After you create a model, the model predicts the label from the features.",
+"zh": "与之相反，无标签示例包含特征，但没有标签。创建模型后，模型会根据特征预测标签。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Two unlabeled examples</b>",
+"zh": "<b>两个无标签示例</b>"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/unlabeled_example.png",
+"alt": {
+"en": "Placeholder image.",
+"zh": "占位图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Dataset characteristics",
+"zh": "数据集特征"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "A dataset is characterized by its size and diversity. Size indicates the number of examples. Diversity indicates the range those examples cover. Good datasets are both large and highly diverse.",
+"zh": "数据集的特点在于其规模和多样性。大小表示示例数量。多样性表示这些示例涵盖的范围。优质的数据集既大又多样。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Datasets can be large and diverse, or large but not diverse, or small but highly diverse. In other words, a large dataset doesn't guarantee sufficient diversity, and a dataset that is highly diverse doesn't guarantee sufficient examples.",
+"zh": "数据集可以是庞大且多样化的数据集，也可以是庞大但不多样化的数据集，还可以是小但高度多样化的数据集。换句话说，大型数据集并不能保证足够的多样性，而高度多样化的数据集也不能保证足够的示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For instance, a dataset might contain 100 years worth of data, but only for the month of July. Using this dataset to predict rainfall in January would produce poor predictions. Conversely, a dataset might cover only a few years but contain every month. This dataset might produce poor predictions because it doesn't contain enough years to account for variability.",
+"zh": "例如，一个数据集可能包含 100 年的数据，但仅限 7 月份。如果使用此数据集来预测 1 月份的降雨量，预测结果会不准确。反之，数据集可能仅涵盖几年，但包含每个月的数据。由于此数据集包含的年份不足以反映变异性，因此可能会产生不准确的预测结果。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What attributes of a dataset would be ideal to use for ML?",
+"zh": "哪些数据集属性最适合用于机器学习？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Large size / High diversity",
+"zh": "体量大 / 多样性高"
+},
+"why": {
+"en": "A large number of examples that cover a variety of use cases is essential for a machine learning system to understand the underlying patterns in the data. A model trained on this type of dataset is more likely to make good predictions on new data.",
+"zh": "大量涵盖各种用例的示例对于机器学习系统了解数据中的底层模式至关重要。使用此类数据集训练的模型更有可能对新数据做出准确的预测。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Large size / Low diversity",
+"zh": "规模较大 / 多样性较低"
+},
+"why": {
+"en": "Machine learning models are only as good as the examples used to train them. A model will produce poorer predictions on novel data that it never trained on.",
+"zh": "机器学习模型的准确性最高与用于训练它们的示例相当。模型对从未训练过的新数据的预测结果会较差。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Small size / High diversity",
+"zh": "体积小 / 多样性高"
+},
+"why": {
+"en": "Most models can't find reliable patterns in a small dataset. The predictions will lack the confidence a larger dataset provides.",
+"zh": "大多数模型无法在小型数据集中找到可靠的模式。预测结果将不如使用较大数据集时可靠。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Small size / Low diversity",
+"zh": "规模较小 / 多样性较低"
+},
+"why": {
+"en": "If your dataset is small and without much variation, you may not benefit from machine learning.",
+"zh": "如果您的数据集较小且没有太大差异，您可能无法从机器学习中受益。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "A dataset can also be characterized by the number of its features. For example, some weather datasets might contain hundreds of features, ranging from satellite imagery to cloud coverage values. Other datasets might contain only three or four features, like humidity, atmospheric pressure, and temperature. Datasets with more features can help a model discover additional patterns and make better predictions. However, datasets with more features don't <i>always</i> produce models that make better predictions because some features might have no causal relationship to the label.",
+"zh": "数据集还可以通过其特征数量进行描述。例如，某些天气数据集可能包含数百个地图项，从卫星图像到云层覆盖率值都有。其他数据集可能只包含三四个特征，例如湿度、大气压和温度。包含更多特征的数据集可以帮助模型发现更多模式并做出更准确的预测。不过，包含更多特征的数据集<i>并不一定</i>会生成能做出更准确预测的模型，因为某些特征可能与标签没有因果关系。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Model",
+"zh": "型号"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "In supervised learning, a model is the complex collection of numbers that define the mathematical relationship from specific input feature patterns to specific output label values. The model discovers these patterns through training.",
+"zh": "在监督式学习中，模型是一组复杂的数字，用于定义特定输入特征模式与特定输出标签值之间的数学关系。模型会通过训练发现这些模式。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Training",
+"zh": "培训"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Before a supervised model can make predictions, it must be trained. To train a model, we give the model a dataset with labeled examples. The model's goal is to work out the best solution for predicting the labels from the features. The model finds the best solution by comparing its predicted value to the label's actual value. Based on the difference between the predicted and actual values—defined as the <button type=\"button\" class=\"term\" data-term=\"loss\">loss</button>—the model gradually updates its solution. In other words, the model learns the mathematical relationship between the features and the label so that it can make the best predictions on unseen data.",
+"zh": "监督式模型必须先接受训练，然后才能进行预测。为了训练模型，我们会向模型提供包含标记示例的数据集。模型的目标是找出根据特征预测标签的最佳解决方案。该模型会将其预测值与标签的实际值进行比较，以找到最佳解决方案。模型会根据预测值与实际值之间的差异（定义为“损失”<button type=\"button\" class=\"term\" data-term=\"loss\"></button>）逐步更新其解决方案。换句话说，模型会学习特征与标签之间的数学关系，以便对未见过的数据做出最准确的预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, if the model predicted <code>1.15 inches</code> of rain, but the actual value was <code>.75 inches</code>, the model modifies its solution so its prediction is closer to <code>.75 inches</code>. After the model has looked at each example in the dataset—in some cases, multiple times—it arrives at a solution that makes the best predictions, on average, for each of the examples.",
+"zh": "例如，如果模型预测降雨量为 <code>1.15 inches</code>，但实际值为 <code>.75 inches</code>，则模型会修改其解决方案，使其预测结果更接近 <code>.75 inches</code>。在模型查看数据集中的每个示例（在某些情况下，会多次查看）后，它会得出一个解决方案，该解决方案能针对每个示例做出平均最佳预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following demonstrates training a model:",
+"zh": "以下代码演示了如何训练模型："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "The model takes in a single labeled example and provides a prediction.<br> <br> <b>Figure 1</b>. An ML model making a prediction from a labeled example.",
+"zh": "该模型接受单个标记示例，并提供预测结果。<br> <br> <b>图 1</b>. 机器学习模型根据标记的示例进行预测。"
+},
+{
+"en": "The model compares its predicted value with the actual value and updates its solution.<br> <br> <b>Figure 2</b>. An ML model updating its predicted value.",
+"zh": "模型会将其预测值与实际值进行比较，并更新其解决方案。<br> <br> <b>图 2</b>. 机器学习模型正在更新其预测值。"
+},
+{
+"en": "The model repeats this process for each labeled example in the dataset.<br> <br> <b>Figure 3</b>. An ML model updating its predictions for each labeled example in the training dataset.",
+"zh": "模型会对数据集中的每个标记示例重复此过程。<br> <br> <b>图 3</b>. 机器学习模型正在更新训练数据集中每个标记示例的预测结果。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/training-a-model-01.png",
+"alt": {
+"en": "An image of a model making a prediction.",
+"zh": "一张显示模型进行预测的图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/training-a-model-02.png",
+"alt": {
+"en": "An image of a model comparing its prediction with actual value.",
+"zh": "一张图片，显示了模型将其预测值与实际值进行比较。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/training-a-model-03.png",
+"alt": {
+"en": "An image of a model repeating the process of its prediction versus the actual value.",
+"zh": "一张图片，显示模型重复预测过程与实际值的对比。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In this way, the model gradually learns the correct relationship between the features and the label. This gradual understanding is also why large and diverse datasets produce a better model. The model has seen more data with a wider range of values and has refined its understanding of the relationship between the features and the label.",
+"zh": "这样，模型会逐渐学习特征与标签之间的正确关系。这种逐步理解也是大型多样化数据集能够生成更好模型的原因。模型看到了更多值范围更广的数据，并进一步了解了特征与标签之间的关系。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "During training, ML practitioners can make subtle adjustments to the configurations and features the model uses to make predictions. For example, certain features have more predictive power than others. Therefore, ML practitioners can select which features the model uses during training. For example, suppose a weather dataset contains<code>time_of_day</code> as a feature. In this case, an ML practitioner can add or remove <code>time_of_day</code> during training to see whether the model makes better predictions with or without it.",
+"zh": "在训练期间，机器学习从业者可以对模型用于进行预测的配置和特征进行微妙调整。例如，某些特征的预测能力比其他特征更强。因此，机器学习从业者可以选择模型在训练期间使用哪些特征。例如，假设某个天气数据集包含 <code>time_of_day</code> 作为地图项。在这种情况下，机器学习从业者可以在训练期间添加或移除 <code>time_of_day</code>，以了解模型在添加或移除 <code>time_of_day</code> 后能否做出更准确的预测。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Evaluating",
+"zh": "正在评估"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "We evaluate a trained model to determine how well it learned. When we evaluate a model, we use a labeled dataset, but we only give the model the dataset's features. We then compare the model's predictions to the label's true values.",
+"zh": "我们会评估训练好的模型，以确定其学习效果。评估模型时，我们使用标记数据集，但只向模型提供数据集的特征。然后，我们将模型的预测结果与标签的真实值进行比较。"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/evaluating-a-model.png",
+"alt": {
+"en": "An image showing a trained model having its predictions compared against actual values.",
+"zh": "一张图片，显示了训练好的模型的预测结果与实际值的对比情况。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 4</b>. Evaluating an ML model by comparing its predictions to the actual values.",
+"zh": "<b>图 4</b>. 通过将机器学习模型的预测结果与实际值进行比较来评估模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Depending on the model's predictions, we might do more training and evaluating before deploying the model in a real-world application.",
+"zh": "根据模型的预测结果，我们可能会在将模型部署到真实应用之前进行更多训练和评估。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Why does a model need to be trained before it can make predictions?",
+"zh": "为什么模型需要先训练，然后才能进行预测？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A model needs to be trained to learn the mathematical relationship between the features and the label in a dataset.",
+"zh": "模型需要经过训练，才能学习数据集中特征与标签之间的数学关系。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "A model doesn't need to be trained. Models are available on most computers.",
+"zh": "无需训练模型。大多数计算机都支持模型。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "A model needs to be trained so it won't require data to make a prediction.",
+"zh": "模型需要经过训练，这样便无需数据即可做出预测。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Inference",
+"zh": "推理"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Once we're satisfied with the results from evaluating the model, we can use the model to make predictions, called <button type=\"button\" class=\"term\" data-term=\"inference\">inferences</button>, on unlabeled examples. In the weather app example, we would give the model the current weather conditions—like temperature, atmospheric pressure, and relative humidity—and it would predict the amount of rainfall.",
+"zh": "对模型评估结果感到满意后，我们就可以使用该模型对无标签示例进行预测（称为<button type=\"button\" class=\"term\" data-term=\"inference\">推理</button>）。在天气应用示例中，我们会向模型提供当前天气状况（例如温度、大气压和相对湿度），然后模型会预测降雨量。"
+}
+}
+]
+},
+{
+"id": "understanding",
+"path": "/machine-learning/intro-to-ml/understanding",
+"min": null,
+"heading": {
+"en": "Test Your Understanding",
+"zh": "测试您的掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/intro-to-ml/understanding",
+"zh": "https://developers.google.com/machine-learning/intro-to-ml/understanding?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This page tests your understanding of core machine learning (ML) concepts through interactive questions.",
+"zh": null
+},
+{
+"en": "It covers fundamental ML topics such as predictive power of features, supervised and unsupervised learning, and model training and evaluation.",
+"zh": null
+},
+{
+"en": "You'll learn how to choose the right ML approach for different problems and assess the effectiveness of a trained model.",
+"zh": null
+},
+{
+"en": "Links to further resources are provided to deepen your understanding of ML and its practical applications.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The following questions help you solidify your understanding of core ML concepts.",
+"zh": "以下问题有助于您巩固对机器学习核心概念的理解。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Predictive power",
+"zh": "预测能力"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Supervised ML models are trained using datasets with labeled examples. The model learns how to predict the label from the features. However, not every feature in a dataset has predictive power. In some instances, only a few features act as predictors of the label. In the dataset below, use price as the label and the remaining columns as the features.",
+"zh": "监督式机器学习模型使用包含带标签样本的数据集进行训练。模型会学习如何根据特征预测标签。不过，并非数据集中的每个特征都具有预测能力。在某些情况下，只有少数特征充当 标签的预测因子。在下面的数据集中，使用 price 作为标签 其余列作为特征。"
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/predictive_power.png",
+"alt": {
+"en": "An labeled example of automobile attributes.",
+"zh": "汽车属性的带标签示例。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which three features do you think are likely the greatest predictors for a car's price?",
+"zh": "您认为哪三个特征最有可能成为汽车价格的最佳预测因子？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Make_model, year, miles.",
+"zh": "Make_model、year、miles。"
+},
+"why": {
+"en": "A car's make/model, year, and miles are likely to be among the strongest predictors for its price.",
+"zh": "汽车的品牌/型号、年份和里程数很可能成为其价格的最强预测因子。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Color, height, make_model.",
+"zh": "Color、height、make_model。"
+},
+"why": {
+"en": "A car's height and color are not strong predictors for a car's price.",
+"zh": "汽车的高度和颜色不是汽车价格的强预测因子 。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Miles, gearbox, make_model.",
+"zh": "Miles、gearbox、make_model。"
+},
+"why": {
+"en": "The gearbox isn't a main predictor of price.",
+"zh": "变速箱不是价格的主要预测因子。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Tire_size, wheel_base, year.",
+"zh": "Tire_size、wheel_base、year。"
+},
+"why": {
+"en": "Tire size and wheel base aren't strong predictors for a car's price.",
+"zh": "轮胎尺寸和轴距不是汽车价格的强预测因子。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Supervised and unsupervised learning",
+"zh": "监督式学习与非监督式学习"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Based on the problem, you'll use either a supervised or unsupervised approach. For example, if you know beforehand the value or category you want to predict, you'd use supervised learning. However, if you wanted to learn if your dataset contains any segmentations or groupings of related examples, you'd use unsupervised learning.",
+"zh": "根据问题，您将使用监督式方法或非监督式方法。 例如，如果您事先知道要预测的值或类别，则可以使用监督式学习。但是，如果您想了解数据集是否包含任何相关样本的细分或分组，则可以使用非监督式学习。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you had a dataset of users for an online shopping website, and it contained the following columns:",
+"zh": "假设您有一个在线购物网站的用户数据集，其中 包含以下列："
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/supervised-unsupervised.png",
+"alt": {
+"en": "An image of an row of customer attributes.",
+"zh": "客户属性行示例图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you wanted to understand the types of users that visit the site, would you use supervised or unsupervised learning?",
+"zh": "如果您想了解访问该网站的用户类型， 您会使用监督式学习还是非监督式学习？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Unsupervised learning.",
+"zh": "非监督式学习。"
+},
+"why": {
+"en": "Because we want the model to cluster groups of related customers, we'd use unsupervised learning. After the model clustered the users, we'd create our own names for each cluster, for example, \"discount seekers,\" \"deal hunters,\" \"surfers,\" \"loyal,\" and \"wanderers.\"",
+"zh": "由于我们希望模型对相关客户群体进行聚类， 我们会使用非监督式学习。在模型对用户进行聚类后， 我们会为每个集群创建自己的名称，例如 “折扣寻求者”“优惠猎手”“浏览者”“忠实用户” 和“漫游者”。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Supervised learning because I'm trying to predict which class a user belongs to.",
+"zh": "监督式学习，因为我尝试预测用户所属的类别 。"
+},
+"why": {
+"en": "In supervised learning, the dataset must contain the label you're trying to predict. In the dataset, there is no label that refers to a category of user.",
+"zh": "在监督式学习中，数据集必须包含您要 预测的标签。在数据集中，没有引用用户类别的标签。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you had an energy usage dataset for homes with the following columns:",
+"zh": "假设您有一个住宅能耗数据集，其中包含以下列："
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/supervised.png",
+"alt": {
+"en": "An image of a row of home attributes.",
+"zh": "一行住宅属性的图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "What type of ML would you use to predict the kilowatt hours used per year for a newly constructed house?",
+"zh": "您会使用哪种机器学习方法来预测新建住宅的年用电量（千瓦时）？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Supervised learning.",
+"zh": "监督式学习。"
+},
+"why": {
+"en": "Supervised learning trains on labeled examples. In this dataset \"kilowatt hours used per year” would be the label because this is the value you want the model to predict. The features would be \"square footage,” \"location,” and \"year built.”",
+"zh": "监督式学习基于带标签的样本进行训练。在此数据集中 “kilowatt hours used per year”将是标签，因为这是您希望模型预测的值。特征将是 “square footage”“location”和“year built”。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Unsupervised learning.",
+"zh": "非监督式学习。"
+},
+"why": {
+"en": "Unsupervised learning uses unlabeled examples. In this example, \"kilowatt hours used per year” would be the label because this is the value you want the model to predict.",
+"zh": "非监督式学习使用无标签的样本。在此示例中， “kilowatt hours used per year”将是标签，因为这是您希望模型预测的 值。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you had a flight dataset with the following columns:",
+"zh": "假设您有一个航班数据集，其中包含以下列："
+}
+},
+{
+"type": "figure",
+"src": "img/intro-to-ml/images/flight-table.png",
+"alt": {
+"en": "An image of a row of flight data.",
+"zh": "一张显示一行航班数据的图片。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you wanted to predict the cost of an airplane ticket, would you use regression or classification?",
+"zh": "如果您想预测机票价格，您会使用 回归还是分类？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Regression",
+"zh": "回归"
+},
+"why": {
+"en": "A regression model's output is a numeric value.",
+"zh": "回归模型的输出是数值。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Classification",
+"zh": "分类"
+},
+"why": {
+"en": "A classification model's output is a discrete value, normally a word. In this case, the cost of an airplane ticket is a numeric value.",
+"zh": "分类模型的输出是离散值， 通常是一个字词。在本例中，机票价格是 数值。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Based on the dataset, could you train a classification model to classify the cost of an airplane ticket as \"high,\" \"average,\" or \"low\"?",
+"zh": "根据数据集，您能否训练分类模型 将机票价格分类为 “高”“中”或“低”？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Yes, but we'd first need to convert the numeric values in the <code>airplane_ticket_cost</code> column to categorical values.",
+"zh": "可以，但我们首先需要将 <code>airplane_ticket_cost</code>列中的数值转换为分类值。"
+},
+"why": {
+"en": "It's possible to create a classification model from the dataset. You would do something like the following: <ol><li>Find the average cost of a ticket from the departure airport to the destination airport.</li><li>Determine the thresholds that would constitute \"high,\" \"average,\" and \"low\".</li><li>Compare the predicted cost to the thresholds and output the category the value falls within.</li></ol>",
+"zh": "可以根据数据集创建分类模型。 您可以执行以下操作： <ol><li>查找从出发机场到 目的地机场的平均机票价格。</li><li>确定构成“高”“中” 和“低”的阈值。</li><li>将预测价格与阈值进行比较，并输出该 值所属的类别。</li></ol>"
+},
+"correct": true
+},
+{
+"html": {
+"en": "No. It's not possible to create a classification model. The <code>airplane_ticket_cost</code> values are numeric not categorical.",
+"zh": "不能。无法创建分类模型。 值是数值，而不是分类值。<code>airplane_ticket_cost</code>"
+},
+"why": {
+"en": "With a little bit of work, you could create a classification model.",
+"zh": "稍作处理，您就可以创建分类 模型。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "No. Classification models only predict two categories, like <code>spam</code> or <code>not_spam</code>. This model would need to predict three categories.",
+"zh": "不能。分类模型只能预测两个类别，例如 <code>spam</code> 或 <code>not_spam</code>。此模型需要预测 三个类别。"
+},
+"why": {
+"en": "Classification models can predict multiple categories. They're called multiclass classification models.",
+"zh": "分类模型可以预测多个类别。它们被称为多类别分类模型。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Training and evaluating",
+"zh": "训练和评估"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "After we've trained a model, we evaluate it by using a dataset with labeled examples and compare the model's predicted value to the label's actual value.",
+"zh": "训练模型后，我们会使用包含带 标签样本的数据集对其进行评估，并将模型的预测值与标签的 实际值进行比较。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Select the two best answers for the question.",
+"zh": "为问题选择两个最佳答案。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "If the model's predictions are far off, what might you do to make them better?",
+"zh": "如果模型的预测结果与实际值相差甚远，您可能会采取哪些措施来改进 预测结果？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Retrain the model, but use only the features you believe have the strongest predictive power for the label.",
+"zh": "重新训练模型，但仅使用您认为对标签具有 最强预测能力的特征。"
+},
+"why": {
+"en": "Retraining the model with fewer features, but that have more predictive power, can produce a model that makes better predictions.",
+"zh": "使用较少的特征（但具有更强的 预测能力）重新训练模型，可以生成做出更好 预测的模型。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "You can't fix a model whose predictions are far off.",
+"zh": "您无法修复预测结果与实际值相差甚远的模型。"
+},
+"why": {
+"en": "It's possible to fix a model whose predictions are off. Most models require multiple rounds of training until they make useful predictions.",
+"zh": "可以修复预测结果与实际值相差甚远的模型。大多数模型 都需要经过多轮训练，才能做出 有用的预测。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Retrain the model using a larger and more diverse dataset.",
+"zh": "使用更大、更多样化的数据集重新训练模型。"
+},
+"why": {
+"en": "Models trained on datasets with more examples and a wider range of values can produce better predictions because the model has a better generalized solution for the relationship between the features and the label.",
+"zh": "基于包含更多样本和更广泛值的数据集训练的模型可以做出更好的预测，因为模型对特征与标签之间的关系具有更好的广义解决方案。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Try a different training approach. For example, if you used a supervised approach, try an unsupervised approach.",
+"zh": "尝试其他训练方法。例如，如果您使用了 监督式方法，请尝试非监督式方法。"
+},
+"why": {
+"en": "A different training approach would not produce better predictions.",
+"zh": "不同的训练方法不会产生更好的 预测结果。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "You're now ready to take the next step in your ML journey:",
+"zh": "现在，您可以开始机器学习之旅的下一步了："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">Machine Learning Crash Course</a>. If you're ready for an in-depth, hands-on approach to learning more about ML.",
+"zh": "<a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">机器学习速成课程</a>。如果您已准备好深入学习机器学习，并采取动手实践的方式。"
+},
+{
+"en": "<a href=\"#/ch/c14/intro\">Problem Framing</a>. If you're looking for a field-tested approach for creating ML models and avoiding common pitfalls.",
+"zh": "<a href=\"#/ch/c14/intro\">问题构建</a>。如果您正在寻找 经过实战检验的方法来创建机器学习模型并避免常见误区。"
+},
+{
+"en": "<a href=\"https://pair.withgoogle.com/guidebook/\" target=\"_blank\" rel=\"noopener\">People + AI Guidebook</a>. If you're looking for practical guidance for designing human-centered AI products.",
+"zh": "<a href=\"https://pair.withgoogle.com/guidebook/\" target=\"_blank\" rel=\"noopener\">《人 + AI 指南》</a>。如果您正在寻找设计以人为本的 AI 产品的实用指南。"
+}
+]
+}
+]
+}
+]
+}

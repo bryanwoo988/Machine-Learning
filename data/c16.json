@@ -1,0 +1,1198 @@
+{
+"id": "c16",
+"num": 16,
+"stage": 4,
+"title": {
+"en": "Ideation and planning",
+"zh": "构思与规划"
+},
+"minutes": null,
+"sections": [
+{
+"id": "feasibility",
+"path": "/machine-learning/managing-ml-projects/feasibility",
+"min": null,
+"heading": {
+"en": "Feasibility",
+"zh": "可行性"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/feasibility",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/feasibility?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning solution feasibility hinges on data availability, problem complexity, desired prediction quality, technical requirements, and cost-effectiveness.",
+"zh": null
+},
+{
+"en": "Sufficient, high-quality data is crucial for effective model training, especially for generative AI which often requires extensive datasets for tasks like fine-tuning.",
+"zh": null
+},
+{
+"en": "Problem complexity and potential vulnerabilities should be assessed; simpler problems with readily available solutions are generally more feasible.",
+"zh": null
+},
+{
+"en": "Consider prediction quality requirements, technical constraints (latency, platform, etc.), and associated costs, including human resources, infrastructure, and potential generative AI inference expenses.",
+"zh": null
+},
+{
+"en": "Thoroughly evaluating these factors enables informed decision-making regarding the feasibility and successful implementation of an ML solution.",
+"zh": null
+}
+],
+"terms": [
+"classification-model",
+"confabulation",
+"example",
+"few-shot-prompting",
+"fine-tuning",
+"inference",
+"interpretability",
+"label",
+"labeled-example",
+"parameter-efficient-tuning",
+"precision",
+"pre-trained-model",
+"prompt-engineering",
+"retrieval-augmented-generation",
+"training",
+"training-set",
+"zero-shot-prompting"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "During the ideation and planning phase, you investigate the elements of an ML solution. During the problem framing task, you frame a problem in terms of an ML solution. The <a href=\"#/ch/c14/intro\">Introduction to Machine Learning Problem Framing</a> course covers those steps in detail. During the planning task, you estimate a solution's feasibility, plan approaches, and set success metrics.",
+"zh": "在构思和规划阶段，您需要研究机器学习解决方案的各个要素。在问题框架化任务中，您需要从机器学习解决方案的角度来框架化问题。<a href=\"#/ch/c14/intro\">机器学习问题框架简介</a>课程详细介绍了这些步骤。在规划任务期间，您需要评估解决方案的可行性、规划方法并设置成功指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "While ML might be a theoretically good solution, you still need to estimate its real-world feasibility. For instance, a solution might technically work but be impractical or impossible to implement. The following factors influence a project's feasibility:",
+"zh": "虽然机器学习在理论上可能是一个不错的解决方案，但您仍需评估其在现实世界中的可行性。例如，某个解决方案在技术上可能可行，但实际上却难以或无法实施。以下因素会影响项目的可行性："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Data availability",
+"zh": "数据可用性"
+},
+{
+"en": "Problem difficulty",
+"zh": "问题难度"
+},
+{
+"en": "Prediction quality",
+"zh": "预测质量"
+},
+{
+"en": "Technical requirements",
+"zh": "技术要求"
+},
+{
+"en": "Cost",
+"zh": "费用"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Data availability",
+"zh": "数据可用性"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "ML models are only as good as the data they're trained on. They need lots of high-quality data to make high-quality predictions. Addressing the following questions can help you judge whether you have the necessary data to train a model:",
+"zh": "机器学习模型的优劣只取决于用于训练它们的数据的质量。它们需要大量优质数据才能做出优质预测。回答以下问题有助于您判断自己是否拥有训练模型所需的数据："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Quantity.</b> Can you get enough high-quality data to train a model? Are <button type=\"button\" class=\"term\" data-term=\"labeled-example\">labeled examples</button> scarce, difficult to get, or too expensive? For instance, getting labeled medical images or translations of rare languages is notoriously hard. To make good predictions, <button type=\"button\" class=\"term\" data-term=\"classification-model\">classification models</button> require numerous <button type=\"button\" class=\"term\" data-term=\"example\">examples</button> for every <button type=\"button\" class=\"term\" data-term=\"label\">label</button>. If the <button type=\"button\" class=\"term\" data-term=\"training-set\">training dataset</button> contains limited examples for some labels, the model can't make good predictions.",
+"zh": "<b>数量。</b>您能否获得足够的高质量数据来训练模型？<button type=\"button\" class=\"term\" data-term=\"labeled-example\">带标签的示例</button>是否稀缺、难以获取或过于昂贵？ 例如，获取带标签的医学图片或稀有语言的翻译非常困难。为了做出良好的预测，<button type=\"button\" class=\"term\" data-term=\"classification-model\">分类模型</button>需要为每个<button type=\"button\" class=\"term\" data-term=\"label\">标签</button>提供大量<button type=\"button\" class=\"term\" data-term=\"example\">示例</button>。如果<button type=\"button\" class=\"term\" data-term=\"training-set\">训练数据集</button>中某些标签的示例数量有限，模型就无法做出良好的预测。"
+},
+{
+"en": "<b>Feature availability at serving time.</b> Will all the features used in training be available at serving time? Teams have spent considerable amounts of time <button type=\"button\" class=\"term\" data-term=\"training\">training</button> models only to realize that some features didn't become available until days after the model required them.<br> For example, suppose a model predicts whether a customer will click a URL, and one of the features used in training include <code>user_age</code>. However, when the model serves a prediction, <code>user_age</code> isn't available, perhaps because the user hasn't created an account yet.",
+"zh": "<b>提供时的功能可用性。</b>训练中使用的所有功能在提供服务时是否都可用？团队花费了大量时间<button type=\"button\" class=\"term\" data-term=\"training\">训练</button>模型，但后来才发现，某些功能在模型需要它们时并未提供，而是过了几天才提供。<br> 例如，假设某个模型用于预测客户是否会点击网址，而训练中使用的特征之一包含 <code>user_age</code>。不过，当模型提供预测时，<code>user_age</code> 不可用，可能是因为用户尚未创建账号。"
+},
+{
+"en": "<b>Regulations.</b> What are the regulations and legal requirements for acquiring and using the data? For instance, some requirements set limits for storing and using certain types of data.",
+"zh": "<b>法规。</b>获取和使用数据有哪些法规和法律要求？例如，某些要求对存储和使用特定类型的数据设置了限制。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Generative AI",
+"zh": "生成式 AI"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"pre-trained-model\">Pre-trained</button> generative AI models often require curated datasets to excel at domain-specific tasks. You'll potentially need datasets for the following use cases:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"pre-trained-model\">预训练的</button> 生成式 AI 模型通常需要精心挑选的数据集才能在特定领域的任务中表现出色。您可能需要数据集来满足以下使用场景："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"prompt-engineering\">Prompt engineering</button>, <button type=\"button\" class=\"term\" data-term=\"parameter-efficient-tuning\">parameter efficient tuning</button>, and <button type=\"button\" class=\"term\" data-term=\"fine-tuning\">fine-tuning</button>.</b> Depending on the use case, you might need between 10 and 10,000 high-quality examples to further refine a model's output. For example, if a model needs to be fine-tuned to excel at a particular task, like answering medical questions, you'll need a high-quality dataset that's representative of the kinds of questions it will be asked along with the types of answers it should respond with. The following table provides estimates for the number of examples needed to refine a generative AI model's output for a given technique:",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"prompt-engineering\">提示工程</button>、 <button type=\"button\" class=\"term\" data-term=\"parameter-efficient-tuning\">参数高效调优</button>和 <button type=\"button\" class=\"term\" data-term=\"fine-tuning\">微调</button>。</b> 根据应用场景，您可能需要 10 到 10,000 个高质量示例，才能进一步优化模型的输出。例如，如果需要对模型进行微调，使其在回答医疗问题等特定任务方面表现出色，您需要一个高质量的数据集，该数据集应能代表模型将被问到的问题类型以及应回答的答案类型。 下表提供了估计值，用于说明需要多少示例才能通过特定技术优化生成式 AI 模型的输出："
+},
+{
+"en": "<b>Up-to-date information.</b> Once pre-trained, generative AI models have a fixed knowledge base. If content in the model's domain changes often, you'll need a strategy to keep the model up-to-date, such as: <ul><li>fine-tuning</li><li><button type=\"button\" class=\"term\" data-term=\"retrieval-augmented-generation\">retrieval-augmented generation (RAG)</button></li><li>periodic pre-training</li></ul>",
+"zh": "<b>最新信息。</b>预训练完成后，生成式 AI 模型就拥有了固定的知识库。如果模型网域中的内容经常变化，您需要制定策略来确保模型保持最新状态，例如： <ul><li>微调</li><li><button type=\"button\" class=\"term\" data-term=\"retrieval-augmented-generation\">检索增强生成 (RAG)</button></li><li>周期性预训练</li></ul>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Problem difficulty",
+"zh": "问题难度"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A problem's difficulty can be hard to estimate. What initially appears to be a plausible approach might actually turn out to be an open research question; what seems practical and doable might turn out to be unrealistic or unworkable. Answering the following questions can help gauge a problem's difficulty:",
+"zh": "问题的难度可能很难估计。最初看似可行的方法实际上可能是一个开放的研究问题；看似实用且可行的做法可能实际上不切实际或不可行。回答以下问题有助于评估问题的难度："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Has a similar problem already been solved?</b> For example, have teams in your organization used similar (or identical) data to build models? Have people or teams outside your organization solved similar problems, for instance, at <a href=\"https://www.kaggle.com/\" target=\"_blank\" rel=\"noopener\">Kaggle</a> or <a href=\"https://www.tensorflow.org/hub\" target=\"_blank\" rel=\"noopener\">TensorFlow Hub</a>? If so, it's likely that you'll be able to use parts of their model to build yours.<br> <b>Important:</b>If you're attempting to solve a new problem, expect to invest substantial amounts of time and resources. You're basically doing a research project that doesn't have a guaranteed solution.",
+"zh": "<b>类似问题是否已得到解决？</b>例如，您组织中的团队是否曾使用类似（或相同）的数据来构建模型？组织外部的人员或团队是否曾解决过类似问题，例如在 <a href=\"https://www.kaggle.com/\" target=\"_blank\" rel=\"noopener\">Kaggle</a> 或 <a href=\"https://www.tensorflow.org/hub?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">TensorFlow Hub</a> 上？如果是，您很可能可以使用其模型的部分内容来构建自己的模型。<br> <b>重要提示</b>：如果您尝试解决新问题，预计需要投入大量时间和资源。您基本上是在进行一项没有保证解决方案的研究项目。"
+},
+{
+"en": "<b>Is the nature of the problem difficult?</b> Knowing the human benchmarks for the task can inform the problem's level of difficulty. For example:<br> <ul><li>Humans can classify the type of animal in an image at about 95% accuracy.</li><li>Humans can classify handwritten digits at about 99% accuracy.</li></ul> The preceding data suggests that creating a model to classify animals is more difficult than creating a model to classify handwritten digits.",
+"zh": "<b>问题性质是否复杂？</b>了解任务的人类基准可以帮助我们了解问题的难度。例如：<br> <ul><li>人类对图片中的动物类型进行分类的准确率约为 95%。</li><li>人类可以以大约 99% 的准确率对手写数字进行分类。</li></ul> 上述数据表明，创建用于对动物进行分类的模型比创建用于对手写数字进行分类的模型更难。"
+},
+{
+"en": "<b>Are there potentially bad actors?</b> Will people be actively trying to exploit your model? If so, you'll be in a constant race to update the model before it can be misused. For instance, spam filters can't catch new types of spam when someone exploits the model to create emails that appear legitimate.",
+"zh": "<b>是否存在潜在的不法分子？</b>是否会有人积极尝试利用您的模型？如果是这样，您将需要不断更新模型，以免其被滥用。例如，当有人利用该模型创建看起来合法的电子邮件时，垃圾邮件过滤器就无法捕获新型垃圾邮件。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Generative AI",
+"zh": "生成式 AI"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Generative AI models have potential vulnerabilities that can increase a problem's difficulty:",
+"zh": "生成式 AI 模型存在潜在的漏洞，可能会增加问题的难度："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Input source.</b> Where will the input come from? Can adversarial prompts leak training data, preamble material, database content, or tool information?",
+"zh": "<b>输入源。</b>输入将来自何处？对抗性提示是否会泄露训练数据、序言材料、数据库内容或工具信息？"
+},
+{
+"en": "<b>Output use.</b> How will outputs be used? Will the model output raw content or will there be intermediary steps that test and verify it's appropriate? For example, providing raw output to plugins can cause a number of security issues.",
+"zh": "<b>输出使用。</b>输出将如何使用？模型会输出原始内容，还是会通过中间步骤测试并验证其是否合适？例如，向插件提供原始输出可能会导致许多安全问题。"
+},
+{
+"en": "<b>Fine-tuning.</b> Fine-tuning with a corrupted dataset can negatively affect the model's weights. This corruption would cause the model to output incorrect, toxic, or biased content. As noted previously, fine-tuning requires a dataset that's been verified to contain high-quality examples.",
+"zh": "<b>微调。</b>使用损坏的数据集进行微调可能会对模型的权重产生负面影响。这种损坏会导致模型输出不正确、有害或有偏见的内容。如前所述，微调需要使用经过验证包含高质量示例的数据集。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Prediction quality",
+"zh": "预测质量"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You'll want to carefully consider the impact a model's predictions will have on your users and determine the necessary prediction quality required for the model.",
+"zh": "您需要仔细考虑模型的预测对用户的影响，并确定模型所需的预测质量。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The required prediction quality depends upon the type of prediction. For instance, the prediction quality required for a recommendation system won't be the same for a model that flags policy violations. Recommending the wrong video might create a bad user experience. However, wrongly flagging a video as violating a platform's policies might generate support costs, or worse, legal fees.",
+"zh": "所需的预测质量取决于预测类型。例如，推荐系统所需的预测质量与用于标记违规行为的模型的预测质量不同。推荐错误的视频可能会导致用户体验不佳。不过，错误地将视频标记为违反平台政策可能会产生支持费用，甚至更糟糕的是，还会产生法律费用。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Will your model need to have very high prediction quality because wrong predictions are extremely costly? Generally, the higher the required prediction quality, the harder the problem. Unfortunately, projects often reach diminishing returns as you try to improve quality. For instance, increasing a model's <button type=\"button\" class=\"term\" data-term=\"precision\">precision</button> from 99.9% to 99.99% could mean a 10-times increase in the project's cost (if not more).",
+"zh": "您的模型是否需要具有非常高的预测质量，因为错误的预测会带来极高的成本？一般来说，所需的预测质量越高，问题就越难。遗憾的是，随着您尝试提高质量，项目往往会达到收益递减点。例如，将模型的<button type=\"button\" class=\"term\" data-term=\"precision\">精确度</button>从 99.9% 提高到 99.99% 可能会使项目的费用增加 10 倍（甚至更多）。"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/prediction-costs.png",
+"alt": {
+"en": "As prediction quality increases, so do project costs.",
+"zh": "预测质量越高，项目费用就越高。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 2</b>. An ML project typically requires more and more resources as the required prediction quality increases.",
+"zh": "<b>图 2</b>. 随着所需预测质量的提高，机器学习项目通常需要越来越多的资源。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Generative AI",
+"zh": "生成式 AI"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "When analyzing generative AI output, consider the following:",
+"zh": "分析生成式 AI 输出时，请考虑以下几点："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Factual accuracy.</b> Although generative AI models can produce fluent and coherent content, it's not guaranteed to be factual. False statements from generative AI models are called <button type=\"button\" class=\"term\" data-term=\"confabulation\">confabulations</button>. For example, generative AI models can confabulate and produce incorrect summarizations of text, wrong answers to math questions, or false statements about the world. Many use cases still require human verification of generative AI output before being used in a production environment, for example, LLM-generated code. Like traditional ML, the higher the requirement for factual accuracy, the higher the cost to develop and maintain.",
+"zh": "<b>事实准确性。</b>虽然生成式 AI 模型可以生成流畅连贯的内容，但无法保证内容真实可靠。生成式 AI 模型给出的错误陈述称为<button type=\"button\" class=\"term\" data-term=\"confabulation\">虚构</button>。 例如，生成式 AI 模型可能会虚构内容，生成不正确的文本总结、错误的数学问题答案或关于世界的虚假陈述。许多应用场景仍需要人工验证生成式 AI 输出，然后才能在生产环境中使用，例如 LLM 生成的代码。 与传统机器学习一样，对事实准确性的要求越高，开发和维护成本就越高。"
+},
+{
+"en": "<b>Output quality.</b> What are the legal and financial consequences (or ethical implications) of bad outputs, like biased, plagiarized, or toxic content?",
+"zh": "<b>输出质量。</b>不良输出（例如有偏见、剽窃或有害的内容）会带来哪些法律和财务后果（或伦理影响）？"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Technical requirements",
+"zh": "技术要求"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Models have a number of technical requirements that impact their feasibility. The following are the main technical requirements you'll need to address to determine your project's feasibility:",
+"zh": "模型有许多技术要求，这些要求会影响模型的可行性。 以下是您需要满足的主要技术要求，以便确定项目的可行性："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Latency.</b> What are the latency requirements? How fast do predictions need to be served?",
+"zh": "<b>延迟时间。</b>延迟要求是什么？需要以多快的速度提供预测？"
+},
+{
+"en": "<b>Queries per second (QPS).</b> What are the QPS requirements?",
+"zh": "<b>每秒查询次数 (QPS)。</b>QPS 要求是什么？"
+},
+{
+"en": "<b>RAM usage.</b> What are the RAM requirements for training and serving?",
+"zh": "<b>RAM 使用情况。</b>训练和传送的 RAM 要求是什么？"
+},
+{
+"en": "<b>Platform.</b> Where will the model run: Online (queries sent to RPC server), WebML (inside a web browser), ODML (on a phone or tablet), or offline (predictions saved in a table)?",
+"zh": "<b>平台：</b>模型将在何处运行：在线（发送到 RPC 服务器的查询）、WebML（在网络浏览器内）、ODML（在手机或平板电脑上）还是离线（保存在表格中的预测）？"
+},
+{
+"en": "<b>Interpretability.</b> Will predictions need to be <button type=\"button\" class=\"term\" data-term=\"interpretability\">interpretable</button>? For example, will your product need to answer questions like, \"Why was a specific piece of content marked as spam?\" or \"Why was a video determined to violate the platform's policy?\"<br> <b>Important:</b>Note that explaining ML predictions is hard and an active area of research. Using tools like <a href=\"https://modelcards.withgoogle.com/about\" target=\"_blank\" rel=\"noopener\">Model Cards</a> and the <a href=\"https://pair-code.github.io/what-if-tool/\" target=\"_blank\" rel=\"noopener\">What-if Tool</a> can help you begin to understand a model's behavior and design for interpretability.",
+"zh": "<b>可解释性。</b>预测结果是否需要<button type=\"button\" class=\"term\" data-term=\"interpretability\">可解释</button>？例如，您的产品是否需要回答以下问题：“为什么特定内容被标记为垃圾内容？”或“为什么某个视频被判定为违反平台政策？”<br> <b>重要提示</b>：请注意，解释机器学习预测是一项艰巨的任务，也是一个活跃的研究领域。使用<a href=\"https://modelcards.withgoogle.com/about\" target=\"_blank\" rel=\"noopener\">模型卡片</a>和 <a href=\"https://pair-code.github.io/what-if-tool/\" target=\"_blank\" rel=\"noopener\">What-if 工具</a>等工具可以帮助您开始了解模型的行为，并设计出可解释性强的模型。"
+},
+{
+"en": "<b>Retraining frequency</b>. When the underlying data for your model changes rapidly, frequent or continuous retraining may be necessary. However, frequent retraining can lead to significant costs that may outweigh the benefits of updating the model's predictions.",
+"zh": "<b>重新训练频率</b>。如果模型的基础数据快速变化，可能需要频繁或持续重新训练模型。不过，频繁的重新训练可能会导致高昂的费用，这可能会抵消更新模型预测带来的好处。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In most cases, you'll probably have to compromise on a model's quality to adhere to its technical specifications. In those instances, you'll need to determine if you can still produce a model that's good enough to go to production.",
+"zh": "在大多数情况下，您可能需要牺牲模型质量才能符合其技术规范。在这些情况下，您需要确定是否仍能生成足以投入生产的模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Generative AI",
+"zh": "生成式 AI"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following technical requirements when working with generative AI:",
+"zh": "使用生成式 AI 时，请考虑以下技术要求："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Platform.</b> Many pre-trained models come in a range of sizes, enabling them to work on a variety of platforms with different computational resources. For example, pre-trained models can range from data center scale to fitting on a phone. You'll need to consider your product or service's latency, privacy, and quality constraints when choosing a model size. These constraints can often conflict. For example, privacy constraints might require that inferences run on a user's device. However, the output quality might be poor because the device lacks the computational resources to produce good results.",
+"zh": "<b>平台：</b>许多预训练模型都有多种尺寸，因此可以在各种具有不同计算资源的平台上运行。例如，预训练模型的大小可以从数据中心规模到适合在手机上运行。选择模型大小时，您需要考虑产品或服务的延迟时间、隐私权和质量限制。这些限制条件往往会相互冲突。例如，隐私权限制可能要求在用户设备上运行推理。不过，由于设备缺乏生成理想结果所需的计算资源，输出质量可能较差。"
+},
+{
+"en": "<b>Latency.</b> Model input and output size affects latency. In particular, output size affects latency more than input size. While models can parallelize their inputs, they can only generate outputs sequentially. In other words, the latency might be the same to ingest a 500-word or 10-word input, while generating a 500-word summary takes substantially longer than generating a 10-word summary.",
+"zh": "<b>延迟时间。</b>模型输入和输出大小会影响延迟时间。特别是，输出大小对延迟的影响大于输入大小。 虽然模型可以并行处理输入，但只能按顺序生成输出。换句话说，输入 500 字或 10 字的延迟时间可能相同，但生成 500 字摘要所需的时间要比生成 10 字摘要长得多。"
+},
+{
+"en": "<b>Tool and API use.</b> Will the model need to use tools and APIs, like searching the internet, using a calculator, or accessing an email client to complete a task? Typically, the more tools needed to complete a task, the more chances exist for propagating mistakes and increasing the model's vulnerabilities.",
+"zh": "<b>工具和 API 使用情况。</b>模型是否需要使用工具和 API（例如搜索互联网、使用计算器或访问电子邮件客户端）来完成任务？通常，完成任务所需的工具越多，传播错误和增加模型漏洞的可能性就越大。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Cost",
+"zh": "费用"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Will an ML implementation be worth its costs? Most ML projects won't be approved if the ML solution is more expensive to implement and maintain than the money it generates (or saves). ML projects incur both human and machine costs.",
+"zh": "机器学习实现的成本是否值得？如果机器学习解决方案的实施和维护成本高于其产生的（或节省的）资金，那么大多数机器学习项目都不会获得批准。机器学习项目会产生人工费用和机器费用。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Human costs.</b> How many people will it take for the project to go from proof of concept to production? As ML projects evolve, expenses typically increase. For instance, ML projects require more people to deploy and maintain a production-ready system than to create a prototype. Try to estimate the number and kinds of roles the project will need at each phase.",
+"zh": "<b>人工成本。</b>项目从概念验证阶段到生产阶段需要多少人？随着机器学习项目的发展，费用通常会增加。例如，与创建原型相比，机器学习项目需要更多的人员来部署和维护可用于生产的系统。尝试估算项目在每个阶段所需的角色数量和类型。"
+},
+{
+"en": "<b>Machine costs.</b> Training, deploying, and maintaining models requires lots of compute and memory. For example, you might need TPU quota for training models and serving predictions, along with the necessary infrastructure for your data pipeline. You might have to pay to get data labeled or pay data licensing fees. Before training a model, consider estimating the machine costs for building and maintaining ML features for the long term.",
+"zh": "<b>机器费用。</b>训练、部署和维护模型需要大量计算资源和内存。例如，您可能需要 TPU 配额来训练模型和提供预测，还需要为数据流水线提供必要的基础设施。您可能需要付费才能获得带标签的数据，或者支付数据许可费用。在训练模型之前，请考虑估计长期构建和维护机器学习功能的机器费用。"
+},
+{
+"en": "<b>Inference cost.</b> Will the model need to make hundreds or thousands of <button type=\"button\" class=\"term\" data-term=\"inference\">inferences</button> that cost more than the revenue generated?",
+"zh": "<b>推理费用。</b>模型是否需要进行数百次或数千次<button type=\"button\" class=\"term\" data-term=\"inference\">推理</button>，而这些推理的成本高于所产生的收入？"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Keep in mind",
+"zh": "注意事项"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Encountering issues related to any of the previous topics can make implementing an ML solution a challenge, but tight deadlines can amplify the challenges. Try to plan and budget enough time based on the perceived difficulty of the problem, and then try to reserve even more overhead time than you might for a non-ML project.",
+"zh": "如果遇到与上述任何主题相关的问题，实现机器学习解决方案可能会面临挑战，而紧迫的截止期限会加剧这些挑战。尝试根据问题的难易程度规划和预算足够的时间，然后尝试预留比非机器学习项目可能需要的更多开销时间。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You work for a nature preservation company and manage the company's plant identification software. You want to create a model to classify 60 types of invasive plant species to help conservationists manage the habitats for endangered animals.<br> You found sample code that solves a similar plant identification problem, and the estimated costs to implement your solution are within the project's budget. While the dataset has lots of training examples, it has only a few for the five most invasive species. Leadership isn't requiring that the model's predictions be interpretable, and there doesn't appear to be negative consequences related to bad predictions. Is your ML solution feasible?",
+"zh": "您在一家自然保护公司工作，负责管理该公司的植物识别软件。您希望创建一个模型来对 60 种入侵性植物物种进行分类，以帮助环保人士管理濒危动物的栖息地。<br> 您找到了可解决类似植物识别问题的示例代码，并且实现解决方案的估计费用在项目预算范围内。虽然该数据集包含大量训练示例，但对于五种最具入侵性的物种，只有少数示例。领导层并未要求模型预测结果可解释，而且似乎也没有与不良预测结果相关的负面后果。您的机器学习解决方案是否可行？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "No.",
+"zh": "否。"
+},
+"why": {
+"en": "Correct. Although most of the feasibility criteria are met, there probably aren't enough examples for each species to train a model well enough to make good predictions.",
+"zh": "正确。虽然大部分可行性标准都已满足，但可能没有足够的每个物种的示例来训练模型，使其能够做出良好的预测。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Yes.",
+"zh": "是。"
+},
+"why": {
+"en": "Although most of the feasibility criteria are met, there aren't enough examples for each species to train a model well enough to make good predictions.",
+"zh": "虽然大部分可行性标准都已满足，但每种物种的样本数量不足，无法训练出能够做出良好预测的模型。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "planning",
+"path": "/machine-learning/managing-ml-projects/planning",
+"min": null,
+"heading": {
+"en": "ML project planning",
+"zh": "机器学习项目规划"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/planning",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/planning?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning (ML) projects are inherently uncertain, making it difficult to estimate timelines and predict effort due to their experimental and iterative nature.",
+"zh": null
+},
+{
+"en": "Unlike traditional software projects with clear paths, ML projects often require trying multiple approaches (data transformations, architectures, hyperparameters) to find the best solution.",
+"zh": null
+},
+{
+"en": "Effective ML project planning involves strategies like time-boxing tasks, scoping down requirements, and assigning projects to interns or new hires to explore feasibility and manage expectations.",
+"zh": null
+},
+{
+"en": "Embracing an experimental mindset in ML development helps teams understand that failures and dead ends are part of the process, enabling better risk management and stakeholder communication.",
+"zh": null
+},
+{
+"en": "While experience improves effort estimation, the unpredictable nature of ML experiments necessitates dynamic project plans that evolve with learnings and breakthroughs.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Planning ML projects is different than planning typical software engineering projects. ML projects are characteristically non-linear and have varying degrees of uncertainty. They require an iterative approach and an experimental mindset.",
+"zh": "规划机器学习项目与规划典型的软件工程项目不同。ML 项目具有非线性特征，并且不确定性程度各不相同。这需要采用迭代方法和实验性思维。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Project uncertainty",
+"zh": "项目不确定性"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Early-stage planning can be difficult because the best approach typically isn't apparent when beginning a project. This inherent uncertainty makes estimating timelines hard.",
+"zh": "早期规划可能很难，因为在开始项目时，最佳方法通常并不明显。这种固有的不确定性使得预估时间表变得困难。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A recent <a href=\"https://www.kaggle.com/\" target=\"_blank\" rel=\"noopener\">Kaggle</a> competition illustrates the uncertainty of ML projects. In the first few weeks of a competition, 350 teams participated. The top teams were able to increase the benchmark prediction quality from 35% to 65%. During the next two weeks, the number of teams working on the problem increased from 350 to 1400. However, the best model only achieved a prediction quality of 68%.",
+"zh": "最近的 <a href=\"https://www.kaggle.com/\" target=\"_blank\" rel=\"noopener\">Kaggle</a> 竞赛就说明了机器学习项目的不确定性。在比赛的前几周，就有 350 支队伍参与其中。表现出色的团队将基准预测质量从 35% 提高到了 65%。在接下来的两周内，负责解决此问题的团队数量从 350 个增加到了 1, 400 个。不过，效果最好的模型预测质量仅为 68%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Figure 3 illustrates the uncertainty in ML development by showing the significant increase in effort but only minimal gains in model quality.",
+"zh": "图 3 展示了机器学习开发的不确定性，其中显示了工作量显著增加，但模型质量仅略有提升。"
+}
+},
+{
+"type": "figure",
+"src": "img/managing-ml-projects/images/effort-success.png",
+"alt": {
+"en": "The image shows the number of teams increasing from 350 to 1400 over two weeks, but the model quality only improves three percent.",
+"zh": "该图片显示，两个星期内团队数量从 350 个增加到了 1400 个，但模型质量仅提高了 3%。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 3</b>. Over a two week period, the number of teams working on the problem increased by a factor of 4, but the model's quality stayed almost the same, highlighting the difficulty in estimating effort of an ML solution.",
+"zh": "<b>图 3</b>. 在两周的时间里，负责解决此问题的团队数量增加了 4 倍，但模型的质量几乎保持不变，这凸显了估算机器学习解决方案的工作量之难。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In other words, over a thousand teams—each experimenting with a variety of data transformations, architectures, and hyperparameters—only achieved producing a model with 68% prediction quality.",
+"zh": "换句话说，超过一千支团队（每支团队都尝试了各种数据转换、架构和超参数）仅能生产出预测质量为 68% 的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "An example from industry illustrates the non-linearity of ML projects, where the output isn't proportional to the inputs. Two teams took several months to train a model to 90% prediction quality. However, it took several teams more than five years to get the model ready for production with 99.9% prediction quality.",
+"zh": "下面的行业示例说明了 ML 项目的非线性特征，即输出与输入不成正比。两个团队花了几个月的时间才将模型的预测质量提升到了 90%。不过，多个团队花了超过 5 年的时间，才将该模型的预测质量提升到了 99.9%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "These examples highlight that production-ready ML is an exploratory process, requiring both a scientific and engineering mindset.",
+"zh": "这些示例突出表明，可用于生产环境的机器学习是一项探索性过程，需要具备科学和工程思维。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Experimental approach",
+"zh": "实验方法"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In most cases, ML development is more like performing experiments than it is practicing traditional software engineering. ML requires testing different features, trying multiple architectures, and tuning hyperparameters just right. By definition, experiments aren't guaranteed to be successful. Because of this, it's best to plan using an experimental framework.",
+"zh": "在大多数情况下，机器学习开发更像是进行实验，而不是实践传统软件工程。机器学习需要测试不同的特征、尝试多种架构，并恰当地调整超参数。从定义上讲，实验并不一定会成功。因此，最好使用实验框架进行规划。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Let's look at a typical software engineering plan to see how it's different from an ML project plan.",
+"zh": "我们来看看典型的软件工程计划，看看它与机器学习项目计划有何不同。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Planning software engineering projects",
+"zh": "规划软件工程项目"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "In a typical software engineering plan, you define the requirements, outline the components, estimate the effort, and schedule the work. There's a clearly defined path to a solution. For example, engineers often know with a high degree of certainty the tasks they need to complete to build an application that meets the design spec.",
+"zh": "在典型的软件工程计划中，您需要定义要求、概述组件、估算工作量并安排工作。明确定义了解决方案的路径。例如，工程师通常能够非常确定地知道自己需要完成哪些任务才能构建符合设计规范的应用。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When they predict the time it'll take to complete a task, they can estimate the work based on similar projects. Although challenges invariably occur—like unknown dependencies or changing requirements—that can make estimating sometimes difficult, a clear path to the solution typically exists.",
+"zh": "在预测完成任务所需时间时，他们可以根据类似项目估算工作量。虽然总会遇到各种挑战（例如未知的依赖项或不断变化的要求），这有时会导致估算变得困难，但通常总有明确的解决方案。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, ML projects don't normally have one clear path to success.",
+"zh": "相比之下，机器学习项目通常没有一条明确的成功之路。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Planning ML projects",
+"zh": "规划机器学习项目"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "For most ML projects, you'll find the best solution by experimenting with multiple approaches in a trial-and-error process. You won't typically know the optimal solution to your problem before attempting to solve it. For example, the optimal solution's architecture might be a simple linear model, or a neural net, or possibly a decision tree. Only by trying each approach can you discover the best solution.",
+"zh": "对于大多数机器学习项目，您需要通过试错过程尝试多种方法，才能找到最佳解决方案。在尝试解决问题之前，您通常不知道最佳解决方案。例如，最优解决方案的架构可能是简单的线性模型、神经网络，或者可能是决策树。只有尝试每种方法，才能找到最佳解决方案。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This ambiguity makes planning hard. As discussed previously, predicting the effort an ML project will require is difficult. Only by attempting to solve the problem can you get a better sense for the amount of time and resources a solution might require.",
+"zh": "这种模糊性会导致规划难度加大。如前所述，预测机器学习项目所需的工作量很难。只有尝试解决问题，您才能更好地了解解决方案可能需要的时间和资源。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following are recommended strategies for planning ML work:",
+"zh": "以下是规划机器学习工作时建议采用的策略："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Time box the work</b>. Set clear timeframes to complete tasks or attempt a particular solution. For example, you might allocate two weeks to determine if you can get access to the right kind of data. If you can get the data, you then might designate two more weeks to see if a simple model indicates that an ML solution is feasible. If a simple model fails, you might designate two more weeks to try a neural net. At the end of each timeframe, you'll have more information to determine if continuing to apply resources to the problem is worthwhile.",
+"zh": "<b>为工作设置时间限制</b>。设置明确的时间范围来完成任务或尝试特定解决方案。例如，您可以分配两周的时间来确定自己是否可以访问正确类型的数据。如果您能获得数据，那么您可以再指定两周时间，看看简单的模型是否表明机器学习解决方案可行。如果简单的模型失败，您可以再指定两周时间来尝试使用神经网络。在每个时间段结束时，您将获得更多信息，以便确定是否值得继续投入资源来解决此问题。"
+},
+{
+"en": "<b>Scope down the project requirements</b>. If an ML solution appears promising but isn't a critical feature for your product or service, scope back its requirements. For example, when planning the next quarter's work, you might plan to try a very simple solution. Then in subsequent quarters, you might plan to iteratively improve the solution. Implementing an ML solution by making incremental improvements over a longer time horizon has been the way many teams have arrived at impactful ML solutions.",
+"zh": "<b>缩小项目要求的范围</b>。如果某种机器学习解决方案看起来很有前景，但对您的产品或服务来说并不是一项关键功能，请缩小其要求的范围。例如，在规划下一季度的工作时，您可以计划尝试一个非常简单的解决方案。然后，在后续季度，您可以计划迭代改进解决方案。许多团队都是通过在较长的时间范围内逐步改进来实现机器学习解决方案，从而获得卓有成效的机器学习解决方案。"
+},
+{
+"en": "<b>Intern or new hire project</b>. Directing and guiding an intern or a new hire to attempt an ML solution can be a good way to begin exploring a new space with unknown outcomes. After the project is over, you'll have a better sense of the effort an ML solution will require and potentially promising approaches to pursue—or whether resources should be put somewhere else.",
+"zh": "<b>实习生或新员工项目</b>。指引和指导实习生或新员工尝试使用机器学习解决方案，是开始探索未知结果的新领域的好方法。项目结束后，您将更好地了解实现 ML 解决方案所需的工作量，以及可能有前景的方法，或者是否应将资源用于其他方面。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "With any strategy, it's wise to fail fast. Attempt approaches with the lowest costs, but potentially the highest payoff, first. If the approach works, you've found a good solution. If it doesn't, you haven't wasted lots of time and resources.",
+"zh": "对于任何策略，快速失败都是明智之举。先尝试成本最低但可能收益最高的方法。如果该方法有效，则说明您找到了合适的解决方案。如果没有，您也不会浪费大量时间和资源。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As teams get experience and exposure to running experiments, they'll be able to better estimate the effort an experiment might require, making planning more predictable. However, an experiment's outcome will almost always be unknown, so the number of experiments needed to find the best solution can't be estimated beforehand.",
+"zh": "随着团队获得运行实验的经验，他们将能够更好地估算实验可能需要的工作量，从而提高规划的可预测性。不过，实验结果几乎总是未知的，因此无法事先估算找到最佳解决方案所需的实验次数。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Planning approaches with an experimental mindset helps set your team up for success. When an approach leads to a dead end, rather than being discouraged, team members understand that's part of the process in finding an ML solution. More importantly, by discussing the inherent uncertainty in ML development with stakeholders, you're able to set more realistic expectations.",
+"zh": "采用实验性思维方式制定计划有助于您的团队取得成功。如果某种方法陷入了死胡同，团队成员不会因此而气馁，而是会理解这是寻找机器学习解决方案过程中的一部分。更重要的是，通过与利益相关方讨论机器学习开发中的固有不确定性，您可以设定更现实的预期。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What is a benefit of planning ML development using an experimental mindset? Select all that apply.",
+"zh": "采用实验性思维规划机器学习开发有哪些好处？请选择所有适用的选项。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "To identify and manage potential risks.",
+"zh": "识别和管理潜在风险。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "To decrease the time and resources spent on unsuccessful approaches.",
+"zh": "减少在无效方法上花费的时间和资源。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Communicate with stakeholders the inherent uncertainty in ML development.",
+"zh": "与利益相关方沟通机器学习开发过程中固有的不确定性。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "To identify the best approach and solve it first.",
+"zh": "确定最佳方法并优先解决。"
+},
+"why": {
+"en": "You won't initially know what approach will be the best one.",
+"zh": "您最初可能不知道哪种方法最适合。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Keep in mind",
+"zh": "注意事项"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Learning to plan multiple ML approaches probabilistically takes time and experience. Your project plan might require frequent updates. Think of it as a dynamic document in constant evolution as your team experiments with multiple approaches. By focusing on the following key ideas, you'll increase your chances of success:",
+"zh": "学习以概率方式规划多种机器学习方法需要时间和经验。您的项目计划可能需要经常更新。您可以将其视为一个动态文档，随着团队尝试多种方法而不断演变。通过重点关注以下关键要点，您可以提高成功几率："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Estimate the cost and chance of success for each approach.",
+"zh": "估算每种方法的费用和成功几率。"
+},
+{
+"en": "Attempt a portfolio of approaches.",
+"zh": "尝试采用多种方法。"
+},
+{
+"en": "Identify lessons learned and try to improve the system one thing at a time.",
+"zh": "总结所收获的经验教训，并尝试一次改进一项系统。"
+},
+{
+"en": "Plan for failures.",
+"zh": "针对故障进行规划。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Occasionally an early approach leads to a breakthrough. Someone might discover a bug in the data generation pipeline or training-validation split. With good planning and thorough documentation, you increase the likelihood that you'll find a model that solves your business problem sooner than expected.",
+"zh": "有时，早期的方法会带来突破。有人可能会在数据生成流水线或训练-验证拆分中发现 bug。通过周密的规划和详尽的文档记录，您可以提高找到能够比预期更快解决业务问题的模型的可能性。"
+}
+}
+]
+},
+{
+"id": "success",
+"path": "/machine-learning/managing-ml-projects/success",
+"min": null,
+"heading": {
+"en": "Measuring success",
+"zh": "衡量表现"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/managing-ml-projects/success",
+"zh": "https://developers.google.com/machine-learning/managing-ml-projects/success?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Defining clear business metrics and model metrics is crucial for measuring the success of your machine learning project.",
+"zh": null
+},
+{
+"en": "Business metrics, such as revenue or click-through rate, are the primary indicators of project success and should be quantifiable and focused.",
+"zh": null
+},
+{
+"en": "While model metrics like AUC or F1 score are important for evaluating model quality, they do not guarantee improvement in business metrics.",
+"zh": null
+},
+{
+"en": "It's essential to establish a connection between model performance and business outcomes through early user testing and careful monitoring of business metrics.",
+"zh": null
+},
+{
+"en": "Don't solely focus on model success; prioritize business impact and ensure alignment between model metrics and desired business outcomes.",
+"zh": null
+}
+],
+"terms": [
+"auc-area-under-the-roc-curve",
+"pr-auc-area-under-the-pr-curve",
+"binary-classification",
+"f1",
+"metric",
+"precision",
+"recall",
+"root-mean-squared-error-rmse"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "How will you know if your ML implementation was worth the work? When should you start celebrating: right after the model goes to production and serves its first prediction, or only after a quantitative business metric starts moving in the right direction?",
+"zh": "如何判断您的机器学习实现是否值得？您应该何时开始庆祝：是在模型投入生产并提供第一个预测结果后立即开始庆祝，还是仅在定量业务指标开始朝着正确的方向变化后才开始庆祝？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Before starting a project, it's critical to define your success metrics and agree on deliverables. You'll need to define and track the following two types of metrics:",
+"zh": "在开始项目之前，请务必确定成功指标并就交付内容达成一致。您需要定义并跟踪以下两种类型的指标："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Business metrics.</b> Metrics for quantifying business performance, for example, revenue, click-through rate, or number of users.",
+"zh": "<b>业务指标。</b>用于量化业务绩效的指标，例如收入、点击率或用户数。"
+},
+{
+"en": "<b>Model metrics.</b> <button type=\"button\" class=\"term\" data-term=\"metric\">Metrics</button> for quantifying model quality, for example, <button type=\"button\" class=\"term\" data-term=\"root-mean-squared-error-rmse\">Root Mean Squared Error</button>, <button type=\"button\" class=\"term\" data-term=\"precision\">precision</button>, or <button type=\"button\" class=\"term\" data-term=\"recall\">recall</button>.",
+"zh": "<b>模型指标。</b>用于量化模型质量的<button type=\"button\" class=\"term\" data-term=\"metric\">指标</button>，例如<button type=\"button\" class=\"term\" data-term=\"root-mean-squared-error-rmse\">均方根误差</button>、<button type=\"button\" class=\"term\" data-term=\"precision\">精确率</button>或<button type=\"button\" class=\"term\" data-term=\"recall\">召回率</button>。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Business metrics",
+"zh": "业务指标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Business metrics are the most important. They're the reason you're using ML: you want to improve the business.",
+"zh": "业务指标最为重要。这是您使用机器学习的原因：您希望改进业务。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Start with quantifiable product or business metrics. The metric should be as granular and focused as possible. The following are examples of focused, quantifiable business metrics:",
+"zh": "首先，确定可量化的产品或业务指标。指标应尽可能精细和有针对性。以下是一些有针对性且可量化的业务指标示例："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Reduce a datacenter's monthly electric costs by 30 percent.",
+"zh": "将数据中心的每月电费降低 30%。"
+},
+{
+"en": "Increase revenue from product recommendations by 12 percent.",
+"zh": "将商品推荐带来的收入提高 12%。"
+},
+{
+"en": "Increase click-through rate by 9 percent.",
+"zh": "点击率提高 9%。"
+},
+{
+"en": "Increase customer sentiment from opt-in surveys by 20 percent.",
+"zh": "通过选择加入调查将客户情绪提升了 20%。"
+},
+{
+"en": "Increase time on page by 4 percent.",
+"zh": "网页停留时间增加了 4%。"
+}
+]
+},
+{
+"type": "note",
+"kind": "special",
+"html": {
+"en": "<b>Important:</b>The metric you care about might change. For example, you might want to optimize revenue from recommendations. After launching, revenue might increase, but subscriptions to your service might decrease. In this case, you might reevaluate your success metric as the goal becomes clearer.",
+"zh": "<b>重要提示</b>：您关心的指标可能会发生变化。例如，您可能希望优化建议带来的收入。发布后，收入可能会增加，但服务订阅量可能会减少。在这种情况下，随着目标变得更加明确，您可能需要重新评估成效指标。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Tracking business metrics",
+"zh": "跟踪业务指标"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "If you're not tracking the business metric you want to improve, start by implementing the infrastructure to do so. Setting a goal to increase click-through rate 15% isn't logical if you're not currently measuring click-through rates.",
+"zh": "如果您未跟踪想要改进的业务指标，请先实现相应的基础设施。如果您目前未衡量点击率，那么将目标设定为将点击率提高 15% 是不合逻辑的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "More importantly, make sure you're measuring the right metric for your problem. For instance, don't spend time writing instrumentation to track click-through rates if the more important metric might be revenue from recommendations.",
+"zh": "更重要的是，请确保您衡量的是适合您的问题的指标。 例如，如果更重要的指标可能是推荐带来的收入，那么就不要花时间编写插桩来跟踪点击通过率。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "As your project progresses, you'll realize whether or not the target success metric is actually a realistic target. In some cases, you might determine the project isn't viable given the defined success metrics.",
+"zh": "随着项目的推进，您会发现目标成功指标是否确实是一个现实的目标。在某些情况下，您可能会发现，根据设定的成功指标，该项目不可行。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Model metrics",
+"zh": "模型指标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "When should you put the model into production? When <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\">AUC</button> is at a certain value? When the model reaches a particular <button type=\"button\" class=\"term\" data-term=\"f1\">F1 score</button>? The answer to this question depends upon the type of problem you're solving and the prediction quality you think you need to improve the business metric.",
+"zh": "何时应将模型投入生产环境？当 <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\">AUC</button> 达到某个值时？当模型达到特定 <button type=\"button\" class=\"term\" data-term=\"f1\">F1 得分</button>时？此问题的答案取决于您要解决的问题类型以及您认为需要提高预测质量才能改进的业务指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When determining what metrics to evaluate your model against, consider the following:",
+"zh": "在确定要使用哪些指标来评估模型时，请考虑以下因素："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Determine a single metric to optimize</b>. For example, classification models can be evaluated against a variety of metrics (<button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\">AUC</button>, <button type=\"button\" class=\"term\" data-term=\"pr-auc-area-under-the-pr-curve\">AUC-PR</button>, etc). Choosing the best model can be challenging when different metrics favor different models. Therefore, agree on a single metric to evaluate models against.",
+"zh": "<b>确定要优化的单个指标</b>。例如，可以根据各种指标（<button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\">AUC</button>、<button type=\"button\" class=\"term\" data-term=\"pr-auc-area-under-the-pr-curve\">AUC-PR</button> 等）评估分类模型。当不同的指标偏向不同的模型时，选择最佳模型可能会很困难。因此，请就用于评估模型的单一指标达成一致。"
+},
+{
+"en": "<b>Determine acceptability goals to meet</b>. Acceptability goals are different from model evaluation metrics. They refer to goals a model needs to meet to be considered acceptable for an intended use case. For example, an acceptability goal might be \"incorrect output is less than 0.1%,\" or \"recall for the top five categories is greater than 97%.\"",
+"zh": "<b>确定要达到的可接受性目标</b>。可接受性目标与模型评估指标不同。它们是指模型需要达到的目标，才能被认为适合预期的应用场景。例如，一个可接受性目标可能是“错误输出低于 0.1%”，或者“前五类别的召回率高于 97%”。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose a <button type=\"button\" class=\"term\" data-term=\"binary-classification\">binary classification model</button> detects fraudulent transactions. Its optimization metric might be recall while its acceptability goal might be precision. In other words, we'd prioritize recall (correctly identifying fraud most of the time) while wanting precision to stay at or above a particular value (identifying real fraudulent transactions).",
+"zh": "例如，假设某个<button type=\"button\" class=\"term\" data-term=\"binary-classification\">二元分类模型</button>用于检测欺诈性交易。其优化指标可能是召回率，而可接受性目标可能是精确率。换句话说，我们会优先考虑召回率（大部分时间都能正确识别欺诈交易），同时希望精确率保持在特定值或高于该值（识别真正的欺诈性交易）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Connection between model metrics and business metrics",
+"zh": "模型指标与业务指标之间的关联"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Fundamentally, you're trying to develop a model whose prediction quality is causally connected to your business metric. Great model metrics don't necessarily imply improved business metrics. Your team might develop a model with impressive metrics, but the model's predictions might fail to improve the business metric.",
+"zh": "从根本上讲，您要尝试开发一种预测质量与业务指标存在因果关系的模型。出色的模型指标并不一定意味着业务指标有所改善。您的团队可能会开发出指标令人印象深刻的模型，但该模型的预测可能无法改善业务指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When you're satisfied with your model's prediction quality, try to determine how the model's metrics affect the business metric. Typically teams will deploy the model to 1% of users and then monitor the business metric.",
+"zh": "如果您对模型的预测质量感到满意，请尝试确定模型指标对业务指标的影响。通常，团队会将模型部署到 1% 的用户，然后监控业务指标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For instance, let's say your team develops a model to increase revenue by predicting customer churn. In theory, if you can predict whether or not a customer is likely to leave the platform, you can encourage them to stay.",
+"zh": "例如，假设您的团队开发了一个通过预测客户流失来增加收入的模型。从理论上讲，如果您能预测客户是否可能会离开平台，就可以鼓励他们留下来。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Your team creates a model with 95% prediction quality and tests it on a small sample of users. However, revenue doesn't increase. Customer churn actually increases. Here are some possible explanations:",
+"zh": "您的团队创建了一个预测质量达到 95% 的模型，并在一小部分用户中对其进行了测试。不过，收入不会增加。客户流失率实际上会增加。以下是一些可能的原因："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Predictions don't occur early enough to be actionable</b>. The model can only predict customer churn within a seven-day timeframe, which isn't soon enough to offer incentives to keep them on the platform.",
+"zh": "<b>预测出现得不够早，无法作为行动依据</b>。该模型只能预测七天内的客户流失情况，这不足以让您及时提供激励措施来留住客户。"
+},
+{
+"en": "<b>Incomplete features</b>. Maybe other factors contribute to customer churn that weren't in the training dataset.",
+"zh": "<b>功能不完整</b>。可能还有其他因素导致客户流失，但这些因素并未包含在训练数据集中。"
+},
+{
+"en": "<b>Threshold isn't high enough</b>. The model might need to have a prediction quality of 97% or higher for it to be useful.",
+"zh": "<b>阈值不够高</b>。模型可能需要达到 97% 或更高的预测质量才能发挥作用。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "This simple example highlights the two points:",
+"zh": "这个简单的示例突出了以下两点："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "It's important to perform early user testing to prove (and understand) the connection between the model's metrics and the business metrics.",
+"zh": "请务必尽早进行用户测试，以证明（并了解）模型指标与业务指标之间的关联。"
+},
+{
+"en": "Great model metrics don't guarantee improved business metrics.",
+"zh": "出色的模型指标并不能保证业务指标有所改善。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Generative AI",
+"zh": "生成式 AI"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Evaluating generative AI output presents unique challenges. In many cases, like open-ended or creative output, it's more difficult than evaluating traditional ML outputs.",
+"zh": "评估生成式 AI 输出面临着独特的挑战。在许多情况下（例如开放式或创意输出），评估生成式 AI 的输出比评估传统机器学习的输出要困难得多。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "LLMs can be measured and evaluated against a variety of metrics. Determining which metrics to evaluate your model against depends on your use case.",
+"zh": "LLM 可以根据各种指标进行衡量和评估。确定要使用哪些指标来评估模型取决于您的使用场景。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Keep in mind",
+"zh": "注意事项"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Don't confuse model success with business success. In other words, a model with outstanding metrics doesn't guarantee business success.",
+"zh": "请勿将模型成功与业务成功混为一谈。换句话说，指标出色的模型并不能保证业务成功。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Many skilled engineers can create models with impressive metrics. Training a good-enough model isn't typically the issue. Rather, it's that the model doesn't improve the business metric. An ML project can be destined for failure from a misalignment between business metrics and model metrics.",
+"zh": "许多经验丰富的工程师都可以创建具有出色指标的模型。训练出足够好的模型通常不是问题。而是指模型无法提升业务指标。如果业务指标与模型指标不一致，机器学习项目可能会失败。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You have a clear business problem and a well-defined solution for using an LLM as a customer support agent. How should you think about measuring whether the solution is successful?",
+"zh": "您有明确的业务问题，并且针对使用 LLM 作为客户支持代理制定了明确的解决方案。您应该如何衡量解决方案是否成功？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The number of resolved support cases requiring human involvement decreases from 72% to 50%.",
+"zh": "需要人工参与的已解决支持请求数量从 72% 降至 50%。"
+},
+"why": {
+"en": "Correct. This is a quantifiable business metric that you can track.",
+"zh": "正确。这是一个可跟踪的可量化业务指标。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The LLM's evaluation metrics are consistently high.",
+"zh": "大语言模型的评估指标一直很高。"
+},
+"why": {
+"en": "Good model metrics doesn't guarantee that you'll have improved business metrics.",
+"zh": "良好的模型指标并不能保证您会获得更好的业务指标。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Feedback from initial user testing is very favorable.",
+"zh": "初步用户测试的反馈非常积极。"
+},
+"why": {
+"en": "Early user feedback is typically more qualitative than quantitative. You'll need to determine a quantifiable business metric for measuring success.",
+"zh": "早期用户反馈通常更偏向定性而非定量。您需要确定一个可量化的业务指标来衡量效果。"
+},
+"correct": false
+}
+]
+}
+]
+}
+]
+}

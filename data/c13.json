@@ -1,0 +1,2125 @@
+{
+"id": "c13",
+"num": 13,
+"stage": 2,
+"title": {
+"en": "Fairness",
+"zh": "公平性"
+},
+"minutes": 110,
+"sections": [
+{
+"id": "fairness",
+"path": "/machine-learning/crash-course/fairness",
+"min": 5,
+"heading": {
+"en": "Fairness",
+"zh": "公平性"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module focuses on identifying and mitigating human biases that can negatively impact machine learning models.",
+"zh": null
+},
+{
+"en": "You'll learn how to proactively examine data for potential bias before model training and how to evaluate your model's predictions for fairness.",
+"zh": null
+},
+{
+"en": "The module explores various types of human biases that can unintentionally be replicated by machine learning algorithms, emphasizing responsible AI development.",
+"zh": null
+},
+{
+"en": "It builds upon foundational machine learning knowledge, including linear and logistic regression, classification, and handling numerical and categorical data.",
+"zh": null
+}
+],
+"terms": [
+"bias-ethicsfairness",
+"model"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Evaluating a machine learning model (ML) responsibly requires doing more than just calculating overall loss metrics. Before putting a model into production, it's critical to audit training data and evaluate predictions for <button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\">bias</button>.",
+"zh": "负责任地评估机器学习 (ML) 模型不仅仅需要计算总体损失指标。在将模型投入生产环境之前，请务必审核训练数据并评估预测是否存在<button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\">偏差</button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This module looks at different types of human biases that can manifest in training data. It then provides strategies to identify and mitigate them, and then evaluate model performance with fairness in mind.",
+"zh": "本单元将介绍可能会在训练数据中显现出来的不同类型的人为偏差。然后，该文档提供了识别和减少偏见的策略，并以公平性为考量因素评估模型性能。"
+}
+},
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Become aware of common human biases that can inadvertently be reproduced by ML algorithms.</li><li>Proactively explore data to identify sources of bias before training a model.</li><li>Evaluate model predictions for bias.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>了解机器学习算法可能会无意中重现的常见人类偏见。</li><li>在训练模型之前，主动探索数据以识别偏差来源。</li><li>评估模型预测是否存在偏差。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c03/logistic-regression\">Logistic regression</a></li><li><a href=\"#/ch/c04/classification\">Classification</a></li><li><a href=\"#/ch/c05/numerical-data\">Working with numerical data</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li><li><a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a></li></ul>",
+"zh": "<b>前提条件</b>： 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c03/logistic-regression\">逻辑回归</a></li><li><a href=\"#/ch/c04/classification\">Classification</a></li><li><a href=\"#/ch/c05/numerical-data\">处理数值数据</a></li><li><a href=\"#/ch/c06/categorical-data\">处理分类数据</a></li><li><a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a></li></ul>"
+}
+},
+{
+"type": "video",
+"id": "NIwexiIjASA"
+}
+]
+},
+{
+"id": "types-of-bias",
+"path": "/machine-learning/crash-course/fairness/types-of-bias",
+"min": 5,
+"heading": {
+"en": "Fairness: Types of bias",
+"zh": "公平性：偏见的类型"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/types-of-bias",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/types-of-bias?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning models can be susceptible to bias due to human involvement in data selection and curation.",
+"zh": null
+},
+{
+"en": "Understanding common human biases is crucial for mitigating their impact on model predictions.",
+"zh": null
+},
+{
+"en": "This webpage explores various types of biases, including reporting bias, historical bias, and automation bias, among others, providing definitions and examples for each.",
+"zh": null
+},
+{
+"en": "Selection bias, group attribution bias, and implicit bias are also discussed, with subtypes and illustrations.",
+"zh": null
+},
+{
+"en": "While not exhaustive, the presented biases highlight potential areas of concern when developing and evaluating machine learning models.",
+"zh": null
+}
+],
+"terms": [
+"automation_bias",
+"confirmation_bias",
+"selection_bias",
+"group_attribution_bias",
+"historical-bias",
+"implicit_bias",
+"in-group_bias",
+"out-group_homogeneity_bias",
+"participation_bias",
+"reporting_bias"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Machine learning (ML) models are not inherently objective. ML practitioners train models by feeding them a dataset of training examples, and human involvement in the provision and curation of this data can make a model's predictions susceptible to bias.",
+"zh": "机器学习 (ML) 模型本身不是客观的。机器学习从业者通过向模型提供训练示例数据集来训练模型，如果人工参与提供和管理这些数据，则可能会导致模型的预测结果容易出现偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When building models, it's important to be aware of common human biases that can manifest in your data, so you can take proactive steps to mitigate their effects.",
+"zh": "构建模型时，请务必注意常见的人为偏见， 这样您便可以主动采取措施 效果。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>The following inventory of biases provides just a small selection of biases that are often uncovered in machine learning datasets; this list <i>is not intended to be exhaustive</i>. Wikipedia's <a href=\"https://wikipedia.org/wiki/List_of_cognitive_biases\" target=\"_blank\" rel=\"noopener\">catalog of cognitive biases</a> enumerates over 100 different types of human bias that can affect our judgment. When auditing your data, beware of any and all potential sources of bias that might skew your model's predictions.",
+"zh": "<b>注意</b>：以下偏差清单仅提供了一小部分选项 机器学习数据集中经常发现的偏见；此列表<i>不是 旨在提供详尽说明</i>。维基百科的<a href=\"https://wikipedia.org/wiki/List_of_cognitive_biases\" target=\"_blank\" rel=\"noopener\">认知目录 偏见</a> 会枚举超过 100 个 可能会影响我们判断的人为偏见。在审核 请提防任何和所有潜在的偏见来源 对模型的预测。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Reporting bias",
+"zh": "报告偏差"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Reporting bias</b> occurs when the frequency of events, properties, and/or outcomes captured in a dataset does not accurately reflect their real-world frequency. This bias can arise because people tend to focus on documenting circumstances that are unusual or especially memorable, assuming that the ordinary does not need to be recorded.<br> Click chevron_right for an example.",
+"zh": "定义 如果出现以下情况，就会出现<b>报告偏差</b>： 数据集捕获的事件、属性和/或结果 准确地反映它们的真实频率。这种偏差可能 因为人们往往专注于记录 不寻常或特别令人难忘（假设平凡并没有 进行录制<br> 点击 chevron_right。"
+},
+{
+"en": "Example A sentiment-analysis model is trained to predict whether book reviews are positive or negative based on a corpus of user submissions to a popular website. The majority of reviews in the training dataset reflect extreme opinions (reviewers who either loved or hated a book), because people were less likely to submit a review of a book if they did not respond to it strongly. As a result, the model is less able to correctly predict sentiment of reviews that use more subtle language to describe a book.<br> Click chevron_left for the definition.",
+"zh": "示例 训练一个情感分析模型，以便根据用户提交给热门网站的语料库来预测图书评价是好评还是差评。训练数据集中的大多数评价都反映了极端观点（评价者对图书的评价是极其喜爱或极其厌恶），因为人们不太可能对图书没有强烈的回应就提交评价。作为 因此，模型无法正确预测 使用更微妙的语言描述图书的评价。<br> 点击相应定义的chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Historical bias",
+"zh": "历史偏差"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Historical bias</b> occurs when historical data reflects inequities that existed in the world at that time.<br> Click chevron_right for an example",
+"zh": "定义 当历史数据发生时，就会出现<b>历史偏差</b> 反映了当时世界上存在的不公平问题。<br> 点击 chevron_right 示例"
+},
+{
+"en": "Example A city housing dataset from the 1960s contains home-price data that reflects <a href=\"https://wikipedia.org/wiki/Redlining\" target=\"_blank\" rel=\"noopener\">discriminatory lending practices</a> in effect during that decade.<br> Click chevron_left for the definition.",
+"zh": "示例 1960 年代的城市房屋数据集包含房价数据，反映了该十年间有效的<a href=\"https://wikipedia.org/wiki/Redlining\" target=\"_blank\" rel=\"noopener\">歧视性放款做法</a>。<br> 点击相应定义的chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Automation bias",
+"zh": "自动化偏差"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Automation bias</b> is a tendency to favor results generated by automated systems over those generated by non-automated systems, irrespective of the error rates of each.<br> Click chevron_right for an example",
+"zh": "定义 <b>自动化偏差</b>倾向于结果 自动化系统生成的数据是非自动化系统生成的， 而不考虑每个系统的错误率。<br> 点击 chevron_right 示例"
+},
+{
+"en": "Example ML practitioners working for a sprocket manufacturer were eager to deploy the new \"groundbreaking\" model they trained to identify tooth defects, until the factory supervisor pointed out that the model's precision and recall rates were both 15% lower than those of human inspectors.<br> Click chevron_left for the definition.",
+"zh": "示例 为某个链轮制造商工作的机器学习从业者非常渴望部署他们训练的“开创性”新模型来识别齿缺陷，直到工厂主管指出该模型的精确度和召回率都比人工检查员低 15%。<br> 点击相应定义的chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Selection bias",
+"zh": "选择性偏差"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"selection-bias\"><b>Selection bias</b></button> occurs if a dataset's examples are chosen in a way that is not reflective of their real-world distribution. Selection bias can take many different forms, including coverage bias, non-response bias, and sampling bias.",
+"zh": "如果数据集中选择的样本未能反映样本的真实分布情况，便会出现<button type=\"button\" class=\"term\" data-term=\"selection-bias\"><b>选择性偏差</b></button>。选择性偏差有多种不同形式，包括覆盖偏差、回复率偏差和抽样偏差。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Coverage bias",
+"zh": "覆盖偏差"
+},
+"level": 3
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Coverage bias</b> occurs if data is not selected in a representative fashion.<br> Click chevron_right for an example",
+"zh": "定义 如果数据在 Google Cloud 的运行情况中未选择，就会出现<b>覆盖偏差</b> 一种具有代表性的方式<br> 点击 chevron_right 查看示例"
+},
+{
+"en": "Example A model is trained to predict future sales of a new product based on phone surveys conducted with a sample of consumers who bought the product. Consumers who instead opted to buy a competing product were not surveyed, and as a result, this group of people was not represented in the training data.<br> Click chevron_left for the definition.",
+"zh": "示例 通过训练模型来预测新产品的未来销量 对已购买产品/服务的消费者进行电话调查， 产品。我们没有对选择购买竞争产品的消费者进行调查，因此训练数据中不包含这类人群。<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Non-Response bias",
+"zh": "无反应偏差"
+},
+"level": 3
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Non-response bias</b> (also known as <b>participation bias</b>) occurs if data ends up being unrepresentative due to participation gaps in the data-collection process.<br> Click chevron_right for an example",
+"zh": "定义 <b>未回答偏差</b>（也称为 <b>参与偏差</b>） 由于数据收集过程中存在缺口，缺乏代表性 过程。<br> 点击 chevron_right 示例"
+},
+{
+"en": "Example A model is trained to predict future sales of a new product based on phone surveys conducted with a sample of consumers who bought the product and with a sample of consumers who bought a competing product. Consumers who bought the competing product were 80% more likely to refuse to complete the survey, and their data was underrepresented in the sample.<br> Click chevron_left for the definition.",
+"zh": "示例 通过训练模型来预测新产品的未来销量 对已购买产品/服务的消费者进行电话调查， 对购买过竞争对手的竞争对手的产品进行抽样， 产品。购买竞争产品的消费者数量高出 80% 拒绝填写调查问卷且其数据 在样本中代表性不足。<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Sampling bias",
+"zh": "采样偏差"
+},
+"level": 3
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Sampling bias</b> occurs if proper randomization is not used during data collection.<br> Click chevron_right for an example",
+"zh": "定义 如果在数据收集期间未采用适当的随机化方法，就会出现<b>采样偏差</b>。<br> 点击 chevron_right 查看示例"
+},
+{
+"en": "Example A model is trained to predict future sales of a new product based on phone surveys conducted with a sample of consumers who bought the product and with a sample of consumers who bought a competing product. Instead of randomly targeting consumers, the surveyor chose the first 200 consumers that responded to an email, who might have been more enthusiastic about the product than average purchasers.<br> Click chevron_left for the definition.",
+"zh": "示例 通过训练模型来预测新产品的未来销量 对已购买产品/服务的消费者进行电话调查， 对购买过竞争对手的竞争对手的产品进行抽样， 产品。调查人员选择了回复电子邮件的前 200 位消费者，而不是随机选择消费者，因为这些消费者可能比普通购买者对该产品更感兴趣。<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Group attribution bias",
+"zh": "群体归因偏差"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"group_attribution_bias\"><b>Group attribution bias</b></button> is a tendency to generalize what is true of individuals to the entire group to which they belong. Group attribution bias often manifests in the two following forms.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"group_attribution_bias\"><b>群体归因偏差</b></button> 倾向于将个体的真实情况泛化到整个群体， 它们所属的类别群体归因偏差通常表现为以下两种情况 表单。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "In-group bias",
+"zh": "群内偏差"
+},
+"level": 3
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>In-group bias</b> is a preference for members of your own group <i>you also belong</i>, or for characteristics that you also share.<br> Click chevron_right for an example",
+"zh": "定义 <b>群内偏差</b>是指偏向于您所属群体或具有共同特征的群体内成员。<br> 点击 chevron_right 示例"
+},
+{
+"en": "Example Two ML practitioners training a résumé-screening model for software developers are predisposed to believe that applicants who attended the same computer-science academy as they both did are more qualified for the role.<br> Click chevron_left for the definition.",
+"zh": "示例 两名机器学习从业者训练一个简历过滤模型， 软件开发者倾向于认为应聘者 并且就读于同一所计算机科学院校 更适合这个角色<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Out-group homogeneity bias",
+"zh": "群外同质性偏差"
+},
+"level": 3
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Out-group homogeneity bias</b> is a tendency to stereotype individual members of a group to which <i>you do not belong</i>, or to see their characteristics as more uniform.<br> Click chevron_right for an example",
+"zh": "定义 <b>群外同质性偏差</b>是指倾向于 刻板印象某个群体中您并不认同的或认为它们的特征更加一致。<br> 点击 chevron_right 示例"
+},
+{
+"en": "Example Two ML practitioners training a résumé-screening model for software developers are predisposed to believe that all applicants who did not attend a computer-science academy don't have sufficient expertise for the role.<br> Click chevron_left for the definition.",
+"zh": "示例 假设两名机器学习从业者在训练用于筛选软件开发者简历的模型，他们会倾向于认为毕业于非计算机科学院校的所有求职者都不具备担任相应职位所需的足够专业知识。<br> 点击相应定义的chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Implicit Bias",
+"zh": "隐性偏差"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Implicit bias</b> occurs when assumptions are made based on one's own model of thinking and personal experiences that don't necessarily apply more generally.<br> Click chevron_right for an example",
+"zh": "定义 如果根据不一定普遍适用的个人思维模式和个人经验做出假设，便会出现<b>隐性偏差</b>。<br> 点击 chevron_right 查看示例"
+},
+{
+"en": "Example An ML practitioner training a gesture-recognition model uses a <a href=\"https://wikipedia.org/wiki/Head_shake\" target=\"_blank\" rel=\"noopener\">head shake</a> as a feature to indicate a person is communicating the word \"no.\" However, in some regions of the world, a head shake actually signifies \"yes.\"<br> Click chevron_left for the definition.",
+"zh": "示例 一位机器学习从业者训练一个手势识别模型， <a href=\"https://wikipedia.org/wiki/Head_shake\" target=\"_blank\" rel=\"noopener\">摇头</a> 一种指示某人在传达“否”一词的功能。 但在世界上的某些地区，摇头其实表示“是”。<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Confirmation bias",
+"zh": "确认偏差"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Confirmation bias</b> occurs when model builders unconsciously process data in ways that affirm pre-existing beliefs and hypotheses.<br> Click chevron_right for an example",
+"zh": "定义 <b>确认偏差</b>是指模型构建者在处理数据时会不自觉地肯定已有的信念和假设。<br> 点击 chevron_right 示例"
+},
+{
+"en": "Example An ML practitioner is building a model that predicts aggressiveness in dogs based on a variety of features (height, weight, breed, environment). The practitioner had an unpleasant encounter with a hyperactive toy poodle as a child, and ever since has associated the breed with aggression. When curating the model's training data, the practitioner unconsciously discarded features that provided evidence of docility in smaller dogs.<br> Click chevron_left for the definition.",
+"zh": "示例 一名机器学习从业者正在构建一个可预测攻击性的模型 根据各种特征（身高、体重、品种、 ）。该从业者与一个 从小就特别活跃的玩具贵宾犬 具有攻击性的品种。在整理模型的训练数据时，该从业者无意识地舍弃了能够证明小型犬温顺的特征。<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Experimenter's bias",
+"zh": "实验者偏差"
+},
+"level": 2
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Definition <b>Experimenter's bias</b> occurs when a model builder keeps training a model until it produces a result that aligns with their original hypothesis.<br> Click chevron_right for an example",
+"zh": "定义 模型构建者会出现<b>实验者偏差</b> 会不断地训练模型，直到获得 原始假设。<br> 点击 chevron_right 查看示例"
+},
+{
+"en": "Example An ML practitioner is building a model that predicts aggressiveness in dogs based on a variety of features (height, weight, breed, environment). The practitioner had an unpleasant encounter with a hyperactive toy poodle as a child, and ever since has associated the breed with aggression. When the trained model predicted most toy poodles to be relatively docile, the practitioner retrained the model several more times until it produced a result showing smaller poodles to be more violent.<br> Click chevron_left for the definition.",
+"zh": "示例 一名机器学习从业者要构建一个模型，根据狗的各种特征（身高、体重、品种、环境）预测狗的攻击性。这名从业者幼年曾经有过与一只活蹦乱跳的宠物贵宾犬相处的不愉快经历，从那以后便认为该品种的狗具有攻击性。当经过训练的模型 对贵宾犬比较温和，从业者接受过再培训 然后多次运行模型，直到得出显示如下结果的结果： 让小型贵宾犬更暴力。<br> 点击 chevron_left。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following types of bias could have contributed to the skewed predictions in the college admissions model described <a href=\"#/ch/c13/fairness\">in the introduction</a>?",
+"zh": "以下哪些类型的偏差会造成影响 与上述大学招生模型中描述的偏差预测相比， <a href=\"#/ch/c13/fairness\">英寸 简介</a>？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Historical bias",
+"zh": "历史偏差"
+},
+"why": {
+"en": "The admissions model was trained on student records from the past 20 years. If minority students were underrepresented in this data, the model could have reproduced the same historical inequities when making predictions on new student data.",
+"zh": "招生模型基于过去的学生记录进行训练 20 年。如果这些数据代表少数族裔学生， 模型本来可以重现那些 对新学生数据进行预测。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "In-group bias",
+"zh": "群内偏差"
+},
+"why": {
+"en": "The admissions model was trained by current university students, who could have had an unconscious preference for admitting students that came from backgrounds similar to their own, which could have affected how they curated or feature-engineered the data on which the model was trained.",
+"zh": "招生模型由现役大学生训练，他们可能会无意识地偏向于录取与自己背景相似的学生，这可能会影响他们对模型训练数据的管理或特征工程处理方式。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Confirmation bias",
+"zh": "确认偏差"
+},
+"why": {
+"en": "The admissions model was trained by current university students, who likely had preexisting beliefs about what types of qualifications correlate with success in the computer science program. They could have inadvertently curated or feature-engineered the data so that the model affirmed these existing beliefs.",
+"zh": "该招生模型由在校大学生训练而成， 那些可能早就认为自己应具备的资格条件 都与计算机科学计划的成功相关。他们可以 无意中对数据进行了挑选或特征工程， 模型证实了这些现有的信念。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Automation bias",
+"zh": "自动化偏差"
+},
+"why": {
+"en": "Automation bias might explain why the admissions committee chose to use an ML model to make admissions decisions; they might have believed an automated system would produce better results than decisions made by humans. However, automation bias doesn't provide any insight into why the model's predictions ended up being skewed.",
+"zh": "自动化偏差或许是招生委员会选择的原因 使用机器学习模型做出录入决策；它们可能 认为自动化系统比自动化系统 人类作出的决策。然而，自动化偏差并不能提供 对模型预测结果出现偏差的原因进行任何分析。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "identifying-bias",
+"path": "/machine-learning/crash-course/fairness/identifying-bias",
+"min": 10,
+"heading": {
+"en": "Fairness: Identifying bias",
+"zh": "公平性：识别偏见"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/identifying-bias",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/identifying-bias?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Training data should represent real-world prevalence to avoid bias in machine learning models.",
+"zh": null
+},
+{
+"en": "Missing or unexpected feature values in the dataset can be indicative of potential sources of bias.",
+"zh": null
+},
+{
+"en": "Data skew, where certain groups are under- or over-represented, can introduce bias and should be addressed.",
+"zh": null
+},
+{
+"en": "Evaluating model performance by subgroup ensures fairness and equal performance across different characteristics.",
+"zh": null
+},
+{
+"en": "Auditing for bias requires a thorough review of data and model outcomes to mitigate potential negative impacts.",
+"zh": null
+}
+],
+"terms": [
+"bias-ethicsfairness"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "As you prepare your data for model training and evaluation, it's important to keep issues of fairness in mind and audit for potential sources of <button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\"><b>bias</b></button>, so you can proactively mitigate its effects before releasing your model into production.",
+"zh": "在准备数据以进行模型训练和评估时，请务必考虑公平性问题，并审核是否存在可能导致出现<button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\"><b>偏差</b></button>的潜在来源，以便在将模型发布到生产环境之前主动减少其影响。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Where might bias lurk? Here are some red flags to look out for in your dataset.",
+"zh": "偏见可能存在于哪些方面？以下是数据集中需要注意的一些危险信号。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Missing feature values",
+"zh": "缺少特征值"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "If your dataset has one or more features that have missing values for a large number of examples, that could be an indicator that certain key characteristics of your dataset are under-represented.",
+"zh": "如果您的数据集中有一个或多个特征缺少大量样本数据，那么这可能表明数据集中的某些关键特性未得到充分代表。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "You're training a model to predict adoptability of rescue dogs based on a variety of features, including breed, age, weight, temperament, and quantity of fur shed each day. Your goal is to ensure the model performs equally well on all types of dogs, irrespective of their physical or behavioral characteristics<br><br> You discover that 1,500 of the 5,000 examples in the training set are missing temperament values. Which of the following are potential sources of bias you should investigate?",
+"zh": "您要训练一个模型，以便根据各种特征（包括品种、年龄、体重、性情和每天脱落的毛发数量）预测救助犬的适合度。您的目标是确保模型对所有类型的狗狗都具有相同的效果，无论它们的身体或行为特征如何<br><br><br> 您发现训练集中的 5,000 个示例中有 1,500 个缺少气质值。以下哪些是潜在的偏见来源，您应该调查？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Temperament data is more likely to be missing for certain breeds of dogs.",
+"zh": "某些犬种更有可能缺少性情数据。"
+},
+"why": {
+"en": "If the availability of temperament data correlates with dog breed, then this might result in less accurate adoptability predictions for certain dog breeds.",
+"zh": "如果狗的品种与是否有性情数据相关，那么这可能会导致系统对某些狗狗的适合领养程度预测不准确。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Temperament data is more likely to be missing for dogs under 12 months in age",
+"zh": "年龄在 12 个月以下的狗狗更可能缺少温度数据"
+},
+"why": {
+"en": "If the availability of temperament data correlates with age, then this might result in less accurate adoptability predictions for puppies versus adult dogs.",
+"zh": "如果性情数据的可用性与年龄相关，那么与成年犬相比，幼犬的可领养性预测结果可能会不太准确。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Temperament data is missing for all dogs rescued from big cities.",
+"zh": "所有从大城市救出的狗狗的性情数据都缺失。"
+},
+"why": {
+"en": "At first glance, it might not appear that this is a potential source of bias, since the missing data would affect all dogs from big cities equally, irrespective of their breed, age, weight, etc. However, we still need to consider that the location a dog is from might effectively serve as a proxy for these physical characteristics. For example, if dogs from big cities are significantly more likely to be smaller than dogs from more rural areas, that could result in less accurate adoptability predictions for lower-weight dogs or certain small-dog breeds.",
+"zh": "乍一看，这似乎并不是潜在的偏见来源，因为缺失的数据会对大城市的所有狗狗造成同等的影响，而不考虑其品种、年龄、体重等。不过，我们仍然需要考虑狗狗的来源地是否可有效代表这些身体特征。例如，如果来自大城市的狗狗比来自更多农村地区的狗狗要小得多，则可能会导致对低体重狗或某些小狗品种的领养性预测不太准确。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Temperament data is missing from the dataset at random.",
+"zh": "数据集中随机缺少性情数据。"
+},
+"why": {
+"en": "If temperament data is truly missing at random, then that would not be a potential source of bias. However, it's possible temperament data might appear to be missing at random, but further investigation might reveal an explanation for the discrepancy. So it's important to do a thorough review to rule out other possibilities, rather than assume data gaps are random.",
+"zh": "如果气质数据确实是随机缺失的，那么这不会成为潜在的偏差来源。不过，情绪数据可能会随机缺失，但进一步调查可能会揭示差异的原因。因此，请务必进行全面检查，排除其他可能性，而不是假定数据缺口是随机的。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Unexpected feature values",
+"zh": "特征值异常"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "When exploring data, you should also look for examples that contain feature values that stand out as especially uncharacteristic or unusual. These unexpected feature values could indicate problems that occurred during data collection or other inaccuracies that could introduce bias.",
+"zh": "在探索数据时，您还应查找包含明显非典型或异常特征值的样本。这些意外的特征值可能表明数据收集期间出现了问题，或者存在其他可能导致偏差的不准确性。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Review the following hypothetical set of examples for training a rescue-dog adoptability model.",
+"zh": "查看以下用于训练救援狗可领性模型的以下假设示例集。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "breed",
+"zh": "品种"
+},
+{
+"en": "age (yrs)",
+"zh": "年龄（年）"
+},
+{
+"en": "weight (lbs)",
+"zh": "重量（磅）"
+},
+{
+"en": "temperament",
+"zh": "性情"
+},
+{
+"en": "shedding_level",
+"zh": "shedding_level"
+}
+],
+"rows": [
+[
+{
+"en": "toy poodle",
+"zh": "玩具贵宾犬"
+},
+{
+"en": "2",
+"zh": "2"
+},
+{
+"en": "12",
+"zh": "12"
+},
+{
+"en": "excitable",
+"zh": "易激动"
+},
+{
+"en": "low",
+"zh": "低价"
+}
+],
+[
+{
+"en": "golden retriever",
+"zh": "金毛寻回犬"
+},
+{
+"en": "7",
+"zh": "7"
+},
+{
+"en": "65",
+"zh": "65"
+},
+{
+"en": "calm",
+"zh": "平静"
+},
+{
+"en": "high",
+"zh": "高价"
+}
+],
+[
+{
+"en": "labrador retriever",
+"zh": "拉布拉多猎犬"
+},
+{
+"en": "35",
+"zh": "35"
+},
+{
+"en": "73",
+"zh": "73"
+},
+{
+"en": "calm",
+"zh": "平静"
+},
+{
+"en": "high",
+"zh": "高价"
+}
+],
+[
+{
+"en": "french bulldog",
+"zh": "法国斗牛犬"
+},
+{
+"en": "0.5",
+"zh": "0.5"
+},
+{
+"en": "11",
+"zh": "11"
+},
+{
+"en": "calm",
+"zh": "平静"
+},
+{
+"en": "medium",
+"zh": "medium"
+}
+],
+[
+{
+"en": "unknown mixed breed",
+"zh": "未知混血"
+},
+{
+"en": "4",
+"zh": "4"
+},
+{
+"en": "45",
+"zh": "45"
+},
+{
+"en": "excitable",
+"zh": "兴奋"
+},
+{
+"en": "high",
+"zh": "高价"
+}
+],
+[
+{
+"en": "basset hound",
+"zh": "巴吉度猎犬"
+},
+{
+"en": "9",
+"zh": "9"
+},
+{
+"en": "48",
+"zh": "48"
+},
+{
+"en": "calm",
+"zh": "平静"
+},
+{
+"en": "medium",
+"zh": "medium"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Can you identify any problems with the feature data?",
+"zh": "您能否发现特征数据存在任何问题？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "Click here to see the answer",
+"zh": "点击此处查看答案"
+},
+"why": {
+"en": "Click here to see the answer breed age (yrs) weight (lbs) temperament shedding_level toy poodle 2 12 excitable low golden retriever 7 65 calm high labrador retriever 35 73 calm high french bulldog 0.5 11 calm medium unknown mixed breed 4 45 excitable high basset hound 9 48 calm medium The oldest dog to have their age verified by <i>Guinness World Records</i> was <a href=\"https://wikipedia.org/wiki/Bluey_(long-lived_dog)\" target=\"_blank\" rel=\"noopener\">Bluey</a>, an Australian Cattle Dog who lived to be 29 years and 5 months. Given that, it seems quite implausible that the labrador retriever is actually 35 years old, and more likely that the dog's age was either calculated or recorded inaccurately (maybe the dog is actually 3.5 years old). This error could also be indicative of broader accuracy issues with age data in the dataset that merit further investigation.",
+"zh": "点击此处查看答案 品种 年龄（年） 重量（磅） 性情 shedding_level 玩具贵宾犬 2 12 易激动 低价 金毛寻回犬 7 65 平静 高价 拉布拉多猎犬 35 73 平静 高价 法国斗牛犬 0.5 11 平静 medium 未知混血 4 45 兴奋 高价 巴吉度猎犬 9 48 平静 medium <i>吉尼斯世界纪录</i>认证过的最长寿狗是澳大利亚牧牛犬 <a href=\"https://wikipedia.org/wiki/Bluey_(long-lived_dog)\" target=\"_blank\" rel=\"noopener\">Bluey</a>，它活了 29 年零 5 个月。鉴于此，这只拉布拉多犬实际上 35 岁的说法似乎不太可信，更有可能是狗的年龄计算或记录有误（狗可能实际上只有 3.5 岁）。此错误还可能表明数据集中的年龄数据存在更广泛的准确性问题，需要进一步调查。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Data skew",
+"zh": "数据倾斜"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Any sort of skew in your data, where certain groups or characteristics may be under- or over-represented relative to their real-world prevalence, can introduce bias into your model.",
+"zh": "数据倾斜是指相对于实际的发生率而言，某些小组或特性未得到充分代表或得到过度代表；如果您的数据存在任何形式的倾斜，便可能会在模型中引入偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When auditing model performance, it's important not only to look at results in aggregate, but to break out results by subgroup. For example, in the case of our rescue-dog adoptability model, to ensure fairness, it's not sufficient to simply look at overall accuracy. We should also audit performance by subgroup to ensure the model performs equally well for each dog breed, age group, and size group.",
+"zh": "审核模型性能时，不仅要按汇总查看结果，还要按子组查看结果。例如，在我们的救助犬领养资格模型中，仅查看整体准确性不足以确保公平性。我们还应按子群组审核效果，以确保模型对每种狗狗品种、年龄段和大小群组的预测效果均不相上下。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Later in this module, in <a href=\"#/ch/c13/evaluating-for-bias\">Evaluating for Bias</a>, we'll take a closer look at different methods for evaluating models by subgroup.",
+"zh": "在本单元稍后的<a href=\"#/ch/c13/evaluating-for-bias\">评估偏差</a>部分，我们将详细介绍按子群组评估模型的不同方法。"
+}
+}
+]
+},
+{
+"id": "mitigating-bias",
+"path": "/machine-learning/crash-course/fairness/mitigating-bias",
+"min": 5,
+"heading": {
+"en": "Fairness: Mitigating bias",
+"zh": "公平性：减少偏见"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/mitigating-bias",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/mitigating-bias?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning engineers use two primary strategies to mitigate bias in models: augmenting training data and adjusting the model's loss function.",
+"zh": null
+},
+{
+"en": "Augmenting training data involves collecting additional data to address missing, incorrect, or skewed data, but it can be infeasible due to data availability or resource constraints.",
+"zh": null
+},
+{
+"en": "Adjusting the model's loss function involves using fairness-aware optimization functions like MinDiff or Counterfactual Logit Pairing to penalize errors based on sensitive attributes and counteract imbalances in training data.",
+"zh": null
+},
+{
+"en": "MinDiff aims to balance errors between different data slices by penalizing differences in prediction distributions, while Counterfactual Logit Pairing penalizes discrepancies in predictions for similar examples with different sensitive attribute values.",
+"zh": null
+},
+{
+"en": "Choosing the right bias-mitigation technique depends on the specific use case of the model, and augmenting training data and adjusting the loss function can be used in conjunction for optimal bias reduction.",
+"zh": null
+}
+],
+"terms": [
+"bias-ethicsfairness",
+"log-loss"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Once a source of <button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\"><b>bias</b></button> has been identified in the training data, we can take proactive steps to mitigate its effects. There are two main strategies that machine learning (ML) engineers typically employ to remediate bias:",
+"zh": "在训练数据中发现<button type=\"button\" class=\"term\" data-term=\"bias-ethicsfairness\"><b>偏差</b></button>来源后，我们就可以采取主动措施来减轻其影响。机器学习 (ML) 工程师通常采用以下两种主要策略来消除偏差："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Augmenting the training data.",
+"zh": "扩充训练数据。"
+},
+{
+"en": "Adjusting the model's loss function.",
+"zh": "调整模型的损失函数。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Augmenting the training data",
+"zh": "扩充训练数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "If an audit of the training data has uncovered issues with missing, incorrect, or skewed data, the most straightforward way to address the problem is often to collect additional data.",
+"zh": "如果对训练数据进行审核发现数据缺失、不正确或有偏差，解决问题的最直接方法通常是收集更多数据。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "However, while augmenting the training data can be ideal, the downside of this approach is that it can also be infeasible, either due to a lack of available data or resource constraints that impede data collection. For example, gathering more data might be too costly or time-consuming, or not viable due to legal/privacy restrictions.",
+"zh": "然而，虽然扩充训练数据非常理想，但这种方法的缺点也可能是不可行的，原因可能是缺少可用数据或阻碍数据收集的资源限制。例如，收集更多数据可能成本过高或耗时，或者因法律/隐私限制而不可行。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Adjusting the model's optimization function",
+"zh": "调整模型的优化函数"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In cases where collecting additional training data is not viable, another approach for mitigating bias is to adjust how loss is calculated during model training. We typically use an optimization function like <button type=\"button\" class=\"term\" data-term=\"log-loss\"><b>log loss</b></button> to penalize incorrect model predictions. However, log loss does not take subgroup membership into consideration. So instead of using log loss, we can choose an optimization function designed to penalize errors in a fairness-aware fashion that counteracts the imbalances we've identified in our training data.",
+"zh": "如果无法收集更多训练数据，另一种减少偏差的方法是调整模型训练期间损失的计算方式。我们通常使用<button type=\"button\" class=\"term\" data-term=\"log-loss\"><b>对数损失函数</b></button>等优化函数来惩罚错误的模型预测。但是，对数损失不会考虑子组成员资格。因此，我们可以选择优化函数，而不是使用对数损失，而设计以公平性意识的方式惩罚错误，以抵消我们在训练数据中发现的不平衡。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The TensorFlow Model Remediation Library provides utilities for applying two different bias-mitigation techniques during model training:",
+"zh": "TensorFlow Model Remediation 库提供了一些实用程序，用于在模型训练期间应用两种不同的偏见缓解技术："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://www.tensorflow.org/responsible_ai/model_remediation/min_diff/guide/mindiff_overview\" target=\"_blank\" rel=\"noopener\"><b>MinDiff</b></a>: MinDiff aims to balance the errors for two different slices of data (male/female students versus nonbinary students) by adding a penalty for differences in the prediction distributions for the two groups.",
+"zh": "<a href=\"https://www.tensorflow.org/responsible_ai/model_remediation/min_diff/guide/mindiff_overview?hl=zh-cn\" target=\"_blank\" rel=\"noopener\"><b>MinDiff</b></a>：MinDiff 旨在通过对这两组的预测分布差异增加惩罚项，来平衡两类不同数据片段（男/女学生与非二元学生）的错误。"
+},
+{
+"en": "<a href=\"https://www.tensorflow.org/responsible_ai/model_remediation/counterfactual/guide/counterfactual_overview\" target=\"_blank\" rel=\"noopener\"><b>Counterfactual Logit Pairing</b></a>: Counterfactual Logit Pairing (CLP) aims to ensure that changing a sensitive attribute of a given example doesn't alter the model's prediction for that example. For example, if a training dataset contains two examples whose feature values are identical, except one has a <code>gender</code> value of <code>male</code> and the other has a <code>gender</code> value of <code>nonbinary</code>, CLP will add a penalty if the predictions for these two examples are different.",
+"zh": "<a href=\"https://www.tensorflow.org/responsible_ai/model_remediation/counterfactual/guide/counterfactual_overview?hl=zh-cn\" target=\"_blank\" rel=\"noopener\"><b>Counterfactual Logit Pairing</b></a>：Counterfactual Logit Pairing (CLP) 旨在确保更改给定样本的敏感属性不会改变模型对该样本的预测。例如，如果训练数据集包含两个特征值相同的示例，但其中一个的 <code>gender</code> 值为 <code>male</code>，另一个的 <code>gender</code> 值为 <code>nonbinary</code>，如果这两个示例的预测结果不同，CLP 会增加惩罚项。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The techniques you choose for adjusting the optimization function are dependent on the use cases for the model. In the next section, we'll take a closer look at how to approach the task of evaluating a model for fairness by considering these use cases.",
+"zh": "您选择用于调整优化函数的技术取决于模型的用例。在下一部分中，我们将通过考虑这些用例来深入了解如何完成模型公平性评估任务。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following statements regarding bias-mitigation techniques are true?",
+"zh": "以下关于减少偏见技术的说法中，哪些是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Both MinDiff and CLP penalize discrepancies in model performance tied to sensitive attributes",
+"zh": "MinDiff 和 CLP 都会惩罚与敏感属性相关的模型性能差异"
+},
+"why": {
+"en": "Both techniques aim to mitigate bias by penalizing prediction errors resulting from imbalances in how sensitive attributes are represented in training data.",
+"zh": "这两种技术都旨在通过对由于训练数据中敏感属性表示方式不平衡而导致的预测错误进行惩罚来减少偏差。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "MinDiff penalizes differences in the overall distribution of predictions for different slices of data, whereas CLP penalizes discrepancies in predictions for individual pairs of examples.",
+"zh": "MinDiff 会惩罚不同数据片段的预测结果在整体分布上的差异，而 CLP 会惩罚个别示例对的预测结果差异。"
+},
+"why": {
+"en": "MinDiff addresses bias by aligning score distributions for two subgroups. CLP tackles bias by ensuring that individual examples are not treated differently solely because of their subgroup membership.",
+"zh": "MinDiff 通过使两个子群组的分数分布保持一致来解决偏差问题。CLP 通过确保不会仅因子群组成员身份而对个别示例进行不同的处理来解决偏差问题。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Adding more examples to the training dataset will always help counteract bias in a model's predictions.",
+"zh": "向训练数据集添加更多示例始终有助于抵消模型预测中的偏差。"
+},
+"why": {
+"en": "Adding more training examples is an effective strategy for mitigating bias, but the composition of the new training data matters. If the additional training examples exhibit similar imbalances to the original data, they probably won't help mitigate the existing bias.",
+"zh": "添加更多训练示例是一种有效的减少偏见策略，但新训练数据的组成很重要。如果其他训练样本表现出与原始数据类似的不平衡情况，它们可能无法帮助减少现有偏差。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "If you are mitigating bias by adding more training data, you shouldn't also apply MinDiff or CLP during training.",
+"zh": "如果您通过添加更多训练数据来减少偏见，则不应在训练期间也应用 MinDiff 或 CLP。"
+},
+"why": {
+"en": "Augmenting training data and applying techniques like MinDiff or CLP can be complementary. For example, an ML engineer might be able to collect enough additional training data to reduce a discrepancy in performance by 30%, and then use MinDiff to further reduce the discrepancy by another 50%.",
+"zh": "增强训练数据和应用 MinDiff 或 CLP 等技术可以相辅相成。例如，机器学习工程师或许能够收集足够的额外训练数据，将性能差异降低 30%，然后使用 MinDiff 进一步将差异再降低 50%。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "evaluating-for-bias",
+"path": "/machine-learning/crash-course/fairness/evaluating-for-bias",
+"min": 5,
+"heading": {
+"en": "Fairness: Evaluating for bias",
+"zh": "公平性：评估偏差"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/evaluating-for-bias",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/evaluating-for-bias?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Aggregate model performance metrics like precision, recall, and accuracy can hide biases against minority groups.",
+"zh": null
+},
+{
+"en": "Fairness in model evaluation involves ensuring equitable outcomes across different demographic groups.",
+"zh": null
+},
+{
+"en": "This page explores various fairness metrics, including demographic parity, equality of opportunity, and counterfactual fairness, to assess model predictions for bias.",
+"zh": null
+},
+{
+"en": "Evaluating model predictions with these metrics helps in identifying and mitigating potential biases that can negatively affect minority groups.",
+"zh": null
+},
+{
+"en": "The goal is to develop models that not only achieve good overall performance but also ensure fair treatment for all individuals, regardless of their demographic background.",
+"zh": null
+}
+],
+"terms": [
+"accuracy",
+"bias-ethicsfairness",
+"precision",
+"recall"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "When evaluating a model, metrics calculated against an entire test or validation set don't always give an accurate picture of how fair the model is. Great model performance overall for a majority of examples may mask poor performance on a minority subset of examples, which can result in biased model predictions. Using aggregate performance metrics such as <button type=\"button\" class=\"term\" data-term=\"precision\"><b>precision</b></button>, <button type=\"button\" class=\"term\" data-term=\"recall\"><b>recall</b></button>, and <button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>accuracy</b></button> is not necessarily going to expose these issues.",
+"zh": "评估模型时，根据整个测试或验证数据计算的指标 并不能准确反映模型的公平性。 在大多数样本中，模型整体性能优异可能会掩盖糟糕的模型 这可能导致出现偏差 模型预测。使用汇总效果指标，例如 <button type=\"button\" class=\"term\" data-term=\"precision\"><b>精确率</b></button>、 <button type=\"button\" class=\"term\" data-term=\"recall\"><b>召回率</b></button>、 和<button type=\"button\" class=\"term\" data-term=\"accuracy\"><b>准确率</b></button>不一定持续 来揭示这些问题"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We can revisit our <a href=\"#/ch/c13/fairness\">admissions model</a> and explore some new techniques for how to evaluate its predictions for bias, with fairness in mind.",
+"zh": "我们可以回顾一下我们的<a href=\"#/ch/c13/fairness\">招生模式</a>，并探索一些新方法 如何在兼顾公平性的前提下评估预测是否存在偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose the admissions classification model selects 20 students to admit to the university from a pool of 100 candidates, belonging to two demographic groups: the majority group (blue, 80 students) and the minority group (orange, 20 students).",
+"zh": "假设招生分类模型选择 20 名学生进入 从 100 名学生中挑选出一所大学，分为两个人口统计群体： 多数群体（蓝色，80 位学生）和少数群体 （橙色，20 位学生）。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_candidate_pool.png",
+"alt": {
+"en": "Grid of 100 people icons. 80 icons are shaded blue,\n         representing the majority group. 20 icons are shaded orange,\n         representing the minority group.",
+"zh": "由 100 人图标组成的网格。80 个图标显示为蓝色阴影，\n         多数人组。20 个图标为橙色阴影，\n         代表着少数族裔群体"
+},
+"caption": {
+"en": "<b>Figure 1.</b> Candidate pool of 100 students: 80 students belong to the majority group (blue), and 20 students belong to the minority group (orange).",
+"zh": "<b>图 1.</b> 拥有 100 名学生的候选人库：共 80 名学生 多数群体（蓝色），20 名学生属于少数群体 （橙色）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The model must admit qualified students in a manner that is fair to the candidates in both demographic groups.",
+"zh": "该模型在接纳符合要求的学生时，必须以对 两个受众特征群体中的候选人。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "How should we evaluate the model's predictions for fairness? There are a variety of metrics we can consider, each of which provides a different mathematical definition of \"fairness.\" In the following sections, we'll explore three of these fairness metrics in depth: demographic parity, equality of opportunity, and counterfactual fairness.",
+"zh": "我们应如何评估模型预测的公平性？有很多种 每个指标都提供了不同的数学概念 “公平性”的定义在后续部分中，我们将探讨 这些深入的公平性指标：人口统计一致性、机会平等， 和反事实公平性原则。"
+}
+}
+]
+},
+{
+"id": "demographic-parity",
+"path": "/machine-learning/crash-course/fairness/demographic-parity",
+"min": 10,
+"heading": {
+"en": "Fairness: Demographic parity",
+"zh": "公平性：人口均等"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/demographic-parity",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/demographic-parity?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Demographic parity in machine learning models aims to ensure equal acceptance rates for both majority and minority groups, regardless of individual qualifications.",
+"zh": null
+},
+{
+"en": "While demographic parity promotes equal representation, it can overlook differences in the qualifications of individuals within each group, potentially leading to unfair outcomes.",
+"zh": null
+},
+{
+"en": "Evaluating model fairness requires considering various metrics and the specific context of the model's application, as demographic parity alone may not be sufficient.",
+"zh": null
+},
+{
+"en": "This specific example highlights the potential bias in feature data, leading to disparities in qualification predictions between majority and minority groups.",
+"zh": null
+}
+],
+"terms": [
+"bias-ethicsfairness",
+"demographic-parity"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "One method we can use to evaluate our model's predictions for fairness is to compare the admissions rate for the majority group and the minority group. If the two admissions rates are equal, then the model's predictions exhibit <button type=\"button\" class=\"term\" data-term=\"demographic-parity\"><b>demographic parity</b></button>: a student's chance of being admitted to the university doesn't vary by demographic group.",
+"zh": "在评估模型预测的公平性时，我们可以使用的一种方法是 比较多数群体和少数群体的入学率。 如果两个入学率相等，模型的预测结果表明 <button type=\"button\" class=\"term\" data-term=\"demographic-parity\"><b>受众特征对等</b></button>： 学生被录入大学的几率不会因 受众特征群体。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose the admissions model accepts 16 candidates from the majority group and 4 candidates from the minority group. The model's decisions satisfy demographic parity, as the acceptance rate for both majority and minority candidates is 20%.",
+"zh": "假设该录取模型接受多数人的 16 位候选人 选出了 4 位来自少数族裔群体的候选人。模型的决策 即多数人和多数人均符合人口统计学特征的接受率， 少数民族候选人占 20%。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_demographic_parity.png",
+"alt": {
+"en": "Candidate pool, split into two groups: Rejected Candidates (64 blue\n         students, 16 orange students) and Accepted Candidates (16 blue\n         students, 4 orange students).",
+"zh": "候选人池，分为两组：被拒绝的候选人（64 个蓝色的）\n         学生、16 名橙色学生）和接受的候选学生（16 名蓝色学生）\n         学生，4 个橙色的学生）。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> Candidate pool split into two groups: Rejected Candidates and Accepted Candidates. Both the majority (blue) and minority (orange) groups have an acceptance rate of 20%.",
+"zh": "<b>图 2.</b> 候选人池分为两组：被拒的候选人 和已接受的候选能量塔。多数（蓝色）和少数（橙色） 的接受率为 20%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following table quantifies the numbers supporting the rejected and accepted candidates in Figure 2.",
+"zh": "下表量化了支持被拒和已接受的 API 的数字 如图 2 所示。"
+}
+},
+{
+"type": "table",
+"by": {
+"en": {
+"headers": [],
+"rows": [
+[
+"<b>Accepted</b>",
+"16",
+"4"
+],
+[
+"<b>Rejected</b>",
+"64",
+"16"
+],
+[
+"<b>Acceptance Rate</b>",
+"20%",
+"20%"
+]
+]
+},
+"zh": {
+"headers": [
+"",
+"多数派",
+"少数群体"
+],
+"rows": [
+[
+"<b>已接受</b>",
+"16",
+"4"
+],
+[
+"<b>已拒绝</b>",
+"64",
+"16"
+],
+[
+"<b>接受率</b>",
+"20%",
+"20%"
+]
+]
+}
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your intuition",
+"zh": "练习：检查您的直觉"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The university admissions committee is considering using demographic parity as the fairness evaluation metric for their model, and needs your guidance on the benefits and drawbacks of this approach. Can you identify one <b>pro</b> and one <b>con</b> of evaluating the model's predictions using demographic parity?",
+"zh": "大学招生委员会正在考虑使用人口统计学平等 作为模型的公平性评估指标，需要您的指导 介绍这种方法的优缺点你能找出一个吗 <b>优点</b>和使用受众特征评估模型预测结果的一个<b>缺点</b> 对等？"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Can you identify any problems with the feature data?",
+"zh": "您能找出特征数据存在的任何问题吗？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "Click here to see our answers",
+"zh": "点击此处查看我们的回答"
+},
+"why": {
+"en": "Click here to see our answers Continue reading the next section, <b>Benefits and Drawbacks</b>, for our summary of the key pros and cons of using demographic parity.",
+"zh": "点击此处查看我们的回答 继续阅读下一部分：<b>优势和 缺点</b>。 受众特征对等。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Benefits and Drawbacks",
+"zh": "优点和缺点"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The key benefit of demographic parity for our admissions example is that it ensures that both majority and minority groups are represented in the admitted class of students in the same proportions as they are in the candidate pool. That is, if the applicant pool is comprised of 80% majority-group candidates and 20% minority-group candidates, demographic parity guarantees that the group of admittees will also be 80% majority-group students and 20% minority-group students.",
+"zh": "在我们的招生示例中，人口统计对等的关键优势在于 确保多数人和少数族裔群体都有机会 与候选集中的学生群体的比例相同。 也就是说，如果申请者群体由 80% 的多数党候选人组成 拥有 20% 的少数族裔候选人，受众特征平等可以保证 在入学者中，80% 为多数群体学生，20% 为少数群体 学生。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "However, demographic parity has one significant drawback: it does not take the <i>distribution</i> of predictions for each demographic group (the number of students classified as \"qualified\" vs. \"unqualified\") into account when evaluating how the 20 admissions slots should be allocated.",
+"zh": "但是，受众特征对等有一个显著的缺点： 被归类为“合格”的学生而不是“不符合条件”） 评估应如何分配 20 个入场空档。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Let's take another look at the composition of our candidate pool from above. However, this time we'll classify candidates not only by demographic group, but also by whether the model has scored each candidate as \"qualified\" or \"unqualified\":",
+"zh": "我们再来看一下上述候选者群的构成。 不过，这次我们不仅按照受众特征群体对候选人进行分类， 还取决于模型是否将每个候选定位设置都打成了“符合条件”或 \"unqualified\":"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_demographic_parity_by_qualifications.png",
+"alt": {
+"en": "The same breakdown of Rejected vs. Accepted candidates as in\n      the previous image, but this time the 50 students who are actually\n      qualified (35 blue students, 15 orange students) are shaded in green,\n      and the subset of qualified students who were rejected (19 blue students,\n      11 orange students) are marked with an X.",
+"zh": "与\n      上图中的 50 位学生，\n      （35 名蓝色学生、15 名橙色学生）以绿色阴影表示，\n      而被拒绝的符合条件的学生中（19 名蓝色学生、\n      11 个橙色的学生）标有 X。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> The same breakdown of Rejected and Accepted candidates as in Figure 2, but this time all qualified students in both the majority and minority groups are shaded in green, and the qualified students who were rejected are marked with an X. Of the 35 qualified majority-group students, 16 were accepted. Of the 15 qualified minority-group students, 4 were accepted.",
+"zh": "<b>图 3.</b> “已拒绝”和“已接受”的候选人的细分数据与 但这次大多数符合条件的学生 少数民族群体以绿色阴影表示，符合条件的学生 则标有“X”在 35 个符合条件的多数群体中 有 16 名学生被录取。在这 15 名符合条件的少数族裔学生中， 有 4 项任务被接受。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following table quantifies the numbers supporting the rejected and accepted candidates in Figure 3.",
+"zh": "下表量化了支持被拒和已接受的 API 的数字 如图 3 所示。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Majority group",
+"zh": "多数派"
+},
+{
+"en": "Minority group",
+"zh": "少数群体"
+}
+],
+"rows": [
+[
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Accepted",
+"zh": "已接受"
+},
+{
+"en": "Rejected",
+"zh": "已拒绝"
+},
+{
+"en": "Accepted",
+"zh": "已接受"
+},
+{
+"en": "Rejected",
+"zh": "已拒绝"
+}
+],
+[
+{
+"en": "<b>Qualified</b>",
+"zh": "<b>符合条件</b>"
+},
+{
+"en": "16",
+"zh": "16"
+},
+{
+"en": "19",
+"zh": "19"
+},
+{
+"en": "4",
+"zh": "4"
+},
+{
+"en": "11",
+"zh": "11"
+}
+],
+[
+{
+"en": "<b>Unqualified</b>",
+"zh": "<b>不符合条件</b>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "45",
+"zh": "45"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "5",
+"zh": "5"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Let's tabulate the acceptance rates for qualified students for both groups:",
+"zh": "我们将以下两组数据中符合条件的学生的录取率制成表格："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8778em;vertical-align:-0.1944em;\"></span><span class=\"mord text\"><span class=\"mord\">Majority acceptance rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">total qualified majority students</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">qualified majority students accepted</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0074em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3214em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">35</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">16</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">46%</span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8778em;vertical-align:-0.1944em;\"></span><span class=\"mord text\"><span class=\"mord\">Majority acceptance rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">total qualified majority students</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">qualified majority students accepted</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0074em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3214em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">35</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">16</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">46%</span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8778em;vertical-align:-0.1944em;\"></span><span class=\"mord text\"><span class=\"mord\">Minority acceptance rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">total qualified minority students</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">qualified minority students accepted</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0074em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3214em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">15</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">4</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">27%</span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8778em;vertical-align:-0.1944em;\"></span><span class=\"mord text\"><span class=\"mord\">Minority acceptance rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.2519em;vertical-align:-0.8804em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3714em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">total qualified minority students</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord text\"><span class=\"mord\">qualified minority students accepted</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8804em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0074em;vertical-align:-0.686em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3214em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">15</span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">4</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.686em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">27%</span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Even though both groups have an overall acceptance rate of 20%, satisfying demographic parity, the acceptance rate for qualified majority students is 46%, whereas the acceptance rate for qualified minority students is only 27%.",
+"zh": "尽管这两组的总体接受率都是 20%， 符合条件的大多数学生的录取率为 46%， 而符合条件的少数族裔学生的录取率只有 27%。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In cases like this, where the distribution of a preferred label (such as \"qualified\") varies greatly for both groups, demographic parity may not be the optimal metric to choose for evaluating fairness. In the next section, we'll look at an alternative fairness metric, equality of opportunity, which takes these differences into consideration.",
+"zh": "在这种情况下， （例如“符合条件”）相差很大，因此受众特征对等可能会 不是评估公平性的最佳指标。在未来 我们会介绍另一个公平性指标，即机会平等， ，后者会将这些差异考虑在内。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>There may be additional benefits/drawbacks of demographic parity not discussed here that are also worth considering, depending on both the goals the model is designed to achieve and the social context in which the model's predictions will be used.",
+"zh": "<b>注意</b>：如果与受众特征一致， 也值得考虑，具体取决于 模型的目标以及模型所处的社会环境 使用预测。"
+}
+}
+]
+},
+{
+"id": "equality-of-opportunity",
+"path": "/machine-learning/crash-course/fairness/equality-of-opportunity",
+"min": 10,
+"heading": {
+"en": "Fairness: Equality of opportunity",
+"zh": "公平性：机会平等"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/equality-of-opportunity",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/equality-of-opportunity?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Equality of opportunity in machine learning focuses on ensuring that qualified individuals have an equal chance of being accepted, regardless of their demographic group.",
+"zh": null
+},
+{
+"en": "It's achieved when the acceptance rates for qualified individuals are the same across different demographic groups, as illustrated by the example with a 40% acceptance rate for qualified candidates in both the majority and minority groups.",
+"zh": null
+},
+{
+"en": "While it promotes fairness in specific scenarios, equality of opportunity has limitations, such as its dependence on a clear preferred label and potential challenges in situations lacking demographic data.",
+"zh": null
+},
+{
+"en": "Unlike demographic parity which focuses on overall acceptance rates, equality of opportunity concentrates on the acceptance rates within the qualified subset of each group.",
+"zh": null
+},
+{
+"en": "It's possible for a model to satisfy both demographic parity and equality of opportunity simultaneously, under specific conditions where positive prediction rates and true positive rates are balanced across groups.",
+"zh": null
+}
+],
+"terms": [
+"bias-ethicsfairness",
+"equality_of_opportunity",
+"equalized-odds"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In the previous section, we evaluated our admissions model for fairness using demographic parity, by comparing the overall acceptance rates for both demographic groups.",
+"zh": "在上一部分中，我们使用 比较两者的总体接受率 受众特征群体。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Alternatively, we could compare the acceptance rates for just the qualified candidates in the majority group and the minority group. If the acceptance rates for qualified students in both groups are equal, the model exhibits <button type=\"button\" class=\"term\" data-term=\"equality_of_opportunity\"><b>equality of opportunity</b></button>: students with our preferred label (\"qualified for admission\") have an equal chance of being admitted, irrespective of which demographic group they belong to.",
+"zh": "或者，我们可以只比较合格 多数人和少数族裔群体中的候选人出席。如果接受率 两组符合条件的学生人数相等，该模型显示 <button type=\"button\" class=\"term\" data-term=\"equality_of_opportunity\"><b>机会平等</b></button>： 具有首选标签（“符合入学资格”）的学生在 被录取的可能性，无论他们属于哪个受众特征群体 目标。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Let's revisit our candidate pool from the previous section:",
+"zh": "我们来回顾一下上一部分中的候选人池："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Majority group",
+"zh": "多数派"
+},
+{
+"en": "Minority group",
+"zh": "少数群体"
+}
+],
+"rows": [
+[
+{
+"en": "<b>Qualified</b>",
+"zh": "<b>符合条件</b>"
+},
+{
+"en": "35",
+"zh": "35"
+},
+{
+"en": "15",
+"zh": "15"
+}
+],
+[
+{
+"en": "<b>Unqualified</b>",
+"zh": "<b>不符合条件</b>"
+},
+{
+"en": "45",
+"zh": "45"
+},
+{
+"en": "5",
+"zh": "5"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose the admissions model accepts 14 candidates from the majority group and 6 candidates from the minority group. The model's decisions satisfy equality of opportunity, as the acceptance rate for both qualified majority and qualified minority candidates is 40%.",
+"zh": "假设招生模型接受多数群体中的 14 个候选人 和 6 位来自少数族裔群体的候选人。模型的决策满足 即合格多数人的接受率， 符合条件的少数族裔候选人的得分为 40%。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_equality_of_opportunity_by_qualifications.png",
+"alt": {
+"en": "Pool of 100 candidates, split into two groups: Rejected\n      Candidates (66 blue students, 14 orange students) and Accepted\n      Candidates (14 blue students, 6 orange students). In the Accepted\n      group, all 20 students are shaded green (signifying\n      qualified), and in the Rejected group, 21 blue students and 9\n      orange students are also shaded green",
+"zh": "分 100 位候选人组成的小组，分为两组：已拒绝\n      候选者（66 位蓝色学生，14 位橙色学生）和“已接受”\n      候选人（14 位蓝色学生，6 位橙色学生）。在“已接受”\n      全部 20 位学生都显示为绿色（表示\n      而“已拒绝”组中，有 21 位蓝色学生和 9 位\n      橙色学生也对应的是绿色"
+},
+"caption": {
+"en": "<b>Figure 4.</b> Breakdown of Rejected and Accepted candidates, with all qualified students in both the majority and minority groups shaded in green. Of the 35 qualified majority-group students, 14 were accepted. Of the 15 qualified minority-group students, 6 were accepted. Both groups thus have an acceptance rate of 40% for qualified students.",
+"zh": "<b>图 4.</b> “已拒绝”和“已接受”的候选人的细分数据，包括 以阴影表示多数和少数群体的合格学生 以绿色显示在这 35 位符合资格的多数群体学生中，有 14 位 接受。在这 15 名符合条件的少数族裔学生中，有 6 名 接受。因此，这两个组的接受率均为 40% 符合条件的学生。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following table quantifies the numbers supporting the rejected and accepted candidates in Figure 4.",
+"zh": "下表量化了支持被拒和已接受的 API 的数字 如图 4 所示。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Majority group",
+"zh": "多数派"
+},
+{
+"en": "Minority group",
+"zh": "少数群体"
+}
+],
+"rows": [
+[
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Accepted",
+"zh": "已接受"
+},
+{
+"en": "Rejected",
+"zh": "已拒绝"
+},
+{
+"en": "Accepted",
+"zh": "已接受"
+},
+{
+"en": "Rejected",
+"zh": "已拒绝"
+}
+],
+[
+{
+"en": "<b>Qualified</b>",
+"zh": "<b>符合条件</b>"
+},
+{
+"en": "14",
+"zh": "14"
+},
+{
+"en": "21",
+"zh": "21"
+},
+{
+"en": "6",
+"zh": "6"
+},
+{
+"en": "9",
+"zh": "9"
+}
+],
+[
+{
+"en": "<b>Unqualified</b>",
+"zh": "<b>不符合条件</b>"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "45",
+"zh": "45"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "5",
+"zh": "5"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Benefits and Drawbacks",
+"zh": "优点和缺点"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The key benefit of equality of opportunity is that it allows the model's ratio of positive to negative predictions to vary across demographic groups, provided that the model is equally successful at predicting the preferred label (\"qualified for admission\") for both groups.",
+"zh": "机会平等的关键好处在于， 正向预测与负向预测的比率因受众特征群体而异， 但前提是该模型在预测首选标签方面 （“符合入场条件”）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The model predictions in Figure 4 <i>do not</i> satisfy demographic parity, as a student in the majority group has a 17.5% chance of being accepted, and a student in the minority group has a 30% chance of being accepted. However, a qualified student has a 40% chance of being accepted, irrespective of which group they belong to, which is arguably an outcome that is more fair in this particular model use case.",
+"zh": "图 4 中的模型预测<i>不</i>满足受众特征一致性， 学生入学的几率为 17.5%， 少数族裔学生被录取的概率为 30%。不过， 符合条件的学生有 40% 的概率被录取 这可能是一种更公平的结果， 特定的模型用例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "One drawback of equality of opportunity is that it is designed for use cases where there is a clear-cut preferred label. If it's equally important that the model predict both the positive class (\"qualified for admission\") and negative class (\"not qualified for admission\") for all demographic groups, it may make sense to instead use the metric <button type=\"button\" class=\"term\" data-term=\"equalized-odds\"><b>equalized odds</b></button>, which enforces equal success rates for both labels.",
+"zh": "机会平等的一个缺点是， 如果有明显的首选标签如果它们同样重要 模型对正类别和字词的预测性预测为正类别（“符合准入条件”） 以及负类别（“不符合入场条件”）的所有受众群体； 那么可能合理的做法是 <button type=\"button\" class=\"term\" data-term=\"equalized-odds\"><b>相等几率</b></button>，强制 两个标签的成功率相同。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Another drawback of equality of opportunity is that it assesses fairness by comparing error rates in aggregate for demographic groups, which may not always be feasible. For example, if our admissions model's dataset did not have a feature of <code>demographic_group</code>, it would not be possible to break out acceptance rates for qualified majority and minority candidates and compare them to see if equality of opportunity is satisfied.",
+"zh": "机会平等的另一个缺点是，它会评估公平性 比较不同受众特征群体的错误率， 并不总是可行的。例如，如果登记模型的数据集 没有 <code>demographic_group</code> 功能，则无法 细分出合格的多数选民和少数族裔候选人的接受率 并比较它们，看看是否满足了机会平等。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the next section, we'll look at another fairness metric, counterfactual fairness, that can be employed in scenarios where demographic data doesn't exist for all examples.",
+"zh": "在下一节中，我们将了解另一个公平性指标， 公平性，可在受众特征数据 所有样本都存在。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "True or False: It is impossible for a binary classification model to satisfy both demographic parity and equality of opportunity on the same set of predictions.",
+"zh": "判断正误：二元分类模型不可能 同时满足 。"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "True",
+"zh": "正确"
+},
+"why": {
+"en": "It's possible for a model's predictions to satisfy both demographic parity and equality of opportunity. See if you can think of a scenario where both metrics are satisfied, and then choose the other answer choice below to see our explanation.",
+"zh": "模型的预测有可能同时满足受众特征 机会平等和平等看看你能不能想出一个 然后选择另一个 选择下方，查看我们的解释。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "False",
+"zh": "错误"
+},
+"why": {
+"en": "It's possible for a model's predictions to satisfy both demographic parity and equality of opportunity.<br> For example, let's say a binary classifier (whose preferred label is the positive class) is evaluated on 100 examples, with results shown in the following confusion matrices, broken out by demographic group (majority and minority):<br> Majority group Minority group Predicted positive Predicted negative Predicted positive Predicted negative <b>Actual positive</b> 6 12 3 6 <b>Actual negative</b> 10 36 6 21 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">10</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">12</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">36</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">10</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">64</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">16</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">25%</span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">True Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">12</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">18</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">33%</span></span></span></span></span> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">21</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">36</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">9</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">25%</span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">True Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">9</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">33%</span></span></span></span></span> Both majority and minority groups have a positive prediction rate of 25%, satisfying demographic parity, and a true positive rate (percentage of examples with the preferred label that are correctly classified) of 33%, satisfying equality of opportunity.",
+"zh": "模型的预测有可能同时满足受众特征 机会平等和平等<br> 例如，假设有一个二元分类器（其首选标签 是正类别）对 100 个样本进行评估， 如以下混淆矩阵所示， 受众特征群体（大多数人和少数群体）：<br> 多数派 少数群体 预测为正例 预测为负例 预测为正例 预测为负例 <b>实际正例</b> 6 12 3 6 <b>实际负例</b> 10 36 6 21 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">10</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">12</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">36</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">10</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">64</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">16</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">25%</span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">True Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">12</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">18</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">6</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">33%</span></span></span></span></span> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">21</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">36</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">9</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">25%</span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord text\"><span class=\"mord\">True Positive Rate</span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">6</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">9</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8056em;vertical-align:-0.0556em;\"></span><span class=\"mord text\"><span class=\"mord\">33%</span></span></span></span></span> 多数群体和少数群体的预测率均为正数 达到 25%，满足受众特征一致性要求，并且具有真正例率 （在 正确分类的概率为 33%，这可满足机会均等的需要。"
+},
+"correct": true
+}
+]
+}
+]
+},
+{
+"id": "counterfactual-fairness",
+"path": "/machine-learning/crash-course/fairness/counterfactual-fairness",
+"min": 10,
+"heading": {
+"en": "Fairness: Counterfactual fairness",
+"zh": "公平性：反事实公平性"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/counterfactual-fairness",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/counterfactual-fairness?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Counterfactual fairness is a metric that evaluates fairness by comparing predictions for similar individuals, differing only in a sensitive attribute like demographic group.",
+"zh": null
+},
+{
+"en": "This metric is particularly useful when datasets lack complete demographic information for all examples but contain it for a subset.",
+"zh": null
+},
+{
+"en": "While counterfactual fairness can identify individual-level biases, it might not address broader, systemic biases across subgroups.",
+"zh": null
+},
+{
+"en": "Other fairness metrics, such as demographic parity and equality of opportunity, provide a more holistic view but may require complete demographic data.",
+"zh": null
+},
+{
+"en": "Selecting the appropriate fairness metric depends on the specific application and desired outcome, with no single \"right\" metric universally applicable.",
+"zh": null
+}
+],
+"terms": [
+"bias-ethicsfairness",
+"demographic-parity",
+"incompatibility-of-fairness-metrics"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Thus far, our discussions of fairness metrics have assumed that our training and test examples contain comprehensive demographic data for the demographic subgroups being evaluated. But often this isn't the case.",
+"zh": "到目前为止，我们对公平性指标的讨论假设我们的训练 和测试示例包含有关相应受众特征的全面受众特征数据 所评估的子群组。但通常并非如此。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose our admissions dataset doesn't contain complete demographic data. Instead, demographic-group membership is recorded for just a small percentage of examples, such as students who opted to self-identify which group they belonged to. In this case, the breakdown of our candidate pool into accepted and rejected students now looks like this:",
+"zh": "假设我们的招生数据集不包含完整的受众特征数据。 而是仅记录一小部分受众 样本，例如选择自行标识自己属于哪个群体的学生 所属的项目。在本例中，我们将候选人群细分为已接受的候选人 和被拒绝的学生现在如下所示："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_candidate_pool.png",
+"alt": {
+"en": "A candidate pool of 100 students, split into two groups:\n      Rejected Candidates (80 student icons) and Accepted Candidates (20\n      student icons). All of the icons are shaded gray (signifying that their\n      demographic group is unknown), except for 6 icons. In the Rejected\n      group, two student icons are shaded blue and two student icons are shaded\n      orange. In the Accepted group, one student icon is shaded blue and one is\n      shaded orange.",
+"zh": "将 100 名学生分为两组：\n      被拒绝的候选方案（80 个学生图标）和已接受的候选方案（20 个）\n      学生图标）。所有图标均为灰色阴影（表示\n      受众特征群体未知），但 6 个图标除外。在已拒绝的\n      小组，两个学生图标为蓝色阴影，两个学生图标为阴影\n      橙色。在“已接受”群组中，一个学生图标为蓝色阴影，另一个学生图标为蓝色\n      橙色阴影。"
+},
+"caption": {
+"en": "<b>Figure 5.</b> Candidate pool, with demographic-group membership unknown for nearly all candidates (icons shaded in gray).",
+"zh": "<b>图 5.</b> 具有受众特征群体成员资格的候选人池 几乎所有候选字词均未知（以灰色阴影表示的图标）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It's not feasible here to evaluate model predictions for either demographic parity or equality of opportunity, because we don't have demographic data for 94% of our examples. However, for the 6% of examples that do contain demographic features, we can still compare pairs of individual predictions (a majority candidate vs. a minority candidate) and see if they have been treated equitably by the model.",
+"zh": "在这里评估任一受众特征的模型预测都是不可行的 因为我们没有受众特征数据， 94% 的样本。然而，对于包含 6% 的 我们仍然可以比较各个预测项的成对， （多数候选人还是少数群体候选人），看看他们是否 公平对待。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, let's say that we've thoroughly reviewed the feature data available for two candidates (one in the majority group and one in the minority group, annotated with a star in the image below), and have determined that they are identically qualified for admission in all respects. If the model makes the same prediction for both of these candidates (i.e., either rejects both candidates or accepts both candidates), it is said to satisfy <b>counterfactual fairness</b> for these examples. Counterfactual fairness stipulates that two examples that are identical in all respects, except a given sensitive attribute (here, demographic group membership), should result in the same model prediction.",
+"zh": "例如，假设我们已全面审核了特征数据， 有两个候选人（一个在多数党候选人中，一个在少数党候选人） 已在下图中标注了星标），并且已经确定， 完全有资格入围。如果模型 针对这两个候选字词的相同预测（即 或同时接受两个候选人），即被认为符合<b>反事实 公平性</b>。反事实公平性规定 除了指定的敏感属性以外，在各方面都相同 （此处为受众特征群体成员资格），应得到相同的模型 预测。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_satisfied.png",
+"alt": {
+"en": "Same candidate pool as in the previous image, except in\n      this version, one blue student icon (belonging to the majority group) and\n      one orange student icon (belonging to the minority group) in the Rejected\n      group are annotated with a star, indicating that these two candidates are\n      identical (aside from demographic group).",
+"zh": "候选池与上图相同，但\n      一个蓝色的学生图标（属于多数群组）和\n      在“已拒绝”部分中有一个橙色的学生图标（属于少数群体）\n      都带有星标，表示这两个候选字词\n      完全相同（受众特征群体除外）。"
+},
+"caption": {
+"en": "<b>Figure 6.</b> Counterfactual fairness is satisfied for the two identical examples (only varying in demographic group membership) annotated with a star, as the model makes the same decision for both (Rejected).",
+"zh": "<b>图 6.</b> 两个完全相同的场景满足反事实性公平性原则， 带有 星星，因为模型会针对两者做出相同的决定（拒绝）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Benefits and drawbacks",
+"zh": "优点和缺点"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "As mentioned earlier, one key benefit of counterfactual fairness is that it can be used to evaluate predictions for fairness in many cases where using other metrics wouldn't be feasible. If a dataset doesn't contain a full set of feature values for the relevant group attributes under consideration, it won't be possible to evaluate fairness using demographic parity or equality of opportunity. However, if these group attributes are available for a subset of examples, and it's possible to identify comparable pairs of equivalent examples in different groups, practitioners can use counterfactual fairness as a metric to probe the model for potential biases in predictions.",
+"zh": "如前所述，反事实性公平性的一个主要好处是， 在许多情况下，该模型可用于评估预测的公平性， 那么其他指标就不可行了。如果数据集不包含完整的 相关组属性的特征值，则不能 可以使用人口统计学平等性或 优化建议。但是，如果这些组属性适用于 并可以找出对等的等效项对， 样本，从业者可以使用反事实公平性 作为一项指标来探测模型是否存在预测中可能存在的偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Additionally, because metrics like demographic parity and equality of opportunity assess groups in aggregate, they may mask bias issues that affect the model at the level of individual predictions, which can be surfaced by evaluation using counterfactual fairness. For example, suppose our admissions model accepts qualified candidates from the majority group and the minority group in the same proportion, but the most qualified minority candidate is rejected whereas the most qualified majority candidate who has the exact same credentials is accepted. A counterfactual fairness analysis can help identify these sorts of discrepancies so that they can be addressed.",
+"zh": "此外，由于受众特征对等和 对各个群体进行业务机会评估时，他们可能会掩盖影响 单个预测的级别， 使用反事实公平性进行评估。例如，假设我们的 模型接受来自多数群体和少数群体的合格候选人 但最合格的少数民族候选人才是 而最合格的多数候选人具有与 凭据。反事实公平性分析可以帮助你 以便消除这些差异"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "On the flipside, the key downside of counterfactual fairness is that it doesn't provide as holistic a view of bias in model predictions. Identifying and remediating a handful of inequities in pairs of examples may not be sufficient to address systemic bias issues that affect entire subgroups of examples.",
+"zh": "另一方面，反事实性公平的关键缺点是它 以便从整体上了解模型预测中的偏差。识别和 修正一些成对的不等式可能不够 来解决影响整个样本子群组的系统性偏见问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In cases where it's possible, practitioners can consider doing both an aggregate fairness analysis (using a metric like demographic parity or equality of opportunity) as well as a counterfactual fairness analysis to gain the widest range of insights into potential bias issues in need of remediation.",
+"zh": "如果可以的话，从业者可以考虑同时进行汇总 公平性分析（使用人口统计学平等性或 以及反事实公平性分析，以获得最广泛的 从而了解需要补救的潜在偏见问题。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "figure",
+"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_exercise_diagram.png",
+"alt": {
+"en": "Exercise Figure. Two groups of circles: Negative\n             Predictions and Positive Predictions.\n             Negative Predictions consists of 50 circles:\n             39 gray circles, 8 blue circles, and 3 orange circles. One\n             blue circle is labeled 'A', one orange circle is labeled 'A',\n             and one blue circle is labeled 'C'. \n             Positive Predictions consists of 15 circles:\n             10 gray circles, 3 blue circles, and 2\n             orange circles. One blue circle is labeled 'B', one orange\n             circle is labeled 'B', and one blue circle is labeled 'C'.\n             A legend below the diagram states that blue circles represent\n             an example in the majority group, orange circles represent\n             an example in the minority group, and gray circles represent\n             examples whose group membership is unknown",
+"zh": "锻炼图。两组圈子：排除\n             预测和积极预测。\n             负例预测包含 50 个圆圈：\n             39 个灰色圆圈、8 个蓝色圆圈和 3 个橙色圆圈。一个\n             蓝色圆圈标为“A”，另一个橙色圆圈标为“A”\n             有一个蓝色圆圈标着“C” \n             正向预测由 15 个圆圈组成：\n             10 个灰色圆圈、3 个蓝色圆圈和 2 个\n             橙色圆圈。一个蓝色圆圈标为“B”，另一个标为橙色\n             圆圈标为“B”，其中一个蓝色圆圈标为“C”。\n             图表下方的图例说明蓝色圆圈代表\n             是多数组中一个样本，橙色圆圈表示\n             其中灰色圆圈表示\n             群组成员资格未知的示例"
+},
+"caption": {
+"en": "<b>Figure 7.</b> Negative and Positive predictions for a batch of examples, with three pairs of examples labeled as A, B, and C.",
+"zh": "&lt;/ph&gt; <b>图 7.</b>对一批样本进行负例和正例预测， 其中包含三对样本，分别标记为 A、B 和 C。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "In the set of predictions in Figure 7 above, which of the following pairs of identical (excluding group membership) examples received predictions that violate counterfactual fairness?",
+"zh": "在上面图 7 中的一组预测中， 以下几对完全相同的内容（不包括组成员） 样本收到的预测违反了反事实公平性？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Pair A",
+"zh": "配对 A"
+},
+"why": {
+"en": "Pair A's predictions satisfy counterfactual fairness, as both the example in the majority group (blue) and the example in the minority group (orange) received the same prediction (Negative).",
+"zh": "配对 A 的预测满足反事实公平性要求，因为两者 多数群体中的样本（蓝色）和 少数群体（橙色）也获得了相同的预测结果（负例）。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Pair B",
+"zh": "配对 B"
+},
+"why": {
+"en": "Pair B's predictions satisfy counterfactual fairness, as both the example in the majority group (blue) and the example in the minority group (orange) received the same prediction (Positive).",
+"zh": "配对 B 的预测满足反事实公平性，因为两者 多数群体中的样本（蓝色）和 少数群体（橙色）得到的预测相同（正例）。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Pair C",
+"zh": "配对 C"
+},
+"why": {
+"en": "Pair C's predictions are for two examples that both belong to the majority group (blue). The fact that the model produced different predictions for these identical examples suggests that there may be broader performance issues with the model that should be investigated. However, this result does not violate counterfactual fairness, whose conditions only apply in cases where the two identical examples are each drawn from different groups.",
+"zh": "C 对的预测针对的两个样本均属于 多数组（蓝色）。事实上，模型生成的不同， 这些相同样本的预测表明， 模型存在更广泛的性能问题， 。不过，此结果并不违反反事实 公平性，其条件仅适用于 完全相同的样本 都是从不同的组中抽取的。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "None of these pairs violate counterfactual fairness",
+"zh": "这些对均未违反反事实公平性"
+},
+"why": {
+"en": "The predictions for Pairs A and B satisfy counterfactual fairness because in both cases, the example in the majority group and the example in the minority group receive the same prediction. Pair C's examples both belong to the same group (the majority group), so counterfactual fairness is not applicable in this case.",
+"zh": "对 A 和 B 的预测满足反事实公平性要求 因为在这两种情况下，多数组中的示例和 都会获得相同的预测结果。配对 C 样本都属于同一组（多数组），因此 在这种情况下，反事实公平性并不适用。"
+},
+"correct": true
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Summary",
+"zh": "摘要"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<a href=\"#/ch/c13/demographic-parity\">Demographic parity</a>, <a href=\"#/ch/c13/equality-of-opportunity\">equality of opportunity</a>, and counterfactual fairness each provide different mathematical definitions of fairness for model predictions. And those are just three possible ways to quantify fairness. Some definitions of fairness are even <button type=\"button\" class=\"term\" data-term=\"incompatibility-of-fairness-metrics\"><b>mutually incompatible</b></button>, meaning it may be impossible to satisfy them simultaneously for a given model's predictions.",
+"zh": "<a href=\"#/ch/c13/demographic-parity\">受众特征对等</a> <a href=\"#/ch/c13/equality-of-opportunity\">机会平等</a> 和反事实公平性都提供了不同的数学定义 模型预测的公平性。以上就是 量化公平的方法某些公平的定义<button type=\"button\" class=\"term\" data-term=\"incompatibility-of-fairness-metrics\"><b>不兼容</b></button>， 这意味着系统可能无法同时满足 预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "So how do you choose the \"right\" fairness metric for your model? You need to consider the context in which it's being used and the overarching goals you want to accomplish. For example, is the goal to achieve equal representation (in this case, demographic parity may be the optimal metric) or is it to achieve equal opportunity (here, equality of opportunity may be the best metric)?",
+"zh": "那么，如何选择“合适的”公平性指标？您需要 您需要考虑使用该工具的背景以及您设定的首要目标， 希望达成的目标例如，我们的目标是实现公平的代表性 （在此例中，受众特征对等可能是最佳指标）还是 机会平等（在这里，机会平等可能是 指标）？"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To learn more about ML Fairness and explore these issues in more depth, see <a href=\"https://fairmlbook.org/\" target=\"_blank\" rel=\"noopener\"><i>Fairness and Machine Learning: Limitations and Opportunities</i></a> by Solon Barocas, Moritz Hardt, and Arvind Narayanan.",
+"zh": "如需详细了解机器学习公平性并深入探索这些问题，请参阅 <a href=\"https://fairmlbook.org/\" target=\"_blank\" rel=\"noopener\"><i>Fairness and Machine Learning: Limitations and Opportunity</i></a>（《公平性与机器学习：限制与机会》），作者：Solon Barocas、Moriz Hardt 和 Arvind Narayanan。"
+}
+}
+]
+},
+{
+"id": "programming-exercise",
+"path": "/machine-learning/crash-course/fairness/programming-exercise",
+"min": 40,
+"heading": {
+"en": "Fairness: Programming exercise",
+"zh": "公平性：编程练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/programming-exercise",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/programming-exercise?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The following exercise demonstrates how to audit data sets with fairness in mind, and how to employ bias-remediation strategies to address fairness issues:",
+"zh": "以下练习演示了如何审核 Google Cloud 中 思维方式，以及如何利用偏见补救策略解决公平性问题 问题："
+}
+},
+{
+"type": "link",
+"href": {
+"en": "https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/fairness_income.ipynb?utm_source=mlcc&utm_campaign=colab-external&utm_medium=referral&utm_content=fairness",
+"zh": "https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/fairness_income.ipynb?utm_source=mlcc&utm_campaign=colab-external&utm_medium=referral&utm_content=fairness"
+},
+"html": {
+"en": "Open fairness exercise",
+"zh": "Open fairness exercise"
+},
+"only": "en"
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/fairness_income.ipynb?utm_source=mlcc&amp;utm_campaign=colab-external&amp;utm_medium=referral&amp;utm_content=fairness&amp;hl=zh-cn\" target=\"_blank\" rel=\"noopener\">解决机器学习模型中的偏见和公平性问题</a> Colab 练习。",
+"zh": "<a href=\"https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/fairness_income.ipynb?utm_source=mlcc&amp;utm_campaign=colab-external&amp;utm_medium=referral&amp;utm_content=fairness&amp;hl=zh-cn\" target=\"_blank\" rel=\"noopener\">解决机器学习模型中的偏见和公平性问题</a> Colab 练习。"
+}
+],
+"only": "zh"
+},
+{
+"type": "p",
+"html": {
+"en": "Programming exercises run directly in your browser (no setup required!) using the <a href=\"https://colab.research.google.com\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> platform. Colaboratory is supported on most major browsers, and is most thoroughly tested on desktop versions of Chrome and Firefox.",
+"zh": "直接在浏览器中运行编程练习（无需设置 使用 <a href=\"https://colab.research.google.com?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> 来运行 平台。大多数主流浏览器都支持 Colaboratory， 在桌面版 Chrome 和 Firefox 上进行了全面测试。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/fairness/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Fairness: Test your knowledge",
+"zh": "公平性：测试您的知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/fairness/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/fairness/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest.",
+"zh": "我们鼓励您根据自己的兴趣和进度，探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。"
+}
+}
+]
+}
+]
+}

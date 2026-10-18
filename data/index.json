@@ -1,0 +1,1060 @@
+{
+ "app": {
+  "en": "Machine Learning",
+  "zh": "机器学习"
+ },
+ "stages": [
+  {
+   "n": 1,
+   "id": "intro-to-ml",
+   "title": {
+    "en": "Intro to Machine Learning",
+    "zh": "机器学习简介"
+   },
+   "blurb": {
+    "en": "A brief introduction to machine learning.",
+    "zh": "简要介绍机器学习。"
+   },
+   "url": "https://developers.google.com/machine-learning/intro-to-ml",
+   "chapters": [
+    "c01"
+   ]
+  },
+  {
+   "n": 2,
+   "id": "crash-course",
+   "title": {
+    "en": "Machine Learning Crash Course",
+    "zh": "机器学习速成课程"
+   },
+   "blurb": {
+    "en": "A hands-on course to explore the critical basics of machine learning.",
+    "zh": "探索机器学习关键基础知识的实操课程。"
+   },
+   "url": "https://developers.google.com/machine-learning/crash-course",
+   "chapters": [
+    "c02",
+    "c03",
+    "c04",
+    "c05",
+    "c06",
+    "c07",
+    "c08",
+    "c09",
+    "c10",
+    "c11",
+    "c12",
+    "c13"
+   ]
+  },
+  {
+   "n": 3,
+   "id": "problem-framing",
+   "title": {
+    "en": "Problem Framing",
+    "zh": "问题构建"
+   },
+   "blurb": {
+    "en": "A course to help you map real-world problems to machine learning solutions.",
+    "zh": "帮助您将现实问题映射到机器学习解决方案的课程。"
+   },
+   "url": "https://developers.google.com/machine-learning/problem-framing",
+   "chapters": [
+    "c14"
+   ]
+  },
+  {
+   "n": 4,
+   "id": "managing-ml-projects",
+   "title": {
+    "en": "Managing ML Projects",
+    "zh": "管理机器学习项目"
+   },
+   "blurb": {
+    "en": "Learn how to manage machine learning projects.",
+    "zh": "学习如何管理机器学习项目。"
+   },
+   "url": "https://developers.google.com/machine-learning/managing-ml-projects",
+   "chapters": [
+    "c15",
+    "c16",
+    "c17",
+    "c18"
+   ]
+  }
+ ],
+ "chapters": [
+  {
+   "id": "c01",
+   "num": 1,
+   "stage": 1,
+   "title": {
+    "en": "Intro to Machine Learning",
+    "zh": "机器学习简介"
+   },
+   "minutes": null,
+   "sections": [
+    {
+     "id": "intro",
+     "heading": {
+      "en": "Introduction to Machine Learning",
+      "zh": "机器学习简介"
+     }
+    },
+    {
+     "id": "what-is-ml",
+     "heading": {
+      "en": "What is Machine Learning?",
+      "zh": "什么是机器学习？"
+     }
+    },
+    {
+     "id": "supervised",
+     "heading": {
+      "en": "Supervised Learning",
+      "zh": "监督式学习"
+     }
+    },
+    {
+     "id": "understanding",
+     "heading": {
+      "en": "Test Your Understanding",
+      "zh": "测试您的掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c02",
+   "num": 2,
+   "stage": 2,
+   "title": {
+    "en": "Linear regression",
+    "zh": "线性回归"
+   },
+   "minutes": 80,
+   "sections": [
+    {
+     "id": "linear-regression",
+     "heading": {
+      "en": "Linear regression",
+      "zh": "线性回归"
+     }
+    },
+    {
+     "id": "loss",
+     "heading": {
+      "en": "Linear regression: Loss",
+      "zh": "线性回归：损失函数"
+     }
+    },
+    {
+     "id": "parameters-exercise",
+     "heading": {
+      "en": "Linear regression: Parameters exercise",
+      "zh": "线性回归：参数练习"
+     }
+    },
+    {
+     "id": "gradient-descent",
+     "heading": {
+      "en": "Linear regression: Gradient descent",
+      "zh": "线性回归：梯度下降"
+     }
+    },
+    {
+     "id": "hyperparameters",
+     "heading": {
+      "en": "Linear regression: Hyperparameters",
+      "zh": "线性回归：超参数"
+     }
+    },
+    {
+     "id": "gradient-descent-exercise",
+     "heading": {
+      "en": "Linear regression: Gradient descent exercise",
+      "zh": "线性回归：梯度下降练习"
+     }
+    },
+    {
+     "id": "programming-exercise",
+     "heading": {
+      "en": "Linear regression: Programming exercise",
+      "zh": "线性回归：编程练习"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Linear regression: Test your knowledge",
+      "zh": "线性回归：测试您的知识"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c03",
+   "num": 3,
+   "stage": 2,
+   "title": {
+    "en": "Logistic regression",
+    "zh": "逻辑回归"
+   },
+   "minutes": 35,
+   "sections": [
+    {
+     "id": "logistic-regression",
+     "heading": {
+      "en": "Logistic Regression",
+      "zh": "逻辑回归"
+     }
+    },
+    {
+     "id": "sigmoid-function",
+     "heading": {
+      "en": "Logistic regression: Calculating a probability with the sigmoid function",
+      "zh": "逻辑回归：使用 S 型函数计算概率"
+     }
+    },
+    {
+     "id": "loss-regularization",
+     "heading": {
+      "en": "Logistic regression: Loss and regularization",
+      "zh": "逻辑回归：损失和正则化"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Logistic regression: Test your knowledge",
+      "zh": "逻辑回归：测试知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c04",
+   "num": 4,
+   "stage": 2,
+   "title": {
+    "en": "Classification",
+    "zh": "分类"
+   },
+   "minutes": 70,
+   "sections": [
+    {
+     "id": "classification",
+     "heading": {
+      "en": "Classification",
+      "zh": "分类"
+     }
+    },
+    {
+     "id": "thresholding",
+     "heading": {
+      "en": "Thresholds and the confusion matrix",
+      "zh": "阈值和混淆矩阵"
+     }
+    },
+    {
+     "id": "accuracy-precision-recall",
+     "heading": {
+      "en": "Classification: Accuracy, recall, precision, and related metrics",
+      "zh": "分类：准确率、召回率、精确率和相关指标"
+     }
+    },
+    {
+     "id": "roc-and-auc",
+     "heading": {
+      "en": "Classification: ROC and AUC",
+      "zh": "分类 (Classification)：ROC 和曲线下面积"
+     }
+    },
+    {
+     "id": "prediction-bias",
+     "heading": {
+      "en": "Classification: Prediction bias",
+      "zh": "分类：预测偏差"
+     }
+    },
+    {
+     "id": "multiclass",
+     "heading": {
+      "en": "Classification: Multi-class classification",
+      "zh": "分类：多类别分类"
+     }
+    },
+    {
+     "id": "programming-exercise",
+     "heading": {
+      "en": "Classification: Programming exercise",
+      "zh": "分类：编程练习"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Classification: Test your knowledge",
+      "zh": "分类：测试知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c05",
+   "num": 5,
+   "stage": 2,
+   "title": {
+    "en": "Working with numerical data",
+    "zh": "处理数值数据"
+   },
+   "minutes": 85,
+   "sections": [
+    {
+     "id": "numerical-data",
+     "heading": {
+      "en": "Working with numerical data",
+      "zh": "处理数值数据"
+     }
+    },
+    {
+     "id": "feature-vectors",
+     "heading": {
+      "en": "Numerical data: How a model ingests data using feature vectors",
+      "zh": "数值数据：模型如何使用特征向量注入数据"
+     }
+    },
+    {
+     "id": "first-steps",
+     "heading": {
+      "en": "Numerical data: First steps",
+      "zh": "数值数据：初始步骤"
+     }
+    },
+    {
+     "id": "programming-exercises",
+     "heading": {
+      "en": "Numerical data: Programming exercises",
+      "zh": "数值数据：编程练习"
+     }
+    },
+    {
+     "id": "normalization",
+     "heading": {
+      "en": "Numerical data: Normalization",
+      "zh": "数值数据：标准化"
+     }
+    },
+    {
+     "id": "binning",
+     "heading": {
+      "en": "Numerical data: Binning",
+      "zh": "数值数据：分箱"
+     }
+    },
+    {
+     "id": "scrubbing",
+     "heading": {
+      "en": "Numerical data: Scrubbing",
+      "zh": "数值数据：擦除"
+     }
+    },
+    {
+     "id": "qualities-of-good-numerical-features",
+     "heading": {
+      "en": "Numerical data: Qualities of good numerical features",
+      "zh": "数值数据：良好数值特征的特性"
+     }
+    },
+    {
+     "id": "polynomial-transforms",
+     "heading": {
+      "en": "Numerical data: Polynomial transforms",
+      "zh": "数值数据：多项式转换"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Numerical data: Test your knowledge",
+      "zh": "数值数据：测试您的知识掌握情况"
+     }
+    },
+    {
+     "id": "conclusion",
+     "heading": {
+      "en": "Numerical data: Conclusion",
+      "zh": "数值数据：总结"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c06",
+   "num": 6,
+   "stage": 2,
+   "title": {
+    "en": "Working with categorical data",
+    "zh": "处理分类数据"
+   },
+   "minutes": 50,
+   "sections": [
+    {
+     "id": "categorical-data",
+     "heading": {
+      "en": "Working with categorical data",
+      "zh": "处理分类数据"
+     }
+    },
+    {
+     "id": "one-hot-encoding",
+     "heading": {
+      "en": "Categorical data: Vocabulary and one-hot encoding",
+      "zh": "分类数据：词汇和独热编码"
+     }
+    },
+    {
+     "id": "issues",
+     "heading": {
+      "en": "Categorical data: Common issues",
+      "zh": "分类数据：常见问题"
+     }
+    },
+    {
+     "id": "feature-crosses",
+     "heading": {
+      "en": "Categorical data: Feature crosses",
+      "zh": "分类数据：特征组合"
+     }
+    },
+    {
+     "id": "feature-cross-exercises",
+     "heading": {
+      "en": "Categorical data: Feature cross exercises",
+      "zh": "分类数据：特征组合练习"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Categorical data: Test your knowledge",
+      "zh": "分类数据：测试您的知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c07",
+   "num": 7,
+   "stage": 2,
+   "title": {
+    "en": "Datasets, generalization, and overfitting",
+    "zh": "数据集、泛化和过拟合"
+   },
+   "minutes": 105,
+   "sections": [
+    {
+     "id": "overfitting",
+     "heading": {
+      "en": "Datasets, generalization, and overfitting",
+      "zh": "数据集、泛化和过拟合"
+     }
+    },
+    {
+     "id": "data-characteristics",
+     "heading": {
+      "en": "Datasets: Data characteristics",
+      "zh": "数据集：数据特征"
+     }
+    },
+    {
+     "id": "labels",
+     "heading": {
+      "en": "Datasets: Labels",
+      "zh": "数据集：标签"
+     }
+    },
+    {
+     "id": "imbalanced-datasets",
+     "heading": {
+      "en": "Datasets: Class-imbalanced datasets",
+      "zh": "数据集：类别不平衡的数据集"
+     }
+    },
+    {
+     "id": "dividing-datasets",
+     "heading": {
+      "en": "Datasets: Dividing the original dataset",
+      "zh": "数据集：拆分原始数据集"
+     }
+    },
+    {
+     "id": "transforming-data",
+     "heading": {
+      "en": "Datasets: Transforming data",
+      "zh": "数据集：转换数据"
+     }
+    },
+    {
+     "id": "generalization",
+     "heading": {
+      "en": "Generalization",
+      "zh": "泛化"
+     }
+    },
+    {
+     "id": "overfitting-2",
+     "heading": {
+      "en": "Overfitting",
+      "zh": "过拟合"
+     }
+    },
+    {
+     "id": "model-complexity",
+     "heading": {
+      "en": "Overfitting: Model complexity",
+      "zh": "过拟合：模型复杂性"
+     }
+    },
+    {
+     "id": "regularization",
+     "heading": {
+      "en": "Overfitting: L2 regularization",
+      "zh": "过拟合：L2 正则化"
+     }
+    },
+    {
+     "id": "interpreting-loss-curves",
+     "heading": {
+      "en": "Overfitting: Interpreting loss curves",
+      "zh": "过拟合：解读损失曲线"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Datasets, generalization, and overfitting: Test your knowledge",
+      "zh": "数据集、泛化和过拟合：测试知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c08",
+   "num": 8,
+   "stage": 2,
+   "title": {
+    "en": "Neural networks",
+    "zh": "神经网络"
+   },
+   "minutes": 75,
+   "sections": [
+    {
+     "id": "neural-networks",
+     "heading": {
+      "en": "Neural networks",
+      "zh": "神经网络"
+     }
+    },
+    {
+     "id": "nodes-hidden-layers",
+     "heading": {
+      "en": "Neural networks: Nodes and hidden layers",
+      "zh": "神经网络：节点和隐藏层"
+     }
+    },
+    {
+     "id": "activation-functions",
+     "heading": {
+      "en": "Neural networks: Activation functions",
+      "zh": "神经网络：激活函数"
+     }
+    },
+    {
+     "id": "backpropagation",
+     "heading": {
+      "en": "Neural Networks: Training using backpropagation",
+      "zh": "神经网络：使用反向传播进行训练"
+     }
+    },
+    {
+     "id": "interactive-exercises",
+     "heading": {
+      "en": "Neural networks: Interactive exercises",
+      "zh": "神经网络：互动练习"
+     }
+    },
+    {
+     "id": "multi-class",
+     "heading": {
+      "en": "Neural networks: Multi-class classification",
+      "zh": "神经网络：多类别分类"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Neural networks: Test your knowledge",
+      "zh": "神经网络：测试您的知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c09",
+   "num": 9,
+   "stage": 2,
+   "title": {
+    "en": "Embeddings",
+    "zh": "嵌入"
+   },
+   "minutes": 55,
+   "sections": [
+    {
+     "id": "embeddings",
+     "heading": {
+      "en": "Embeddings",
+      "zh": "Embeddings"
+     }
+    },
+    {
+     "id": "embedding-space",
+     "heading": {
+      "en": "Embeddings: Embedding space and static embeddings",
+      "zh": "嵌入：嵌入空间和静态嵌入"
+     }
+    },
+    {
+     "id": "interactive-exercises",
+     "heading": {
+      "en": "Embeddings: Interactive exercises",
+      "zh": "嵌入：互动练习"
+     }
+    },
+    {
+     "id": "obtaining-embeddings",
+     "heading": {
+      "en": "Embeddings: Obtaining embeddings",
+      "zh": "嵌入：获取嵌入"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Embeddings: Test your knowledge",
+      "zh": "嵌入：测试知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c10",
+   "num": 10,
+   "stage": 2,
+   "title": {
+    "en": "Intro to Large Language Models",
+    "zh": "大型语言模型简介"
+   },
+   "minutes": 45,
+   "sections": [
+    {
+     "id": "llm",
+     "heading": {
+      "en": "Introduction to Large Language Models",
+      "zh": "大型语言模型简介"
+     }
+    },
+    {
+     "id": "transformers",
+     "heading": {
+      "en": "LLMs: What's a large language model?",
+      "zh": "LLM：什么是大语言模型？"
+     }
+    },
+    {
+     "id": "tuning",
+     "heading": {
+      "en": "LLMs: Fine-tuning, distillation, and prompt engineering",
+      "zh": "LLM：微调、蒸馏和提示工程"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "LLMs: Test your knowledge",
+      "zh": "LLM：测试知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c11",
+   "num": 11,
+   "stage": 2,
+   "title": {
+    "en": "Production ML systems",
+    "zh": "生产环境机器学习系统"
+   },
+   "minutes": 80,
+   "sections": [
+    {
+     "id": "production-ml-systems",
+     "heading": {
+      "en": "Production ML systems",
+      "zh": "生产环境机器学习系统"
+     }
+    },
+    {
+     "id": "static-vs-dynamic-training",
+     "heading": {
+      "en": "Production ML systems: Static versus dynamic training",
+      "zh": "生产型机器学习系统：静态训练与动态训练"
+     }
+    },
+    {
+     "id": "static-vs-dynamic-inference",
+     "heading": {
+      "en": "Production ML systems: Static versus dynamic inference",
+      "zh": "生产型机器学习系统：静态推理与动态推理"
+     }
+    },
+    {
+     "id": "transforming-data",
+     "heading": {
+      "en": "Production ML systems: When to transform data?",
+      "zh": "生产型机器学习系统：何时转换数据？"
+     }
+    },
+    {
+     "id": "deployment-testing",
+     "heading": {
+      "en": "Production ML systems: Deployment testing",
+      "zh": "生产机器学习系统：部署测试"
+     }
+    },
+    {
+     "id": "monitoring",
+     "heading": {
+      "en": "Production ML systems: Monitoring pipelines",
+      "zh": "生产型机器学习系统：监控流水线"
+     }
+    },
+    {
+     "id": "questions",
+     "heading": {
+      "en": "Production ML systems: Questions to ask",
+      "zh": "生产型机器学习系统：要提出的问题"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Production ML systems: Test your knowledge",
+      "zh": "生产型机器学习系统：测试您的知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c12",
+   "num": 12,
+   "stage": 2,
+   "title": {
+    "en": "Automated machine learning",
+    "zh": "自动化机器学习 (AutoML)"
+   },
+   "minutes": 30,
+   "sections": [
+    {
+     "id": "automl",
+     "heading": {
+      "en": "Automated Machine Learning (AutoML)",
+      "zh": "自动化机器学习 (AutoML)"
+     }
+    },
+    {
+     "id": "benefits-limitations",
+     "heading": {
+      "en": "AutoML: Benefits and limitations",
+      "zh": "AutoML：优势和限制"
+     }
+    },
+    {
+     "id": "getting-started",
+     "heading": {
+      "en": "AutoML: Getting started",
+      "zh": "AutoML：使用入门"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c13",
+   "num": 13,
+   "stage": 2,
+   "title": {
+    "en": "Fairness",
+    "zh": "公平性"
+   },
+   "minutes": 110,
+   "sections": [
+    {
+     "id": "fairness",
+     "heading": {
+      "en": "Fairness",
+      "zh": "公平性"
+     }
+    },
+    {
+     "id": "types-of-bias",
+     "heading": {
+      "en": "Fairness: Types of bias",
+      "zh": "公平性：偏见的类型"
+     }
+    },
+    {
+     "id": "identifying-bias",
+     "heading": {
+      "en": "Fairness: Identifying bias",
+      "zh": "公平性：识别偏见"
+     }
+    },
+    {
+     "id": "mitigating-bias",
+     "heading": {
+      "en": "Fairness: Mitigating bias",
+      "zh": "公平性：减少偏见"
+     }
+    },
+    {
+     "id": "evaluating-for-bias",
+     "heading": {
+      "en": "Fairness: Evaluating for bias",
+      "zh": "公平性：评估偏差"
+     }
+    },
+    {
+     "id": "demographic-parity",
+     "heading": {
+      "en": "Fairness: Demographic parity",
+      "zh": "公平性：人口均等"
+     }
+    },
+    {
+     "id": "equality-of-opportunity",
+     "heading": {
+      "en": "Fairness: Equality of opportunity",
+      "zh": "公平性：机会平等"
+     }
+    },
+    {
+     "id": "counterfactual-fairness",
+     "heading": {
+      "en": "Fairness: Counterfactual fairness",
+      "zh": "公平性：反事实公平性"
+     }
+    },
+    {
+     "id": "programming-exercise",
+     "heading": {
+      "en": "Fairness: Programming exercise",
+      "zh": "公平性：编程练习"
+     }
+    },
+    {
+     "id": "test-your-knowledge",
+     "heading": {
+      "en": "Fairness: Test your knowledge",
+      "zh": "公平性：测试您的知识掌握情况"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c14",
+   "num": 14,
+   "stage": 3,
+   "title": {
+    "en": "Problem Framing",
+    "zh": "问题构建"
+   },
+   "minutes": null,
+   "sections": [
+    {
+     "id": "intro",
+     "heading": {
+      "en": "Introduction to Machine Learning Problem Framing",
+      "zh": "机器学习问题构建简介"
+     }
+    },
+    {
+     "id": "intro",
+     "heading": {
+      "en": "Overview",
+      "zh": "概览"
+     }
+    },
+    {
+     "id": "problem",
+     "heading": {
+      "en": "Understand the problem",
+      "zh": "了解问题"
+     }
+    },
+    {
+     "id": "ml-framing",
+     "heading": {
+      "en": "Framing an ML problem",
+      "zh": "对机器学习问题进行框架处理"
+     }
+    },
+    {
+     "id": "implement-model",
+     "heading": {
+      "en": "Implementing a model",
+      "zh": "实现模型"
+     }
+    },
+    {
+     "id": "summary",
+     "heading": {
+      "en": "Summary",
+      "zh": "摘要"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c15",
+   "num": 15,
+   "stage": 4,
+   "title": {
+    "en": "Introduction",
+    "zh": "简介"
+   },
+   "minutes": null,
+   "sections": [
+    {
+     "id": "intro",
+     "heading": {
+      "en": "Managing ML projects",
+      "zh": "管理机器学习项目"
+     }
+    },
+    {
+     "id": "phases",
+     "heading": {
+      "en": "ML development phases",
+      "zh": "机器学习开发阶段"
+     }
+    },
+    {
+     "id": "team",
+     "heading": {
+      "en": "Assembling an ML team",
+      "zh": "组建机器学习团队"
+     }
+    },
+    {
+     "id": "stakeholders",
+     "heading": {
+      "en": "Stakeholders",
+      "zh": "利益相关方"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c16",
+   "num": 16,
+   "stage": 4,
+   "title": {
+    "en": "Ideation and planning",
+    "zh": "构思与规划"
+   },
+   "minutes": null,
+   "sections": [
+    {
+     "id": "feasibility",
+     "heading": {
+      "en": "Feasibility",
+      "zh": "可行性"
+     }
+    },
+    {
+     "id": "planning",
+     "heading": {
+      "en": "ML project planning",
+      "zh": "机器学习项目规划"
+     }
+    },
+    {
+     "id": "success",
+     "heading": {
+      "en": "Measuring success",
+      "zh": "衡量表现"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c17",
+   "num": 17,
+   "stage": 4,
+   "title": {
+    "en": "Experiments to production",
+    "zh": "将实验发布到正式版"
+   },
+   "minutes": null,
+   "sections": [
+    {
+     "id": "experiments",
+     "heading": {
+      "en": "Experiments",
+      "zh": "实验"
+     }
+    },
+    {
+     "id": "pipelines",
+     "heading": {
+      "en": "ML pipelines",
+      "zh": "机器学习流水线"
+     }
+    },
+    {
+     "id": "production",
+     "heading": {
+      "en": "Productionization",
+      "zh": "生产化"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c18",
+   "num": 18,
+   "stage": 4,
+   "title": {
+    "en": "Global considerations and resources",
+    "zh": "全球注意事项和资源"
+   },
+   "minutes": null,
+   "sections": [
+    {
+     "id": "ethics",
+     "heading": {
+      "en": "AI and ML ethics and safety",
+      "zh": "AI 和机器学习道德与安全"
+     }
+    },
+    {
+     "id": "resources",
+     "heading": {
+      "en": "ML resources",
+      "zh": "机器学习资源"
+     }
+    }
+   ]
+  }
+ ]
+}

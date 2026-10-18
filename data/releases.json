@@ -1,0 +1,7 @@
+[
+ {"v": "1.0.0", "date": "2026-10-18", "notes": [
+  {"en": "First release: Google's four foundational machine-learning courses (Intro to ML, Machine Learning Crash Course, Problem Framing, Managing ML Projects) in English and Chinese, usable offline.", "zh": "第一版：Google 四门机器学习基础课程（机器学习简介、机器学习速成课程、问题构建、管理机器学习项目），中英对照，可离线使用。"},
+  {"en": "Key takeaways for each lesson, a recap card for each module, 'Check your understanding' questions you can answer in the app, and an 'I've mastered this' checklist.", "zh": "每课的「必会知识点」、每个单元的复习卡、可以直接作答的「检查您的理解情况」题目，以及「我已掌握」进度。"},
+  {"en": "Interactive figures you drag with a finger, the full ML glossary, flashcards, search in both languages, highlights, notes, bookmarks and a notes backup.", "zh": "可以用手指拖动的互动图、完整的机器学习术语表、闪卡、中英搜索、画线、笔记、书签和笔记备份。"}
+ ]}
+]

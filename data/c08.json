@@ -1,0 +1,1802 @@
+{
+"id": "c08",
+"num": 8,
+"stage": 2,
+"title": {
+"en": "Neural networks",
+"zh": "神经网络"
+},
+"minutes": 75,
+"sections": [
+{
+"id": "neural-networks",
+"path": "/machine-learning/crash-course/neural-networks",
+"min": 5,
+"heading": {
+"en": "Neural networks",
+"zh": "神经网络"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module explores neural networks, a model architecture designed to automatically identify nonlinear patterns in data, eliminating the need for manual feature cross experimentation.",
+"zh": null
+},
+{
+"en": "You will learn the fundamental components of a deep neural network, including nodes, hidden layers, and activation functions, and how they contribute to prediction.",
+"zh": null
+},
+{
+"en": "The module covers the training process of neural networks, using the backpropagation algorithm to optimize predictions and minimize loss.",
+"zh": null
+},
+{
+"en": "Additionally, you will gain insights into how neural networks handle multi-class classification problems using one-vs.-all and one-vs.-one approaches.",
+"zh": null
+},
+{
+"en": "This module builds on prior knowledge of machine learning concepts such as linear and logistic regression, classification, and working with numerical and categorical data.",
+"zh": null
+}
+],
+"terms": [
+"activation_function",
+"hidden_layer",
+"linear-model",
+"model",
+"neural_network",
+"node-neural-network",
+"nonlinear"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Explain the motivation for building neural networks, and the use cases they address.</li><li>Define and explain the function of the key components of a deep neural network architecture: <ul><li><b><button type=\"button\" class=\"term\" data-term=\"node-neural-network\">Nodes</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"hidden_layer\">Hidden layers</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"activation_function\">Activation functions</button></b></li></ul></li><li>Develop intuition around how neural network predictions are made, by stepping through the inference process.</li><li>Build a high-level intuition of how neural networks are trained, using the backpropagation algorithm.</li><li>Explain how neural networks can be used to perform two types of multi-class classification: one-vs.-all and one-vs.-one.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>说明构建神经网络的动机，以及它们解决的用例。</li><li>定义并说明深度神经网络架构的关键组件的功能： <ul><li><b><button type=\"button\" class=\"term\" data-term=\"node-neural-network\">节点</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"hidden_layer\">隐藏层</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"activation_function\">激活函数</button></b></li></ul></li><li>通过逐步演示推理过程，直观了解神经网络如何进行预测。</li><li>使用 反向传播算法。</li><li>解释如何使用神经网络来执行两种类型的 多类别分类：一对多和一对一。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c03/logistic-regression\">Logistic regression</a></li><li><a href=\"#/ch/c04/classification\">Classification</a></li><li><a href=\"#/ch/c05/numerical-data\">Working with numerical data</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li><li><a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a></li></ul>",
+"zh": "<b>前提条件</b>： 本单元假定您熟悉 以下模块：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c03/logistic-regression\">逻辑回归</a></li><li><a href=\"#/ch/c04/classification\">Classification</a></li><li><a href=\"#/ch/c05/numerical-data\">处理数值数据</a></li><li><a href=\"#/ch/c06/categorical-data\">使用分类数据</a></li><li><a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You may recall from the <a href=\"#/ch/c06/feature-cross-exercises\">Feature cross exercises</a> in the <a href=\"#/ch/c06/categorical-data\">Categorical data module</a>, that the following classification problem is nonlinear:",
+"zh": "您可能还记得<a href=\"#/ch/c06/categorical-data\">“分类数据”模块</a>中的<a href=\"#/ch/c06/feature-cross-exercises\">特征交叉练习</a>，其中指出以下分类问题是非线性的："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/nonlinear_simple.png",
+"alt": {
+"en": "Figure 1. Cartesian coordinate plane, divided into four\n      quadrants, each filled with random dots in a shape resembling a\n      square. The dots in the top-right and bottom-leftquadrants are blue,\n      and the dots in the top-left and bottom-right quadrants are orange.",
+"zh": "图 1. 直角坐标平面，分为四个象限，每个象限都填充了形状类似于正方形的随机点。右上象限和左下象限中的点是蓝色的，\n      而左上角和右下角象限中的点为橙色。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> Nonlinear classification problem. A linear function cannot cleanly separate all the blue dots from the orange dots.",
+"zh": "<b>图 1.</b> 非线性分类问题。线性函数无法将所有蓝点与橙点清晰地分开。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "\"Nonlinear\" means that you can't accurately predict a label with a model of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>. In other words, the \"decision surface\" is not a line.",
+"zh": "“非线性”这表示你无法准确预测 格式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>。换言之， “决策界面”不是一条线。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "However, if we perform a feature cross on our features <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, we can then represent the nonlinear relationship between the two features using a <button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>linear model</b></button>: <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> where <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> is the feature cross between <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>:",
+"zh": "不过，如果我们对特征 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 和 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 执行特征交叉，则可以使用<button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>线性模型</b></button>表示这两个特征之间的非线性关系：<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>，其中 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 和 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 之间的特征交叉："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/nonlinear_simple_feature_cross.png",
+"alt": {
+"en": "Figure 2. The same Cartesian coordinate plane of blue and orange\n      dots as in Figure 1.  However, this time a white hyperbolic curve is\n      plotted atop the grid, which separates the blue dots in the top-right\n      and bottom-left quadrants (now shaded with a blue background) from\n      the orange dots in the top-left and bottom right quadrants (now\n      shaded with an orange background).",
+"zh": "图 2. 蓝色和橙色的同一个笛卡尔坐标平面\n      如图 1 所示。不过，这次在网格上方绘制了一条白色双曲线，将右上象限和左下象限中的蓝点（现在用蓝色背景填充）与左上象限和右下象限中的橙点（现在用橙色背景填充）区分开来。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> By adding the feature cross <i>x</i><sub>1</sub><i>x</i><sub>2</sub>, the linear model can learn a hyperbolic shape that separates the blue dots from the orange dots.",
+"zh": "<b>图 2.</b> 通过添加特征交叉项 <i>x</i><sub>1</sub><i>x</i><sub>2</sub>，线性模型可以学习一个将蓝点与橙点分开的双曲线形状。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Now consider the following dataset:",
+"zh": "现在，请考虑以下数据集："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/nonlinear_complex.png",
+"alt": {
+"en": "Figure 3. Cartesian coordinate plane, divided into four quadrants.\n      A circular cluster of blue dots is centered at the origin of the\n      graph, and is surrounded by a ring of orange dots.",
+"zh": "图 3. 笛卡尔坐标平面，分为四个象限。\n      蓝点位于蓝点原点\n      周围环绕着一圈橙点。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> A more difficult nonlinear classification problem.",
+"zh": "<b>图 3.</b> 更困难的非线性分类问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You may also recall from the <a href=\"#/ch/c06/feature-cross-exercises\">Feature cross exercises</a> that determining the correct feature crosses to fit a linear model to this data took a bit more effort and experimentation.",
+"zh": "您可能还记得<a href=\"#/ch/c06/feature-cross-exercises\">特征交叉练习</a>，在确定正确的特征交叉以将线性模型拟合到这些数据时，需要付出更多努力并进行更多实验。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "But what if you didn't have to do all that experimentation yourself? <button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>Neural networks</b></button> are a family of model architectures designed to find <button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>nonlinear</b></button> patterns in data. During training of a neural network, the <button type=\"button\" class=\"term\" data-term=\"model\"><b>model</b></button> automatically learns the optimal feature crosses to perform on the input data to minimize loss.",
+"zh": "但如果您不必亲自进行所有这些实验，该怎么办？ <button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>神经网络</b></button>是一类模型架构，旨在发现数据中的<button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>非线性</b></button>模式。在神经网络训练期间，<button type=\"button\" class=\"term\" data-term=\"model\"><b>模型</b></button>会自动学习对输入数据执行的最佳特征交叉，以最大限度地减少损失。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the following sections, we'll take a closer look at how neural networks work.",
+"zh": "在后面的部分中，我们将详细介绍神经网络的运作方式。"
+}
+}
+]
+},
+{
+"id": "nodes-hidden-layers",
+"path": "/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+"min": 15,
+"heading": {
+"en": "Neural networks: Nodes and hidden layers",
+"zh": "神经网络：节点和隐藏层"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"bias",
+"hidden_layer",
+"input-layer",
+"linear-model",
+"model",
+"neural_network",
+"neuron",
+"nonlinear",
+"parameter",
+"weight"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "To build a <button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>neural network</b></button> that learns <button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>nonlinearities</b></button>, begin with the following familiar model structure: a <button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>linear model</b></button> of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>.",
+"zh": "要构建一个学习<button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>非线性的</b></button><button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>神经网络</b></button>，首先从以下熟悉的模型结构开始：形如 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 的<button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>线性模型</b></button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We can visualize this equation as shown below, where <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> are our three input nodes (in blue), and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> is our output node (in green).",
+"zh": "我们可以将这个方程可视化如下图所示，其中 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 和 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是我们的三个输入节点（蓝色），<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> 是我们的输出节点（绿色）。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 1",
+"zh": "练习 1"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In the model above, the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> and <button type=\"button\" class=\"term\" data-term=\"bias\"><b>bias</b></button> values have been randomly initialized. Perform the following tasks to familiarize yourself with the interface and explore the linear model. You can ignore the <i>Activation Function</i> dropdown for now; we'll discuss this topic later on in the module.",
+"zh": "在上图中，<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button>和<button type=\"button\" class=\"term\" data-term=\"bias\"><b>偏差</b></button>值已随机初始化。请完成以下任务，熟悉界面并探索线性模型。您可以暂时忽略<i>“激活函数”</i>下拉菜单；我们将在本模块的后续部分讨论此主题。"
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Click the Play (▶️) button above the network to calculate the value of the output node for the input values <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">1.00</span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">2.00</span></span></span></span>, and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">3.00</span></span></span></span>.",
+"zh": "点击网络上方的播放（▶️）按钮，计算输入值 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">1.00</span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">2.00</span></span></span></span> 和 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">3.00</span></span></span></span> 时输出节点的值。"
+},
+{
+"en": "Click the second node in the <button type=\"button\" class=\"term\" data-term=\"input-layer\"><b>input layer</b></button>, and increase the value from 2.00 to 2.50. Note that the value of the output node changes. Select the output nodes (in green) and review the <i>Calculations</i> panel to see how the output value was calculated.<br> <b>Notes about calculations:</b> <ul><li>Values displayed are rounded to the hundredths place.</li><li>The <code>Linear()</code> function simply returns the value it is passed.</li></ul>",
+"zh": "单击<button type=\"button\" class=\"term\" data-term=\"input-layer\"><b>输入层</b></button>中的第二个节点，并将值从 2.00 增加到 2.50。请注意，输出节点的值会发生变化。选择输出节点（绿色），然后查看<i>“计算”</i>面板，了解输出值的计算方式。<br><b>计算说明：</b><ul><li>显示的值四舍五入到小数点后两位。</li><li><code>Linear()</code>函数只是简单地返回传递给它的值。</li></ul>"
+},
+{
+"en": "Click the output node (in green) to see the weight (<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>) and bias (<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span>) parameter values. Decrease the weight value for <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> (again, note that the value of the output node and the calculations below have changed). Then, increase the bias value. Review how these changes have affected the model output.",
+"zh": "点击输出节点（绿色），查看权重（<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>）和偏差（<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span>）参数值。降低权重 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 的值（请注意，输出节点的值和下面的计算结果已发生变化）。然后，增加偏差值。观察这些更改对模型输出的影响。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Adding layers to the network",
+"zh": "为网络添加层"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Note that when you adjusted the weight and bias values of the network in Exercise 1, that didn't change the overall mathematical relationship between input and output. Our model is still a linear model.",
+"zh": "请注意，在练习 1中调整网络权重和偏置值时，输入和输出之间的整体数学关系并没有改变。我们的模型仍然是一个线性模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "But what if we add another layer to the network, in between the input layer and the output layer? In neural network terminology, additional layers between the input layer and the output layer are called <button type=\"button\" class=\"term\" data-term=\"hidden_layer\"><b>hidden layers</b></button>, and the nodes in these layers are called <button type=\"button\" class=\"term\" data-term=\"neuron\"><b>neurons</b></button>.",
+"zh": "但是，如果我们在输入层和输出层之间再添加一层呢？在神经网络术语中，输入层和输出层之间的额外层称为<button type=\"button\" class=\"term\" data-term=\"hidden_layer\"><b>隐藏层</b></button>，这些层中的节点称为<button type=\"button\" class=\"term\" data-term=\"neuron\"><b>神经元</b></button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The value of each neuron in the hidden layer is calculated the same way as the output of a linear model: take the sum of the product of each of its inputs (the neurons in the previous network layer) and a unique weight parameter, plus the bias. Similarly, the neurons in the next layer (here, the output layer) are calculated using the hidden layer's neuron values as inputs.",
+"zh": "隐藏层中每个神经元的值计算方式与线性模型的输出相同：将其所有输入（前一层网络神经元的值）与一个唯一的权重参数相乘，然后求和，再加上偏置项。类似地，下一层（此处为输出层）神经元的值也是以隐藏层神经元的值作为输入计算的。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This new hidden layer allows our model to recombine the input data using another set of parameters. Can this help our model learn nonlinear relationships?",
+"zh": "这个新的隐藏层允许我们的模型使用另一组参数重新组合输入数据。这能帮助我们的模型学习非线性关系吗？"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 2",
+"zh": "练习 2"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "We've added a hidden layer containing four neurons to the model.",
+"zh": "我们在模型中添加了一个包含四个神经元的隐藏层。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Click the Play (▶️) button above the network to calculate the value of the four hidden-layer nodes and the output node for the input values <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">1.00</span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">2.00</span></span></span></span>, and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">3.00</span></span></span></span>.",
+"zh": "点击网络上方的播放（▶️）按钮，计算输入值 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">1.00</span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">2.00</span></span></span></span> 和 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">3.00</span></span></span></span> 时四个隐藏层节点和输出节点的值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Then explore the model, and use it to answer the following questions.",
+"zh": "然后探索该模型，并用它来回答以下问题。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "How many <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameters</b></button> (weights and biases) does this neural network model have?",
+"zh": "这个神经网络模型有多少个<button type=\"button\" class=\"term\" data-term=\"parameter\"><b>参数</b></button>（权重和偏差）？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "4",
+"zh": "4"
+},
+"why": {
+"en": "Our original model in Exercise 1 had four parameters: w<sub>11</sub>, w<sub>21</sub>, w<sub>31</sub>, and b. Because this model contains a hidden layer, there are more parameters.",
+"zh": "我们在练习 1中的原始模型有四个参数： <sub>w11</sub> 、 <sub>w21</sub> 、 <sub>w31</sub>和 b。由于该模型包含一个隐藏层，因此参数更多。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "12",
+"zh": "12"
+},
+"why": {
+"en": "Note that the total number of parameters includes both the parameters used to calculate the node values in the hidden layer from the input values, and the parameters used to calculate the output value from the node values in the hidden layer.",
+"zh": "请注意，参数总数包括用于根据输入值计算隐藏层节点值的参数，以及用于根据隐藏层节点值计算输出值的参数。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "16",
+"zh": "16"
+},
+"why": {
+"en": "Note that the total number of parameters includes both the weight parameters and the bias parameters.",
+"zh": "请注意，参数总数包括权重参数和偏差参数。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "21",
+"zh": "21"
+},
+"why": {
+"en": "There are 4 parameters used to calculate each of the 4 node values in the hidden layer—3 weights (one for each input value) and a bias—which sums to 16 parameters. Then there are 5 parameters used to calculate the output value: 4 weights (one for each node in the hidden layer) and a bias. In total, this neural network has 21 parameters.",
+"zh": "隐藏层中每个节点的值都需要用到 4 个参数来计算：3 个权重（每个输入值对应一个权重）和一个偏置项，总共 16 个参数。输出值则需要用到 5 个参数：4 个权重（隐藏层中每个节点对应一个权重）和一个偏置项。因此，该神经网络总共有 21 个参数。"
+},
+"correct": true
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Try modifying the model parameters, and observe the effect on the hidden-layer node values and the output value (you can review the Calculations panel below to see how these values were calculated).<br> Can this model learn nonlinearities?",
+"zh": "尝试修改模型参数，并观察对隐藏层节点值和输出值的影响（您可以查看下面的“计算”面板，了解这些值是如何计算的）。<br>这个模型能学习非线性吗？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Yes",
+"zh": "是的"
+},
+"why": {
+"en": "Click on each of the nodes in the hidden layer and the output node, and review the calculations below. What do you notice about all these calculations?",
+"zh": "点击隐藏层中的每个节点和输出节点，并查看下面的计算过程。你注意到这些计算过程有什么共同之处吗？"
+},
+"correct": false
+},
+{
+"html": {
+"en": "No",
+"zh": "不"
+},
+"why": {
+"en": "If you click on each of the nodes in the hidden layer and review the calculations below, you'll see that all of them are linear (comprising multiplication and addition operations).<br> If you then click on the output node and review the calculation below, you'll see that this calculation is also linear. Linear calculations performed on the output of linear calculations are also linear, which means this model cannot learn nonlinearities.",
+"zh": "如果您点击隐藏层中的每个节点并查看下面的计算，您会发现它们都是线性的（包括乘法和加法运算）。<br>如果您点击输出节点并查看下面的计算，您会发现该计算也是线性的。对线性计算的输出进行线性计算仍然是线性的，这意味着该模型无法学习非线性关系。"
+},
+"correct": true
+}
+]
+}
+]
+},
+{
+"id": "activation-functions",
+"path": "/machine-learning/crash-course/neural-networks/activation-functions",
+"min": 10,
+"heading": {
+"en": "Neural networks: Activation functions",
+"zh": "神经网络：激活函数"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/activation-functions",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/activation-functions?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"activation_function",
+"sigmoid-function",
+"vanishing-gradient-problem"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "You saw in the <a href=\"#/ch/c08/nodes-hidden-layers\">previous exercise</a> that just adding hidden layers to our network wasn't sufficient to represent nonlinearities. Linear operations performed on linear operations are still linear.",
+"zh": "在<a href=\"#/ch/c08/nodes-hidden-layers\">之前的练习</a>中，你已经看到，仅仅在网络中添加隐藏层不足以表示非线性。对线性运算进行线性运算仍然是线性运算。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "How can you configure a neural network to learn nonlinear relationships between values? We need some way to insert nonlinear mathematical operations into a model.",
+"zh": "如何配置神经网络来学习数值之间的非线性关系？我们需要某种方法将非线性数学运算融入模型中。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If this seems somewhat familiar, that's because we've actually applied nonlinear mathematical operations to the output of a linear model earlier in the course. In the <a href=\"#/ch/c03/logistic-regression\">Logistic Regression</a> module, we adapted a linear regression model to output a continuous value from 0 to 1 (representing a probability) by passing the model's output through a <button type=\"button\" class=\"term\" data-term=\"sigmoid-function\"><b>sigmoid function</b></button>.",
+"zh": "如果这看起来有点眼熟，那是因为我们在课程前面部分已经对线性模型的输出应用了非线性数学运算。在<a href=\"#/ch/c03/logistic-regression\">逻辑回归</a>模块中，我们通过将模型的输出通过<button type=\"button\" class=\"term\" data-term=\"sigmoid-function\"><b>sigmoid 函数</b></button>，使线性回归模型输出 0 到 1 之间的连续值（表示概率）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We can apply the same principle to our neural network. Let's revisit our model from <a href=\"#/ch/c08/nodes-hidden-layers\">Exercise 2</a> earlier, but this time, before outputting the value of each node, we'll first apply the sigmoid function:",
+"zh": "我们可以将同样的原理应用到神经网络中。让我们回顾一下之前<a href=\"#/ch/c08/nodes-hidden-layers\">练习 2</a>中的模型，但这一次，在输出每个节点的值之前，我们将首先应用 sigmoid 函数："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Try stepping through the calculations of each node by clicking the <b>&gt;|</b> button (to the right of the play button). Review the mathematical operations performed to calculate each node value in the <i>Calculations</i> panel below the graph. Note that each node's output is now a sigmoid transform of the linear combination of the nodes in the previous layer, and the output values are all squished between 0 and 1.",
+"zh": "点击<b>“&gt;|</b> ”按钮（位于播放按钮右侧），逐步查看每个节点的计算过程。在图表下方的<i>“计算”</i>面板中，查看用于计算每个节点值的数学运算。请注意，每个节点的输出现在是上一层节点线性组合的 sigmoid 变换，并且所有输出值都被压缩到 0 到 1 之间。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Here, the sigmoid serves as an <button type=\"button\" class=\"term\" data-term=\"activation_function\"><b>activation function</b></button> for the neural network, a nonlinear transform of a neuron's output value before the value is passed as input to the calculations of the next layer of the neural network.",
+"zh": "在这里，sigmoid 函数用作神经网络的<button type=\"button\" class=\"term\" data-term=\"activation_function\"><b>激活函数</b></button>，它是神经元输出值在作为神经网络下一层计算的输入之前进行非线性变换的结果。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Now that we've added an activation function, adding layers has more impact. Stacking nonlinearities on nonlinearities lets us model very complicated relationships between the inputs and the predicted outputs. In brief, each layer is effectively learning a more complex, higher-level function over the raw inputs. If you'd like to develop more intuition on how this works, see <a href=\"https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/\" target=\"_blank\" rel=\"noopener\">Chris Olah's excellent blog post</a>.",
+"zh": "现在我们添加了激活函数，增加层数的影响就更大了。通过叠加非线性函数，我们可以对输入和预测输出之间非常复杂的关系进行建模。简而言之，每一层实际上都在学习一个基于原始输入的更复杂、更高层次的函数。如果您想更深入地了解其工作原理，请参阅<a href=\"https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/\" target=\"_blank\" rel=\"noopener\">Chris Olah 的精彩博文</a>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Common activation functions",
+"zh": "常见激活函数"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Three mathematical functions that are commonly used as activation functions are sigmoid, tanh, and ReLU.",
+"zh": "常用的三种激活函数是 sigmoid、tanh 和 ReLU。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The sigmoid function (discussed above) performs the following transform on input <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span>, producing an output value between 0 and 1:",
+"zh": "上文讨论过的 sigmoid 函数对输入 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 执行以下变换，产生介于 0 和 1 之间的输出值："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0908em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3214em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">1</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.6973em;\"><span style=\"top:-2.989em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">−</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.0908em;vertical-align:-0.7693em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.3214em;\"><span style=\"top:-2.314em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">1</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.6973em;\"><span style=\"top:-2.989em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">−</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.677em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7693em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "The term <i>sigmoid</i> is often used more generally to refer to any S-shaped function. A more technically precise term for the specific function <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7027em;\"><span style=\"top:-2.786em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">−</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span> is <i>logistic function</i>.",
+"zh": "术语<i>sigmoid</i>通常更广泛地用来指代任何 S 形函数。对于特定函数 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2484em;vertical-align:-0.4033em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7027em;\"><span style=\"top:-2.786em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">−</span><span class=\"mord mathnormal mtight\">x</span></span></span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4033em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span>，更精确的技术术语是<i>逻辑函数</i>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Here's a plot of this function:",
+"zh": "这是该函数的图像："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/sigmoid.png",
+"alt": {
+"en": "Figure 4. Plot of the sigmoid function: an s-shaped curve that\n      asymptotically approaches the x-axis as x approaches negative\n      infinity and 1 as x approaches infinity.",
+"zh": "图 4. Sigmoid 函数图：一条 S 形曲线，  当 x 趋近于负无穷时渐近趋近于 x 轴，  当 x 趋近于无穷时渐近趋近于 1。"
+},
+"caption": {
+"en": "<b>Figure 4. Plot of the sigmoid function.</b>",
+"zh": "<b>图 4. sigmoid 函数图。</b>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The tanh (short for \"hyperbolic tangent\") function transforms input <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> to produce an output value between –1 and 1:",
+"zh": "tanh（“双曲正切”的缩写）函数将输入 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 变换为介于 -1 和 1 之间的输出值："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">anh</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">anh</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Here's a plot of this function:",
+"zh": "这是该函数的图像："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/tanh.png",
+"alt": {
+"en": "Figure 5. Plot of the tanh function: a slightly\n      steeper s-shaped curve than the sigmoid function, which asymptotically\n      approaches –1 as x approaches negative infinity and 1 as x approaches\n      infinity.",
+"zh": "图 5. tanh 函数的图像：一条略  比 sigmoid 函数更陡峭的 S 形曲线，渐近线  当 x 趋近于负无穷时趋近于 -1，当 x 趋近于 正无穷时趋近于 1。"
+},
+"caption": {
+"en": "<b>Figure 5. Plot of the tanh function.</b>",
+"zh": "<b>图 5. tanh 函数的图像。</b>"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "Note that the range of the sigmoid function is 0 to 1, and the range of the tanh function is –1 to 1",
+"zh": "注意，sigmoid 函数的取值范围是 0 到 1，tanh 函数的取值范围是 -1 到 1。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The <b>rectified linear unit</b> activation function (or <b>ReLU</b>, for short) transforms output using the following algorithm:",
+"zh": "<b>修正线性单元</b>激活函数（简称<b>ReLU</b> ）使用以下算法转换输出："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "If the input value <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> is less than 0, return 0.",
+"zh": "如果输入值 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 小于 0，则返回 0。"
+},
+{
+"en": "If the input value <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> is greater than or equal to 0, return the input value.",
+"zh": "如果输入值 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 大于或等于 0，则返回输入值。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "ReLU can be represented mathematically using the max() function:",
+"zh": "ReLU 可以用 max() 函数进行数学表示："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">ma</span><span class=\"mord mathnormal\">x</span><span class=\"mopen\">(</span><span class=\"mord\">0</span><span class=\"mpunct\">,</span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.13889em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">ma</span><span class=\"mord mathnormal\">x</span><span class=\"mopen\">(</span><span class=\"mord\">0</span><span class=\"mpunct\">,</span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Here's a plot of this function:",
+"zh": "这是该函数的图像："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/relu.png",
+"alt": {
+"en": "Figure 6. Plot of the ReLU function: a horizontal line\n      along the x-axis from negative infinity to 0, which becomes a diagonal line\n      going up and to the right with slope 1 (y=x) from 0 to infinity.",
+"zh": "图 6. ReLU 函数图：一条水平线  沿 x 轴从负无穷大到 0，变成一条对角线  从 0 到无穷大向上向右，斜率为 1 (y=x)。"
+},
+"caption": {
+"en": "<b>Figure 6. Plot of the ReLU function.</b>",
+"zh": "<b>图 6. ReLU 函数图。</b>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "ReLU often works a little better as an activation function than a smooth function like sigmoid or tanh, because it is less susceptible to the <button type=\"button\" class=\"term\" data-term=\"vanishing-gradient-problem\"><b>vanishing gradient problem</b></button> during <a href=\"#/ch/c08/backpropagation\">neural network training</a>. ReLU is also significantly easier to compute than these functions.",
+"zh": "ReLU 作为激活函数通常比 sigmoid 或 tanh 等平滑函数效果更好，因为它在<a href=\"#/ch/c08/backpropagation\">神经网络训练</a>过程中不易受到<button type=\"button\" class=\"term\" data-term=\"vanishing-gradient-problem\"><b>梯度消失问题的</b></button>影响。此外，ReLU 的计算也比这些函数容易得多。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Other activation functions",
+"zh": "其他激活函数"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In practice, any mathematical function can serve as an activation function. Suppose that <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span></span> represents our activation function. The value of a node in the network is given by the following formula:",
+"zh": "实际上，任何数学函数都可以作为激活函数。假设 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span></span></span></span> 代表我们的激活函数。网络中节点的值由以下公式给出："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord\"><span class=\"mord boldsymbol\" style=\"margin-right:0.02778em;\">w</span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">⋅</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6667em;vertical-align:-0.0833em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord boldsymbol\">x</span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">σ</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord\"><span class=\"mord boldsymbol\" style=\"margin-right:0.02778em;\">w</span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">⋅</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6667em;vertical-align:-0.0833em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord boldsymbol\">x</span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mclose\">)</span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a> provides out-of-the-box support for many <a href=\"https://keras.io/api/layers/activations/\" target=\"_blank\" rel=\"noopener\">activation functions</a>. That said, we still recommend starting with ReLU.",
+"zh": "<a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a>为许多<a href=\"https://keras.io/api/layers/activations/\" target=\"_blank\" rel=\"noopener\">激活函数</a>提供了开箱即用的支持。尽管如此，我们仍然建议从 ReLU 开始。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Summary",
+"zh": "概括"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The following video provides a recap of everything you've learned thus far about how neural networks are constructed:",
+"zh": "以下视频总结了您目前为止所学的关于神经网络构建方式的所有内容："
+}
+},
+{
+"type": "video",
+"id": "0kZIGB_dG80"
+},
+{
+"type": "p",
+"html": {
+"en": "Now our model has all the standard components of what people usually mean when they refer to a neural network:",
+"zh": "现在，我们的模型具备了人们通常所说的神经网络的所有标准组成部分："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A set of nodes, analogous to neurons, organized in layers.",
+"zh": "一组类似于神经元的节点，按层排列。"
+},
+{
+"en": "A set of learned weights and biases representing the connections between each neural network layer and the layer beneath it. The layer beneath may be another neural network layer, or some other kind of layer.",
+"zh": "一组学习得到的权重和偏置，表示神经网络中每一层与其下一层之间的连接。下一层可以是另一个神经网络层，也可以是其他类型的层。"
+},
+{
+"en": "An activation function that transforms the output of each node in a layer. Different layers may have different activation functions.",
+"zh": "激活函数用于转换层中每个节点的输出。不同的层可以具有不同的激活函数。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "A caveat: neural networks aren't necessarily always better than feature crosses, but neural networks do offer a flexible alternative that works well in many cases.",
+"zh": "需要注意的是：神经网络不一定总是比特征交叉更好，但神经网络确实提供了一种灵活的替代方案，在很多情况下都能很好地发挥作用。"
+}
+}
+]
+},
+{
+"id": "backpropagation",
+"path": "/machine-learning/crash-course/neural-networks/backpropagation",
+"min": 10,
+"heading": {
+"en": "Neural Networks: Training using backpropagation",
+"zh": "神经网络：使用反向传播进行训练"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Backpropagation is the primary training algorithm for neural networks, enabling gradient descent for multi-layer networks and often handled automatically by machine learning libraries.",
+"zh": null
+},
+{
+"en": "Vanishing gradients occur when gradients in lower layers become very small, hindering their training, and can be mitigated by using ReLU activation function.",
+"zh": null
+},
+{
+"en": "Exploding gradients happen when large weights cause excessively large gradients, disrupting convergence, and can be addressed with batch normalization or lowering the learning rate.",
+"zh": null
+},
+{
+"en": "Dead ReLU units emerge when a ReLU unit's output gets stuck at 0, halting gradient flow, and can be avoided by lowering the learning rate or using ReLU variants like LeakyReLU.",
+"zh": null
+},
+{
+"en": "Dropout regularization is a technique to prevent overfitting by randomly dropping unit activations during training, with higher dropout rates indicating stronger regularization.",
+"zh": null
+}
+],
+"terms": [
+"backpropagation",
+"dropout_regularization",
+"exploding-gradient-problem",
+"vanishing-gradient-problem"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"backpropagation\"><b>Backpropagation</b></button> is the most common training algorithm for neural networks. It makes gradient descent feasible for multi-layer neural networks. Many machine learning code libraries (such as <a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a>) handle backpropagation automatically, so you don't need to perform any of the underlying calculations yourself. Check out the following video for a conceptual overview of how backpropagation works:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"backpropagation\"><b>反向传播</b></button>是神经网络最常用的训练算法。它使梯度下降法适用于多层神经网络。 许多机器学习代码库（例如 <a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a>）会自动处理反向传播，因此您无需自行执行任何底层计算。观看以下视频，从概念上大致了解反向传播的运作方式："
+}
+},
+{
+"type": "video",
+"id": "ovCyBmlrZGg"
+},
+{
+"type": "h",
+"html": {
+"en": "Best practices for neural network training",
+"zh": "神经网络训练的最佳实践"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "This section explains backpropagation's failure cases and the most common way to regularize a neural network.",
+"zh": "本部分将介绍反向传播的失败情况以及对神经网络进行正则化的最常见方法。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>NOTE:</b> The backpropagation training algorithm makes use of the calculus concept of a <a href=\"https://wikipedia.org/wiki/Gradient\" target=\"_blank\" rel=\"noopener\">gradient</a> to adjust model weights to minimize loss. Understanding and debugging the issues below usually requires some background in calculus.",
+"zh": "<b>注意</b>：反向传播训练算法利用微积分中的<a href=\"https://wikipedia.org/wiki/Gradient\" target=\"_blank\" rel=\"noopener\">梯度</a>概念来调整模型权重，以最大限度地减少损失。了解并调试以下问题通常需要具备一定的微积分基础知识。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Vanishing Gradients",
+"zh": "梯度消失"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The <button type=\"button\" class=\"term\" data-term=\"gradient\"><b>gradients</b></button> for the lower neural network layers (those closer to the input layer) can become very small. In <button type=\"button\" class=\"term\" data-term=\"deep-model\"><b>deep networks</b></button> (networks with more than one hidden layer), computing these gradients can involve taking the product of many small terms.",
+"zh": "较低神经网络层（更靠近输入层的层）的<button type=\"button\" class=\"term\" data-term=\"gradient\"><b>梯度</b></button>可能会变得非常小。在<button type=\"button\" class=\"term\" data-term=\"deep-model\"><b>深层网络</b></button>（具有多个隐藏层的网络）中，计算这些梯度可能需要将许多小项相乘。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When the gradient values approach 0 for the lower layers, the gradients are said to \"vanish\". Layers with vanishing gradients train very slowly, or not at all.",
+"zh": "当较低层的梯度值接近 0 时，梯度就会“消失”。具有梯度消失的层训练速度非常缓慢，甚至根本无法训练。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The ReLU activation function can help prevent vanishing gradients.",
+"zh": "ReLU 激活函数有助于防止梯度消失。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exploding Gradients",
+"zh": "梯度爆炸"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "If the weights in a network are very large, then the gradients for the lower layers involve products of many large terms. In this case you can have exploding gradients: gradients that get too large to converge.",
+"zh": "如果网络中的权重非常大，那么较低层的梯度会涉及许多大项的乘积。在这种情况下，可能会出现梯度爆炸：梯度过大而无法收敛。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Batch normalization can help prevent exploding gradients, as can lowering the learning rate.",
+"zh": "批次归一化有助于防止梯度爆炸，降低学习速率也有助于防止梯度爆炸。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Dead ReLU Units",
+"zh": "失效的 ReLU 单元"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Once the weighted sum for a ReLU unit falls below 0, the ReLU unit can get stuck. It outputs 0, contributing nothing to the network's output, and gradients can no longer flow through it during backpropagation. With a source of gradients cut off, the input to the ReLU may not ever change enough to bring the weighted sum back above 0.",
+"zh": "一旦 ReLU 的加权和低于 0，ReLU 单元就会卡住。它会输出 0，对网络的输出没有任何贡献，并且在反向传播期间梯度无法再通过它流动。如果梯度来源被切断，ReLU 的输入可能永远不会发生足够的变化，从而使加权和重新回到 0 以上。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Lowering the learning rate can help keep ReLU units from dying.",
+"zh": "降低学习率有助于防止 ReLU 单元失效。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "There are also many variants of ReLU that were designed to address this specific problem, such as <a href=\"https://keras.io/api/layers/activation_layers/leaky_relu/\" target=\"_blank\" rel=\"noopener\">LeakyReLU</a>, which you may want to consider using as an activation function to prevent dead ReLU units.",
+"zh": "还有许多 ReLU 变体旨在解决这一特定问题，例如 <a href=\"https://keras.io/api/layers/activation_layers/leaky_relu/\" target=\"_blank\" rel=\"noopener\">LeakyReLU</a>，您可以考虑将其用作激活函数，以防止出现失效的 ReLU 单元。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Dropout Regularization",
+"zh": "Dropout 正规化"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Yet another form of regularization, called <button type=\"button\" class=\"term\" data-term=\"dropout_regularization\"><b>dropout regularization</b></button>, is useful for neural networks. It works by randomly \"dropping out\" unit activations in a network for a single gradient step. The more you drop out, the stronger the regularization:",
+"zh": "另一种形式的正则化（称为 <button type=\"button\" class=\"term\" data-term=\"dropout_regularization\"><b>dropout 正则化</b></button>）对神经网络很有用。其工作原理是，在一个梯度步长中随机“丢弃”网络中的单元激活。 丢弃的越多，正则化就越强："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "0.0 = No dropout regularization.",
+"zh": "0.0 = 不进行 dropout 正规化。"
+},
+{
+"en": "1.0 = Drop out all nodes. The model learns nothing.",
+"zh": "1.0 = 丢弃所有节点。模型学不到任何规律。"
+},
+{
+"en": "Values between 0.0 and 1.0 = More useful.",
+"zh": "0.0 和 1.0 之间的值更有用。"
+}
+]
+}
+]
+},
+{
+"id": "interactive-exercises",
+"path": "/machine-learning/crash-course/neural-networks/interactive-exercises",
+"min": 15,
+"heading": {
+"en": "Neural networks: Interactive exercises",
+"zh": "神经网络：互动练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/interactive-exercises",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/interactive-exercises?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"test-loss",
+"training-loss"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In the interactive exercises below, you'll further explore the inner workings of neural networks. First, you'll see how parameter and hyperparameter changes affect the network's predictions. Then you'll use what you've learned to train a neural network to fit nonlinear data.",
+"zh": "In the interactive exercises below, you'll further explore the inner workings of neural networks. First, you'll see how parameter and hyperparameter changes affect the network's predictions. Then you'll use what you've learned to train a neural network to fit nonlinear data."
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 1",
+"zh": "练习1"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "The following widget sets up a neural network with the following configuration:",
+"zh": "以下组件使用以下配置设置神经网络："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Input layer with 3 neurons containing the values <code>0.00</code>, <code>0.00</code>, and <code>0.00</code>",
+"zh": "输入层包含 3 个神经元<code>0.00</code>其值分别为<code>0.00</code>和<code>0.00</code>"
+},
+{
+"en": "Hidden layer with 4 neurons",
+"zh": "隐藏层包含4个神经元"
+},
+{
+"en": "Output layer with 1 neuron",
+"zh": "输出层（1个神经元）"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"ReLU\"><b>ReLU</b></button> activation function applied to all hidden layer nodes and the output node",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"ReLU\"><b>ReLU</b></button>激活函数应用于所有隐藏层节点和输出节点"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Review the initial setup of the network (note: <b>do not</b> click the <b>▶️</b> or <b>&gt;|</b> buttons yet), and then complete the tasks below the widget.",
+"zh": "查看网络的初始设置（注意：暂时<b>不要</b>点击<b>▶️</b>或<b>&gt;|</b>按钮），然后完成小部件下面的任务。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Task 1",
+"zh": "任务1"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The values for the three input features to the neural network model are all <code>0.00</code>. Click each of the nodes in the network to see all the initialized values. Before hitting the Play (<b>▶️</b>) button, answer this question:",
+"zh": "The values for the three input features to the neural network model are all <code>0.00</code> . Click each of the nodes in the network to see all the initialized values. Before hitting the Play ( <b>▶️</b> ) button, answer this question:"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "What kind of output value do you think will be produced: positive, negative, or 0?",
+"zh": "你认为会产生什么样的产出值：正值、负值还是 0？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "Positive output value",
+"zh": "正输出值"
+},
+"why": {
+"en": "Positive output value You chose <b>positive output value</b>. Follow the instructions below to perform inference on the input data and see if you're right.",
+"zh": "正输出值您选择了<b>正的输出值</b>。请按照以下说明对输入数据进行推理，看看您的选择是否正确。"
+},
+"correct": null
+},
+{
+"html": {
+"en": "Negative output value",
+"zh": "负输出值"
+},
+"why": {
+"en": "Negative output value You chose <b>negative output value</b>. Follow the instructions below to perform inference on the input data and see if you're right.",
+"zh": "负输出值你选择了<b>负的输出值</b>。请按照以下说明对输入数据进行推理，看看你的判断是否正确。"
+},
+"correct": null
+},
+{
+"html": {
+"en": "Output value of 0",
+"zh": "输出值为 0"
+},
+"why": {
+"en": "Output value of 0 You chose <b>output value of 0</b>. Follow the instructions below to perform inference on the input data and see if you're right.",
+"zh": "输出值为 0您选择的<b>输出值为 0。</b>请按照以下说明对输入数据进行推理，看看您的选择是否正确。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Now click the Play (▶️) button above the network, and watch all the hidden-layer and output node values populate. Was your answer above correct?",
+"zh": "现在点击网络图上方的播放（▶️）按钮，观察所有隐藏层节点和输出节点的值如何变化。你上面的答案正确吗？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for an explanation</b>",
+"zh": "<b>点击此处查看说明</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The exact output value you get will vary based on how the weight and bias parameters are randomly initialized. However, since each neuron in the input layer has a value of 0, the weights used to calculate the hidden-layer node values will all be zeroed out. For example, the first hidden layer node calculation will be:",
+"zh": "The exact output value you get will vary based on how the weight and bias parameters are randomly initialized. However, since each neuron in the input layer has a value of 0, the weights used to calculate the hidden-layer node values will all be zeroed out. For example, the first hidden layer node calculation will be:"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "y = ReLU(w<sub>11</sub>* 0.00 + w<sub>21</sub>* 0.00 + w<sub>31</sub>* 0.00 + b)",
+"zh": "y = ReLU(w <sub>11</sub> * 0.00 + w <sub>21</sub> * 0.00 + w <sub>31</sub> * 0.00 + b)"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "y = ReLU(b)",
+"zh": "y = ReLU(b)"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "So each hidden-layer node's value will be equal to the ReLU value of the bias (b), which will be 0 if b is negative and b itself if b is 0 or positive.",
+"zh": "因此，每个隐藏层节点的值将等于偏置项 (b) 的 ReLU 值，如果 b 为负，则该值为 0；如果 b 为 0 或正，则该值为 b 本身。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The value of the output node will then be calculated as follows:",
+"zh": "然后，输出节点的值将按如下方式计算："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "y = ReLU(w<sub>11</sub>* x<sub>11</sub> + w<sub>21</sub>* x<sub>21</sub> + w<sub>31</sub>* x<sub>31</sub> + w<sub>41</sub>* x<sub>41</sub> + b)",
+"zh": "y = ReLU(w <sub>11</sub> * x <sub>11</sub> + w <sub>21</sub> * x <sub>21</sub> + w <sub>31</sub> * x <sub>31</sub> + w <sub>41</sub> * x <sub>41</sub> + b)"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Task 2",
+"zh": "任务 2"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Before modifying the neural network, answer the following question:",
+"zh": "在修改神经网络之前，请回答以下问题："
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you add another hidden layer to the neural network after the first hidden layer, and give this new layer 3 nodes, keeping all input and weight/bias parameters the same, which other nodes' calculations will be affected?",
+"zh": "If you add another hidden layer to the neural network after the first hidden layer, and give this new layer 3 nodes, keeping all input and weight/bias parameters the same, which other nodes' calculations will be affected?"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "All the nodes in the network, except the input nodes",
+"zh": "网络中除输入节点外的所有节点"
+},
+"why": {
+"en": "All the nodes in the network, except the input nodes You chose <b>all the nodes in the network, except the input nodes</b>. Follow the instructions below to update the neural network and see if you're correct.",
+"zh": "网络中除输入节点外的所有节点您选择了<b>网络中除输入节点之外的所有节点</b>。请按照以下说明更新神经网络，看看您的选择是否正确。"
+},
+"correct": null
+},
+{
+"html": {
+"en": "Just the nodes in the first hidden layer",
+"zh": "仅第一隐藏层中的节点"
+},
+"why": {
+"en": "Just the nodes in the first hidden layer You chose <b>just the nodes in the first hidden layer</b>. Follow the instructions below to update the neural network and see if you're correct.",
+"zh": "仅第一隐藏层中的节点您<b>只选择了第一个隐藏层中的节点</b>。请按照以下说明更新神经网络，看看是否正确。"
+},
+"correct": null
+},
+{
+"html": {
+"en": "Just the output node",
+"zh": "仅输出节点"
+},
+"why": {
+"en": "Just the output node You chose <b>just the output node</b>. Follow the instructions below to update the neural network and see if you're correct.",
+"zh": "仅输出节点您<b>只选择了输出节点</b>。请按照以下说明更新神经网络，看看是否正确。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Now modify the neural network to add a new hidden layer with 3 nodes as follows:",
+"zh": "现在修改神经网络，添加一个包含 3 个节点的新隐藏层，如下所示："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Click the <b>+</b> button to the left of the text <b>1 hidden layer</b> to add a new hidden layer before the output layer.",
+"zh": "单击文本<b>“1 个隐藏图层”</b>左侧的“ <b>+”</b>按钮，在输出图层之前添加一个新的隐藏图层。"
+},
+{
+"en": "Click the <b>+</b> button above the new hidden layer twice to add 2 more nodes to the layer.",
+"zh": "单击新隐藏图层上方的<b>“+”</b>按钮两次，即可向该图层添加 2 个节点。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Was your answer above correct?",
+"zh": "你上面的回答正确吗？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for an explanation</b>",
+"zh": "<b>点击此处查看说明</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Only the output node changes. Because inference for this neural network is \"feed-forward\" (calculations progress from start to finish), the addition of a new layer to the network will only affect nodes <i>after</i> the new layer, not those that precede it.",
+"zh": "Only the output node changes. Because inference for this neural network is \"feed-forward\" (calculations progress from start to finish), the addition of a new layer to the network will only affect nodes <i>after</i> the new layer, not those that precede it."
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Task 3",
+"zh": "任务3"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Click the second node (from the top) in the first hidden layer of the network graph. Before making any changes to the network configuration, answer the following question:",
+"zh": "单击网络图第一层隐藏区域中从上往下数的第二个节点。在对网络配置进行任何更改之前，请回答以下问题："
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "If you change the value of the weight w<sub>12</sub> (displayed below the first input node, x<sub>1</sub>), which other nodes' calculations <i>could</i> be affected for some input values?",
+"zh": "如果更改权重 w <sub>12</sub> （显示在第一个输入节点 x <sub>1</sub>下方）的值，对于某些输入值，哪些其他节点的计算<i>可能</i>会受到影响？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "None",
+"zh": "没有任何"
+},
+"why": {
+"en": "None You chose <b>none</b>. Follow the instructions below to update the neural network and see if you're correct.",
+"zh": "没有任何您选择了<b>“无”</b> 。请按照以下说明更新神经网络，看看您的选择是否正确。"
+},
+"correct": null
+},
+{
+"html": {
+"en": "The second node in the first hidden layer, all the nodes in the second hidden layer, and the output node.",
+"zh": "第一隐藏层中的第二个节点、第二隐藏层中的所有节点以及输出节点。"
+},
+"why": {
+"en": "The second node in the first hidden layer, all the nodes in the second hidden layer, and the output node. You chose <b>the second node in the first hidden layer, all the nodes in the second hidden layer, and the output node</b>. Follow the instructions below to update the neural network and see if you're correct.",
+"zh": "第一隐藏层中的第二个节点、第二隐藏层中的所有节点以及输出节点。You chose <b>the second node in the first hidden layer, all the nodes in the second hidden layer, and the output node</b> . Follow the instructions below to update the neural network and see if you're correct."
+},
+"correct": null
+},
+{
+"html": {
+"en": "All the nodes in the first hidden layer, the second hidden layer, and the output layer.",
+"zh": "第一隐藏层、第二隐藏层和输出层中的所有节点。"
+},
+"why": {
+"en": "All the nodes in the first hidden layer, the second hidden layer, and the output layer. You chose <b>all the nodes in the first hidden layer, the second hidden layer, and the output layer</b>. Follow the instructions below to update the neural network and see if you're correct.",
+"zh": "第一隐藏层、第二隐藏层和输出层中的所有节点。您选择了<b>第一隐藏层、第二隐藏层和输出层中的所有节点</b>。请按照以下说明更新神经网络，看看您的选择是否正确。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Now, click in the text field for the weight w<sub>12</sub> (displayed below the first input node, x<sub>1</sub>), change its value to <code>5.00</code>, and hit Enter. Observe the updates to the graph.",
+"zh": "现在，点击权重 w <sub>12</sub>的文本框（显示在第一个输入节点 x <sub>1</sub>下方），将其值更改为<code>5.00</code> ，然后按 Enter 键。观察图表的更新。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Was your answer correct? Be careful when verifying your answer: if a node value doesn't change, does that mean the underlying calculation didn't change?",
+"zh": "你的答案正确吗？验证答案时要小心：如果节点值没有改变，是否意味着底层计算也没有改变？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for an explanation</b>",
+"zh": "<b>点击此处查看说明</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The only node affected in the first hidden layer is the second node (the one you clicked). The value calculations for the other nodes in the first hidden layer do not contain w<sub>12</sub> as a parameter, so they are not affected. All the nodes in the second hidden layer are affected, as their calculations depend on the value of the second node in the first hidden layer. Similarly, the output node value is affected because its calculations depend on the values of the nodes in the second hidden layer.",
+"zh": "在第一层隐藏层中，唯一受影响的节点是第二个节点（您点击的那个）。第一层隐藏层中其他节点的值计算不包含<sub>w12</sub>作为参数，因此它们不受影响。第二层隐藏层中的所有节点都会受到影响，因为它们的计算依赖于第一层隐藏层中第二个节点的值。同样，输出节点的值也会受到影响，因为它的计算依赖于第二层隐藏层中节点的值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Did you think the answer was \"none\" because none of the node values in the network changed when you changed the weight value? Note that an underlying calculation for a node may change without changing the node's value (e.g., ReLU(0) and ReLU(–5) both produce an output of 0). Don't make assumptions about how the network was affected just by looking at the node values; make sure to review the calculations as well.",
+"zh": "你是不是因为更改权重值时网络中所有节点的值都没有改变，就认为答案是“无”？请注意，节点的底层计算可能会在节点值不变的情况下发生变化（例如，ReLU(0) 和 ReLU(-5) 的输出结果都是 0）。不要仅仅通过观察节点值就对网络受到的影响妄下结论；务必同时检查计算过程。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise 2",
+"zh": "练习 2"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In the <a href=\"#/ch/c06/feature-cross-exercises\">Feature cross exercises</a> in the <a href=\"#/ch/c06/categorical-data\">Categorical data module</a>, you manually constructed feature crosses to fit nonlinear data. Now, you'll see if you can build a neural network that can automatically learn how to fit nonlinear data during training.",
+"zh": "In the <a href=\"#/ch/c06/feature-cross-exercises\">Feature cross exercises</a> in the <a href=\"#/ch/c06/categorical-data\">Categorical data module</a> , you manually constructed feature crosses to fit nonlinear data. Now, you'll see if you can build a neural network that can automatically learn how to fit nonlinear data during training."
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Your task:</b> configure a neural network that can separate the orange dots from the blue dots in the diagram below, achieving a loss of less than 0.2 on both the training and test data.",
+"zh": "<b>你的任务：</b>配置一个神经网络，使其能够将下图中的橙色点与蓝色点分开，在训练数据和测试数据上实现小于 0.2 的损失。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Instructions:</b>",
+"zh": "<b>指示：</b>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the interactive widget below:",
+"zh": "在下面的交互式组件中："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Modify the neural network hyperparameters by experimenting with some of the following config settings: <ul><li>Add or remove hidden layers by clicking the <b>+</b> and <b>-</b> buttons to the left of the <b>HIDDEN LAYERS</b> heading in the network diagram.</li><li>Add or remove neurons from a hidden layer by clicking the <b>+</b> and <b>-</b> buttons above a hidden-layer column.</li><li>Change the learning rate by choosing a new value from the <b>Learning rate</b> drop-down above the diagram.</li><li>Change the activation function by choosing a new value from the <b>Activation</b> drop-down above the diagram.</li></ul>",
+"zh": "通过尝试以下一些配置设置来修改神经网络超参数：<ul><li>在网络图中，单击<b>“隐藏图层”</b>标题左侧的<b>+</b>和<b>-</b>按钮，即可添加或删除隐藏图层。</li><li>单击隐藏层列上方的<b>+</b>和<b>-</b>按钮，即可向隐藏层添加或删除神经元。</li><li>通过从图表上方的<b>“学习率”</b>下拉菜单中选择新值来更改学习率。</li><li>通过从图表上方的<b>“激活”</b>下拉菜单中选择新值来更改激活函数。</li></ul>"
+},
+{
+"en": "Click the Play (▶️) button above the diagram to train the neural network model using the specified parameters.",
+"zh": "点击图表上方的播放（▶️）按钮，使用指定的参数训练神经网络模型。"
+},
+{
+"en": "Observe the visualization of the model fitting the data as training progresses, as well as the <button type=\"button\" class=\"term\" data-term=\"test-loss\"><b>Test loss</b></button> and <button type=\"button\" class=\"term\" data-term=\"training-loss\"><b>Training loss</b></button> values in the <b>Output</b> section.",
+"zh": "观察模型在训练过程中拟合数据的可视化效果，以及<b>输出</b>部分中的<button type=\"button\" class=\"term\" data-term=\"test-loss\"><b>测试损失</b></button>和<button type=\"button\" class=\"term\" data-term=\"training-loss\"><b>训练损失</b></button>值。"
+},
+{
+"en": "If the model does not achieve loss below 0.2 on the test and training data, click reset, and repeat steps 1–3 with a different set of configuration settings. Repeat this process until you achieve the preferred results.",
+"zh": "If the model does not achieve loss below 0.2 on the test and training data, click reset, and repeat steps 1–3 with a different set of configuration settings. Repeat this process until you achieve the preferred results."
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for our solution</b>",
+"zh": "<b>点击此处查看我们的解决方案</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "We were able to achieve both test and training loss below 0.2 by:",
+"zh": "我们通过以下方式成功将测试损失和训练损失都控制在 0.2 以下："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Adding 1 hidden layer containing 3 neurons.",
+"zh": "添加 1 个包含 3 个神经元的隐藏层。"
+},
+{
+"en": "Choosing a learning rate of 0.01.",
+"zh": "选择学习率为 0.01。"
+},
+{
+"en": "Choosing an activation function of ReLU.",
+"zh": "选择 ReLU 作为激活函数。"
+}
+]
+}
+]
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/machine-learning/crash-course/playground/?utm_source=engeduss&utm_campaign=mlcc#activation=linear&batchSize=1&dataset=circle&regDataset=reg-plane&learningRate=0.1&regularizationRate=0&noise=35&networkShape=&seed=0.68707&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=true&problem=classification&initZero=false&hideText=true&dataset_hide=true&percTrainData_hide=false&noise_hide=false&batchSize_hide=false&xTimesY_hide=false&xSquared_hide=false&ySquared_hide=false&sinX_hide=true&sinY_hide=true&learningRate_hide=false&problem_hide=true&tutorial=dp-feature-crosses-nn-complex&goalTestLossMinThresholdFirst=0.2&goalTestLossMinThresholdSecond=0.173",
+"zh": "https://developers.google.com/machine-learning/crash-course/playground/?utm_source=engeduss&utm_campaign=mlcc&hl=zh-cn#activation=linear&batchSize=1&dataset=circle&regDataset=reg-plane&learningRate=0.1&regularizationRate=0&noise=35&networkShape=&seed=0.68707&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=true&problem=classification&initZero=false&hideText=true&dataset_hide=true&percTrainData_hide=false&noise_hide=false&batchSize_hide=false&xTimesY_hide=false&xSquared_hide=false&ySquared_hide=false&sinX_hide=true&sinY_hide=true&learningRate_hide=false&problem_hide=true&tutorial=dp-feature-crosses-nn-complex&goalTestLossMinThresholdFirst=0.2&goalTestLossMinThresholdSecond=0.173"
+}
+}
+]
+},
+{
+"id": "multi-class",
+"path": "/machine-learning/crash-course/neural-networks/multi-class",
+"min": 10,
+"heading": {
+"en": "Neural networks: Multi-class classification",
+"zh": "神经网络：多类别分类"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/multi-class",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/multi-class?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This document explores multi-class classification models, which predict from multiple possibilities instead of just two, like binary classification models.",
+"zh": null
+},
+{
+"en": "Multi-class classification can be achieved through two main approaches: one-vs.-all and one-vs.-one (softmax).",
+"zh": null
+},
+{
+"en": "One-vs.-all uses multiple binary classifiers, one for each possible outcome, to determine the probability of each class independently.",
+"zh": null
+},
+{
+"en": "One-vs.-one (softmax) predicts probabilities of each class relative to all other classes, ensuring all probabilities sum to 1 using the softmax function.",
+"zh": null
+},
+{
+"en": "Softmax is efficient for fewer classes but can become computationally expensive with many classes; candidate sampling offers an alternative for increased efficiency.",
+"zh": null
+}
+],
+"terms": [
+"binary-classification",
+"multi-class-classification",
+"one-vs",
+"softmax"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Earlier, you encountered <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>binary classification</b></button> models that could pick between one of <i>two</i> possible choices, such as whether:",
+"zh": "您之前遇到了 <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>二元分类</b></button> 可以从<i>两个</i>可能的选项中选择其一，例如："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "A given email is spam or not spam.",
+"zh": "指定电子邮件是垃圾邮件还是非垃圾邮件。"
+},
+{
+"en": "A given tumor is malignant or benign.",
+"zh": "特定肿瘤是恶性或良性的。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In this section, we'll investigate <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>multi-class classification</b></button> models, which can pick from <i>multiple</i> possibilities. For example:",
+"zh": "在本节中，我们将介绍 <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>多类别分类</b></button> 模型，并从<i>多种</i>可能性中进行选择。例如："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Is this dog a beagle, a basset hound, or a bloodhound?",
+"zh": "这只狗是小猎犬、巴吉度猎犬还是寻血猎犬？"
+},
+{
+"en": "Is this flower a Siberian Iris, Dutch Iris, Blue Flag Iris, or Dwarf Bearded Iris?",
+"zh": "这朵花是西伯利亚鸢尾、荷兰鸢尾、蓝旗鸢尾吗？ 还是矮胡须鸢尾？"
+},
+{
+"en": "Is that plane a Boeing 747, Airbus 320, Boeing 777, or Embraer 190?",
+"zh": "那架飞机是波音 747、空客 320、波音 777 还是 Embraer 190？"
+},
+{
+"en": "Is this an image of an apple, bear, candy, dog, or egg?",
+"zh": "这是一张苹果、熊、糖果、狗还是鸡蛋的图片？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Some real-world multi-class problems entail choosing from <i>millions</i> of separate classes. For example, consider a multi-class classification model that can identify the image of just about anything.",
+"zh": "现实世界中的一些多类别问题需要从数百万个类别中进行选择 不同类别的组合。以多类别分类为例， 该模型可识别几乎任何事物的图像。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This section details the two main variants of multi-class classification:",
+"zh": "本部分详细介绍了多类别分类的两个主要变体："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"one-vs\"><b>one-vs.-all</b></button>",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"one-vs\">一对多</button>"
+},
+{
+"en": "<b>one-vs.-one</b>, which is usually known as <button type=\"button\" class=\"term\" data-term=\"softmax\"><b>softmax</b></button>",
+"zh": "<b>one-vs.-one</b>，通常称为 <button type=\"button\" class=\"term\" data-term=\"softmax\"><b>softmax</b></button>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "One versus all",
+"zh": "一对多"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<i>One-vs.-all</i> provides a way to use binary classification for a series of yes or no predictions across multiple possible labels.",
+"zh": "<i>一对多</i>提供了一种使用二元分类的方法 以跨多个可能的标签进行一系列是或否预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Given a classification problem with N possible solutions, a one-vs.-all solution consists of N separate binary classifiers—one binary classifier for each possible outcome. During training, the model runs through a sequence of binary classifiers, training each to answer a separate classification question.",
+"zh": "假设某个分类问题有 N 种可能的解决方案，即一对多 包含 N 个独立的二元分类器 - 一个二元分类器， 来预测每个可能的结果。在训练期间，模型会运行 一系列二元分类器，对每个分类器进行训练， 分类问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, given a picture of a piece of fruit, four different recognizers might be trained, each answering a different yes/no question:",
+"zh": "例如，假设有一张水果的图片， 可能会训练不同的识别器，每个识别器都会回答不同的是或否 问题："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Is this image an apple?",
+"zh": "这是一张苹果的图片吗？"
+},
+{
+"en": "Is this image an orange?",
+"zh": "这张图片是橙色的吗？"
+},
+{
+"en": "Is this image a banana?",
+"zh": "这是一张香蕉的图片吗？"
+},
+{
+"en": "Is this image a grape?",
+"zh": "这张图片是葡萄吗？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The following image illustrates how this works in practice.",
+"zh": "下图说明了在实践中的运作方式。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/one_vs_all_binary_classifiers.png",
+"alt": {
+"en": "Figure 7. An image of a pear being passed as input into 4 different\n      binary classifier models. The first model predicts 'apple' or 'not\n      apple', and its prediction is 'not apple'. The second model predicts\n      'orange' or 'not orange', and its prediction is 'not orange'. The\n      third model predicts 'pear' or 'not pear', and its prediction is\n      'pear'. The fourth model predicts 'grape' or 'not grape', and its\n      prediction is 'not grape'.",
+"zh": "图 7. 将梨作为输入传递到 4 个不同\n      二元分类器模型。第一个模型预测“apple”或“非”\n      “apple”，而其预测结果是“not apple”。第二个模型\n      “橙色”即“not orange”，即预测为“not orange”。通过\n      第三个模型即“not pear”，其预测结果是\n      “pear”。第四个模型预测“grape”或“非葡萄”字样，而其\n      而不是“葡萄”。"
+},
+"caption": {
+"en": "<b>Figure 7. An image of a pear being passed as input to four different binary classifiers. The first, second, and fourth models (predicting whether or not the image is an apple, orange, or grape, respectively) predict the negative class. The third model (predicting whether or not the image is a pear) predicts the positive class.</b>",
+"zh": "<b>图 7. 一颗梨作为输入传递到四个不同的 二元分类器。第一种、第二和第四个模型（预测 图片是苹果、橙子还是葡萄） 来预测负类别。第三个模型（预测 图片是梨）预测正类别。</b>"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "For more on how binary classifiers make predictions (setting a classification threshold to convert numerical model output into a positive or negative label), see the <a href=\"#/ch/c04/classification\">Classification</a> module.",
+"zh": "有关二元分类器如何进行预测的详细信息 （设置分类阈值，将数值模型输出转换为 正向或负向标签），请参阅 <a href=\"#/ch/c04/classification\">分类</a> 单元。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This approach is fairly reasonable when the total number of classes is small, but becomes increasingly inefficient as the number of classes rises.",
+"zh": "这种方法相当合理， 很小，但随着类别数量的增加， 。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We can create a significantly more efficient one-vs.-all model with a deep neural network in which each output node represents a different class. The following image illustrates this approach.",
+"zh": "我们可以创建一个更加高效的一对多模型 深度神经网络，其中每个输出节点表示不同的 类。下图演示了此方法。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/one_vs_all_neural_net.png",
+"alt": {
+"en": "Figure 8. A neural network with the following architecture: input layer with\n      1 node, hidden layer with 3 nodes, hidden layer with 4 nodes,\n      output layer with 4 nodes. The input node is fed an image of a pear.\n      A sigmoid activation function is applied to the output layer. Each\n      output node represents the probability that the image is a specified\n      fruit. Output node 1 represents 'Is apple?' and has a value of 0.34.\n      Output node 2 represents 'Is orange?' and has a value of 0.18.\n      Output node 3 represents 'Is pear?' and has a value of 0.84.\n      Output node 4 represents 'Is grape?' and has a value of 0.07.",
+"zh": "图 8. 一个具有以下架构的神经网络：输入层\n      1 个节点、包含 3 个节点的隐藏层、包含 4 个节点的隐藏层，\n      输出层，其中包含 4 个节点。向输入节点馈送一个梨图像。\n      对输出层应用 S 型激活函数。每个\n      输出节点表示该图像是指定的\n      水果。输出节点 1 表示“Is apple?”值为 0.34\n      输出节点 2 表示“Is orange?”（是橙色吗？）值为 0.18\n      输出节点 3 表示“Is pear?”（是梨吗？）值为 0.84\n      输出节点 4 表示“Is grape?”（是葡萄吗？）值为 0.07"
+},
+"caption": {
+"en": "<b>Figure 8. The same one-vs.-all classification tasks accomplished using a neural net model. A sigmoid activation function is applied to the output layer, and each output value represents the probability that the input image is a specified fruit. This model predicts that there is a 84% chance that the image is a pear, and a 7% chance that the image is a grape.</b>",
+"zh": "<b>图 8. 使用 模型。将 S 型激活函数应用于输出 每个输出值都表示 图片是指定的水果。该模型预测，有 84% 图片是梨的概率， 葡萄。</b>"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "One versus one (softmax)",
+"zh": "一对一 (softmax)"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You may have noticed that the probability values in the output layer of Figure 8 don't sum to 1.0 (or 100%). (In fact, they sum to 1.43.) In a one-vs.-all approach, the probability of each binary set of outcomes is determined independently of all the other sets. That is, we're determining the probability of \"apple\" versus \"not apple\" without considering the likelihood of our other fruit options: \"orange\", \"pear\", or \"grape.\"",
+"zh": "您可能已经注意到，图 8 输出层中的概率值 总和不是 1.0（或 100%）。（实际上，两者的总和为 1.43。）在“一对多”模式中 方法时，每个二元结果集的概率 而不会影响所有其他数据集也就是说，我们要确定 的“apple”与“非 Apple”而不会考虑 水果选项：“橙色”“梨”或“葡萄”。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "But what if we want to predict the probabilities of each fruit relative to each other? In this case, instead of predicting \"apple\" versus \"not apple\", we want to predict \"apple\" versus \"orange\" versus \"pear\" versus \"grape\". This type of multi-class classification is called <i>one-vs.-one classification</i>.",
+"zh": "但是，如果我们想要预测每种水果 相互比较？在本示例中，我们不再预测“apple”与“非 “apple”，我们想要预测“apple”还是“橙色”与“pear”以及“葡萄”字样。 这种类型的多类别分类称为<i>一对一分类</i>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We can implement a one-vs.-one classification using the same type of neural network architecture used for one-vs.-all classification, with one key change. We need to apply a different transform to the output layer.",
+"zh": "我们可以使用同一类型的神经元， 用于一对多分类的网络架构，具有一个关键更改。 我们需要对输出层应用不同的转换。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For one-vs.-all, we applied the sigmoid activation function to each output node independently, which resulted in an output value between 0 and 1 for each node, but did not guarantee that these values summed to exactly 1.",
+"zh": "对于一对多，我们将 S 型激活函数应用于每个输出 这样，每个节点的输出值都介于 0 到 1 之间 节点，但无法保证这些值的总和正好为 1。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For one-vs.-one, we can instead apply a function called <i>softmax</i>, which assigns decimal probabilities to each class in a multi-class problem such that all probabilities add up to 1.0. This additional constraint helps training converge more quickly than it otherwise would.",
+"zh": "对于一对一运算，我们可以应用一个名为 <i>softmax</i> 的函数， 向多类别问题中的每个类别分配以小数表示的概率， 所有概率相加之和为 1.0。这一附加限制条件 有助于训练过程比其他方式更快收敛。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to see the softmax equation.",
+"zh": "点击加号图标可查看 softmax 方程。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The softmax equation is as follows:",
+"zh": "softmax 方程如下所示："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.05724em;\">j</span><span class=\"mord\">∣</span><span class=\"mord text\"><span class=\"mord textbf\">x</span></span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.8765em;vertical-align:-1.1509em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.7255em;\"><span style=\"top:-2.2247em;\"><span class=\"pstrut\" style=\"height:3.0485em;\"></span><span class=\"mord\"><span class=\"mop\"><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1864em;\"><span style=\"top:-2.4003em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.03148em;\">k</span><span class=\"mrel mtight\">∈</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.07153em;\">K</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3271em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.9338em;\"><span style=\"top:-3.0508em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mopen mtight\">(</span><span class=\"mord mtight\"><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">w</span></span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8329em;\"><span style=\"top:-2.1528em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.03148em;\">k</span></span></span><span style=\"top:-2.8448em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">T</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3472em;\"><span></span></span></span></span></span></span><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">x</span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3448em;\"><span style=\"top:-2.3488em;margin-left:0em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.03148em;\">k</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1512em;\"><span></span></span></span></span></span></span><span class=\"mclose mtight\">)</span></span></span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.2785em;\"><span class=\"pstrut\" style=\"height:3.0485em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.7255em;\"><span class=\"pstrut\" style=\"height:3.0485em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.0485em;\"><span style=\"top:-3.1052em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mopen mtight\">(</span><span class=\"mord mtight\"><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">w</span></span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.9191em;\"><span style=\"top:-2.214em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.05724em;\">j</span></span></span><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">T</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4249em;\"><span></span></span></span></span></span></span><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">x</span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3281em;\"><span style=\"top:-2.357em;margin-left:0em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.05724em;\">j</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.2819em;\"><span></span></span></span></span></span></span><span class=\"mclose mtight\">)</span></span></span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.1509em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.05724em;\">j</span><span class=\"mord\">∣</span><span class=\"mord text\"><span class=\"mord textbf\">x</span></span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:2.8765em;vertical-align:-1.1509em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.7255em;\"><span style=\"top:-2.2247em;\"><span class=\"pstrut\" style=\"height:3.0485em;\"></span><span class=\"mord\"><span class=\"mop\"><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1864em;\"><span style=\"top:-2.4003em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.03148em;\">k</span><span class=\"mrel mtight\">∈</span><span class=\"mord mathnormal mtight\" style=\"margin-right:0.07153em;\">K</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3271em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.9338em;\"><span style=\"top:-3.0508em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mopen mtight\">(</span><span class=\"mord mtight\"><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">w</span></span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8329em;\"><span style=\"top:-2.1528em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.03148em;\">k</span></span></span><span style=\"top:-2.8448em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">T</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3472em;\"><span></span></span></span></span></span></span><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">x</span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3448em;\"><span style=\"top:-2.3488em;margin-left:0em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.03148em;\">k</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.1512em;\"><span></span></span></span></span></span></span><span class=\"mclose mtight\">)</span></span></span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.2785em;\"><span class=\"pstrut\" style=\"height:3.0485em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.7255em;\"><span class=\"pstrut\" style=\"height:3.0485em;\"></span><span class=\"mord\"><span class=\"mord\"><span class=\"mord mathnormal\">e</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.0485em;\"><span style=\"top:-3.1052em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mopen mtight\">(</span><span class=\"mord mtight\"><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">w</span></span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.9191em;\"><span style=\"top:-2.214em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.05724em;\">j</span></span></span><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.13889em;\">T</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.4249em;\"><span></span></span></span></span></span></span><span class=\"mord text mtight\"><span class=\"mord textbf mtight\">x</span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3281em;\"><span style=\"top:-2.357em;margin-left:0em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.05724em;\">j</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.2819em;\"><span></span></span></span></span></span></span><span class=\"mclose mtight\">)</span></span></span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.1509em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Note that this formula basically extends the formula for logistic regression into multiple classes.",
+"zh": "请注意，这个公式基本上扩展了逻辑公式 回归到多个类别。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The following image re-implements our one-vs.-all multi-class classification task as a one-vs.-one task. Note that in order to perform softmax, the hidden layer directly preceding the output layer (called the softmax layer) must have the same number of nodes as the output layer.",
+"zh": "下图重新实现了我们的一对多多类别分类。 一对一任务的形式来表示。请注意，为了执行 softmax， 位于输出层正前面的层（称为 softmax 层）必须具有 与输出层相同数量的节点。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/neural-networks/images/one_vs_one_neural_net.png",
+"alt": {
+"en": "Figure 9. A neural network with the following architecture: input\n      layer with 1 node, hidden layer with 3 nodes, hidden layer with 4 nodes,\n      output layer with 4 nodes. The input node is fed an image of a pear.\n      A softmax activation function is applied to the output layer. Each\n      output node represents the probability that the image is a specified\n      fruit. Output node 1 represents 'Is apple?' and has a value of 0.19.\n      Output node 2 represents 'Is orange?' and has a value of 0.12.\n      Output node 3 represents 'Is pear?' and has a value of 0.63.\n      Output node 4 represents 'Is grape?' and has a value of 0.06.",
+"zh": "图 9.采用以下架构的神经网络：输入\n      有 1 个节点的隐藏层、有 3 个节点的隐藏层、有 4 个节点的隐藏层，\n      输出层，其中包含 4 个节点。向输入节点馈送一个梨图像。\n      将 softmax 激活函数应用于输出层。每个\n      输出节点表示该图像是指定的\n      水果。输出节点 1 表示“Is apple?”值为 0.19\n      输出节点 2 表示“Is orange?”（是橙色吗？）值为 0.12\n      输出节点 3 表示“Is pear?”（是梨吗？）值为 0.63\n      输出节点 4 表示“Is grape?”（是葡萄吗？）值为 0.06"
+},
+"caption": {
+"en": "<b>Figure 9. Neural net implementation of one-vs.-one classification, using a softmax layer. Each output value represents the probability that the input image is the specified fruit and not any of the other three fruits (all probabilities sum to 1.0). This model predicts that there is a 63% chance that the image is a pear.</b>",
+"zh": "&lt;/ph&gt; <b>图 9.神经网络实现一对一分类，使用 softmax 层。每个输出值都表示 输入图片是指定的水果，而不是其他三种水果 （所有概率的总和为 1.0）。该模型预测，有 63% 图片是梨的概率。</b>"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Softmax options",
+"zh": "Softmax 选项"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following variants of softmax:",
+"zh": "请考虑以下 softmax 变体："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Full softmax</b> is the softmax we've been discussing; that is, softmax calculates a probability for every possible class.",
+"zh": "<b>完整 softmax</b> 是我们一直以来讨论的 softmax；即 softmax 会计算每个可能的类别的概率。"
+},
+{
+"en": "<b>Candidate sampling</b> means that softmax calculates a probability for all the positive labels but only for a random sample of negative labels. For example, if we are interested in determining whether an input image is a beagle or a bloodhound, we don't have to provide probabilities for every non-doggy example.",
+"zh": "<b>候选采样</b>是指 softmax 计算概率的 但仅随机抽取一个样本， 负标签。例如，如果我们想要确定 无论输入图片是小猎犬还是寻血猎犬，我们都不必 为每个非狗狗样本提供概率。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Full softmax is fairly cheap when the number of classes is small but becomes prohibitively expensive when the number of classes climbs. Candidate sampling can improve efficiency in problems having a large number of classes.",
+"zh": "当类别数很小时，完整 softmax 的开销很小 但随着类别数量的增加，费用会变得非常高。 候选采样可以提高 类别数量。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "One label versus many labels",
+"zh": "一个标签还是多个标签"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Softmax assumes that each example is a member of exactly one class. Some examples, however, can simultaneously be a member of multiple classes. For such examples:",
+"zh": "Softmax 假设每个样本只是一个类别的成员。 不过，一些样本可以同时是多个类别的成员。 对于此类示例："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "You may not use softmax.",
+"zh": "您不能使用 softmax。"
+},
+{
+"en": "You must rely on multiple logistic regressions.",
+"zh": "您必须依赖于多个逻辑回归。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "For example, the one-vs.-one model in Figure 9 above assumes that each input image will depict exactly one type of fruit: an apple, an orange, a pear, or a grape. However, if an input image might contain multiple types of fruit—a bowl of both apples and oranges—you'll have to use multiple logistic regressions instead.",
+"zh": "例如，上面图 9 中的 1:1 模型假设每个输入 图片只能描绘一种水果：苹果、橙子、梨子或梨子 一颗葡萄。然而，如果输入图片可能包含多种类型的水果， 就要同时装有苹果和橙子，这时就要用到 回归。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/neural-networks/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Neural networks: Test your knowledge",
+"zh": "神经网络：测试您的知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/neural-networks/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/neural-networks/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "接下来会发生什么？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜你完成本模块！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c09/embeddings\">Embeddings</a></b>.",
+"zh": "我们鼓励您按照自己的节奏和兴趣探索各种<a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照推荐顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c09/embeddings\">嵌入</a></b>。"
+}
+}
+]
+}
+]
+}

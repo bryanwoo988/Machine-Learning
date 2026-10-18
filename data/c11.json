@@ -1,0 +1,2048 @@
+{
+"id": "c11",
+"num": 11,
+"stage": 2,
+"title": {
+"en": "Production ML systems",
+"zh": "生产环境机器学习系统"
+},
+"minutes": 80,
+"sections": [
+{
+"id": "production-ml-systems",
+"path": "/machine-learning/crash-course/production-ml-systems",
+"min": 2,
+"heading": {
+"en": "Production ML systems",
+"zh": "生产环境机器学习系统"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module explores the broader ecosystem of a production ML system, emphasizing that the model itself is only a small part of the overall system.",
+"zh": null
+},
+{
+"en": "You will learn to choose the appropriate training and inference paradigms (static or dynamic) based on your specific needs.",
+"zh": null
+},
+{
+"en": "The module covers key aspects of production ML systems, including testing, identifying potential flaws, and monitoring the system's components.",
+"zh": null
+},
+{
+"en": "As a prerequisite, familiarity with foundational machine learning concepts, including linear regression, data types, and overfitting, is assumed.",
+"zh": null
+},
+{
+"en": "Building upon previous modules, this content shifts focus to the practical aspects of deploying and maintaining ML models in real-world scenarios.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Appreciate the breadth of components in a production ML system.</li><li>Pick the ideal training paradigm (static versus dynamic).</li><li>Pick the ideal inference paradigm (static versus dynamic).</li><li>Test your machine learning deployment.</li><li>Ask the right questions about your production ML system.</li><li>Determine flaws in real-world ML models.</li><li>Monitor the components in a production ML system.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>感谢生产环境机器学习系统中组件的广度。</li><li>选择理想的训练范式（静态与动态）。</li><li>选择理想的推理范式（静态与动态）。</li><li>测试您的机器学习部署。</li><li>针对生产环境机器学习系统提出合适的问题。</li><li>确定实际机器学习模型中的缺陷。</li><li>监控生产环境机器学习系统中的组件。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c05/numerical-data\">Working with numerical data</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li><li><a href=\"#/ch/c07/overfitting\">Datasets, generalization, and overfitting</a></li></ul>",
+"zh": "<b>前提条件：</b> 本单元假定您熟悉 以下模块：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c05/numerical-data\">处理数值数据</a></li><li><a href=\"#/ch/c06/categorical-data\">使用分类数据</a></li><li><a href=\"#/ch/c07/overfitting\">数据集、泛化和过拟合</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "So far, this course has focused on building machine learning (ML) models. However, as Figure 1 suggests, real-world production ML systems are large ecosystems and the model is just a single, relatively small part.",
+"zh": "到目前为止，本课程侧重于构建机器学习 (ML) 模型。 不过，正如图 1 所示，现实世界的生产机器学习系统是一个庞大的生态系统，而模型只是其中一个相对较小的部分。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/MlSystem.png",
+"alt": {
+"en": "Figure 1. ML system diagram containing the following components:\n            data collection, feature extraction, process management tools,\n            data verification, configuration, machine resource management,\n            monitoring, serving infrastructure, and ML model code. The ML\n            model code part of the diagram is dwarfed by the other nine\n            components.",
+"zh": "图 1. 包含以下组件的机器学习系统图：\n            包括数据收集、特征提取、流程管理工具、\n            数据验证、配置、机器资源管理\n            监控、服务基础架构和机器学习模型代码。机器学习\n            相较于其他九个模型代码，\n            组件。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> A real-world production ML system comprises many components.",
+"zh": "<b>图 1.</b>实际的生产机器学习系统包含许多组件。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "At the heart of a real-world machine learning production system is the ML model code, but it often represents only 5% or less of the total codebase in the system. That's not a misprint; it's significantly less than you might expect. Notice that an ML production system devotes considerable resources to the input data: collecting it, verifying it, and extracting features from it.",
+"zh": "机器学习生产系统的核心是机器学习。 但它通常只占总代码库的 5% 或更少， 系统。这不是打印错误，而是比您预期的要少得多。请注意，机器学习生产系统投入了大量资源， 对输入数据进行增强：收集数据、对其进行验证以及从中提取特征。"
+}
+}
+]
+},
+{
+"id": "static-vs-dynamic-training",
+"path": "/machine-learning/crash-course/production-ml-systems/static-vs-dynamic-training",
+"min": 10,
+"heading": {
+"en": "Production ML systems: Static versus dynamic training",
+"zh": "生产型机器学习系统：静态训练与动态训练"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/static-vs-dynamic-training",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/static-vs-dynamic-training?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Machine learning models can be trained statically (once) or dynamically (continuously).",
+"zh": null
+},
+{
+"en": "Static training is simpler but can become outdated if data patterns change, requiring data monitoring.",
+"zh": null
+},
+{
+"en": "Dynamic training adapts to new data, providing more accurate predictions but demands more resources and monitoring.",
+"zh": null
+},
+{
+"en": "Choosing between static and dynamic training depends on the specific dataset and how frequently it changes.",
+"zh": null
+},
+{
+"en": "Monitoring input data is essential for both static and dynamic training to ensure reliable predictions.",
+"zh": null
+}
+],
+"terms": [
+"dynamic",
+"static"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Broadly speaking, you can train a model in either of two ways:",
+"zh": "一般来说，您可以通过以下两种方式训练模型："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"static\"><b>Static training</b></button> (also called <b>offline training</b>) means that you train a model only once. You then serve that same trained model for a while.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"static\"><b>静态训练</b></button>（也称为<b>离线训练</b>）是指您只训练一次模型。然后，您会在一段时间内提供同一经过训练的模型。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"dynamic\"><b>Dynamic training</b></button> (also called <b>online training</b>) means that you train a model continuously or at least frequently. You usually serve the most recently trained model.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"dynamic\"><b>动态训练</b></button>（也称为<b>在线训练</b>）是指您持续或至少频繁地训练模型。您通常会提供最近训练的模型。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/StaticModel.png",
+"alt": {
+"en": "Figure 2. Raw dough creates three identical loaves of bread.",
+"zh": "图 2. 用原始面团制作出三个完全相同的面包。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> Static training. Train once; serve the same built model multiple times. (Images by Pexels and by fancycrave1.)",
+"zh": "<b>图 2.</b> 静态训练。训练一次；多次提供相同的构建模型。（图片来自 Pexels 和 fancycrave1。）"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/DynamicModel.png",
+"alt": {
+"en": "Figure 3. Raw dough creates slightly different loaves of bread\n            each time.",
+"zh": "图 3. 每次使用生面团制作面包，都会得到略有不同的面包。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> Dynamic training. Retrain frequently; serve the most recently built model. (Images by Pexels and by Couleur.)",
+"zh": "<b>图 3.</b> 动态训练。频繁重新训练；提供最新构建的模型。（图片来自 Pexels 和 Couleur。）"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Table 1.</b> Primary advantages and disadvantages.",
+"zh": "<b>表 1.</b> 主要优点和缺点。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "",
+"zh": ""
+},
+{
+"en": "Static training",
+"zh": "静态训练"
+},
+{
+"en": "Dynamic training",
+"zh": "动态训练"
+}
+],
+"rows": [
+[
+{
+"en": "Advantages",
+"zh": "优点"
+},
+{
+"en": "<b>Simpler.</b> You only need to develop and test the model once.",
+"zh": "<b>更简单</b>。您只需开发和测试一次模型即可。"
+},
+{
+"en": "<b>More adaptable.</b> Your model will keep up with any changes to the relationship between features and labels.",
+"zh": "<b>更具适应性。</b>您的模型将及时跟踪特征与标签之间关系的任何变化。"
+}
+],
+[
+{
+"en": "Disadvantages",
+"zh": "缺点"
+},
+{
+"en": "<b>Sometimes staler.</b> If the relationship between features and labels changes over time, your model's predictions will degrade.",
+"zh": "<b>有时会更旧。</b>如果特征与标签之间的关系随时间而变化，模型的预测结果将会下降。"
+},
+{
+"en": "<b>More work.</b> You must build, test, and release a new product all the time.",
+"zh": "<b>工作量更多。</b>您必须持续构建、测试和发布新产品。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If your dataset truly isn't changing over time, choose static training because it is cheaper to create and maintain than dynamic training. However, datasets tend to change over time, even those with features that you think are as constant as, say, sea level. The takeaway: even with static training, you must still monitor your input data for change.",
+"zh": "如果您的数据集确实不会随时间而变化，请选择静态训练，因为与动态训练相比，静态训练的创建和维护成本更低。不过，数据集往往会随时间而变化，即使是您认为恒定不变的特征（例如海平面）也是如此。要点：即使使用静态训练，您仍然需要监控输入数据是否发生变化。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, consider a model trained to predict the probability that users will buy flowers. Because of time pressure, the model is trained only once using a dataset of flower buying behavior during July and August. The model works fine for several months but then makes terrible predictions around <a href=\"https://wikipedia.org/wiki/Valentine&#x27;s_Day\" target=\"_blank\" rel=\"noopener\">Valentine's Day</a> because user behavior during that floral holiday period changes dramatically.",
+"zh": "例如，假设有一个经过训练的模型，用于预测用户购买花卉的概率。由于时间紧迫，我们仅使用 7 月和 8 月的花卉购买行为数据集训练了一次模型。该模型在几个月内运行良好，但在<a href=\"https://wikipedia.org/wiki/Valentine&#x27;s_Day\" target=\"_blank\" rel=\"noopener\">情人节</a>前后做出的预测非常糟糕，因为在花卉节日期间，用户行为会发生巨大变化。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For a more detailed exploration of static and dynamic training, see the <a href=\"#/ch/c17/pipelines\">Managing ML Projects</a> course.",
+"zh": "如需详细了解静态和动态训练，请参阅<a href=\"#/ch/c17/pipelines\">管理机器学习项目</a>课程。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercises: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>two</b> of the following statements are true about static (offline) training?",
+"zh": "以下关于静态（离线）训练的<b>两项</b>陈述是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The model stays up to date as new data arrives.",
+"zh": "模型会在收到新数据时进行更新。"
+},
+"why": {
+"en": "Actually, if you train offline, then the model has no way to incorporate new data as it arrives. This can lead to model staleness, if the distribution you are trying to learn from changes over time.",
+"zh": "实际上，如果您离线训练，则模型无法在有新数据到来时将其纳入考虑。如果您尝试学习的分布随时间而变化，这可能会导致模型过时。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "You can verify the model before applying it in production.",
+"zh": "您可以在将模型应用于生产环境之前对其进行验证。"
+},
+"why": {
+"en": "Yes, offline training gives ample opportunity to verify model performance before introducing the model in production.",
+"zh": "是的，离线训练可让您在将模型引入生产环境之前有充足的机会验证模型性能。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Offline training requires less monitoring of training jobs than online training.",
+"zh": "与在线训练相比，离线训练对训练作业的监控要求更低。"
+},
+"why": {
+"en": "In general, monitoring requirements at training time are more modest for offline training, which insulates you from many production considerations. However, the more frequently you train your model, the higher the investment you'll need to make in monitoring. You'll also want to validate regularly to ensure that changes to your code (and its dependencies) don't adversely affect model quality.",
+"zh": "一般来说，离线训练的训练时间监控要求更为宽松，这可让您免去许多生产环境注意事项。不过，模型的训练频率越高，您在监控方面的投入就越大。您还应定期进行验证，以确保对代码（及其依赖项）所做的更改不会对模型质量产生不利影响。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Very little monitoring of input data needs to be done at inference time.",
+"zh": "在推理时，对输入数据的监控工作非常少。"
+},
+"why": {
+"en": "Counterintuitively, you do need to monitor input data at serving time. If the input distributions change, then our model's predictions may become unreliable. Imagine, for example, a model trained only on summertime clothing data suddenly being used to predict clothing buying behavior in wintertime.",
+"zh": "与直觉相反，您确实需要在投放时监控输入数据。如果输入分布发生变化，我们模型的预测结果可能会变得不准确。例如，假设一个仅使用夏季服装数据训练的模型突然被用于预测冬季的服装购买行为。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>one</b> of the following statements is true of dynamic (online) training?",
+"zh": "以下哪个关于动态（在线）训练的表述是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The model stays up to date as new data arrives.",
+"zh": "模型会在收到新数据时进行更新。"
+},
+"why": {
+"en": "This is the primary benefit of online training; you can avoid many staleness issues by allowing the model to train on new data as it comes in.",
+"zh": "这是在线训练的主要优势；通过允许模型使用新数据进行训练，您可以避免许多过时问题。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "Very little monitoring of training jobs needs to be done.",
+"zh": "您几乎无需监控训练作业。"
+},
+"why": {
+"en": "Actually, you must continuously monitor training jobs to ensure that they are healthy and working as intended. You'll also need supporting infrastructure like the ability to roll a model back to a previous snapshot in case something goes wrong in training, such as a buggy job or corruption in input data.",
+"zh": "实际上，您必须持续监控训练作业，以确保它们运行正常且按预期运行。您还需要支持的基础架构，例如，能够在训练过程中出现问题（例如作业存在 bug 或输入数据损坏）时将模型回滚到之前的快照。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Very little monitoring of input data needs to be done at inference time.",
+"zh": "在推理时，对输入数据的监控工作非常少。"
+},
+"why": {
+"en": "Just like a static, offline model, it is also important to monitor the inputs to the dynamically updated models. You are likely not at risk for large seasonality effects, but sudden, large changes to inputs (such as an upstream data source going down) can still cause unreliable predictions.",
+"zh": "与静态离线模型一样，监控动态更新模型的输入也很重要。您可能不会面临较大的季节性效应带来的风险，但如果输入数据突然发生巨大变化（例如上游数据源中断），仍然会导致预测结果不可靠。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "static-vs-dynamic-inference",
+"path": "/machine-learning/crash-course/production-ml-systems/static-vs-dynamic-inference",
+"min": 10,
+"heading": {
+"en": "Production ML systems: Static versus dynamic inference",
+"zh": "生产型机器学习系统：静态推理与动态推理"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/static-vs-dynamic-inference",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/static-vs-dynamic-inference?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Inference involves using a trained model to make predictions on unlabeled examples, and it can be done statically or dynamically.",
+"zh": null
+},
+{
+"en": "Static inference generates predictions in advance and caches them, making it suitable for scenarios where prediction speed is critical but limiting its ability to handle uncommon inputs.",
+"zh": null
+},
+{
+"en": "Dynamic inference generates predictions on demand, offering flexibility for diverse inputs but potentially increasing latency and computational demands.",
+"zh": null
+},
+{
+"en": "Choosing between static and dynamic inference depends on factors like model complexity, desired prediction speed, and the nature of the input data.",
+"zh": null
+},
+{
+"en": "Static inference is advantageous when cost and prediction verification are prioritized, while dynamic inference excels in handling diverse, real-time predictions.",
+"zh": null
+}
+],
+"terms": [
+"example",
+"inference",
+"unlabeled_example"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"inference\"><b>Inference</b></button> is the process of making predictions by applying a trained model to <button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>unlabeled examples</b></button>. Broadly speaking, a model can infer predictions in one of two ways:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"inference\"><b>推理</b></button>是指通过将训练后的模型应用于<button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>无标签示例</b></button>做出预测的过程。一般来说，模型可以通过以下两种方式之一推断预测结果："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Static inference</b> (also called <b>offline inference</b> or <b>batch inference</b>) means the model makes predictions on a bunch of common <button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>unlabeled examples</b></button> and then caches those predictions somewhere.",
+"zh": "<b>静态推理</b>（也称为<b>离线推理</b>或<b>批量推理</b>）是指模型对一组常见的<button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>无标签示例</b></button>进行预测，然后将这些预测缓存在某个位置。"
+},
+{
+"en": "<b>Dynamic inference</b> (also called <b>online inference</b> or real-time inference) means that the model only makes predictions on demand, for example, when a client requests a prediction.",
+"zh": "<b>动态推理</b>（也称为<b>在线推理</b>或实时推理）是指模型仅在需要时进行预测，例如在客户端请求预测时。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "To use an extreme example, imagine a very complex model that takes one hour to infer a prediction. This would probably be an excellent situation for static inference:",
+"zh": "举个极端的例子，假设有一个非常复杂的模型，需要 1 小时才能推理出预测结果。这可能非常适合使用静态推理："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/StaticInference.png",
+"alt": {
+"en": "Figure 4. In static inference, a model generates predictions,\n            which are then cached on a server.",
+"zh": "图 4. 在静态推理中，模型会生成预测结果，然后将其缓存在服务器上。"
+},
+"caption": {
+"en": "<b>Figure 4.</b> In static inference, a model generates predictions, which are then cached on a server.",
+"zh": "<b>图 4.</b> 在静态推理中，模型会生成预测结果，然后将这些结果缓存在服务器上。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose this same complex model mistakenly uses dynamic inference instead of static inference. If many clients request predictions around the same time, most of them won't receive that prediction for hours or days.",
+"zh": "假设这个复杂模型错误地使用了动态推理而非静态推理。如果许多客户端在同一时间请求预测，其中大多数客户端将在数小时或数天后才能收到该预测。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Now consider a model that infers quickly, perhaps in 2 milliseconds using a relative minimum of computational resources. In this situation, clients can receive predictions quickly and efficiently through dynamic inference, as suggested in Figure 5.",
+"zh": "现在，假设有一个模型可以快速推理，可能只需 2 毫秒，并且使用相对最少的计算资源。在这种情况下，客户端可以通过动态推理快速高效地接收预测结果，如图 5 所示。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/DynamicInference.png",
+"alt": {
+"en": "Figure 5. In dynamic inference, a model infers predictions on\n            demand.",
+"zh": "图 5. 在动态推理中，模型会根据需要推理出预测结果。"
+},
+"caption": {
+"en": "<b>Figure 5.</b> In dynamic inference, a model infers predictions on demand.",
+"zh": "<b>图 5.</b> 在动态推理中，模型会根据需要推理出预测结果。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Static inference",
+"zh": "静态推理"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Static inference offers certain advantages and disadvantages.",
+"zh": "静态推理具有一定的优势和缺点。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Advantages",
+"zh": "✔︎ 优势"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Don't need to worry much about cost of inference.",
+"zh": "无需过多担心推理费用。"
+},
+{
+"en": "Can do post-verification of predictions before pushing.",
+"zh": "可以在推送前对预测进行后验证。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Disadvantages",
+"zh": "✘ 缺点"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Can only serve cached predictions, so the system might not be able to serve predictions for uncommon input examples.",
+"zh": "只能提供缓存的预测结果，因此系统可能无法针对不常见的输入示例提供预测结果。"
+},
+{
+"en": "Update latency is likely measured in hours or days.",
+"zh": "更新延迟时间可能以小时或天为单位。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Dynamic inference",
+"zh": "动态推理"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Dynamic inference offers certain advantages and disadvantages.",
+"zh": "动态推理具有一定的优势和劣势。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Advantages",
+"zh": "✔︎ 优势"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Can infer a prediction on <i>any</i> new item as it comes in, which is great for long tail (less common) predictions.",
+"zh": "可在新条目加入时对其进行预测，非常适合存在长尾（不常见）的情况。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Disadvantages",
+"zh": "✘ 缺点"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Compute intensive and latency sensitive. This combination may limit model complexity; that is, you might have to build a simpler model that can infer predictions more quickly than a complex model could.",
+"zh": "计算量非常大，对延迟较为敏感。这种组合可能会限制模型复杂性；也就是说，您可能需要构建一个比复杂模型更快地推理出预测结果的更简单的模型。"
+},
+{
+"en": "Monitoring needs are more intensive.",
+"zh": "监控需求更为密集。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Exercises: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 2
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>three</b> of the following four statements are true of static inference?",
+"zh": "以下四个陈述中，哪<b>三个</b>对静态推理来说是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The model must create predictions for all possible inputs.",
+"zh": "模型必须为所有可能的输入创建预测。"
+},
+"why": {
+"en": "Yes, the model must make predictions for all possible inputs and store them in a cache or lookup table. If the set of things that the model is predicting is limited, then static inference might be a good choice. However, for free-form inputs like user queries that have a long tail of unusual or rare items, static inference can't provide full coverage.",
+"zh": "是的，模型必须针对所有可能的输入进行预测，并将其存储在缓存或查找表中。 如果模型要预测的事物集合是有限的，则静态推理可能是一个不错的选择。 不过，对于包含大量不常见或罕见项的自由形式输入（例如用户查询），静态推理无法提供完整覆盖。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The system can verify inferred predictions before serving them.",
+"zh": "系统可以在投放推理出的预测结果之前对其进行验证。"
+},
+"why": {
+"en": "Yes, this is a useful aspect of static inference.",
+"zh": "是，这是静态推理的有用方面。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "For a given input, the model can serve a prediction more quickly than <i>dynamic</i> inference.",
+"zh": "对于给定的输入，模型可以比<i>动态</i>推理更快地提供预测。"
+},
+"why": {
+"en": "Yes, static inference can almost always serve predictions faster than dynamic inference.",
+"zh": "是的，静态推理几乎总是比动态推理更快地提供预测。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "You can react quickly to changes in the world.",
+"zh": "您可以快速应对世界形势的变化。"
+},
+"why": {
+"en": "No, this is a disadvantage of static inference.",
+"zh": "不可以，这是静态推理的缺点。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>one</b> of the following statements is true of dynamic inference?",
+"zh": "以下哪个关于动态推理的表述是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "You can provide predictions for all possible items.",
+"zh": "您可以为所有可能的条目提供预测。"
+},
+"why": {
+"en": "Yes, this is a strength of dynamic inference. Any request that comes in will be given a score. Dynamic inference handles long-tail distributions (those with many rare items), like the space of all possible sentences written in movie reviews.",
+"zh": "是的，这是动态推理的优势。系统会为收到的任何请求分配一个得分。动态推理可处理长尾分布（包含许多稀有项的分布），例如电影评论中所有可能的句子的空间。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "You can do post-verification of predictions before they are used.",
+"zh": "您可以在使用预测结果之前对其进行后验证。"
+},
+"why": {
+"en": "In general, it's not possible to do a post-verification of all predictions before they get used because predictions are being made on demand. You can, however, potentially monitor <i>aggregate</i> prediction qualities to provide some level of quality checking, but these will signal fire alarms only after the fire has already spread.",
+"zh": "通常，由于预测是按需进行的，因此无法在使用之前对所有预测进行后验证。不过，您或许可以监控<i>汇总</i>预测质量，以提供一定程度的质量检查，但这些检查只能在火势蔓延后发出火警。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "When performing dynamic inference, you don't need to worry about prediction latency (the lag time for returning predictions) as much as when performing static inference.",
+"zh": "执行动态推理时，您无需像执行静态推理时那样担心预测延迟时间（返回预测结果的延迟时间）。"
+},
+"why": {
+"en": "Prediction latency is often a real concern in dynamic inference. Unfortunately, you can't necessarily fix prediction latency issues by adding more inference servers.",
+"zh": "在动态推理中，预测延迟时间通常是一个真正的问题。 很遗憾，添加更多推理服务器并不一定能解决预测延迟问题。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "transforming-data",
+"path": "/machine-learning/crash-course/production-ml-systems/transforming-data",
+"min": 3,
+"heading": {
+"en": "Production ML systems: When to transform data?",
+"zh": "生产型机器学习系统：何时转换数据？"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/transforming-data",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/transforming-data?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Feature engineering can be performed before or during model training, each with its own advantages and disadvantages.",
+"zh": null
+},
+{
+"en": "Transforming data before training allows for a one-time transformation of the entire dataset but requires careful recreation of transformations during prediction to avoid training-serving skew.",
+"zh": null
+},
+{
+"en": "Transforming data during training ensures consistency between training and prediction but can increase model latency and complicate batch processing.",
+"zh": null
+},
+{
+"en": "When transforming data during training, considerations such as Z-score normalization across batches with varying distributions need to be addressed.",
+"zh": null
+}
+],
+"terms": [
+"training-serving-skew",
+"z-score-normalization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Raw data must be feature engineered (transformed). When should you transform data? Broadly speaking, you can perform feature engineering during either of the following two periods:",
+"zh": "原始数据必须经过特征工程处理（转换）。何时应转换数据？一般来说，您可以在以下任一时间段执行特征工程："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<i>Before</i> training the model.",
+"zh": "<i>在</i>训练模型之前。"
+},
+{
+"en": "<i>While</i> training the model.",
+"zh": "<i>在</i>训练模型时。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Transforming data before training",
+"zh": "在训练前转换数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In this approach, you follow two steps:",
+"zh": "在此方法中，您需要执行以下两个步骤："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Write code or use specialized tools to transform the raw data.",
+"zh": "编写代码或使用专用工具来转换原始数据。"
+},
+{
+"en": "Store the transformed data somewhere that the model can ingest, such as on disk.",
+"zh": "将转换后的数据存储在模型可以提取的位置，例如磁盘上。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Advantages",
+"zh": "✔︎ 优势"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "The system transforms raw data only once.",
+"zh": "系统仅转换一次原始数据。"
+},
+{
+"en": "The system can analyze the entire dataset to determine the best transformation strategy.",
+"zh": "系统可以分析整个数据集，以确定最佳转换策略。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Disadvantages",
+"zh": "✘ 缺点"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "You must recreate the transformations at prediction time. Beware of <button type=\"button\" class=\"term\" data-term=\"training-serving-skew\"><b>training-serving skew</b></button>!",
+"zh": "您必须在预测时重新创建转换。请注意<button type=\"button\" class=\"term\" data-term=\"training-serving-skew\"><b>训练-应用偏差</b></button>！"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Training-serving skew is more dangerous when your system performs dynamic (online) inference. On a system that uses dynamic inference, the software that transforms the raw dataset usually differs from the software that serves predictions, which can cause training-serving skew. In contrast, systems that use static (offline) inference can sometimes use the same software.",
+"zh": "当系统执行动态（在线）推理时，训练-服务偏差更危险。在使用动态推理的系统中，转换原始数据集的软件通常不同于提供预测的软件，这可能会导致训练-应用偏差。相比之下，使用静态（离线）推理的系统有时可以使用相同的软件。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Transforming data while training",
+"zh": "在训练期间转换数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In this approach, the transformation is part of the model code. The model ingests raw data and transforms it.",
+"zh": "在此方法中，转换是模型代码的一部分。该模型会提取原始数据并对其进行转换。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "✔︎ Advantages",
+"zh": "✔︎ 优势"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "You can still use the same raw data files if you change the transformations.",
+"zh": "即使您更改了转换，也可以继续使用相同的原始数据文件。"
+},
+{
+"en": "You're ensured the same transformations at training and prediction time.",
+"zh": "这样可确保在训练和预测时进行相同的转换。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "✘ Disadvantages",
+"zh": "✘ 缺点"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Complicated transforms can increase model latency.",
+"zh": "复杂的转换可能会增加模型延迟时间。"
+},
+{
+"en": "Transformations occur for each and every batch.",
+"zh": "系统会对每个批次执行转换。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Transforming the data per batch can be tricky. For example, suppose you want to use <button type=\"button\" class=\"term\" data-term=\"z-score-normalization\"><b>Z-score normalization</b></button> to transform raw numerical data. Z-score normalization requires the mean and standard deviation of the feature. However, transformations per batch mean you'll only have access to <i>one batch of data</i>, not the full dataset. So, if the batches are highly variant, a Z-score of, say, -2.5 in one batch won't have the same meaning as -2.5 in another batch. As a workaround, your system can precompute the mean and standard deviation across the entire dataset and then use them as constants in the model.",
+"zh": "转换每批数据可能很棘手。例如，假设您想使用<button type=\"button\" class=\"term\" data-term=\"z-score-normalization\"><b>Z 分数归一化</b></button>来转换原始数值数据。使用 z 分数归一化需要特征的平均值和标准差。不过，每批转换意味着您只能访问<i>一批数据</i>，而不能访问整个数据集。因此，如果批次差异很大，那么一个批次中 Z 得分为 -2.5 与另一个批次中 Z 得分为 -2.5 的含义并不相同。作为一种权宜解决方法，您的系统可以预先计算整个数据集的平均值和标准差，然后将它们用作模型中的常量。"
+}
+}
+]
+},
+{
+"id": "deployment-testing",
+"path": "/machine-learning/crash-course/production-ml-systems/deployment-testing",
+"min": 5,
+"heading": {
+"en": "Production ML systems: Deployment testing",
+"zh": "生产机器学习系统：部署测试"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/deployment-testing",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/deployment-testing?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Deploying a machine learning model involves validating data, features, model versions, serving infrastructure, and pipeline integration.",
+"zh": null
+},
+{
+"en": "Reproducible model training involves deterministic seeding, fixed initialization order, averaging multiple runs, and using version control.",
+"zh": null
+},
+{
+"en": "Integration tests ensure that different components of the ML pipeline work together seamlessly, and should be run continuously and for new model/software versions.",
+"zh": null
+},
+{
+"en": "Before serving a new model, validate its quality by checking for sudden and slow degradations against previous versions and fixed thresholds.",
+"zh": null
+},
+{
+"en": "Ensure model-infrastructure compatibility by staging the model in a sandboxed server environment to avoid dependency conflicts.",
+"zh": null
+}
+],
+"terms": [
+"training-serving-skew",
+"z-score-normalization"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "You're ready to deploy the unicorn model that predicts unicorn appearances! When deploying, your machine learning (ML) pipeline should run, update, and serve without a problem. If only deploying a model were as easy as pressing a big <b>Deploy</b> button. Unfortunately, a full machine learning system requires tests for:",
+"zh": "您现在可以部署用于预测独角兽外观的独角兽模型了！ 在部署时，机器学习 (ML) 流水线应能够顺利运行、更新和提供服务。如果部署模型只需按一个大大的<b>部署</b>按钮就行了，那就太好了。很遗憾，完整的机器学习系统需要针对以下方面进行测试："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Validating input data.",
+"zh": "验证输入数据。"
+},
+{
+"en": "Validating feature engineering.",
+"zh": "验证特征工程。"
+},
+{
+"en": "Validating the quality of new model versions.",
+"zh": "验证新模型版本的质量。"
+},
+{
+"en": "Validating serving infrastructure.",
+"zh": "验证服务基础架构。"
+},
+{
+"en": "Testing integration between pipeline components.",
+"zh": "测试流水线组件之间的集成。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Many software engineers favor test-driven development (TDD). In TDD, software engineers write tests <i>prior</i> to writing the \"real\" source code. However, TDD can be tricky in machine learning. For example, before training your model, you can't write a test to validate the loss. Instead, you must first discover the achievable loss during model development and <i>then</i> test new model versions against the achievable loss.",
+"zh": "许多软件工程师都偏爱测试驱动型开发 (TDD)。在 TDD 中，软件工程师会先编写测试，然后再编写“真实”源代码。不过，在机器学习中，TDD 可能很棘手。例如，在训练模型之前，您无法编写测试来验证损失。而是必须先在模型开发过程中发现可实现的损失，<i>然后</i>根据可实现的损失测试新的模型版本。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "About the unicorn model",
+"zh": "独角兽模型简介"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "This section refers to the <b>unicorn model</b>. Here's what you need to know:",
+"zh": "本部分将提及<b>独角兽模型</b>。以下是您需要知晓的相关信息："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "You are using machine learning to build a classification model that predicts unicorn appearances. Your dataset details 10,000 unicorn appearances and 10,000 unicorn non-appearances. The dataset contains the location, time of day, elevation, temperature, humidity, tree cover, presence of a rainbow, and several other features.",
+"zh": "您将使用机器学习构建一个分类模型，用于预测独角兽的出现情况。您的数据集详细说明了 1 万次独角兽出现情况和 1 万次独角兽未出现情况。该数据集包含地理位置、时间、海拔、温度、湿度、树冠覆盖率、彩虹是否存在以及其他一些特征。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Test model updates with reproducible training",
+"zh": "使用可重现的训练测试模型更新"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Perhaps you want to continue improving your unicorn model. For example, suppose you do some additional feature engineering on a certain feature and then retrain the model, hoping to get better (or at least the same) results. Unfortunately, it is sometimes difficult to reproduce model training. To improve reproducibility, follow these recommendations:",
+"zh": "也许您想继续改进独角兽模型。例如，假设您对某个特征进行了一些额外的特征工程，然后重新训练了模型，希望获得更好（或至少相同）的结果。很遗憾，有时很难重现模型训练。为了提高重现性，请遵循以下建议："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Deterministically seed the random number generator. For details, see <a href=\"#/ch/c11/monitoring\">randomization in data generation</a>",
+"zh": "确定性地为随机数生成器设置种子。 如需了解详情，请参阅<a href=\"#/ch/c11/monitoring\">数据生成中的随机化</a>"
+},
+{
+"en": "Initialize model components in a fixed order to ensure the components get the same random number from the random number generator on every run. ML libraries typically handle this requirement automatically.",
+"zh": "按固定顺序初始化模型组件，以确保组件在每次运行时从随机数生成器获取相同的随机数。ML 库通常会自动处理此要求。"
+},
+{
+"en": "Take the average of several runs of the model.",
+"zh": "取多次运行模型的平均值。"
+},
+{
+"en": "Use version control, even for preliminary iterations, so that you can pinpoint code and parameters when investigating your model or pipeline.",
+"zh": "使用版本控制功能（即使是进行初步迭代），以便在研究模型或流水线时查明代码和参数。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Even after following these guidelines, other sources of nondeterminism might still exist.",
+"zh": "即使遵循这些准则，也可能仍存在其他非确定性来源。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Test calls to machine learning API",
+"zh": "测试对机器学习 API 的调用"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "How do you test updates to API calls? You could retrain your model, but that's time intensive. Instead, write a unit test to generate random input data and run a single step of gradient descent. If this step completes without errors, then any updates to the API probably haven't ruined your model.",
+"zh": "如何测试 API 调用的更新？您可以重新训练模型，但这需要花费大量时间。而是编写单元测试来生成随机输入数据，并运行单个梯度下降步骤。如果此步骤在没有错误的情况下完成，则 API 的任何更新都可能不会破坏您的模型。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Write integration tests for pipeline components",
+"zh": "为流水线组件编写集成测试"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In an ML pipeline, changes in one component can cause errors in other components. Check that components work together by writing an <b>integration test</b> that runs the entire pipeline end-to-end.",
+"zh": "在机器学习流水线中，一个组件中的更改可能会导致其他组件出错。编写一项可端到端运行整个流水线的<b>集成测试</b>，以检查各个组件能否协同工作。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Besides running integration tests continuously, you should run integration tests when pushing new models and new software versions. The slowness of running the entire pipeline makes continuous integration testing harder. To run integration tests faster, train on a subset of the data or with a simpler model. The details depend on your model and data. To get continuous coverage, you'd adjust your faster tests so that they run with every new version of model or software. Meanwhile, your slow tests would run continuously in the background.",
+"zh": "除了持续运行集成测试之外，您还应在推送新模型和新软件版本时运行集成测试。运行整个流水线的速度缓慢，这会使持续集成测试变得更加困难。如需更快地运行集成测试，请使用数据子集或更简单的模型进行训练。具体取决于您的模型和数据。为了实现持续覆盖，您需要调整更快的测试，使其能够在每次有新版本的模型或软件时运行。与此同时，运行缓慢的测试会在后台持续运行。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Validate model quality before serving",
+"zh": "在提供服务之前验证模型质量"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Before pushing a new model version to production, test for the following two types of quality degradations:",
+"zh": "在将新模型版本推送到生产环境之前，请测试是否存在以下两种质量下降情况："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Sudden degradation.</b> A bug in the new version could cause significantly lower quality. Validate new versions by checking their quality against the previous version.",
+"zh": "<b>突然出现的画质下降。</b>新版本中的 bug 可能会导致画质大幅下降。通过与上一个版本对比新版本的质量来验证新版本。"
+},
+{
+"en": "<b>Slow degradation.</b> Your test for sudden degradation might not detect a slow degradation in model quality over multiple versions. Instead, ensure your model's predictions on a validation dataset meet a fixed threshold. If your validation dataset deviates from live data, then update your validation dataset and ensure your model still meets the same quality threshold.",
+"zh": "<b>性能缓慢下降。</b>用于检测突然降级的测试可能无法检测到模型质量在多个版本中缓慢下降的情况。而是确保模型对验证数据集的预测结果达到固定阈值。如果验证数据集与实时数据存在偏差，请更新验证数据集，并确保模型仍能达到相同的质量阈值。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Validate model-infrastructure compatibility before serving",
+"zh": "在提供服务之前验证模型与基础架构的兼容性"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "If your model is updated faster than your server, then your model could have different software dependencies from your server, potentially causing incompatibilities. Ensure that the operations used by the model are present in the server by staging the model in a sandboxed version of the server.",
+"zh": "如果模型的更新速度比服务器更快，则模型的软件依赖项可能会与服务器不同，这可能会导致不兼容。通过将模型暂存到服务器的沙盒版本中，确保模型使用的运算存在于服务器中。"
+}
+}
+]
+},
+{
+"id": "monitoring",
+"path": "/machine-learning/crash-course/production-ml-systems/monitoring",
+"min": 25,
+"heading": {
+"en": "Production ML systems: Monitoring pipelines",
+"zh": "生产型机器学习系统：监控流水线"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "ML pipeline monitoring involves validating data and features, tracking real-world metrics, and addressing potential biases in data slices.",
+"zh": null
+},
+{
+"en": "Monitoring training-serving skew, label leakage, model age, and numerical stability are crucial for maintaining pipeline health and model performance.",
+"zh": null
+},
+{
+"en": "Live model quality testing uses methods like human labeling and statistical analysis to ensure ongoing model effectiveness in real-world scenarios.",
+"zh": null
+},
+{
+"en": "Implementing proper randomization through deterministic data generation enables reproducible experiments and consistent analysis.",
+"zh": null
+},
+{
+"en": "Maintaining invariant hashing ensures data splits remain consistent across experiments, contributing to reliable analysis and model evaluation.",
+"zh": null
+}
+],
+"terms": [
+"AUC",
+"clipping",
+"ground-truth",
+"hashing",
+"label-leakage",
+"one-hot-encoding",
+"outliers",
+"scaling",
+"training-serving-skew"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Congratulations! You've deployed the <a href=\"#/ch/c11/deployment-testing\">unicorn model</a>. Your model should run 24x7 without any problems. To ensure that it does, you must monitor your machine learning (ML) pipeline.",
+"zh": "恭喜！您已部署<a href=\"#/ch/c11/deployment-testing\">独角兽模型</a>。 您的模型应能全天候运行，不会出现任何问题。为确保流水线正常运行，您必须监控机器学习 (ML) 流水线。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Write a data schema to validate raw data",
+"zh": "编写数据架构以验证原始数据"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "To monitor your data, you should continuously check it against expected statistical values by writing rules that the data must satisfy. This collection of rules is called a <i>data schema</i>. Define a data schema by following these steps:",
+"zh": "为了监控数据，您应编写规则，让数据必须满足这些规则，从而根据预期的统计值持续检查数据。这组规则称为<i>数据架构</i>。按照以下步骤定义数据架构："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Understand the range and distribution of your features. For categorical features, understand the set of possible values.",
+"zh": "了解特征的范围和分布情况。对于分类特征，请了解可能值的集合。"
+},
+{
+"en": "Encode your understanding into the data schema. The following are examples of rules:<br> <ul><li>Ensure that user-submitted ratings are always in the range 1 to 5.</li><li>Check that the word <i>the</i> occurs most frequently (for an English text feature).</li><li>Check that each categorical feature is set to a value from a fixed set of possible values.</li></ul>",
+"zh": "将您的理解编码到数据架构中。以下是一些规则示例：<br> <ul><li>确保用户提交的评分始终在 1 到 5 的范围内。</li><li>检查单词 <i>the</i> 是否出现频率最高（对于英语文本功能）。</li><li>检查每个分类特征是否都设置为一组固定的可能值中的某个值。</li></ul>"
+},
+{
+"en": "Test your data against the data schema. Your schema should catch data errors such as:<br> <ul><li>Anomalies</li><li>Unexpected values of categorical variables</li><li>Unexpected data distributions</li></ul>",
+"zh": "根据数据架构测试数据。您的架构应捕获以下数据错误：<br> <ul><li>异常</li><li>分类变量的值异常</li><li>意外的数据分布</li></ul>"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Write unit tests to validate feature engineering",
+"zh": "编写单元测试以验证特征工程"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "While your raw data might pass the data schema, your model doesn't train on raw data. Rather, your model trains on data that has been feature engineered. For example, your model trains on normalized numerical features rather than raw numerical data. Because feature engineered data can be very different from raw input data, you must check feature engineered data separately from your checks on raw input data.",
+"zh": "虽然原始数据可能通过了数据架构验证，但模型不会根据原始数据进行训练。而是使用经过特征工程处理的数据来训练模型。例如，您的模型会根据归一化的数值特征而非原始数值数据进行训练。由于经过特征工程处理的数据可能与原始输入数据有很大不同，因此您必须分别检查经过特征工程处理的数据和原始输入数据。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Write unit tests based on your understanding of feature engineered data. For example, you can write unit tests to check for conditions such as the following:",
+"zh": "根据您对特征工程数据的了解编写单元测试。 例如，您可以编写单元测试来检查以下情况："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "All numeric features are scaled, for example, between 0 and 1.",
+"zh": "所有数值特征都经过缩放处理，例如缩放到 0 到 1 之间。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"one-hot-encoding\"><b>One-hot encoded</b></button> vectors only contain a single 1 and N-1 zeroes.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"one-hot-encoding\"><b>独热编码</b></button>向量仅包含一个 1 和 N-1 个零。"
+},
+{
+"en": "Data distributions after transformation conform to expectations. For example, if you've normalized using Z-scores, the mean of the Z-scores should be 0.",
+"zh": "转换后的数据分布符合预期。 例如，如果您使用 Z 得分进行归一化，则 Z 得分的平均值应为 0。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"outliers\"><b>Outliers</b></button> are handled, such as by <button type=\"button\" class=\"term\" data-term=\"scaling\"><b>scaling</b></button> or <button type=\"button\" class=\"term\" data-term=\"clipping\"><b>clipping</b></button>.",
+"zh": "处理<button type=\"button\" class=\"term\" data-term=\"outliers\"><b>离群值</b></button>，例如通过<button type=\"button\" class=\"term\" data-term=\"scaling\"><b>缩放</b></button>或<button type=\"button\" class=\"term\" data-term=\"clipping\"><b>剪裁</b></button>。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check metrics for important data slices",
+"zh": "检查重要数据切片的指标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "A successful whole sometimes obscures an unsuccessful subset. In other words, a model with great overall metrics might still make terrible predictions for certain situations. For example:",
+"zh": "成功的整体有时会掩盖失败的子集。换句话说，即使模型的总体指标非常出色，在某些情况下，它仍可能会做出糟糕的预测。例如："
+}
+},
+{
+"type": "note",
+"kind": "quote",
+"html": {
+"en": "Your unicorn model performs well overall, but performs poorly when making predictions for the Sahara desert.",
+"zh": "您的独角兽模型整体表现良好，但在预测撒哈拉沙漠时表现不佳。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If you are the kind of engineer satisfied with an overall great AUC, then you might not notice the model's issues in the Sahara desert. If making good predictions for <i>every</i> region is important, then you need to track performance for every region. Subsets of data, like the one corresponding to the Sahara desert, are called <b>data slices</b>.",
+"zh": "如果您是那种对总体 AUC 感到满意的工程师，那么您可能不会注意到模型在撒哈拉沙漠中的问题。如果您需要为<i>每个</i>地区做出准确的预测，则需要跟踪每个地区的效果。与撒哈拉沙漠相对应的数据子集称为“数据切片”。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Identify data slices of interest. Then compare model metrics for these data slices against the metrics for your entire dataset. Checking that your model performs well across all data slices helps remove bias. See <a href=\"#/ch/c13/evaluating-for-bias\">Fairness: Evaluating for Bias</a> for more information.",
+"zh": "确定感兴趣的数据切片。 然后，将这些数据切片的模型指标与整个数据集的指标进行比较。检查模型在所有数据切片上的表现是否良好有助于消除偏差。如需了解详情，请参阅<a href=\"#/ch/c13/evaluating-for-bias\">公平性：评估偏差</a>。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Use real-world metrics",
+"zh": "使用实际指标"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Model metrics don't necessarily measure the real-world impact of your model. For example, changing a hyperparameter might increase a model's AUC, but how did the change affect user experience? To measure real-world impact, you need to define separate metrics. For example, you could survey users of your model to confirm that they really did see a unicorn when the model predicted they would.",
+"zh": "模型指标不一定能衡量模型的实际影响。 例如，更改超参数可能会提高模型的 AUC，但此更改对用户体验有何影响？如需衡量实际影响，您需要定义单独的指标。例如，您可以调查模型用户，以确认当模型预测他们会看到独角兽时，他们是否真的看到了独角兽。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Check for training-serving skew",
+"zh": "检查是否存在训练-应用偏差"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"training-serving-skew\"><b>Training-serving skew</b></button> means your input data during training differs from your input data in serving. The following table describes the two important types of skew:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"training-serving-skew\"><b>训练-应用偏差</b></button>是指训练期间的输入数据与应用期间的输入数据不同。下表介绍了两种重要的倾斜类型："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Type",
+"zh": "类型"
+},
+{
+"en": "Definition",
+"zh": "定义"
+},
+{
+"en": "Example",
+"zh": "示例"
+},
+{
+"en": "Solution",
+"zh": "解决方案"
+}
+],
+"rows": [
+[
+{
+"en": "<b>Schema skew</b>",
+"zh": "<b>架构偏差</b>"
+},
+{
+"en": "Training and serving input data do not conform to the same schema.",
+"zh": "训练和应用输入数据不符合相同的架构。"
+},
+{
+"en": "The format or distribution of the serving data changes while your model continues to train on old data.",
+"zh": "在模型继续根据旧数据进行训练时，应用数据的格式或分布会发生变化。"
+},
+{
+"en": "Use the same schema to validate training and serving data. Ensure you separately check for statistics not checked by your schema, such as the fraction of missing values",
+"zh": "使用相同的架构来验证训练数据和应用数据。 确保您单独检查架构未检查的统计信息，例如缺失值的比例"
+}
+],
+[
+{
+"en": "<b>Feature skew</b>",
+"zh": "<b>特征偏差</b>"
+},
+{
+"en": "Engineered data differs between training and serving.",
+"zh": "工程化数据在训练和应用之间有所不同。"
+},
+{
+"en": "Feature engineering code differs between training and serving, producing different engineered data.",
+"zh": "特征工程代码在训练和部署之间存在差异，从而生成不同的工程数据。"
+},
+{
+"en": "Similar to schema skew, apply the same statistical rules across training and serving engineered data. Track the number of detected skewed features, and the ratio of skewed examples per feature.",
+"zh": "与架构偏差类似，在训练和应用工程化数据时，应用相同的统计规则。跟踪检测到的存在偏差的特征数量，以及每个特征的偏差示例比例。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Causes of training-serving skew can be subtle. Always consider what data is available to your model at prediction time. During training, use only the features that you'll have available when serving.",
+"zh": "训练-应用偏差的原因可能很细微。 请务必考虑模型在预测时可用的数据。 在训练期间，仅使用在服务时可用的特征。"
+}
+},
+{
+"type": "note",
+"kind": "key",
+"html": {
+"en": "The Golden Rule: Ensure that training and production mimic each other as closely as possible. The more closely your training task matches your prediction task, the better your ML system will perform.",
+"zh": "黄金法则：确保训练环境和生产环境尽可能相似。训练任务与预测任务的匹配度越高，机器学习系统的效果就越好。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you have an online store and want to predict how much money you’ll make on a given day. Your ML goal is to predict daily revenue using the number of customers as a feature.",
+"zh": "假设您拥有一家网店，并想预测自己在特定日期的收入。您的机器学习目标是使用客户数量作为特征来预测每日收入。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "What problem might you encounter?",
+"zh": "您可能会遇到什么问题？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "Click here to see the answer",
+"zh": "点击此处查看答案"
+},
+"why": {
+"en": "Click here to see the answer <b>Answer:</b> The problem is that you don't know the number of customers at prediction time, before the day's sales are complete. So, this feature isn't useful, even if this feature is strongly predictive of your daily revenue. Relatedly, when you're training a model and get amazing evaluation metrics (like 0.99 <button type=\"button\" class=\"term\" data-term=\"AUC\"><b>AUC</b></button>), look for these sorts of features that can bleed into your label.",
+"zh": "点击此处查看答案 <b>答</b>：问题在于，在预测时，您不知道客户数量，而此时当天的销售尚未完成。因此，即使此功能能很好地预测您的每日收入，也并无用处。同样，当您训练模型并获得出色的评估指标（例如 0.99 <button type=\"button\" class=\"term\" data-term=\"AUC\"><b>AUC</b></button>）时，请寻找可能会泄露到标签中的这类特征。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check for label leakage",
+"zh": "检查是否存在标签泄露"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"label-leakage\"><b>Label leakage</b></button> means that your <button type=\"button\" class=\"term\" data-term=\"ground-truth\"><b>ground truth</b></button> labels that you're trying to predict have inadvertently entered your training features. Label leakage is sometimes very difficult to detect.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"label-leakage\"><b>标签泄漏</b></button>是指您尝试预测的<button type=\"button\" class=\"term\" data-term=\"ground-truth\"><b>评估依据</b></button>标签无意中进入了训练特征。标签泄露有时很难检测到。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Suppose you build a binary classification model to predict whether or not a new hospital patient has cancer. Your model uses features like the following:",
+"zh": "假设您构建了一个二元分类模型来预测新住院的患者是否患有癌症。您的模型使用以下功能："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Patient age",
+"zh": "患者年龄"
+},
+{
+"en": "Patient gender",
+"zh": "患者性别"
+},
+{
+"en": "Prior medical conditions",
+"zh": "既往病症"
+},
+{
+"en": "Hospital name",
+"zh": "医院名称"
+},
+{
+"en": "Vital signs",
+"zh": "生命体征"
+},
+{
+"en": "Test results",
+"zh": "测试结果"
+},
+{
+"en": "Heredity",
+"zh": "遗传"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The label is as follows:",
+"zh": "标签如下："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Boolean: Does the patient have cancer?",
+"zh": "布尔值：患者是否患有癌症？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "You partition the data carefully, ensuring that your training set is well isolated from your validation set and test set. The model performs exceedingly <i>well</i> on the validation set and test set; the metrics are fantastic. Unfortunately, the model performs <i>terribly</i> on new patients in the real world.",
+"zh": "您需要仔细划分数据，确保训练集与验证集和测试集完全隔离。模型在验证集和测试集上的表现非常<i>出色</i>；指标非常理想。遗憾的是，该模型在现实世界中对新患者的诊断效果<i>非常糟糕</i>。"
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Why did this model that excelled on the test set fail miserably in the real world?",
+"zh": "为什么在测试集上表现出色的模型在现实世界中却表现不佳？"
+},
+"open": true,
+"options": [
+{
+"html": {
+"en": "Click here to see the answer",
+"zh": "点击此处查看答案"
+},
+"why": {
+"en": "Click here to see the answer <b>Answer:</b> One of the model's features is hospital name. Certain hospitals specialize in treating cancer. During training, the model quickly learned that patients assigned to certain hospitals very likely had cancer. So, hospital name became a highly weighted feature.<br> At inference time, most patients hadn't yet been assigned to a hospital. After all, the purpose of the model was to diagnose the presence or absence of cancer and to then use that diagnosis to assign the patient to an appropriate hospital. Consequently, during inference, the hospital name feature wasn't yet available and the model was forced to rely on other features.",
+"zh": "点击此处查看答案 <b>回答</b>：模型的一项特征是医院名称。 某些医院专门治疗癌症。在训练期间，模型很快就了解到，分配到某些医院的患者很可能患有癌症。因此，医院名称成为一个高权重的特征。<br> 在推理时，大多数患者尚未被分配到医院。 毕竟，该模型的目的是诊断患者是否患有癌症，然后根据诊断结果将患者分配到合适的医院。因此，在推理期间，医院名称特征尚不可用，模型被迫依赖其他特征。"
+},
+"correct": null
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b> This exercise is loosely based on <a href=\"http://dl.acm.org/citation.cfm?id=2020496\" target=\"_blank\" rel=\"noopener\">\"Leakage in data mining: formulation, detection, and avoidance\"</a> by Kaufman, Rosset, and Perlich, with some modifications made along the way.",
+"zh": "<b>注意</b>：本练习大致基于 Kaufman、Rosset 和 Perlich 的<a href=\"http://dl.acm.org/citation.cfm?id=2020496\" target=\"_blank\" rel=\"noopener\">“Leakage in data mining: formulation, detection, and avoidance”</a>（数据挖掘中的泄漏：公式、检测和避免），并在此过程中进行了一些修改。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Monitor model age throughout pipeline",
+"zh": "监控整个流水线中的模型年龄"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "If the serving data evolves with time but your model isn’t retrained regularly, then you will see a decline in model quality. Track the time since the model was retrained on new data and set a threshold age for alerts. Besides monitoring the model's age at serving, you should monitor the model's age throughout the pipeline to catch pipeline stalls.",
+"zh": "如果服务数据随时间推移而不断变化，但您的模型未定期重新训练，那么模型质量就会下降。跟踪模型自基于新数据重新训练以来的时间，并设置提醒的年龄阈值。除了监控模型在提供时的使用时长之外，您还应监控整个流水线中模型的使用时长，以发现流水线停滞。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Test that model weights and outputs are numerically stable",
+"zh": "测试模型权重和输出在数值上是否稳定"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "During model training, your weights and layer outputs should not be NaN (not a number) or Inf (infinite). Write tests to check for NaN and Inf values of your weights and layer outputs. Additionally, test that more than half of the outputs of a layer are not zero.",
+"zh": "在模型训练期间，权重和层输出不应为 NaN（非数字）或 Inf（无限）。编写测试，检查权重和层输出的 NaN 和 Inf 值。 此外，还要测试某一层中超过一半的输出是否不为零。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Monitor model performance",
+"zh": "监控模型性能"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Your unicorn appearance predictor has been more popular than expected! You’re getting lots of prediction requests and even more training data. You think that's great until you realize that your model is taking more and more memory and time to train. You decide to monitor your model's performance by following these steps:",
+"zh": "独角兽出现预测工具的受欢迎程度超出了预期！您会收到大量预测请求，甚至更多训练数据。您可能会觉得这很棒，但很快就会发现，模型需要越来越多的内存和时间来进行训练。您决定按照以下步骤监控模型的性能："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Track model performance by versions of code, model, and data. Such tracking lets you pinpoint the exact cause for any performance degradation.",
+"zh": "按代码、模型和数据版本跟踪模型性能。通过此类跟踪，您可以准确找出导致性能下降的原因。"
+},
+{
+"en": "Test the training steps per second for a new model version against the previous version and against a fixed threshold.",
+"zh": "针对新模型版本与之前版本以及固定阈值，测试每秒训练步数。"
+},
+{
+"en": "Catch memory leaks by setting a threshold for memory use.",
+"zh": "通过设置内存使用量阈值来捕获内存泄漏。"
+},
+{
+"en": "Monitor API response times and track their percentiles. While API response times might be outside your control, slow responses could potentially cause poor real-world metrics.",
+"zh": "监控 API 响应时间并跟踪其百分位数。虽然 API 响应时间可能不受您的控制，但响应缓慢可能会导致实际指标不佳。"
+},
+{
+"en": "Monitor the number of queries answered per second.",
+"zh": "监控每秒回答的查询次数。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Test the quality of live model on served data",
+"zh": "测试已投放的实时模型在已投放数据上的质量"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You’ve validated your model. But what if real-world scenarios, such as unicorn behavior, change after recording your validation data? Then the quality of your served model will degrade. However, testing quality in serving is hard because real-world data is not always labeled. If your serving data is not labeled, consider these tests:",
+"zh": "您已验证模型。但如果在记录验证数据后，现实世界中的场景（例如独角兽行为）发生了变化，该怎么办？那么，已部署模型的质量就会下降。不过，在投放时测试质量很难，因为真实世界的数据并不总是带有标签。如果您的投放数据未标记，请考虑进行以下测试："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<a href=\"#/ch/c07/labels\">Generate labels using human raters</a>.",
+"zh": "<a href=\"#/ch/c07/labels\">使用人工评估者生成标签</a>。"
+},
+{
+"en": "Investigate models that show significant statistical bias in predictions. See <a href=\"#/ch/c04/prediction-bias\">Classification: Prediction Bias</a>.",
+"zh": "调查在预测中显示出显著统计偏差的模型。请参阅<a href=\"#/ch/c04/prediction-bias\">分类：预测偏差</a>。"
+},
+{
+"en": "Track real-world metrics for your model. For example, if you’re classifying spam, compare your predictions to user-reported spam.",
+"zh": "跟踪模型的实际效果指标。例如，如果您要对垃圾内容进行分类，请将您的预测结果与用户举报的垃圾内容进行比较。"
+},
+{
+"en": "Mitigate potential divergence between training and serving data by serving a new model version on a fraction of your queries. As you validate your new serving model, gradually switch all queries to the new version.",
+"zh": "通过在部分查询上应用新模型版本，缓解训练数据与应用数据之间可能存在的差异。在验证新服务模型时，逐渐将所有查询切换到新版本。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Using these tests, remember to monitor both sudden and slow degradation in prediction quality.",
+"zh": "使用这些测试时，请务必监控预测质量的突然下降和缓慢下降。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Randomization",
+"zh": "随机"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Make your data generation pipeline reproducible. Say you want to add a feature to see how it affects model quality. For a fair experiment, your datasets should be identical except for this new feature. In that spirit, make sure any randomization in data generation can be made deterministic:",
+"zh": "使数据生成流水线可重现。假设您想添加一个特征，看看它对模型质量有何影响。为了确保实验的公平性，您的数据集应完全相同，只是添加了这项新功能。 因此，请确保数据生成中的任何随机化都可以确定："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Seed your random number generators</b> (RNGs). Seeding ensures that the RNG outputs the same values in the same order each time you run it, recreating your dataset.",
+"zh": "为随机数生成器 (RNG) <b>设置种子</b>。通过设定种子，可以确保每次运行 RNG 时，它都会以相同的顺序输出相同的值，从而重新创建数据集。"
+},
+{
+"en": "<b>Use invariant hash keys.</b> <button type=\"button\" class=\"term\" data-term=\"hashing\"><b>Hashing</b></button> is a common way to split or sample data. You can hash each example, and use the resulting integer to decide in which split to place the example. The inputs to your hash function shouldn't change each time you run the data generation program. Don't use the current time or a random number in your hash, for example, if you want to recreate your hashes on demand.",
+"zh": "<b>使用不变量哈希键。</b> <button type=\"button\" class=\"term\" data-term=\"hashing\"><b>哈希处理</b></button>是一种常见的数据拆分或抽样方法。您可以对每个示例进行哈希处理，并使用生成的整数来决定将示例放置在哪个拆分中。每次运行数据生成程序时，哈希函数的输入不应发生变化。如果您想按需重新创建哈希值，请勿在哈希中使用当前时间或随机数。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The preceding approaches apply both to sampling and splitting your data.",
+"zh": "上述方法既适用于对数据进行抽样，也适用于对数据进行拆分。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Considerations for hashing",
+"zh": "哈希处理方面的注意事项"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Imagine again you were collecting Search queries and using hashing to include or exclude queries. If the hash key only used the query, then across multiple days of data, you'll either <i>always</i> include that query or <i>always</i> exclude it. Always including or always excluding a query is bad because:",
+"zh": "再次假设您正在收集搜索查询，并使用哈希来包含或排除查询。如果哈希键仅使用查询，那么在多天的数据中，您要么<i>始终</i>包含该查询，要么<i>始终</i>排除该查询。始终包含或始终排除某个查询是不好的，原因如下："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Your training set will see a less diverse set of queries.",
+"zh": "您的训练集将看到一组多样性较低的查询。"
+},
+{
+"en": "Your evaluation sets will be artificially hard, because they won't overlap with your training data. In reality, at serving time, you'll have seen some of the live traffic in your training data, so your evaluation should reflect that.",
+"zh": "由于评估集不会与训练数据重叠，因此评估集将人为地变得困难。实际上，在提供服务时，您会在训练数据中看到一些实时流量，因此评估应反映这一点。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Instead you can hash on query + query date, which would result in a different hashing for each day.",
+"zh": "您可以改为对查询 + 查询日期进行哈希处理，这样每天都会得到不同的哈希值。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/hashing_on_query.gif",
+"alt": {
+"en": "Figure 7. Animated visualization showing how hashing solely on the\n            query causes data to go into the same bucket each day, but hashing\n            on the query plus the query time causes data to go into different\n            buckets each day. The three buckets are Training, Evaluation, and\n            Ignored.",
+"zh": "图 7. 动画可视化效果：仅对查询进行哈希处理会导致每天的数据进入同一存储分区，而对查询和查询时间进行哈希处理会导致每天的数据进入不同的存储分区。这三个类别分别是“训练”“评估”和“忽略”。"
+},
+"caption": {
+"en": "<b>Figure 7.</b> Hashing on query versus hashing on query + query date.",
+"zh": "<b>图 7.</b> 对查询进行哈希处理与对查询 + 查询日期进行哈希处理。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>Because these hash keys use the date that the query was logged (rather than the current date), hashing is deterministic. That is, the hash for \"Day One\" will be the same regardless of when it is generated.",
+"zh": "<b>注意</b>：由于这些哈希键使用的是查询记录的日期（而非当前日期），因此哈希是确定性的。也就是说，无论何时生成，“Day One”的哈希值都相同。"
+}
+},
+{
+"type": "note",
+"kind": "warning",
+"html": {
+"en": "Make your hashing unique to ensure your system doesn't collide with other systems.",
+"zh": "使您的哈希处理具有唯一性，以确保您的系统不会与其他系统发生冲突。"
+}
+}
+]
+},
+{
+"id": "questions",
+"path": "/machine-learning/crash-course/production-ml-systems/questions",
+"min": 10,
+"heading": {
+"en": "Production ML systems: Questions to ask",
+"zh": "生产型机器学习系统：要提出的问题"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/questions",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/questions?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Continuously monitor models in production to evaluate feature importance and potentially remove unnecessary ones, ensuring prediction quality and resource efficiency.",
+"zh": null
+},
+{
+"en": "Data reliability is crucial; consider data source stability, potential changes in upstream data processes, and create local data copies to control versioning and mitigate risks.",
+"zh": null
+},
+{
+"en": "Be aware of feedback loops where a model's predictions influence future input data, potentially leading to unexpected behavior or biased outcomes, especially in interconnected systems.",
+"zh": null
+},
+{
+"en": "Regularly assess your model by asking if features are truly helpful and if their value outweighs the costs of inclusion, aiming for a balance between prediction accuracy and maintainability.",
+"zh": null
+},
+{
+"en": "Evaluate if your model is susceptible to a feedback loop and take steps to isolate it if you find it is.",
+"zh": null
+}
+],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This lesson focuses on the questions you should ask about your data and model in production systems.",
+"zh": "本课将重点介绍您应针对生产系统中的数据和模型提出的问题。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Is each feature helpful?",
+"zh": "每项功能是否实用？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You should continuously monitor your model to remove features that contribute little or nothing to the model's predictive ability. If the input data for that feature abruptly changes, your model's behavior might also abruptly change in undesirable ways.",
+"zh": "您应持续监控模型，以移除对模型预测能力贡献不大或没有贡献的特征。如果该特征的输入数据突然发生变化，模型的行为也可能会以不理想的方式突然发生变化。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Also consider the following related question:",
+"zh": "另请考虑以下相关问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Does the usefulness of the feature justify the cost of including it?",
+"zh": "该功能的实用性是否足以证明添加该功能的费用？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "It is always tempting to add more features to the model. For example, suppose you find a new feature whose addition makes your model's predictions slightly better. Slightly better predictions certainly seem better than slightly worse predictions; however, the extra feature adds to your maintenance burden.",
+"zh": "我们总是想向模型添加更多特征。例如，假设您发现添加一项新特征后，模型的预测结果略有改进。预测结果略好一点显然比略差一点要好；不过，额外的功能会增加您的维护负担。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Is your data source reliable?",
+"zh": "您的数据源是否可靠？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Some questions to ask about the reliability of your input data:",
+"zh": "以下是针对输入数据的可靠性询问的一些问题："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Is the signal always going to be available or is it coming from an unreliable source? For example: <ul><li>Is the signal coming from a server that crashes under heavy load?</li><li>Is the signal coming from humans that go on vacation every August?</li></ul>",
+"zh": "信号是否始终可用？信号来源是否不可靠？例如：<ul><li>信号是否来自在高负载下崩溃的服务器？</li><li>信号是否来自每年 8 月都去度假的用户？</li></ul>"
+},
+{
+"en": "Does the system that computes your model's input data ever change? If so: <ul><li>How often?</li><li>How will you know when that system changes?</li></ul>",
+"zh": "计算模型输入数据的系统是否会发生变化？如果是，请执行以下操作： <ul><li>频率如何？</li><li>您如何得知该系统发生变化？</li></ul>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Consider creating your own copy of the data you receive from the upstream process. Then, only advance to the next version of the upstream data when you are certain that it is safe to do so.",
+"zh": "不妨考虑为您从上游进程收到的数据创建自己的副本。然后，仅在您确定可以安全地升级到上游数据的下一个版本时，才执行升级。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Is your model part of a feedback loop?",
+"zh": "您的模型是否属于反馈环？"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Sometimes a model can affect its own training data. For example, the results from some models, in turn, become (directly or indirectly) input features to that same model.",
+"zh": "有时，模型可能会影响自己的训练数据。例如，某些模型的结果反过来会（直接或间接地）成为该模型的输入特征。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Sometimes a model can affect another model. For example, consider two models for predicting stock prices:",
+"zh": "有时，一个模型可能会影响另一个模型。例如，假设有以下两个用于预测股票价格的模型："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Model A, which is a bad predictive model.",
+"zh": "模型 A，这是一个效果不佳的预测模型。"
+},
+{
+"en": "Model B.",
+"zh": "模型 B。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Since Model A is buggy, it mistakenly decides to buy stock in Stock X. Those purchases drive up the price of Stock X. Model B uses the price of Stock X as an input feature, so Model B can come to some false conclusions about the value of Stock X. Model B could, therefore, buy or sell shares of Stock X based on the buggy behavior of Model A. Model B's behavior, in turn, can affect Model A, possibly triggering a <a href=\"https://wikipedia.org/wiki/Tulip_mania\" target=\"_blank\" rel=\"noopener\">tulip mania</a> or a slide in Company X's stock.",
+"zh": "由于模型 A 存在 bug，因此错误地决定购买股票 X。这些购买交易会推高股票 X 的价格。模型 B 使用股票 X 的价格作为输入特征，因此可能会得出一些关于股票 X 价值的错误结论。因此，模型 B 可以根据模型 A 的错误行为来买入或卖出股票 X 的股票。反过来，模型 B 的行为可能会影响模型 A，可能会触发<a href=\"https://wikipedia.org/wiki/Tulip_mania\" target=\"_blank\" rel=\"noopener\">郁金香热潮</a>或导致公司 X 的股票价格下跌。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which <b>three</b> of the following models are susceptible to a feedback loop?",
+"zh": "以下哪<b>三种</b>模型容易受到反馈环的影响？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "A traffic-forecasting model that predicts congestion at highway exits near the beach, using beach crowd size as one of its features.",
+"zh": "交通状况预测模型 - 使用海滩上的人群规模作为特征之一预测海滩附近各个高速公路出口的拥堵情况。"
+},
+"why": {
+"en": "Some beachgoers are likely to base their plans on the traffic forecast. If there is a large beach crowd and traffic is forecast to be heavy, many people may make alternative plans. This may depress beach turnout, resulting in a lighter traffic forecast, which then may increase attendance, and the cycle repeats.",
+"zh": "有些准备前往海滩的游客可能会根据交通状况预测结果制定出行计划。如果海滩上人群规模很大且交通预计会拥堵，则许多人可能会另做打算。这样一来，海滩上游客的数量就会减少，进而使模型作出交通畅通的预测，然后又会导致前往海滩的游客增加，这样，这个循环就会反复下去。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "A book-recommendation model that suggests novels its users may like based on their popularity (i.e., the number of times the books have been purchased).",
+"zh": "图书推荐模型 - 根据小说的受欢迎程度（即图书的购买量）向用户推荐其可能喜欢的小说。"
+},
+"why": {
+"en": "Book recommendations are likely to drive purchases, and these additional sales will be fed back into the model as input, making it more likely to recommend these same books in the future.",
+"zh": "图书推荐有可能吸引用户购买，而且这些额外销量将作为输入项反馈回模型，从而使该模型更有可能在将来推荐同样的图书。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "A university-ranking model that rates schools in part by their selectivity—the percentage of students who applied that were admitted.",
+"zh": "大学排名模型 - 将选择率（即申请某所学校并被录取的学生所占百分比）作为一项学校评分依据。"
+},
+"why": {
+"en": "The model's rankings may drive additional interest to top-rated schools, increasing the number of applications they receive. If these schools continue to admit the same number of students, selectivity will increase (the percentage of students admitted will go down). This will boost these schools' rankings, which will further increase prospective student interest, and so on…",
+"zh": "此模型的排名可能会提高学生对高评分学校的兴趣，从而使这些学校收到的申请增加。如果这些学校继续录取相同数量的学生，则选择性将会提高（录取的学生所占的百分比将会降低）。这将提升这些学校的排名，从而进一步提高潜在学生的兴趣，以此类推..."
+},
+"correct": true
+},
+{
+"html": {
+"en": "An election-results model that forecasts the winner of a mayoral race by surveying 2% of voters after the polls have closed.",
+"zh": "一种选举结果模型，通过在投票结束后对 2% 的选民进行调查，预测市长竞选的胜出者。"
+},
+"why": {
+"en": "If the model does not publish its forecast until after the polls have closed, it is not possible for its predictions to affect voter behavior.",
+"zh": "如果此模型直到投票结束之后才发布其预测，则其预测结果不可能影响投票者的行为。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "A housing-value model that predicts house prices, using size (area in square meters), number of bedrooms, and geographic location as features.",
+"zh": "住宅价值预测模型 - 使用建筑面积（以平方米为单位计算的面积）、卧室数量和地理位置作为特征预测房价。"
+},
+"why": {
+"en": "It is not possible to quickly change a house's location, size, or number of bedrooms in response to price forecasts, making a feedback loop unlikely. However, there is potentially a correlation between size and number of bedrooms (larger homes are likely to have more rooms) that may need to be teased apart.",
+"zh": "快速更改房屋位置、建筑面积或卧室数量以响应价格预测是不可能的，因此不可能形成反馈环。不过，面积和卧室数量之间可能存在相关性（面积较大的住宅可能有更多房间），因此可能需要将这两者区分开来。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "A face-attributes model that detects whether a person is smiling in a photo, which is regularly trained on a database of stock photography that is automatically updated monthly.",
+"zh": "用于检测照片中人物是否在微笑的面部属性模型，该模型会定期使用每月自动更新的照片库数据库进行训练。"
+},
+"why": {
+"en": "There is no feedback loop here, as model predictions don't have any impact on the photo database. However, versioning of the input data is a concern here, as these monthly updates could potentially have unforeseen effects on the model.",
+"zh": "此处没有反馈环，因为模型预测不会对照片数据库产生任何影响。不过，输入数据的版本控制在这里是一个问题，因为这些每月更新可能会对模型产生不可预见的影响。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/production-ml-systems/test-your-knowledge",
+"min": 15,
+"heading": {
+"en": "Production ML systems: Test your knowledge",
+"zh": "生产型机器学习系统：测试您的知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c12/automl\">Auto ML</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照建议的顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c12/automl\">AutoML</a></b>。"
+}
+}
+]
+}
+]
+}

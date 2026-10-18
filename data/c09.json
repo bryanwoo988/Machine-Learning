@@ -1,0 +1,919 @@
+{
+"id": "c09",
+"num": 9,
+"stage": 2,
+"title": {
+"en": "Embeddings",
+"zh": "嵌入"
+},
+"minutes": 55,
+"sections": [
+{
+"id": "embeddings",
+"path": "/machine-learning/crash-course/embeddings",
+"min": 5,
+"heading": {
+"en": "Embeddings",
+"zh": "Embeddings"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/embeddings",
+"zh": "https://developers.google.com/machine-learning/crash-course/embeddings?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module explains how to create embeddings, which are lower-dimensional representations of sparse data that address the problems of large input vectors and lack of meaningful relations between vectors in one-hot encoding.",
+"zh": null
+},
+{
+"en": "One-hot encoding creates large input vectors, leading to a huge number of weights in a neural network, requiring more data, computation, and memory.",
+"zh": null
+},
+{
+"en": "One-hot encoding vectors lack meaningful relationships, failing to capture semantic similarities between items, like the example of hot dogs and shawarmas being more similar than hot dogs and salads.",
+"zh": null
+},
+{
+"en": "Embeddings offer a solution by providing dense vector representations that capture semantic relationships and reduce the dimensionality of data, improving efficiency and performance in machine learning models.",
+"zh": null
+},
+{
+"en": "This module assumes familiarity with introductory machine learning concepts like linear regression, categorical data, and neural networks.",
+"zh": null
+}
+],
+"terms": [
+"one-hot-encoding",
+"neural-network",
+"weight"
+],
+"blocks": [
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives</b> <ul><li>Visualize vector representations of word embeddings, such as <a href=\"https://wikipedia.org/wiki/Word2vec\" target=\"_blank\" rel=\"noopener\">word2vec</a>.</li><li>Distinguish encoding from embedding.</li><li>Describe contextual embedding.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>直观呈现字词嵌入的向量表示法，例如 <a href=\"https://wikipedia.org/wiki/Word2vec\" target=\"_blank\" rel=\"noopener\">word2vec</a>。</li><li>区分编码和嵌入。</li><li>描述上下文嵌入。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following modules:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li><li><a href=\"#/ch/c02/linear-regression\">Linear regression</a></li><li><a href=\"#/ch/c06/categorical-data\">Working with categorical data</a></li><li><a href=\"#/ch/c08/neural-networks\">Neural networks</a></li></ul>",
+"zh": "<b>前提条件：</b> 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li><li><a href=\"#/ch/c02/linear-regression\">线性回归</a></li><li><a href=\"#/ch/c06/categorical-data\">处理类别数据</a></li><li><a href=\"#/ch/c08/neural-networks\">神经网络</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Imagine you're developing a food-recommendation application, where users input their favorite meals, and the app suggests similar meals that they might like. You want to develop a machine learning (ML) model that can predict food similarity, so your app can make high quality recommendations (\"Since you like pancakes, we recommend crepes\").",
+"zh": "假设您正在开发一款餐点推荐应用，用户输入自己喜欢的餐点，应用会建议他们可能喜欢的类似餐点。您想开发一个可以预测食物相似度的机器学习 (ML) 模型，以便您的应用可以提供高质量的推荐（“因为您喜欢煎饼，所以我们推荐可丽饼”）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "To train your model, you curate a dataset of 5,000 popular meal items, including borscht, hot dog, salad, pizza, and shawarma.",
+"zh": "为了训练模型，您需要整理一个包含 5,000 种热门餐点的数据集，包括罗宋汤、热狗、沙拉、披萨和沙瓦玛。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/embeddings/images/food_images.png",
+"alt": {
+"en": "Figure 1. A set of illustrations of five food items. Clockwise from\n       top-left: borscht, hot dog, salad, pizza, shawarma.",
+"zh": "图 1. 一组五种食品的插图。从左上角开始顺时针方向依次为：罗宋汤、热狗、沙拉、披萨、沙瓦玛。"
+},
+"caption": {
+"en": "<b>Figure 1.</b> Sampling of meal items included in the food dataset.",
+"zh": "<b>图 1.</b> 食品数据集中包含的餐点示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You create a <code>meal</code> feature that contains a <button type=\"button\" class=\"term\" data-term=\"one-hot-encoding\"><b>one-hot encoded</b></button> representation of each of the meal items in the dataset. <button type=\"button\" class=\"term\" data-term=\"encoder\"><b>Encoding</b></button> refers to the process of choosing an initial numerical representation of data to train the model on.",
+"zh": "您可以创建一个 <code>meal</code> 特征，其中包含数据集中每种餐点的<button type=\"button\" class=\"term\" data-term=\"one-hot-encoding\"><b>独热编码</b></button>表示法。<button type=\"button\" class=\"term\" data-term=\"encoder\"><b>编码</b></button>是指选择数据的初始数值表示法以训练模型的过程。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/embeddings/images/food_images_one_hot_encodings.png",
+"alt": {
+"en": "Figure 2. Top: a visualization of the one-hot encoding for borscht.\n       The vector [1, 0, 0, 0, ..., 0] is displayed above six boxes,\n       each aligned from left\n       to right with one of the vector numbers. The boxes, from left to right\n       contain the following images: borscht, hot dog, salad, pizza, [empty],\n       shawarma. Middle: a visualization of the one-hot encoding for hot dog.\n       The vector [0, 1, 0, 0, ..., 0] is displayed above six boxes, each\n       aligned from left to right with one of the vector numbers. The boxes have\n       the same images from left to right as for the borscht visualization\n       above. Bottom: a visualization of the one-hot encoding for shawarma. The\n       vector [0, 0, 0, 0, ..., 1] is displayed above six boxes, each aligned\n       from left to right with one of the vector numbers. The boxes have\n       the same images from left to right as for the borscht and hot dog\n       visualizations.",
+"zh": "图 2. 顶部：罗宋汤的独热编码图表。\n       向量 [1, 0, 0, 0, ..., 0] 显示在六个方框上方，每个方框从左到右对齐一个向量数字。方框从左到右包含以下图片：罗宋汤、热狗、沙拉、披萨、[空]、沙瓦玛。中间：热狗的独热编码图表。\n       向量 [0, 1, 0, 0, ..., 0] 显示在六个方框上方，每个方框从左到右对齐一个向量数字。这些方框中显示的图片从左到右与上面的罗宋汤图表相同。底部：沙威玛的独热编码图表。向量 [0, 0, 0, 0, ..., 1] 显示在六个方框上方，每个方框从左到右对齐一个向量数字。这些方框中显示的图片从左到右与上面的罗宋汤和热狗图表相同。"
+},
+"caption": {
+"en": "<b>Figure 2.</b> One-hot encodings of borscht, hot dog, and shawarma. Each one-hot encoding vector has a length of 5,000 (one entry for each menu item in the dataset). The ellipsis in the diagram represents the 4,995 entries not shown.",
+"zh": "<b>图 2.</b> 罗宋汤、热狗和沙瓦玛的独热编码。 每个独热编码向量的长度为 5,000（数据集中的每个餐点都有一个条目）。图中的省略号表示未显示的 4,995 个条目。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Pitfalls of sparse data representations",
+"zh": "稀疏数据表示法的陷阱"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Reviewing these one-hot encodings, you notice several problems with this representation of the data.",
+"zh": "查看这些独热编码时，您会发现这种数据表示法存在一些问题。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Number of weights.</b> Large input vectors mean a huge number of <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weights</b></button> for a <button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>neural network</b></button>. With M entries in your one-hot encoding, and N nodes in the first layer of the network after the input, the model has to train MxN weights for that layer.",
+"zh": "<b>权重数量</b>。较大的输入向量意味着<button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>神经网络</b></button>需要大量的<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button>。在独热编码中，如果有 M 个条目，并且在网络输入层后的第一层中有 N 个节点，那么模型必须为该层训练 MxN 个权重。"
+},
+{
+"en": "<b>Number of datapoints.</b> The more weights in your model, the more data you need to train effectively.",
+"zh": "<b>数据点数</b>。模型中的权重越多，高效训练所需的数据就越多。"
+},
+{
+"en": "<b>Amount of computation.</b> The more weights, the more computation required to train and use the model. It's easy to exceed the capabilities of your hardware.",
+"zh": "<b>计算量</b>。权重越多，训练和使用模型所需的计算就越多。这很容易就会超出硬件的能力范围。"
+},
+{
+"en": "<b>Amount of memory.</b> The more weights in your model, the more memory that is needed on the accelerators that train and serve it. Scaling this up efficiently is very difficult.",
+"zh": "<b>内存占用量</b>。模型中的权重越多，用于训练和应用模型的加速器就需要越多的内存。要高效地扩大规模非常困难。"
+},
+{
+"en": "<b>Difficulty of supporting on-device machine learning (ODML).</b> If you're hoping to run your ML model on local devices (as opposed to serving them), you'll need to be focused on making your model smaller, and will want to decrease the number of weights.",
+"zh": "<b>难以支持<a href=\"https://developers.google.com/learn/topics/on-device-ml?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">设备端机器学习 (ODML)</a>。</b>如果您希望在本地设备上运行机器学习模型（而不是在云端提供模型），则需要专注于缩小模型，并希望减少权重数量。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In this module, you'll learn how to create <b>embeddings</b>, lower-dimensional representations of sparse data, that address these issues.",
+"zh": "在本模块中，您将学习如何创建<b>嵌入</b>（稀疏数据的低维表示），以解决这些问题。"
+}
+}
+]
+},
+{
+"id": "embedding-space",
+"path": "/machine-learning/crash-course/embeddings/embedding-space",
+"min": 10,
+"heading": {
+"en": "Embeddings: Embedding space and static embeddings",
+"zh": "嵌入：嵌入空间和静态嵌入"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/embeddings/embedding-space",
+"zh": "https://developers.google.com/machine-learning/crash-course/embeddings/embedding-space?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Embeddings are low-dimensional representations of high-dimensional data, often used to capture semantic relationships between items.",
+"zh": null
+},
+{
+"en": "Embeddings place similar items closer together in the embedding space, allowing for efficient machine learning on large datasets.",
+"zh": null
+},
+{
+"en": "The distance between points in an embedding space represents the relative similarity between the corresponding items.",
+"zh": null
+},
+{
+"en": "Real-world embeddings can encode complex relationships, like those between countries and their capitals, allowing models to detect patterns.",
+"zh": null
+},
+{
+"en": "Static embeddings like word2vec represent all meanings of a word with a single point, which can be a limitation in some cases.",
+"zh": null
+}
+],
+"terms": [
+"embedding-vector",
+"embedding-space"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "An <button type=\"button\" class=\"term\" data-term=\"embedding-vector\"><b>embedding</b></button> is a vector representation of data in <button type=\"button\" class=\"term\" data-term=\"embedding-space\"><b>embedding space</b></button>. Generally speaking, a model finds potential embeddings by projecting the high-dimensional space of initial data vectors into a lower-dimensional space. For a discussion of high-dimensional versus low-dimensional data, see the <a href=\"#/ch/c06/one-hot-encoding\">Categorical Data</a> module.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"embedding-vector\"><b>嵌入</b></button>是<button type=\"button\" class=\"term\" data-term=\"embedding-space\"><b>嵌入空间</b></button>中数据的向量表示法。一般来说，模型通过将初始数据向量的高维空间投影到低维空间来查找潜在的嵌入。如需了解高维数据与低维数据的不同之处，请参阅<a href=\"#/ch/c06/one-hot-encoding\">类别数据</a>模块。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Embeddings make it easier to do machine learning on large <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vectors</b></button>, such as the sparse vectors representing meal items discussed in the <a href=\"#/ch/c09/embeddings\">previous section</a>. Sometimes the relative positions of items in embedding space have a potential semantic relationship, but often the process of finding a lower-dimensional space, and relative positions in that space, is not interpretable by humans, and the resulting embeddings are difficult to understand.",
+"zh": "借助嵌入，我们可以更轻松地对大型<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>（例如<a href=\"#/ch/c09/embeddings\">上一节</a>中讨论的代表食物的稀疏向量）进行机器学习。有时，嵌入空间中各项内容的相对位置可能存在语义关系，但通常情况下，人类无法解释寻找低维空间以及该空间中的相对位置的过程，并且生成的嵌入很难理解。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Still, for the sake of human understanding, to give an idea of how embedding vectors represent information, consider the following one-dimensional representation of the dishes hot dog, pizza, salad, shawarma, and borscht, on a scale of \"least like a sandwich\" to \"most like a sandwich.\" The single dimension is an imaginary measure of \"sandwichness.\"",
+"zh": "不过，为了便于理解，并了解嵌入向量如何表示信息，请看看以下对菜肴热狗、披萨、沙拉、沙瓦玛和罗宋汤的一维表示法，从“最不像三明治”到“最像三明治”进行评分。单个维度是“三明治度”的虚构衡量标准。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/embeddings_1D.png",
+"alt": {
+"en": "Figure 3. Along an axis of sandwichness, from least to most:\n    borscht, salad, pizza, hot dog, shawarma.",
+"zh": "图 3. 沿着三明治度轴，从最不像到最像：罗宋汤、沙拉、披萨、热狗、沙瓦玛。"
+},
+"caption": {
+"en": "<b>Figure 3.</b> Foods along an imagined dimension of \"sandwichness.\"",
+"zh": "<b>图 3.</b> 沿着想象的“三明治度”维度排列的食物。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Where on this line would an apple strudel fall? Arguably, it could be placed between <code>hot dog</code> and <code>shawarma</code>. But apple strudel also seems to have an additional dimension of <i>sweetness</i> or <i>dessertness</i> that makes it very different from the other options. The following figure visualizes this by adding a \"dessertness\" dimension:",
+"zh": "苹果馅饼会落在哪个位置？可以将其放置在 <code>hot dog</code> 和 <code>shawarma</code> 之间。但苹果馅饼似乎还具有额外的甜度或甜点度维度，这使其与其他选项大不相同。下图通过添加“甜点度”维度来直观呈现这一点："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/embeddings_2D.png",
+"alt": {
+"en": "Figure 4. Same image as before, but with a vertical axis of\n    dessertness. Apple strudel is between hot dog and shawarma but high up on\n    the horizontal axis, but higher up the desserteness axis.",
+"zh": "图 4. 与之前的图片相同，但垂直轴为甜点度。苹果馅饼介于热狗和沙瓦玛之间，但在水平轴上位于较高位置，而在甜点轴上位于更高位置。"
+},
+"caption": {
+"en": "<b>Figure 4.</b> Foods plotted by both \"sandwichness\" and \"dessertness.\"",
+"zh": "<b>图 4.</b> 按“三明治度”和“甜点度”绘制的食物图表。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "An embedding represents each item in <i>n</i>-dimensional space with <i>n</i> floating-point numbers (typically in the range –1 to 1 or 0 to 1). The embedding in Figure 3 represents each food in one-dimensional space with a single coordinate, while Figure 4 represents each food in two-dimensional space with two coordinates. In Figure 4, \"apple strudel\" is in the upper-right quadrant of the graph and could be assigned the point (0.5, 0.3), whereas \"hot dog\" is in the bottom-right quadrant of the graph and could be assigned the point (0.2, –0.5).",
+"zh": "嵌入式表示法使用 n 个浮点数（通常介于 –1 到 1 或 0 到 1 之间）来表示 n 维空间中的每个项。图 3 中的嵌入表示在单维空间中使用单个坐标表示每种食物，而图 4 表示在二维空间中使用两个坐标表示每种食物。在图 4 中，“苹果馅饼”位于图表的右上象限，可以分配点 (0.5, 0.3)，而“热狗”位于图表的右下象限，可以分配点 (0.2, –0.5)。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In an embedding, the distance between any two items can be calculated mathematically, and can be interpreted as a measure of relative similarity between those two items. Two things that are close to each other, like <code>shawarma</code> and <code>hot dog</code> in Figure 4, are more closely related in the model's representation of the data than two things more distant from each other, like <code>apple strudel</code> and <code>borscht</code>.",
+"zh": "在嵌入中，可以通过数学方式计算任意两项之间的距离，并将其解释为衡量这两项之间相似程度的指标。彼此靠近的两项（例如图 4 中的 <code>shawarma</code> 和 <code>hot dog</code>）在模型的数据表示法中比彼此较远的两项（例如 <code>apple strudel</code> 和 <code>borscht</code>）更密切相关。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "To learn about different methods of calculating distance between embedding vectors, see <a href=\"https://developers.google.com/machine-learning/clustering/dnn-clustering/supervised-similarity\" target=\"_blank\" rel=\"noopener\">Measuring Similarity from Embeddings</a>.",
+"zh": "如需了解计算嵌入向量之间距离的不同方法，请参阅<a href=\"https://developers.google.com/machine-learning/clustering/dnn-clustering/supervised-similarity?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">通过嵌入测量相似度</a>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice also that in the 2D space in Figure 4, <code>apple strudel</code> is much farther from <code>shawarma</code> and <code>hot dog</code> than it would be in the 1D space, which matches intuition: <code>apple strudel</code> is not as similar to a hot dog or a shawarma as hot dogs and shawarmas are to each other.",
+"zh": "另请注意，在图 4 中的 2D 空间中，<code>apple strudel</code> 与 <code>shawarma</code> 和 <code>hot dog</code> 的距离比在 1D 空间中更远，这符合直觉：<code>apple strudel</code> 与热狗或沙瓦玛之间的相似度不如热狗与沙瓦玛之间的相似度。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Now consider borscht, which is much more liquid than the other items. This suggests a third dimension, <i>liquidness</i>, or how liquid a food might be. Adding that dimension, the items could be visualized in 3D in this way:",
+"zh": "现在，考虑一下罗宋汤，它比其他菜肴含有更多的液体。这暗示了第三个维度，即液体度，或者说食物的液体程度。添加该维度后，可通过以下方式以 3D 形式直观呈现食物："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/embeddings_3D.png",
+"alt": {
+"en": "Figure 5. Same image as before, but with a third axis of liquidness\n    orthogonal to the other two, and borscht moved far along that axis.",
+"zh": "图 5. 与之前的图片相同，但第三个轴“液体度”与其他两个轴垂直，并且罗宋汤沿该轴移动了很远。"
+},
+"caption": {
+"en": "<b>Figure 5.</b> Foods plotted by \"sandwichness,\" \"dessertness,\" and \"liquidness.\"",
+"zh": "<b>图 5.</b> 按“三明治度”“甜点度”和“液体度”绘制的食物图表。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Where in this 3D space would tangyuan go? It's soupy, like borscht, and a sweet dessert, like apple strudel, and most definitely not a sandwich. Here is one possible placement:",
+"zh": "在这个 3D 空间中，汤圆会放在哪里？它是汤状的，像罗宋汤，还是甜点，像苹果馅饼，但绝对不是三明治。以下是一种可能的放置位置："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/images/embeddings_3D_tangyuan.png",
+"alt": {
+"en": "Figure 6. Same image as before, but with tangyuan placed high on\n    dessertness and liquidness and low on sandwichness.",
+"zh": "图 6. 与之前的图片相同，但汤圆在甜点度和液体度方面得分较高，在三明治度方面得分较低。"
+},
+"caption": {
+"en": "<b>Figure 6.</b> Adding tangyuan to the previous image, high on \"dessertness\" and \"liquidness\" and low on \"sandwichness.\"",
+"zh": "<b>图 6.</b> 向上一个图片添加汤圆，此时“甜点度”和“液体度”分数较高，“三明治度”分数较低。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice how much information is expressed in these three dimensions. You could imagine adding additional dimensions, like how meaty or baked a food might be, though 4D, 5D, and higher-dimensional spaces are difficult to visualize.",
+"zh": "请注意这三个维度表达了多少信息。 您可以想象一下添加其他维度，例如食物的肉质或烘烤程度，但 4D、5D 和更高维空间很难直观呈现。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Real-world embedding spaces",
+"zh": "真实世界的嵌入空间"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In the real world, embedding spaces are <i>d</i>-dimensional, where <i>d</i> is much higher than 3, though lower than the dimensionality of the data, and relationships between data points are not necessarily as intuitive as in the contrived illustration above. (For word embeddings, <i>d</i> is often 256, 512, or 1024.<sup>1</sup>)",
+"zh": "在现实世界中，嵌入空间是 d 维的，其中 d 远高于 3，但低于数据的维数，并且数据点之间的关系不一定像上文中所示的人工构造的图示那样直观。（对于词嵌入，d 通常为 256、512 或 1024。<sup>1</sup>）"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In practice, the ML practitioner usually sets the specific task and the number of embedding dimensions. The model then tries to arrange the training examples to be close in an embedding space with the specified number of dimensions, or tunes for the number of dimensions, if <i>d</i> is not fixed. The individual dimensions are rarely as understandable as \"dessertness\" or \"liquidness.\" Sometimes what they \"mean\" can be inferred but this is not always the case.",
+"zh": "在实践中，机器学习从业者通常会设置特定任务和嵌入维度数量。然后，模型会尝试将训练样本安排在具有指定维度数的嵌入空间中，或者自动适配最佳维度数量（如果 d 未固定）。具体维度很少像“甜点度”或“液体度”那样易于理解。有时，可以推断出它们的“含义”，但并非总是如此。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Embeddings will usually be specific to the task, and differ from each other when the task differs. For example, the embeddings generated by a vegetarian versus non-vegetarian classification model will be different from the embeddings generated by a model that suggests dishes based on time of day or season. \"Cereal\" and \"breakfast sausage\" would probably be close together in the embedding space of a time-of-day model but far apart in the embedding space of a vegetarian versus non-vegetarian model, for example.",
+"zh": "嵌入通常因任务而异，并且在任务不同时也会有所不同。例如，素食与非素食分类模型生成的嵌入将不同于根据时间或季节建议菜肴的模型生成的嵌入。例如，“Cereal”和“breakfast sausage”在一天时段模型的嵌入空间中可能相距不远，但在素食与非素食模型的嵌入空间中可能相距甚远。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Static embeddings",
+"zh": "静态嵌入"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "While embeddings differ from task to task, one task has some general applicability: predicting the context of a word. Models trained to predict the context of a word assume that words appearing in similar contexts are semantically related. For example, training data that includes the sentences \"They rode a burro down into the Grand Canyon\" and \"They rode a horse down into the canyon\" suggests that \"horse\" appears in similar contexts to \"burro.\" It turns out that embeddings based on semantic similarity work well for many general language tasks.",
+"zh": "虽然不同任务的嵌入各不相同，但有一个任务具有一定的通用适用性：预测字词的上下文。经过训练以预测字词上下文的模型会假定在类似上下文中出现的字词在语义上是相关的。例如，包含“They rode a burro down into the Grand Canyon”和“They rode a horse down into the canyon”这两句话的训练数据表明，“horse”出现在与“burro”类似的上下文中。事实证明，基于语义相似性的嵌入对于许多常规语言任务都非常有效。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "While it's an older example, and largely superseded by other models, the <b>word2vec</b> model remains useful for illustration. <code>word2vec</code> trains on a corpus of documents to obtain a single global embedding per word. When each word or data point has a single embedding vector, this is called a <b>static embedding</b>. The following video walks through a simplified illustration of <code>word2vec</code> training.",
+"zh": "虽然 <b>word2vec</b> 模型是一个较旧的示例，并且已被其他模型大大取代，但它仍然可以拿出来作为示例进行说明。<code>word2vec</code> 会针对文档语料库进行训练，以便为每个字词获得单个全局嵌入。如果每个字词或数据点都有一个嵌入向量，则称为<b>静态嵌入</b>。以下视频简要介绍了 <code>word2vec</code> 训练。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note</b>: <b>word2vec</b> can refer to both an algorithm for obtaining static word embeddings and a set of word vectors that were pretrained with that algorithm. It's used in both senses in this module.",
+"zh": "<b>注意</b>：<b>word2vec</b> 既可以指用于获取静态词嵌入的算法，也可以指使用该算法预训练的一组字词向量。在本模块中，它同时具有这两种含义。"
+}
+},
+{
+"type": "video",
+"id": "my5wFNQpFO0"
+},
+{
+"type": "p",
+"html": {
+"en": "Research suggests that these static embeddings, once trained, encode some degree of semantic information, particularly in relationships between words. That is, words that are used in similar contexts will be closer to each other in embedding space. The specific embeddings vectors generated will depend on the corpus used for training. See T. Mikolov et al (2013), <a href=\"https://arxiv.org/abs/1301.3781\" target=\"_blank\" rel=\"noopener\">\"Efficient estimation of word representations in vector space\"</a>, for details.",
+"zh": "研究表明，这些静态嵌入经过训练后会编码一定程度的语义信息，尤其是字词之间的关系。也就是说，在类似上下文中使用的字词在嵌入空间中彼此靠得更近。生成的特定嵌入向量取决于用于训练的语料库。详情请参阅 T. Mikolov 等人 (2013) 的<a href=\"https://arxiv.org/abs/1301.3781\" target=\"_blank\" rel=\"noopener\">“在向量空间中高效估算字词表示法”</a>。"
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "François Chollet, <a href=\"https://www.manning.com/books/deep-learning-with-python\" target=\"_blank\" rel=\"noopener\">Deep Learning with Python</a> (Shelter Island, NY: Manning, 2017), 6.1.2. ↩",
+"zh": "François Chollet，<a href=\"https://www.manning.com/books/deep-learning-with-python\" target=\"_blank\" rel=\"noopener\">使用 Python 进行深度学习</a>（纽约州谢尔特岛：Manning，2017 年），6.1.2。 ↩"
+}
+]
+}
+]
+},
+{
+"id": "interactive-exercises",
+"path": "/machine-learning/crash-course/embeddings/interactive-exercises",
+"min": 15,
+"heading": {
+"en": "Embeddings: Interactive exercises",
+"zh": "嵌入：互动练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/embeddings/interactive-exercises",
+"zh": "https://developers.google.com/machine-learning/crash-course/embeddings/interactive-exercises?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [
+"embedding-vector",
+"embedding-space"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The following widget, based on TensorFlow's <a href=\"https://projector.tensorflow.org/\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a>, flattens 10,000 <code>word2vec</code> static vectors into a 3D space. This collapse of dimensions can be misleading, because the points closest to each other in the original high-dimensional space may appear farther apart in the 3D projection. The closest <i>n</i> points are highlighted in purple, with <i>n</i> chosen by the user in <b>Isolate __ points</b>. The sidebar on the right identifies those nearest neighbors.",
+"zh": "以下基于 TensorFlow <a href=\"https://projector.tensorflow.org/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a> 的 widget 会将 10,000 个 <code>word2vec</code> 静态向量展平到 3D 空间中。这种维度合并可能会造成误导，因为在原始高维空间中彼此最接近的点在 3D 投影中可能会显得相距更远。最接近的 n 个点以紫色突出显示，n 由用户在 <b>Isolate __ points</b> 中设定。右侧的边栏会标识最近的近邻。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In these experiments, you'll play with the <code>word2vec</code> embeddings in the widget above.",
+"zh": "在这些实验中，您将使用上面的 widget 中的 <code>word2vec</code> 嵌入。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Task 1",
+"zh": "任务 1"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Try to find the 20 nearest neighbors for the following, and see where the groups fall in the cloud.",
+"zh": "尝试查找以下内容的 20 个最近邻，并查看这些组在云中的分布情况。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<code>iii</code>, <code>third</code>, and <code>three</code>",
+"zh": "<code>iii</code>、<code>third</code>和<code>three</code>"
+},
+{
+"en": "<code>tao</code> and <code>way</code>",
+"zh": "<code>tao</code>和<code>way</code>"
+},
+{
+"en": "<code>orange</code>, <code>yellow</code>, and <code>juice</code>",
+"zh": "<code>orange</code>、<code>yellow</code>和<code>juice</code>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "What do you notice about these results?",
+"zh": "您对这些结果有何发现？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for our answer</b>",
+"zh": "<b>点击此处查看我们的答案</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Even though <code>iii</code>, <code>third</code>, and <code>three</code> are semantically similar, they appear in different contexts in text and don't appear to be close together in this embedding space. In <code>word2vec</code>, <code>iii</code> is closer to <code>iv</code> than to <code>third</code>.",
+"zh": "尽管 <code>iii</code>、<code>third</code> 和 <code>three</code> 在语义上相似，但它们在文本中出现的上下文不同，并且在该嵌入空间中似乎没有靠得很近。在 <code>word2vec</code> 中，<code>iii</code> 离 <code>iv</code> 比离 <code>third</code> 更近。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Similarly, while <code>way</code> is a direct translation of <code>tao</code>, these words most frequently occur with completely different groups of words in the dataset used, and so the two vectors are very far apart.",
+"zh": "同样，虽然 <code>way</code> 是 <code>tao</code> 的直接翻译，但在所用数据集中，这两个字词最常与完全不同的字词组合在一起，因此这两个向量相差很大。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The first several nearest neighbors of <code>orange</code> are colors, but <code>juice</code> and <code>peel</code>, related to the meaning of <code>orange</code> as fruit, show up as the 14th and 18th nearest neighbors. <code>prince</code>, meanwhile, as in the Prince of Orange, is 17th. In the projection, the words closest to <code>orange</code> are <code>yellow</code> and other colors, while the closest words to <code>juice</code> don't include <code>orange</code>.",
+"zh": "<code>orange</code> 的前几个最近邻是颜色，但与 <code>orange</code> 的水果含义相关的 <code>juice</code> 和 <code>peel</code> 分别显示为第 14 和第 18 个最近邻。与此同时，取自奥兰治亲王含义的 <code>prince</code> 排在第 17 位。在投影中，最接近 <code>orange</code> 的字词是 <code>yellow</code> 和其他颜色，而最接近 <code>juice</code> 的字词不包含 <code>orange</code>。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Task 2",
+"zh": "任务 2"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Try to figure out some characteristics of the training data. For example, try to find the 100 nearest neighbors for the following, and see where the groups are in the cloud:",
+"zh": "尝试找出训练数据的一些特征。例如，尝试查找以下内容的 100 个最近邻，并查看这些组在云中的所处位置："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<code>boston</code>, <code>paris</code>, <code>tokyo</code>, <code>delhi</code>, <code>moscow</code>, and <code>seoul</code> (this is a trick question)",
+"zh": "<code>boston</code>、<code>paris</code>、<code>tokyo</code>、<code>delhi</code>、<code>moscow</code> 和 <code>seoul</code>（这道题有陷阱）"
+},
+{
+"en": "<code>jane</code>, <code>sarah</code>, <code>john</code>, <code>peter</code>, <code>rosa</code>, and <code>juan</code>",
+"zh": "<code>jane</code>、<code>sarah</code>、<code>john</code>、<code>peter</code>、<code>rosa</code>和 <code>juan</code>"
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for our answer</b>",
+"zh": "<b>点击此处查看我们的答案</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Many of the nearest neighbors to <code>boston</code> are other cities in the US. Many of the nearest neighbors to <code>paris</code> are other cities in Europe. <code>tokyo</code> and <code>delhi</code> don't seem to have similar results: one is associated with cities around the world that are travel hubs, while the other is associated with <code>india</code> and related words. <code>seoul</code> doesn't appear in this trimmed-down set of word vectors at all.",
+"zh": "<code>boston</code> 的许多最近邻都是美国的其他城市。<code>paris</code> 的许多最近邻都是欧洲的其他城市。<code>tokyo</code> 和 <code>delhi</code> 似乎没有类似的结果：一个与全球各地的旅行枢纽城市相关，另一个与 <code>india</code> 和相关字词相关。<code>seoul</code> 则完全没有出现在这个经过精简的字词向量集中。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "It seems that this dataset contains many documents related to US national geography, some documents relate to European regional geography, and not much fine-grained coverage of other countries or regions.",
+"zh": "该数据集似乎包含许多与美国国家地理位置相关的文档，一些文档与欧洲地区地理位置相关，但对其他国家/地区的覆盖范围不够精细。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Similarly, this dataset seems to contain many male English names, some female English names, and far fewer names from other languages. Note that Don Rosa wrote and illustrated Scrooge McDuck comics for Disney, which is the likely reason that `scrooge` and `mcduck` are among the nearest neighbors for `rosa`.",
+"zh": "同样，此数据集似乎包含许多男性英语名字、一些女性英语名字，而其他语言的名字数量要少得多。请注意，Don Rosa 曾为迪士尼创作过《Scrooge McDuck》漫画，这可能是“scrooge”和“mcduck”是“rosa”的最近邻的原因。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The pre-trained word vectors offered by <code>word2vec</code> were in fact trained on <a href=\"https://code.google.com/archive/p/word2vec/\" target=\"_blank\" rel=\"noopener\">Google News articles up to 2013</a>.",
+"zh": "<code>word2vec</code> 提供的预训练字词向量实际上是基于<a href=\"https://code.google.com/archive/p/word2vec/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">截至 2013 年的 Google 新闻报道</a>进行训练的。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Task 3",
+"zh": "任务 3"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Embeddings aren't limited to words. Images, audio, and other data can also be embedded. For this task:",
+"zh": "嵌入不限于字词。还可以嵌入图片、音频和其他数据。在此任务中："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Open TensorFlow's <a href=\"https://projector.tensorflow.org/\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a>.",
+"zh": "打开 TensorFlow 的 <a href=\"https://projector.tensorflow.org/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a>。"
+},
+{
+"en": "In the left sidebar titled <b>Data</b>, choose <b>Mnist with images</b>. This brings up a projection of the embeddings of the <button type=\"button\" class=\"term\" data-term=\"mnist\">MNIST</button> database of handwritten digits.",
+"zh": "在标题为 <b>Data</b> 的左侧边栏中，选择 <b>Mnist with images</b>。系统随即会显示手写数字 <button type=\"button\" class=\"term\" data-term=\"mnist\">MNIST</button> 数据库的嵌入投影。"
+},
+{
+"en": "Click to stop the rotation and choose a single image. Zoom in and out as needed.",
+"zh": "点击以停止轮播，然后选择一张图片。根据需要放大和缩小。"
+},
+{
+"en": "Look in the right sidebar for nearest neighbors. Are there any surprises?",
+"zh": "在右侧边栏中查找最近邻。有什么意外的发现吗？"
+}
+]
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Why do some <code>7</code>s have <code>1</code>s as their nearest neighbor? Why do some <code>8</code>s have <code>9</code> as their nearest neighbor?",
+"zh": "为什么某些 <code>7</code> 的最近邻是 <code>1</code>？而某些 <code>8</code> 的最近邻是 <code>9</code>？"
+},
+{
+"en": "Is there anything about the images on the edges of the projection space that seem different from the images in the center of the projection space?",
+"zh": "投影空间边缘的图片是否与投影空间中心的图片有所不同？"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Keep in mind that the model that created these embeddings is receiving image data, which is to say, pixels, and choosing a numerical vector representation for each image. The model doesn't make an automatic mental association between the image of the handwritten digit and the numerical digit itself.",
+"zh": "请注意，创建这些嵌入的模型会接收图片数据（即像素），并为每张图片选择一个数值向量表示法。该模型不会自动推测手写数字图片与数字本身之间的联系。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for our answer</b>",
+"zh": "<b>点击此处查看我们的答案</b>"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Due to similarities in shape, the vector representations of some of the skinnier, narrower <code>7</code>s are placed closer to the vectors for handwritten <code>1</code>s. The same thing happens for some <code>8</code>s and <code>9</code>s, and even some of the <code>5</code>s and <code>3</code>s.",
+"zh": "由于形状相似，一些较窄的 <code>7</code> 的向量表示法会更靠近手写 <code>1</code> 的向量。某些 <code>8</code> 和 <code>9</code>，甚至某些 <code>5</code> 和 <code>3</code> 也会发生同样的情况。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The handwritten digits on the outside of the projection space appear more strongly definable as one of the nine digits and strongly differentiated from other possible digits.",
+"zh": "投影空间外部的手写数字看起来是更容易辨认的九位数字之一，并且不易与其他数字混淆。"
+}
+}
+]
+}
+]
+},
+{
+"id": "obtaining-embeddings",
+"path": "/machine-learning/crash-course/embeddings/obtaining-embeddings",
+"min": 15,
+"heading": {
+"en": "Embeddings: Obtaining embeddings",
+"zh": "嵌入：获取嵌入"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/embeddings/obtaining-embeddings",
+"zh": "https://developers.google.com/machine-learning/crash-course/embeddings/obtaining-embeddings?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Embeddings can be created using dimensionality reduction techniques like PCA or by training them as part of a neural network.",
+"zh": null
+},
+{
+"en": "Training an embedding within a neural network allows customization for specific tasks, where the embedding layer learns optimal weights to represent data in a lower-dimensional space.",
+"zh": null
+},
+{
+"en": "Word embeddings, like word2vec, leverage the distributional hypothesis to map semantically similar words to geometrically close vectors.",
+"zh": null
+},
+{
+"en": "Static word embeddings have limitations as they assign a single representation per word, while contextual embeddings offer multiple representations based on context.",
+"zh": null
+}
+],
+"terms": [
+"bag-of-words",
+"bert-bidirectional-encoder-representations-from-transformers",
+"embedding-layer",
+"embedding-vector",
+"neural-network",
+"positional-encoding",
+"softmax"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This section covers several means of obtaining embeddings, as well as how to transform static embeddings into contextual embeddings.",
+"zh": "本部分介绍了获取嵌入的几种方式，以及如何将静态嵌入转换为上下文嵌入。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Dimensionality reduction techniques",
+"zh": "降维技术"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "There are many mathematical techniques that capture the important structures of a high-dimensional space in a low-dimensional space. In theory, any of these techniques can be used to create an embedding for a machine learning system.",
+"zh": "有许多数学技术可在低维空间中捕获高维空间的重要结构。从理论上讲，这些技术中的任何一种都可以用于为机器学习系统创建嵌入。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, <a href=\"https://wikipedia.org/wiki/Principal_component_analysis\" target=\"_blank\" rel=\"noopener\">principal component analysis</a> (PCA) has been used to create word embeddings. Given a set of instances like <button type=\"button\" class=\"term\" data-term=\"bag-of-words\"><b>bag of words</b></button> vectors, PCA tries to find highly correlated dimensions that can be collapsed into a single dimension.",
+"zh": "例如，<a href=\"https://wikipedia.org/wiki/Principal_component_analysis\" target=\"_blank\" rel=\"noopener\">主成分分析</a> (PCA) 已用于创建词嵌入。在给定一组实例的情况下，例如<button type=\"button\" class=\"term\" data-term=\"bag-of-words\"><b>词袋</b></button>向量，PCA 会尝试查找高度相关且可以合并为单个维度的维度。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Training an embedding as part of a neural network",
+"zh": "在神经网络中训练嵌入"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "You can create an embedding while training a <a href=\"#/ch/c08/neural-networks\"><b>neural network</b></a> for your target task. This approach gets you an embedding well customized for your particular system, but may take longer than training the embedding separately.",
+"zh": "您可以在为目标任务训练<a href=\"#/ch/c08/neural-networks\"><b>神经网络</b></a>时创建嵌入。通过这个方法，您可以为特定系统量身定制嵌入，不过耗费的时间可能要比单独训练嵌入的时间长。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In general, you can create a hidden layer of size <i>d</i> in your neural network that is designated as the <button type=\"button\" class=\"term\" data-term=\"embedding-layer\"><b>embedding layer</b></button>, where <i>d</i> represents both the number of nodes in the hidden layer and the number of dimensions in the embedding space. This embedding layer can be combined with any other features and hidden layers. As in any deep neural network, the parameters will be optimized during training to minimize loss on the nodes in the network's output layer.",
+"zh": "一般来说，您可以在神经网络中创建一个大小为 d 的隐藏层，并将其指定为<button type=\"button\" class=\"term\" data-term=\"embedding-layer\"><b>嵌入层</b></button>，其中 d 既表示隐藏层中的节点数，也表示嵌入空间中的维度数。此嵌入层可与任何其他特征和隐藏层组合。与任何深度神经网络一样，这些参数将在训练期间进行优化，以最大限度地减少网络输出层中的节点损失。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Returning to our <a href=\"#/ch/c09/embeddings\">food recommendation example</a>, our goal is to predict new meals a user will like based on their current favorite meals. First, we can compile additional data on our users' top five favorite foods. Then, we can model this task as a supervised learning problem. We set four of these top five foods to be feature data, and then randomly set aside the fifth food as the positive label that our model aims to predict, optimizing the model's predictions using a <button type=\"button\" class=\"term\" data-term=\"softmax\"><b>softmax</b></button> loss.",
+"zh": "回到<a href=\"#/ch/c09/embeddings\">食物推荐示例</a>，我们的目标是根据用户当前喜欢的食物来预测他们会喜欢的新食物。首先，我们可以针对用户最喜欢的五种食物编译更多数据。然后，我们可以将此任务建模为监督学习问题。我们将这五种食物中的四种设置为特征数据，然后随机将第五种食物设置为模型要预测的正标签，并使用 <button type=\"button\" class=\"term\" data-term=\"softmax\"><b>softmax</b></button> 损失优化模型的预测结果。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "During training, the neural network model will learn the optimal weights for the nodes in the first hidden layer, which serves as the embedding layer. For example, if the model contains three nodes in the first hidden layer, it might determine that the three most relevant dimensions of food items are sandwichness, dessertness, and liquidness. Figure 12 shows the one-hot encoded input value for \"hot dog\" transformed into a three-dimensional vector.",
+"zh": "在训练期间，神经网络模型将学习第一个隐藏层（充当嵌入层）中的节点的最佳权重。例如，如果模型在第一个隐藏层中包含三个节点，则可能会确定食物项的三个最相关维度是三明治度、甜点度和液体度。图 12 显示了将“热狗”的独热编码输入值转换为三维向量的过程。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/embeddings/images/one_hot_hot_dog_embedding.png",
+"alt": {
+"en": "Figure 12. Neural net for one-hot encoding of hot dog. The first layer is an\n    input layer with 5 nodes, each annotated with an icon of the food it\n    represents (borscht, hot dog, salad, ..., and shawarma). These nodes have\n    the values [0, 1, 0, ..., 0], respectively, representing the one-hot\n    encoding of 'hot dog'. The input layer is connected to a 3-node embedding\n    layer, whose nodes have the values 2.98, -0.75, and 0, respectively. The\n    embedding layer is connected to a 5-node hidden layer, which is then\n    connected to a 5-node output layer.",
+"zh": "图 12. 用于对热狗进行独热编码的神经网络。第一层是包含 5 个节点的输入层，每个节点都带有表示其所代表食物（罗宋汤、热狗、沙拉、沙瓦玛等）的图标。这些节点分别具有值 [0, 1, 0, ..., 0]，表示“热狗”的独热编码。输入层连接到 3 个节点的嵌入层，其节点的值分别为 2.98、-0.75 和 0。嵌入层连接到 5 个节点的隐藏层，然后连接到 5 个节点的输出层。"
+},
+"caption": {
+"en": "<b>Figure 12.</b> A one-hot encoding of <code>hot dog</code> provided as input to a deep neural network. An embedding layer translates the one-hot encoding into the three-dimensional embedding vector <code>[2.98, -0.75, 0]</code>.",
+"zh": "<b>图 12.</b> 作为深度神经网络输入的 <code>hot dog</code> 独热编码。嵌入层会将独热编码转换为三维嵌入向量 <code>[2.98, -0.75, 0]</code>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the course of training, the weights of the embedding layer will be optimized so that the <button type=\"button\" class=\"term\" data-term=\"embedding-vector\"><b>embedding vectors</b></button> for similar examples are closer to each other. As previously mentioned, the dimensions that an actual model chooses for its embeddings are unlikely to be as intuitive or understandable as in this example.",
+"zh": "在训练过程中，嵌入层的权重将得到优化，以便相似样本的<button type=\"button\" class=\"term\" data-term=\"embedding-vector\"><b>嵌入向量</b></button>彼此靠近。如前所述，实际模型为其嵌入选择的维度不太可能像本示例中那样直观或易于理解。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Contextual embeddings",
+"zh": "上下文嵌入"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "One limitation of <code>word2vec</code> static embedding vectors is that words can mean different things in different contexts. \"Yeah\" means one thing on its own, but the opposite in the phrase \"Yeah, right.\" \"Post\" can mean \"mail,\" \"to put in the mail,\" \"earring backing,\" \"marker at the end of a horse race,\" \"postproduction,\" \"pillar,\" \"to put up a notice,\" \"to station a guard or soldier,\" or \"after,\" among other possibilities.",
+"zh": "<code>word2vec</code> 静态嵌入向量的一个局限是，字词在不同上下文中可能有不同的含义。“Yeah”本身表示一种含义，但在“Yeah, right.”中表示相反的意思。“Post”可以表示“邮件”“放入邮件”“耳环托”“赛马结束时的标记”“后期制作”“支柱”“张贴通知”“驻扎警卫或士兵”或“之后”，以及其他可能的含义。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "However, with static embeddings, each word is represented by a single point in vector space, even though it may have a variety of meanings. In the <a href=\"#/ch/c09/embedding-space\">last exercise</a>, you discovered the limitations of static embeddings for the word <i>orange,</i> which can signify either a color or a type of fruit. With only one static embedding, <i>orange</i> will always be closer to other colors than to <i>juice</i> when trained on the <code>word2vec</code> dataset.",
+"zh": "但是，对于静态嵌入，每个字词都由向量空间中的单个点表示，即使它可能具有多种含义。在<a href=\"#/ch/c09/embedding-space\">上一个练习</a>中，您发现了静态嵌入对于字词 orange（可以表示颜色或水果类型）的局限性。在仅使用一个静态嵌入的情况下，用 <code>word2vec</code> 数据集进行训练时，orange 将始终比 juice 更接近其他颜色。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Contextual embeddings</b> were developed to address this limitation. Contextual embeddings allow a word to be represented by multiple embeddings that incorporate information about the surrounding words as well as the word itself. <i>Orange</i> would have a different embedding for every unique sentence containing the word in the dataset.",
+"zh": "<b>上下文嵌入</b>旨在解决此限制。借助上下文嵌入，字词可以通过多个嵌入来表示，这些嵌入会整合有关周围字词以及字词本身的信息。在数据集中，对于包含字词“Orange”的每个唯一句子，都会有不同的嵌入。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Some methods for creating contextual embeddings, like <a href=\"https://wikipedia.org/wiki/ELMo\" target=\"_blank\" rel=\"noopener\">ELMo</a>, take the static embedding of an example, such as the <code>word2vec</code> vector for a word in a sentence, and transform it by a function that incorporates information about the words around it. This produces a contextual embedding.",
+"zh": "一些用于创建上下文嵌入的方法（例如 <a href=\"https://wikipedia.org/wiki/ELMo\" target=\"_blank\" rel=\"noopener\">ELMo</a>）会采用样本的静态嵌入（例如句子中某个字词的 <code>word2vec</code> 向量），并通过一个包含其周围字词信息的函数对其进行转换。这样即可生成上下文嵌入。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "<b>Click here for details on contextual embeddings</b>",
+"zh": "<b>点击此处可详细了解上下文嵌入</b>"
+},
+"blocks": [
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "For ELMo models specifically, the static embedding is aggregated with embeddings taken from other layers, which encode front-to-back and back-to-front readings of the sentence.",
+"zh": "具体而言，对于 ELMo 模型，静态嵌入会与从其他层提取的嵌入进行汇总，这些嵌入会对句子的从前到后和从后到前处理方式进行编码。"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"bert-bidirectional-encoder-representations-from-transformers\">BERT</button> models mask part of the sequence that the model takes as input.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"bert-bidirectional-encoder-representations-from-transformers\">BERT</button> 模型会遮盖模型作为输入的序列的一部分。"
+},
+{
+"en": "Transformer models use a <button type=\"button\" class=\"term\" data-term=\"self-attention-also-called-self-attention-layer\">self-attention</button> layer to weight the relevance of the other words in a sequence to each individual word. They also add the relevant column from a <b>positional embedding matrix</b> (see <button type=\"button\" class=\"term\" data-term=\"positional-encoding\">positional encoding</button>) to each previously learned token embedding, element by element, to produce the input embedding that is fed into the rest of the model for inference. This <b>input embedding</b>, unique to each distinct textual sequence, is a contextual embedding.",
+"zh": "Transformer 模型使用<button type=\"button\" class=\"term\" data-term=\"self-attention-also-called-self-attention-layer\">自注意力</button>层来权衡序列中其他字词与每个字词的相关性。它们还会将<b>位置嵌入矩阵</b>（请参阅<button type=\"button\" class=\"term\" data-term=\"positional-encoding\">位置编码</button>）中的相关列逐个元素添加到之前学习的每个 token 嵌入中，以生成输入嵌入，并将其馈送到模型的其余部分进行推理。 此<b>输入嵌入</b>是每个文本序列所特有的上下文嵌入。"
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>NOTE:</b> See the <a href=\"#/ch/c10/transformers\">LLM module</a> for more details on transformers and encoder-decoder architecture.",
+"zh": "<b>注意</b>：如需详细了解 Transformer 和编码器-解码器架构，请参阅 <a href=\"https://developers.google.com/machine-learning/ml-crash-course/llm/whats-an-llm?hl=zh-cn#whats_a_transformer\" target=\"_blank\" rel=\"noopener\">LLM 模块</a>。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "While the models described above are language models, contextual embeddings are useful in other generative tasks, like images. An embedding of the pixel RGB values in a photo of a horse provides more information to the model when combined with a positional matrix representing each pixel and some encoding of the neighboring pixels, creating contextual embeddings, than the original static embeddings of the RGB values alone.",
+"zh": "虽然上述模型是语言模型，但上下文嵌入在其他生成任务（例如图片）中也很有用。与仅包含 RGB 值的原始静态嵌入相比，将马照片中的像素 RGB 值的嵌入与表示每个像素的位置矩阵和相邻像素的某些编码结合使用，可为模型提供更多信息，从而创建上下文嵌入。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/embeddings/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Embeddings: Test your knowledge",
+"zh": "嵌入：测试知识掌握情况"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/embeddings/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/embeddings/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/embeddings/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/embeddings/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜，您已完成本模块！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c10/llm\">Large language models</a></b>.",
+"zh": "我们建议您根据自己的进度和兴趣探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按建议的顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c10/llm\">大型语言模型</a></b>。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "Interested in experimenting further with text embeddings? Check out the Gemini API's <a href=\"https://ai.google.dev/gemini-api/docs/embeddings\" target=\"_blank\" rel=\"noopener\">Embeddings model</a>.",
+"zh": "想进一步尝试文本嵌入吗？ 不妨试试 Gemini API 的<a href=\"https://ai.google.dev/gemini-api/docs/embeddings?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">嵌入模型</a>。"
+}
+}
+]
+}
+]
+}

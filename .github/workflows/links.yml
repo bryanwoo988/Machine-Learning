@@ -1,0 +1,21 @@
+name: Check outside links
+
+# Official data portals get reorganised. Once a week, check every https link
+# in data/ and show the dead ones in the run log. Never blocks a deploy.
+on:
+  schedule:
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tools/check-links.mjs

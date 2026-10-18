@@ -1,0 +1,2661 @@
+{
+"id": "c02",
+"num": 2,
+"stage": 2,
+"title": {
+"en": "Linear regression",
+"zh": "线性回归"
+},
+"minutes": 80,
+"sections": [
+{
+"id": "linear-regression",
+"path": "/machine-learning/crash-course/linear-regression",
+"min": 10,
+"heading": {
+"en": "Linear regression",
+"zh": "线性回归"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "This module introduces linear regression, a statistical method used to predict a label value based on its features.",
+"zh": null
+},
+{
+"en": "The linear regression model uses an equation (y' = b + w₁x₁ + ...) to represent the relationship between features and the label.",
+"zh": null
+},
+{
+"en": "During training, the model adjusts its bias (b) and weights (w) to minimize the difference between predicted and actual values.",
+"zh": null
+},
+{
+"en": "Linear regression can be applied to models with multiple features, each with its own weight, to improve prediction accuracy.",
+"zh": null
+},
+{
+"en": "Gradient descent and hyperparameter tuning are key techniques used to optimize the performance of a linear regression model.",
+"zh": null
+}
+],
+"terms": [
+"bias-math-or-bias-term",
+"feature",
+"label",
+"linear-regression",
+"parameter",
+"weight"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "This module introduces <b>linear regression</b> concepts.",
+"zh": "本模块将介绍<b>线性回归</b>概念。"
+}
+},
+{
+"type": "note",
+"kind": "objective",
+"html": {
+"en": "<b>Learning objectives:</b> <ul><li>Explain a loss function and how it works.</li><li>Define and describe how gradient descent finds the optimal model parameters.</li><li>Describe how to tune hyperparameters to efficiently train a linear model.</li></ul>",
+"zh": "<b>学习目标</b>： <ul><li>解释损失函数及其运作方式。</li><li>定义并描述梯度下降如何找到最佳模型参数。</li><li>介绍如何调整超参数以高效训练线性模型。</li></ul>"
+}
+},
+{
+"type": "note",
+"kind": "caution",
+"html": {
+"en": "<b>Prerequisites:</b> This module assumes you are familiar with the concepts covered in the following module:<br> <ul><li><a href=\"#/ch/c01/intro\">Introduction to Machine Learning</a></li></ul>",
+"zh": "<b>前提条件：</b> 本模块假定您熟悉以下模块中介绍的概念：<br> <ul><li><a href=\"#/ch/c01/intro\">机器学习简介</a></li></ul>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"linear-regression\"><b>Linear regression</b></button> is a statistical technique used to find the relationship between variables. In an ML context, linear regression finds the relationship between <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button> and a <button type=\"button\" class=\"term\" data-term=\"label\"><b>label</b></button>.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"linear-regression\"><b>线性回归</b></button>是一种用于查找变量之间关系的统计技术。在机器学习背景下，线性回归用于查找<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>与<button type=\"button\" class=\"term\" data-term=\"label\"><b>标签</b></button>之间的关系。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, suppose we want to predict a car's fuel efficiency in miles per gallon based on how heavy the car is, and we have the following dataset:",
+"zh": "例如，假设我们想根据汽车的重量预测汽车的燃油效率（以每加仑英里数表示），并且我们有以下数据集："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Pounds in 1000s (feature)",
+"zh": "以千为单位的磅数（特征）"
+},
+{
+"en": "Miles per gallon (label)",
+"zh": "每加仑英里数（标签）"
+}
+],
+"rows": [
+[
+{
+"en": "3.5",
+"zh": "3.5"
+},
+{
+"en": "18",
+"zh": "18"
+}
+],
+[
+{
+"en": "3.69",
+"zh": "3.69"
+},
+{
+"en": "15",
+"zh": "15"
+}
+],
+[
+{
+"en": "3.44",
+"zh": "3.44"
+},
+{
+"en": "18",
+"zh": "18"
+}
+],
+[
+{
+"en": "3.43",
+"zh": "3.43"
+},
+{
+"en": "16",
+"zh": "16"
+}
+],
+[
+{
+"en": "4.34",
+"zh": "4.34"
+},
+{
+"en": "15",
+"zh": "15"
+}
+],
+[
+{
+"en": "4.42",
+"zh": "4.42"
+},
+{
+"en": "14",
+"zh": "14"
+}
+],
+[
+{
+"en": "2.37",
+"zh": "2.37"
+},
+{
+"en": "24",
+"zh": "24"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If we plotted these points, we'd get the following graph:",
+"zh": "如果我们绘制这些点，会得到以下图表："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/car-data-points.png",
+"alt": {
+"en": "Figure 1. Data points showing downward-sloping trend from left to right.",
+"zh": "图 1. 数据点显示从左到右的下降趋势。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 1</b>. Car heaviness (in pounds) versus miles per gallon rating. As a car gets heavier, its miles per gallon rating generally decreases.",
+"zh": "<b>图 1</b>. 汽车重量（以磅为单位）与每加仑汽油能行驶的英里数评级。汽车越重，每加仑燃油行驶里程数通常越低。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We could create our own model by drawing a best fit line through the points:",
+"zh": "我们可以通过在这些点之间绘制最佳拟合线来创建自己的模型："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/car-data-points-with-model.png",
+"alt": {
+"en": "Figure 2. Data points with a best fit line drawn through them representing the model.",
+"zh": "图 2. 数据点，其中绘制了一条最合适的直线来表示模型。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 2</b>. A best fit line drawn through the data from the previous figure.",
+"zh": "<b>图 2</b>. 通过上图数据绘制的最佳拟合线。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Linear regression equation",
+"zh": "线性回归方程"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In algebraic terms, the model would be defined as <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6667em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">m</span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span>, where",
+"zh": "用代数术语来说，该模型可定义为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6667em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">m</span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span>，其中"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span></span></span></span> is miles per gallon—the value we want to predict.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span></span></span></span> 是每加仑燃油行驶里程数，即我们要预测的值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">m</span></span></span></span> is the slope of the line.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">m</span></span></span></span> 是直线的斜率。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> is pounds—our input value.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">x</span></span></span></span> 是磅，即我们的输入值。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span> is the y-intercept.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span> 是 y 轴截距。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In ML, we write the equation for a linear regression model as follows:",
+"zh": "在机器学习中，线性回归模型的方程式如下所示："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9963em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9963em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8019em;\"><span style=\"top:-3.113em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "where:",
+"zh": "其中："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> is the predicted label—the output.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> 是预测标签（输出）。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span> is the <button type=\"button\" class=\"term\" data-term=\"bias-math-or-bias-term\"><b>bias</b></button> of the model. Bias is the same concept as the y-intercept in the algebraic equation for a line. In ML, bias is sometimes referred to as <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">0</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>. Bias is a <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameter</b></button> of the model and is calculated during training.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord mathnormal\">b</span></span></span></span> 是模型的<button type=\"button\" class=\"term\" data-term=\"bias-math-or-bias-term\"><b>偏差</b></button>。偏差与直线代数方程式中的 y 轴截距概念相同。在机器学习中，偏差有时称为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">0</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>。偏差是模型的<button type=\"button\" class=\"term\" data-term=\"parameter\"><b>形参</b></button>，在训练期间计算得出。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> is the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> of the feature. Weight is the same concept as the slope <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">m</span></span></span></span> in the algebraic equation for a line. Weight is a <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameter</b></button> of the model and is calculated during training.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是特征的<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button>。权重与线性代数方程式中的斜率 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">m</span></span></span></span> 的概念相同。权重是模型的<button type=\"button\" class=\"term\" data-term=\"parameter\"><b>形参</b></button>，在训练期间计算得出。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> is a <button type=\"button\" class=\"term\" data-term=\"feature\"><b>feature</b></button>—the input.",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是一个<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>，即输入。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "During training, the model calculates the weight and bias that produce the best model.",
+"zh": "在训练期间，模型会计算出可生成最佳模型的权重和偏差。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/equation.png",
+"alt": {
+"en": "Figure 3. The equation y' = b + w1x1, with each component annotated with its purpose.",
+"zh": "图 3. 等式 y&#39; = b + w1x1，其中每个组成部分都标有其用途。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 3</b>. Mathematical representation of a linear model.",
+"zh": "<b>图 3</b>. 线性模型的数学表示法。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In our example, we'd calculate the weight and bias from the line we drew. The bias is 34 (where the line intersects the y-axis), and the weight is –4.6 (the slope of the line). The model would be defined as <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7278em;vertical-align:-0.0833em;\"></span><span class=\"mord\">34</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord\">−</span><span class=\"mord\">4.6</span><span class=\"mclose\">)</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span>, and we could use it to make predictions. For instance, using this model, a 4,000-pound car would have a predicted fuel efficiency of 15.6 miles per gallon.",
+"zh": "在我们的示例中，我们将根据绘制的直线计算权重和偏差。偏差为 34（直线与 y 轴的交点），权重为 -4.6（直线的斜率）。该模型可定义为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7278em;vertical-align:-0.0833em;\"></span><span class=\"mord\">34</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord\">−</span><span class=\"mord\">4.6</span><span class=\"mclose\">)</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span>，我们可以使用它进行预测。例如，使用此模型，一辆 4,000 磅的汽车的预测燃油效率为每加仑 15.6 英里。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/model-prediction.png",
+"alt": {
+"en": "Figure 4. Same graph as Figure 2, with the point (4, 15.6) highlighted.",
+"zh": "图 4. 与图 2 相同的图，但突出显示了点 (4, 15.6)。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 4</b>. Using the model, a 4,000-pound car has a predicted fuel efficiency of 15.6 miles per gallon.",
+"zh": "<b>图 4</b>. 根据该模型，一辆 4,000 磅的汽车的预测燃油效率为每加仑 15.6 英里。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Models with multiple features",
+"zh": "具有多种特征的模型"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Although the example in this section uses only one feature—the heaviness of the car—a more sophisticated model might rely on multiple features, each having a separate weight (<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, etc.). For example, a model that relies on five features would be written as follows:",
+"zh": "虽然本部分中的示例仅使用一项特征（汽车的重量），但更复杂的模型可能依赖于多项特征，每项特征都有一个单独的权重（<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 等）。例如，依赖于 5 个特征的模型可以写成如下形式："
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">5</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">5</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">5</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">5</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "For example, a model that predicts gas mileage could additionally use features such as the following:",
+"zh": "例如，预测燃油效率的模型还可以使用以下特征："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Engine displacement",
+"zh": "发动机排量"
+},
+{
+"en": "Acceleration",
+"zh": "加速"
+},
+{
+"en": "Number of cylinders",
+"zh": "圆柱数"
+},
+{
+"en": "Horsepower",
+"zh": "马力"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "This model would be written as follows:",
+"zh": "此模型可写为："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/equation-multiple-features.png",
+"alt": {
+"en": "Figure 5. Linear regression equation with five features.",
+"zh": "图 5. 具有 5 个特征的线性回归方程。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 5</b>. A model with five features to predict a car's miles per gallon rating.",
+"zh": "<b>图 5</b>. 一个包含 5 个特征的模型，用于预测汽车的每加仑燃油行驶里程评级。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "By graphing a couple of these additional features, we can see that they also have a linear relationship to the label, miles per gallon:",
+"zh": "通过绘制这几个额外特征的图表，我们可以看到它们与标签（每加仑行驶里程数）也存在线性关系："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/displacement.png",
+"alt": {
+"en": "Figure 6. Displacement in cubic centimeters graphed against miles per gallon showing a negative linear relationship.",
+"zh": "图 6. 以立方厘米为单位的排量与以每加仑英里数为单位的燃油效率的对比图，显示了负线性关系。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 6</b>. A car's displacement in cubic centimeters and its miles per gallon rating. As a car's engine gets bigger, its miles per gallon rating generally decreases.",
+"zh": "<b>图 6</b>. 汽车的排量（以立方厘米为单位）及其每加仑燃油行驶里程数评级。一般来说，汽车的发动机越大，每加仑燃油行驶里程就越低。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/acceleration.png",
+"alt": {
+"en": "Figure 7. Acceleration from zero to sixty in seconds graphed against miles per gallon showing a positive linear relationship.",
+"zh": "图 7. 以秒为单位的从 0 到 60 的加速与以每加仑英里数为单位的燃油效率之间的关系图，显示出正线性关系。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 7</b>. A car's acceleration and its miles per gallon rating. As a car's acceleration takes longer, the miles per gallon rating generally increases.",
+"zh": "<b>图 7</b>. 汽车的加速度及其每加仑英里数评级。汽车的加速时间越长，每加仑燃油行驶里程评级通常越高。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What parts of the linear regression equation are updated during training?",
+"zh": "在训练期间，线性回归方程的哪些部分会更新？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The bias and weights",
+"zh": "偏差和权重"
+},
+"why": {
+"en": "During training, the model updates the bias and weights.",
+"zh": "在训练期间，模型会更新偏差和权重。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "The prediction",
+"zh": "预测"
+},
+"why": {
+"en": "Predictions are not updated during training.",
+"zh": "训练期间不会更新预测结果。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The feature values",
+"zh": "特征值"
+},
+"why": {
+"en": "Feature values are part of the dataset, so they're not updated during training.",
+"zh": "特征值是数据集的一部分，因此在训练期间不会更新。"
+},
+"correct": false
+}
+]
+}
+]
+},
+{
+"id": "loss",
+"path": "/machine-learning/crash-course/linear-regression/loss",
+"min": 10,
+"heading": {
+"en": "Linear regression: Loss",
+"zh": "线性回归：损失函数"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/loss",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/loss?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Loss is a numerical value indicating the difference between a model's predictions and the actual values.",
+"zh": null
+},
+{
+"en": "The goal of model training is to minimize loss, bringing it as close to zero as possible.",
+"zh": null
+},
+{
+"en": "Two common methods for calculating loss are Mean Absolute Error (MAE) and Mean Squared Error (MSE), which differ in their sensitivity to outliers.",
+"zh": null
+},
+{
+"en": "Choosing between MAE and MSE depends on the dataset and how you want the model to handle outliers, with MSE penalizing them more heavily.",
+"zh": null
+}
+],
+"terms": [
+"mean-absolute-error-mae",
+"mean-squared-error-mse",
+"l1-loss",
+"l2-loss",
+"loss",
+"outliers",
+"prediction"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"loss\"><b>Loss</b></button> is a numerical metric that describes how wrong a model's <button type=\"button\" class=\"term\" data-term=\"prediction\"><b>predictions</b></button> are. Loss measures the distance between the model's predictions and the actual labels. The goal of training a model is to minimize the loss, reducing it to its lowest possible value.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"loss\">损失</button>是一种数值指标，用于描述模型的<button type=\"button\" class=\"term\" data-term=\"prediction\"><b>预测</b></button>与实际情况的偏差程度。损失用于衡量模型预测与实际标签之间的距离。训练模型的目标是尽可能降低损失，使其达到最低值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the following image, you can visualize loss as arrows drawn from the data points to the model. The arrows show how far the model's predictions are from the actual values.",
+"zh": "在下图中，您可以将损失直观地表示为从数据点到模型的箭头。箭头显示了模型的预测与实际值之间的差距。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/loss-lines.png",
+"alt": {
+"en": "Figure 8. Loss lines connect the data points to the\nmodel.",
+"zh": "图 8. 损失线将数据点与模型相关联。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 8</b>. Loss is measured from the actual value to the predicted value.",
+"zh": "<b>图 8</b>. 损失是从实际值到预测值进行衡量的。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Distance of loss",
+"zh": "损失距离"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In statistics and machine learning, loss measures the difference between the predicted and actual values. Loss focuses on the <i>distance</i> between the values, not the direction. For example, if a model predicts 2, but the actual value is 5, we don't care that the loss is negative (2 – 5= –3). Instead, we care that the <i>distance</i> between the values is 3. Thus, all methods for calculating loss remove the sign.",
+"zh": "在统计学和机器学习中，损失用于衡量预测值与实际值之间的差异。损失侧重于值之间的<i>距离</i>，而不是方向。例如，如果模型预测值为 2，但实际值为 5，我们并不关心损失为负值 (2 - 5 = -3)。相反，我们关心的是值之间的<i>距离</i>为 3。因此，所有用于计算损失的方法都会移除符号。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The two most common methods to remove the sign are the following:",
+"zh": "以下是两种最常见的移除符号的方法："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Take the absolute value of the difference between the actual value and the prediction.",
+"zh": "计算实际值与预测值之差的绝对值。"
+},
+{
+"en": "Square the difference between the actual value and the prediction.",
+"zh": "计算实际值与预测值之差的平方。"
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Types of loss",
+"zh": "损失类型"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In linear regression, there are five main types of loss, which are outlined in the following table.",
+"zh": "在线性回归中，有五种主要类型的损失，如下表所示。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Loss type",
+"zh": "损失类型"
+},
+{
+"en": "Definition",
+"zh": "定义"
+},
+{
+"en": "Equation",
+"zh": "公式"
+}
+],
+"rows": [
+[
+{
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"l1-loss\">L<sub>1</sub> loss</button></b>",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"l1-loss\">L<sub>1</sub> 损失</button></b>"
+},
+{
+"en": "The sum of the absolute values of the difference between the predicted values and the actual values.",
+"zh": "预测值与实际值之间的差的绝对值之和。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\">∣</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mord mathnormal\">re</span><span class=\"mord mathnormal\">d</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">d</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mord\">∣</span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\">∣</span><span class=\"mord cjk_fallback\">实际值</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord cjk_fallback\">预测值</span><span class=\"mord\">∣</span></span></span></span>"
+}
+],
+[
+{
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"mean-absolute-error-mae\">Mean absolute error (MAE)</button></b>",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"mean-absolute-error-mae\">平均绝对误差 (MAE)</button></b>"
+},
+{
+"en": "The average of L<sub>1</sub> losses across a set of <i>N</i> examples.",
+"zh": "一组 <i>N</i> 个示例的平均 L<sub>1</sub> 损失。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">N</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\">∣</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mord mathnormal\">re</span><span class=\"mord mathnormal\">d</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">d</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mord\">∣</span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">N</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\">∣</span><span class=\"mord cjk_fallback\">实际值</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord cjk_fallback\">预测值</span><span class=\"mord\">∣</span></span></span></span>"
+}
+],
+[
+{
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"l2-loss\">L<sub>2</sub> loss</button></b>",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"l2-loss\">L<sub>2</sub> 损失</button></b>"
+},
+{
+"en": "The sum of the squared difference between the predicted values and the actual values.",
+"zh": "预测值与实际值之间的平方差之和。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.0641em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mord mathnormal\">re</span><span class=\"mord mathnormal\">d</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">d</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mopen\">(</span><span class=\"mord cjk_fallback\">实际值</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.0641em;vertical-align:-0.25em;\"></span><span class=\"mord cjk_fallback\">预测值</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>"
+}
+],
+[
+{
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"mean-squared-error-mse\">Mean squared error (MSE)</button></b>",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"mean-squared-error-mse\">均方误差 (MSE)</button></b>"
+},
+{
+"en": "The average of L<sub>2</sub> losses across a set of <i>N</i> examples.",
+"zh": "一组 <i>N</i> 个示例的平均 L<sub>2</sub> 损失。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">N</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.0641em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mord mathnormal\">re</span><span class=\"mord mathnormal\">d</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">d</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.1901em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">N</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mopen\">(</span><span class=\"mord cjk_fallback\">实际值</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.0641em;vertical-align:-0.25em;\"></span><span class=\"mord cjk_fallback\">预测值</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>"
+}
+],
+[
+{
+"en": "<b><button type=\"button\" class=\"term\" data-term=\"root-mean-squared-error-rmse\">Root mean squared error (RMSE)</button></b>",
+"zh": "<b><button type=\"button\" class=\"term\" data-term=\"root-mean-squared-error-rmse\">均方根误差 (RMSE)</button></b>"
+},
+{
+"en": "The square root of the mean squared error (MSE).",
+"zh": "均方误差 (MSE) 的平方根。"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.84em;vertical-align:-0.6049em;\"></span><span class=\"mord sqrt\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.2351em;\"><span class=\"svg-align\" style=\"top:-3.8em;\"><span class=\"pstrut\" style=\"height:3.8em;\"></span><span class=\"mord\" style=\"padding-left:1em;\"><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">N</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mord mathnormal\">re</span><span class=\"mord mathnormal\">d</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">d</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7401em;\"><span style=\"top:-2.989em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.1951em;\"><span class=\"pstrut\" style=\"height:3.8em;\"></span><span class=\"hide-tail\" style=\"min-width:1.02em;height:1.88em;\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400em\" height=\"1.88em\" viewBox=\"0 0 400000 1944\" preserveAspectRatio=\"xMinYMin slice\"><path d=\"M983 90\nl0 -0\nc4,-6.7,10,-10,18,-10 H400000v40\nH1013.1s-83.4,268,-264.1,840c-180.7,572,-277,876.3,-289,913c-4.7,4.7,-12.7,7,-24,7\ns-12,0,-12,0c-1.3,-3.3,-3.7,-11.7,-7,-25c-35.3,-125.3,-106.7,-373.3,-214,-744\nc-10,12,-21,25,-33,39s-32,39,-32,39c-6,-5.3,-15,-14,-27,-26s25,-30,25,-30\nc26.7,-32.7,52,-63,76,-91s52,-60,52,-60s208,722,208,722\nc56,-175.3,126.3,-397.3,211,-666c84.7,-268.7,153.8,-488.2,207.5,-658.5\nc53.7,-170.3,84.5,-266.8,92.5,-289.5z\nM1001 80h400000v40h-400000z\"/></svg></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.6049em;\"><span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1.84em;vertical-align:-0.6049em;\"></span><span class=\"mord sqrt\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.2351em;\"><span class=\"svg-align\" style=\"top:-3.8em;\"><span class=\"pstrut\" style=\"height:3.8em;\"></span><span class=\"mord\" style=\"padding-left:1em;\"><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8451em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\" style=\"margin-right:0.10903em;\">N</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"mopen\">(</span><span class=\"mord cjk_fallback\">实际值</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord cjk_fallback\">预测值</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7401em;\"><span style=\"top:-2.989em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span><span style=\"top:-3.1951em;\"><span class=\"pstrut\" style=\"height:3.8em;\"></span><span class=\"hide-tail\" style=\"min-width:1.02em;height:1.88em;\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400em\" height=\"1.88em\" viewBox=\"0 0 400000 1944\" preserveAspectRatio=\"xMinYMin slice\"><path d=\"M983 90\nl0 -0\nc4,-6.7,10,-10,18,-10 H400000v40\nH1013.1s-83.4,268,-264.1,840c-180.7,572,-277,876.3,-289,913c-4.7,4.7,-12.7,7,-24,7\ns-12,0,-12,0c-1.3,-3.3,-3.7,-11.7,-7,-25c-35.3,-125.3,-106.7,-373.3,-214,-744\nc-10,12,-21,25,-33,39s-32,39,-32,39c-6,-5.3,-15,-14,-27,-26s25,-30,25,-30\nc26.7,-32.7,52,-63,76,-91s52,-60,52,-60s208,722,208,722\nc56,-175.3,126.3,-397.3,211,-666c84.7,-268.7,153.8,-488.2,207.5,-658.5\nc53.7,-170.3,84.5,-266.8,92.5,-289.5z\nM1001 80h400000v40h-400000z\"/></svg></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.6049em;\"><span></span></span></span></span></span></span></span></span>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The functional difference between L<sub>1</sub> loss and L<sub>2</sub> loss (or between MAE/RMSE and MSE) is squaring. When the difference between the prediction and label is large, squaring makes the loss even larger. When the difference is small (less than 1), squaring makes the loss even smaller.",
+"zh": "L<sub>1</sub> 损失与 L<sub>2</sub> 损失（或 MAE/RMSE 与 MSE）之间的功能差异在于平方。当预测值与标签之间的差值较大时，平方运算会使损失变得更大。当差值较小（小于 1）时，平方运算会使损失更小。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Loss metrics like MAE and RMSE may be preferable to L<sub>2</sub> loss or MSE in some use cases because they tend to be more human-interpretable, as they measure error using the same scale as the model's predicted value.",
+"zh": "在某些使用情形下，与 L<sub>2</sub> 损失或 MSE 相比，MAE 和 RMSE 等损失指标可能更可取，因为它们往往更易于人工解读，并且它们使用与模型预测值相同的比例来衡量误差。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>MAE and RMSE can differ quite widely. MAE represents the average prediction error, whereas RMSE represents the \"spread\" of the errors, and is more skewed by larger errors.",
+"zh": "<b>注意</b>：MAE 和 RMSE 的差异可能非常大。MAE 表示平均预测误差，而 RMSE 表示误差的“离散程度”，并且受较大误差的影响更大。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When processing multiple examples at once, we recommend averaging the losses across all the examples, whether using MAE, MSE, or RMSE.",
+"zh": "在同时处理多个示例时，我们建议对所有示例的损失求平均值，无论使用 MAE、MSE 还是 RMSE。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Calculating loss example",
+"zh": "损失计算示例"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "In the previous section, we created the following <a href=\"#/ch/c02/linear-regression\">model</a> to predict fuel efficiency based on car heaviness:",
+"zh": "在上一部分中，我们创建了以下<a href=\"#/ch/c02/linear-regression\">模型</a>，用于根据汽车的重量预测燃油效率："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "Model: <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7278em;vertical-align:-0.0833em;\"></span><span class=\"mord\">34</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord\">−</span><span class=\"mord\">4.6</span><span class=\"mclose\">)</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span> <ul><li>Weight: <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">–4.6</span></span></span></span></li><li>Bias: <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">34</span></span></span></span></li></ul>",
+"zh": "模型：<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7278em;vertical-align:-0.0833em;\"></span><span class=\"mord\">34</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord\">−</span><span class=\"mord\">4.6</span><span class=\"mclose\">)</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span> <ul><li>权重：<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">–4.6</span></span></span></span></li><li>偏差：<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">34</span></span></span></span></li></ul>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "If the model predicts that a 2,370-pound car gets 23.1 miles per gallon, but it actually gets 24 miles per gallon, we would calculate the L<sub>2</sub> loss as follows:",
+"zh": "如果模型预测一辆 2,370 磅的汽车每加仑汽油能行驶 23.1 英里，但实际上该汽车每加仑汽油能行驶 24 英里，那么我们计算 L<sub>2</sub> 损失的方式如下："
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b>The formula uses 2.37 because the graphs are scaled to 1000s of pounds.",
+"zh": "<b>注意</b>：该公式使用 2.37，因为图表的单位是千磅。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Value",
+"zh": "值"
+},
+{
+"en": "Equation",
+"zh": "公式"
+},
+{
+"en": "Result",
+"zh": "结果"
+}
+],
+"rows": [
+[
+{
+"en": "Prediction",
+"zh": "预测"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9em;vertical-align:-0.225em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord mathnormal\">bia</span><span class=\"mord mathnormal\">s</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">g</span><span class=\"mord mathnormal\">h</span><span class=\"mord mathnormal\">t</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10764em;\">f</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">re</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mclose\">)</span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9em;vertical-align:-0.225em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">34</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mopen\">(</span><span class=\"mord\">−</span><span class=\"mord\">4.6</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\">2.37</span><span class=\"mclose\">)</span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.69em;vertical-align:-0.075em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord cjk_fallback\">偏差</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord cjk_fallback\">（权重</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord cjk_fallback\">特征值）</span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9em;vertical-align:-0.225em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">34</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mopen\">(</span><span class=\"mord\">−</span><span class=\"mord\">4.6</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\">2.37</span><span class=\"mclose\">)</span></span></span></span></span>"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.58em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">23.1</span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.58em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">23.1</span></span></span></span></span>"
+}
+],
+[
+{
+"en": "Actual value",
+"zh": "实际值"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">ab</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">ab</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span></span></span></span></span>"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.58em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">24</span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.58em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">24</span></span></span></span></span>"
+}
+],
+[
+{
+"en": "L<sub>2</sub> loss",
+"zh": "L<sub>2</sub> 损失"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9384em;vertical-align:-0.225em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mopen\">(</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord mathnormal\">p</span><span class=\"mord mathnormal\">re</span><span class=\"mord mathnormal\">d</span><span class=\"mord mathnormal\">i</span><span class=\"mord mathnormal\">c</span><span class=\"mord mathnormal\">t</span><span class=\"mord mathnormal\">e</span><span class=\"mord mathnormal\">d</span><span class=\"mspace\"> </span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mord mathnormal\">a</span><span class=\"mord mathnormal\" style=\"margin-right:0.01968em;\">l</span><span class=\"mord mathnormal\">u</span><span class=\"mord mathnormal\">e</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7926em;\"><span style=\"top:-2.963em;margin-right:0.0556em;\"><span class=\"pstrut\" style=\"height:2.6em;\"></span><span class=\"sizing reset-size5 size2 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9384em;vertical-align:-0.225em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mopen\">(</span><span class=\"mord\">24</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\">23.1</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7926em;\"><span style=\"top:-2.963em;margin-right:0.0556em;\"><span class=\"pstrut\" style=\"height:2.6em;\"></span><span class=\"sizing reset-size5 size2 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7884em;vertical-align:-0.075em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord cjk_fallback\">（实际值</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord cjk_fallback\">预测值</span><span class=\"mord\"><span class=\"mord cjk_fallback\">）</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7926em;\"><span style=\"top:-2.963em;margin-right:0.0556em;\"><span class=\"pstrut\" style=\"height:2.6em;\"></span><span class=\"sizing reset-size5 size2 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span><br> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9384em;vertical-align:-0.225em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mopen\">(</span><span class=\"mord\">24</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mord\">23.1</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7926em;\"><span style=\"top:-2.963em;margin-right:0.0556em;\"><span class=\"pstrut\" style=\"height:2.6em;\"></span><span class=\"sizing reset-size5 size2 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span>"
+},
+{
+"en": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.58em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">0.81</span></span></span></span></span>",
+"zh": "<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.58em;\"></span><span class=\"mord sizing reset-size6 size5\"><span class=\"mord\">0.81</span></span></span></span></span>"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In this example, the L<sub>2</sub> loss for that single data point is 0.81.",
+"zh": "在此示例中，相应单个数据点的 L<sub>2</sub> 损失为 0.81。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Choosing a loss",
+"zh": "选择损失"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Deciding whether to use MAE or MSE can depend on the dataset and the way you want to handle certain predictions. Most feature values in a dataset typically fall within a distinct range. For example, cars are normally between 2000 and 5000 pounds and get between 8 to 50 miles per gallon. An 8,000-pound car, or a car that gets 100 miles per gallon, is outside the typical range and would be considered an <button type=\"button\" class=\"term\" data-term=\"outliers\"><b>outlier</b></button>.",
+"zh": "是否使用 MAE 或 MSE 可能取决于数据集以及您希望如何处理某些预测。数据集中的大多数特征值通常都位于一个明确的范围内。例如，汽车的重量通常介于 2,000 到 5,000 磅之间，每加仑汽油可行驶的里程介于 8 到 50 英里之间。一辆重 8,000 磅的汽车，或者一辆每加仑汽油能行驶 100 英里的汽车，都超出了典型范围，会被视为<button type=\"button\" class=\"term\" data-term=\"outliers\"><b>离群点</b></button>。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "An outlier can also refer to how far off a model's predictions are from the real values. For instance, 3,000 pounds is within the typical car-weight range, and 40 miles per gallon is within the typical fuel-efficiency range. However, a 3,000-pound car that gets 40 miles per gallon would be an outlier in terms of the model's prediction because the model would predict that a 3,000-pound car would get around 20 miles per gallon.",
+"zh": "离群值还可以指模型的预测值与实际值之间的差距。例如，3,000 磅在典型汽车重量范围内，而每加仑 40 英里在典型燃油效率范围内。不过，如果一辆 3,000 磅的汽车每加仑汽油能行驶 40 英里，那么就模型的预测而言，这辆汽车将是一个离群点，因为模型会预测一辆 3,000 磅的汽车每加仑汽油能行驶大约 20 英里。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When choosing the best loss function, consider how you want the model to treat outliers. For instance, MSE moves the model more toward the outliers, while MAE doesn't. L<sub>2</sub> loss incurs a much higher penalty for an outlier than L<sub>1</sub> loss. For example, the following images show a model trained using MAE and a model trained using MSE. The red line represents a fully trained model that will be used to make predictions. The outliers are closer to the model trained with MSE than to the model trained with MAE.",
+"zh": "选择最佳损失函数时，请考虑您希望模型如何处理离群值。例如，MSE 会使模型更接近离群点，而 MAE 则不会。与 L<sub>1</sub> 损失相比，L<sub>2</sub> 损失对离群值的罚分要高得多。例如，以下图片展示了使用 MAE 训练的模型和使用 MSE 训练的模型。红线表示将用于进行预测的完全训练好的模型。与使用 MAE 训练的模型相比，离群点更接近使用 MSE 训练的模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/model-mse.png",
+"alt": {
+"en": "Figure 9. The model is tilted more toward the outliers.",
+"zh": "图 9. 模型更偏向于离群值。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 9</b>. MSE loss moves the model closer to the outliers.",
+"zh": "<b>图 9</b>. MSE 损失会使模型更接近离群值。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/model-mae.png",
+"alt": {
+"en": "Figure 10. The model is tilted further away from the outliers.",
+"zh": "图 10.模型会进一步远离离群值。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 10</b>. MAE loss keeps the model farther from the outliers.",
+"zh": "<b>图 10</b>. MAE 损失可使模型远离离群值。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Note the relationship between the model and the data:",
+"zh": "请注意模型与数据之间的关系："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>MSE</b>. The model is closer to the outliers but further away from most of the other data points.",
+"zh": "<b>MSE</b>。模型更接近离群点，但距离大多数其他数据点更远。"
+},
+{
+"en": "<b>MAE</b>. The model is further away from the outliers but closer to most of the other data points.",
+"zh": "<b>MAE</b>。模型离离群点的距离更远，但离大多数其他数据点的距离更近。"
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "Click the icon for more guidelines on choosing a loss metric",
+"zh": "点击相应图标可查看有关选择损失指标的更多指南"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<b>Choose MSE:</b>",
+"zh": "<b>选择 MSE</b>："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "If you want to heavily penalize large errors.",
+"zh": "如果您想严厉惩罚大误差。"
+},
+{
+"en": "If you believe the outliers are important and indicative of true data variance that the model should account for.",
+"zh": "如果您认为离群值很重要，并且表明模型应考虑的真实数据方差。"
+}
+]
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b> The mathematical properties of MSE often make optimization smoother. Root Mean Squared Error (RMSE) is often used to get the error back into the same units as the label.",
+"zh": "<b>注意</b>：MSE 的数学属性通常会使优化更顺畅。均方根误差 (RMSE) 通常用于将误差恢复为与标签相同的单位。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Choose MAE:</b>",
+"zh": "<b>选择 MAE</b>："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "If your dataset has significant outliers that you don't want to overly influence the model. MAE is more robust.",
+"zh": "如果您的数据集中存在您不希望对模型产生过大影响的显著离群值。MAE 更稳健。"
+},
+{
+"en": "If you prefer a loss function that is more directly interpretable as the average error magnitude.",
+"zh": "如果您希望损失函数能更直接地解释为平均误差幅度。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In practice, your metric choice can also depend on the specific business problem and what kind of errors are more costly.",
+"zh": "在实践中，指标选择还可能取决于具体的业务问题以及哪种类型的错误成本更高。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Check Your Understanding",
+"zh": "检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "Consider the following two plots of a linear model fit to a dataset:",
+"zh": "请看以下两个图，它们显示了线性模型与数据集的拟合情况："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/mse-left.png",
+"alt": {
+"en": "A plot of 10 points.\n      A line runs through 6 of the points. 2 points are 1 unit\n      above the line; 2 other points are 1 unit below the line.",
+"zh": "由 10 个点构成的曲线图。\n      一条直线穿过 6 个点。2 个点位于线上方 1 个单位处；另外 2 个点位于线下方 1 个单位处。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/mse-right.png",
+"alt": {
+"en": "A plot of 10 points. A line runs\n      through 8 of the points. 1 point is 2 units\n      above the line; 1 other point is 2 units below the line.",
+"zh": "由 10 个点构成的曲线图。一条直线穿过 8 个点。1 个点位于该线上方 2 个单位处；另 1 个点位于该线下方 2 个单位处。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the two linear models shown in the preceding plots has the <b>higher</b> Mean Squared Error (MSE) when evaluated on the plotted data points?",
+"zh": "在对曲线图中绘制的数据点进行评估时，哪个线性模型的均方误差 (MSE) <b>较高</b>？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The model on the left.",
+"zh": "左侧的模型。"
+},
+"why": {
+"en": "The six examples on the line incur a total loss of 0. The four examples not on the line are not very far off the line, so even squaring their offset still yields a low value: <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.05764em;\">MSE</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.3629em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.0179em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">10</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">0.4</span></span></span></span>",
+"zh": "该行上的 6 个示例的总损失为 0。不在直线上的四个示例与直线的偏差并不大，因此即使对它们的偏移量进行平方，仍会得到较低的值：<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.05764em;\">MSE</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.3629em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.0179em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">10</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">0.4</span></span></span></span>"
+},
+"correct": false
+},
+{
+"html": {
+"en": "The model on the right.",
+"zh": "右侧的模型。"
+},
+"why": {
+"en": "The eight examples on the line incur a total loss of 0. However, although only two points lay off the line, both of those points are <i>twice</i> as far off the line as the outlier points in the left figure. Squared loss amplifies those differences, so an offset of two incurs a loss four times as great as an offset of one: <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.05764em;\">MSE</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.3629em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.0179em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">10</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">0.8</span></span></span></span>",
+"zh": "该行上的 8 个示例的总损失为 0。不过，尽管只有两个点在线外，但这两个点离线的距离依然是左图中离群点的 2 倍。平方损失进一步加大差异，因此两个单位的偏移量产生的损失是一个单位的 4 倍：<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.05764em;\">MSE</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.3629em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.0179em;\"><span style=\"top:-2.655em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">10</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8913em;\"><span style=\"top:-2.931em;margin-right:0.0714em;\"><span class=\"pstrut\" style=\"height:2.5em;\"></span><span class=\"sizing reset-size3 size1 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6444em;\"></span><span class=\"mord\">0.8</span></span></span></span>"
+},
+"correct": true
+}
+]
+}
+]
+},
+{
+"id": "parameters-exercise",
+"path": "/machine-learning/crash-course/linear-regression/parameters-exercise",
+"min": 5,
+"heading": {
+"en": "Linear regression: Parameters exercise",
+"zh": "线性回归：参数练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/parameters-exercise",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/parameters-exercise?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The graph below plots 20 examples from a fuel-efficiency dataset, with the feature (car heaviness in thousands of pounds) plotted on the x-axis and the label (miles per gallon) plotted on the y-axis.",
+"zh": "下图绘制了燃油效率数据集中的 20 个示例，其中 x 轴表示特征（汽车重量，单位为千磅），y 轴表示标签（每加仑行驶里程数）。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Your task:</b> Adjust the <b>Weight</b> and <b>Bias</b> sliders above the graph to find the linear model that minimizes MSE loss on the data.",
+"zh": "<b>您的任务</b>：调整图表上方的<b>权重</b>和<b>偏差</b>滑块，找到可最大限度减少数据 MSE 损失的线性模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Questions to consider:</b>",
+"zh": "<b>需要考虑的问题</b>："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "What is the lowest MSE you can achieve?",
+"zh": "您可以实现的最低 MSE 是多少？"
+},
+{
+"en": "What weight and bias values produced this loss?",
+"zh": "哪些权重和偏差值产生了此损失？"
+}
+]
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to see the solution",
+"zh": "点击加号图标即可查看解决方案"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "The optimal linear model for this data has an MSE of 3.37, with a weight of –0.12 and a bias of 16.96, as shown in the following image.",
+"zh": "此数据的最佳线性模型的 MSE 为 3.37，权重为 -0.12，偏差为 16.96，如下图所示。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/parameters-exercise-solution.png",
+"alt": {
+"en": "Plot of 20 points and the optimal linear regression line for\n              these points, using the weight and bias values above.",
+"zh": "20 个点的图以及使用上述权重和偏差值得出的这些点的最佳线性回归线。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+}
+]
+}
+]
+},
+{
+"id": "gradient-descent",
+"path": "/machine-learning/crash-course/linear-regression/gradient-descent",
+"min": 10,
+"heading": {
+"en": "Linear regression: Gradient descent",
+"zh": "线性回归：梯度下降"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Gradient descent is an iterative optimization algorithm used to find the best weights and bias for a linear regression model by minimizing the loss function.",
+"zh": null
+},
+{
+"en": "The process involves repeatedly calculating the loss, determining the direction to adjust weights and bias to reduce loss, and updating the parameters accordingly.",
+"zh": null
+},
+{
+"en": "A model is considered to have converged when further iterations do not significantly reduce the loss, indicating it has found the weights and bias that produce the lowest possible loss.",
+"zh": null
+},
+{
+"en": "Loss curves visually represent the model's progress during training, showing how the loss decreases over iterations and helping to identify convergence.",
+"zh": null
+},
+{
+"en": "Linear models have convex loss functions, ensuring that gradient descent will always find the global minimum, resulting in the best possible model for the given data.",
+"zh": null
+}
+],
+"terms": [
+"convergence",
+"convex-function",
+"gradient-descent",
+"iteration",
+"loss-curve"
+],
+"blocks": [
+{
+"type": "video",
+"id": "QoK1nNAURw4"
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"gradient-descent\"><b>Gradient descent</b></button> is a mathematical technique that iteratively finds the weights and bias that produce the model with the lowest loss. Gradient descent finds the best weight and bias by repeating the following process for a number of user-defined iterations.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"gradient-descent\"><b>梯度下降法</b></button>是一种数学技巧，可迭代地找到能使模型产生最低损失的权重和偏差。梯度下降法通过重复以下过程（迭代次数由用户定义）来找到最佳权重和偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The model begins training with randomized weights and biases near zero, and then repeats the following steps:",
+"zh": "模型开始训练时，权重和偏差会随机化为接近于零的值，然后重复执行以下步骤："
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "Calculate the loss with the current weight and bias.",
+"zh": "使用当前权重和偏差计算损失。"
+},
+{
+"en": "Determine the direction to move the weights and bias that reduce loss.",
+"zh": "确定可减少损失的权重和偏差移动方向。"
+},
+{
+"en": "Move the weight and bias values a small amount in the direction that reduces loss.",
+"zh": "将权重和偏差值沿可减少损失的方向移动少量距离。"
+},
+{
+"en": "Return to step one and repeat the process until the model can't reduce the loss any further.",
+"zh": "返回到第 1 步，重复此过程，直到模型无法进一步减少损失为止。"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "The diagram below outlines the iterative steps gradient descent performs to find the weights and bias that produce the model with the lowest loss.",
+"zh": "下图概述了梯度下降法为找到可生成损失最低的模型的权重和偏差而执行的迭代步骤。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/gradient-descent.png",
+"alt": {
+"en": "Figure 11. Illustration of the gradient descent process.",
+"zh": "图 11. 梯度下降过程的图示。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 11</b>. Gradient descent is an iterative process that finds the weights and bias that produce the model with the lowest loss.",
+"zh": "<b>图 11</b>. 梯度下降法是一种迭代过程，用于查找可生成损失最低的模型的权重和偏差。"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to learn more about the math behind gradient descent.",
+"zh": "点击加号图标，详细了解梯度下降法背后的数学原理。"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "At a concrete level, we can walk through the gradient descent steps using the following small fuel-efficiency dataset with seven examples, and <button type=\"button\" class=\"term\" data-term=\"mean-squared-error-mse\"><b>Mean Squared Error (MSE)</b></button> as the loss metric:",
+"zh": "在具体层面上，我们可以使用以下包含 7 个示例的小型燃油效率数据集，并以<button type=\"button\" class=\"term\" data-term=\"mean-squared-error-mse\"><b>均方误差 (MSE)</b></button> 作为损失指标，逐步完成梯度下降法："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Pounds in 1000s (feature)",
+"zh": "以千为单位的磅数（功能）"
+},
+{
+"en": "Miles per gallon (label)",
+"zh": "每加仑燃油行驶的英里数（标签）"
+}
+],
+"rows": [
+[
+{
+"en": "3.5",
+"zh": "3.5"
+},
+{
+"en": "18",
+"zh": "18"
+}
+],
+[
+{
+"en": "3.69",
+"zh": "3.69"
+},
+{
+"en": "15",
+"zh": "15"
+}
+],
+[
+{
+"en": "3.44",
+"zh": "3.44"
+},
+{
+"en": "18",
+"zh": "18"
+}
+],
+[
+{
+"en": "3.43",
+"zh": "3.43"
+},
+{
+"en": "16",
+"zh": "16"
+}
+],
+[
+{
+"en": "4.34",
+"zh": "4.34"
+},
+{
+"en": "15",
+"zh": "15"
+}
+],
+[
+{
+"en": "4.42",
+"zh": "4.42"
+},
+{
+"en": "14",
+"zh": "14"
+}
+],
+[
+{
+"en": "2.37",
+"zh": "2.37"
+},
+{
+"en": "24",
+"zh": "24"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "list",
+"ordered": true,
+"items": [
+{
+"en": "The model starts training by setting the weight and bias to zero:",
+"zh": "模型通过将权重和偏差设置为零来开始训练："
+},
+{
+"en": "Calculate MSE loss with the current model parameters:",
+"zh": "使用当前模型参数计算 MSE 损失："
+},
+{
+"en": "Calculate the slope of the tangent to the loss function at each weight and the bias:",
+"zh": "计算每个权重和偏置处损失函数的切线的斜率："
+},
+{
+"en": "Move a small amount in the direction of the negative slope to get the next weight and bias. For now, we'll arbitrarily define the \"small amount\" as 0.01:",
+"zh": "沿负斜率方向移动少量距离，即可得到下一个权重和偏差。目前，我们将任意定义“少量”为 0.01："
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "Use the new weight and bias to calculate the loss and repeat. Completing the process for six iterations, we'd get the following weights, biases, and losses:",
+"zh": "使用新的权重和偏差计算损失并重复此过程。完成六次迭代后，我们将获得以下权重、偏差和损失："
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Iteration",
+"zh": "迭代"
+},
+{
+"en": "Weight",
+"zh": "重量"
+},
+{
+"en": "Bias",
+"zh": "偏见"
+},
+{
+"en": "Loss (MSE)",
+"zh": "损失（均方误差）"
+}
+],
+"rows": [
+[
+{
+"en": "1",
+"zh": "1"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "0",
+"zh": "0"
+},
+{
+"en": "303.71",
+"zh": "303.71"
+}
+],
+[
+{
+"en": "2",
+"zh": "2"
+},
+{
+"en": "1.20",
+"zh": "1.20"
+},
+{
+"en": "0.34",
+"zh": "0.34"
+},
+{
+"en": "170.84",
+"zh": "170.84"
+}
+],
+[
+{
+"en": "3",
+"zh": "3"
+},
+{
+"en": "2.05",
+"zh": "2.05"
+},
+{
+"en": "0.59",
+"zh": "0.59"
+},
+{
+"en": "103.17",
+"zh": "103.17"
+}
+],
+[
+{
+"en": "4",
+"zh": "4"
+},
+{
+"en": "2.66",
+"zh": "2.66"
+},
+{
+"en": "0.78",
+"zh": "0.78"
+},
+{
+"en": "68.70",
+"zh": "68.70"
+}
+],
+[
+{
+"en": "5",
+"zh": "5"
+},
+{
+"en": "3.09",
+"zh": "3.09"
+},
+{
+"en": "0.91",
+"zh": "0.91"
+},
+{
+"en": "51.13",
+"zh": "51.13"
+}
+],
+[
+{
+"en": "6",
+"zh": "6"
+},
+{
+"en": "3.40",
+"zh": "3.40"
+},
+{
+"en": "1.01",
+"zh": "1.01"
+},
+{
+"en": "42.17",
+"zh": "42.17"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You can see that the loss gets lower with each updated weight and bias. In this example, we stopped after six iterations. In practice, a model trains until it <button type=\"button\" class=\"term\" data-term=\"convergence\"><b>converges</b></button>. When a model converges, additional iterations don't reduce loss more because gradient descent has found the weights and bias that nearly minimize the loss.",
+"zh": "您可以看到，随着每次更新权重和偏差，损失会越来越低。 在此示例中，我们在 6 次迭代后停止了训练。实际上，模型会一直训练，直到<button type=\"button\" class=\"term\" data-term=\"convergence\"><b>收敛</b></button>为止。 当模型收敛时，额外的迭代不会进一步减少损失，因为梯度下降法已经找到了可将损失降至最低的权重和偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If the model continues to train past convergence, loss begins to fluctuate in small amounts as the model continually updates the parameters around their lowest values. This can make it hard to verify that the model has actually converged. To confirm the model has converged, you'll want to continue training until the loss has stabilized.",
+"zh": "如果模型在收敛后继续训练，损失会开始小幅波动，因为模型会不断更新参数，使其接近最低值。这可能会导致难以验证模型是否已实际收敛。如需确认模型是否已收敛，您需要继续训练，直到损失趋于稳定。"
+}
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Model convergence and loss curves",
+"zh": "模型收敛和损失曲线"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "When training a model, you'll often look at a <button type=\"button\" class=\"term\" data-term=\"loss-curve\"><b>loss curve</b></button> to determine if the model has <button type=\"button\" class=\"term\" data-term=\"convergence\"><b>converged</b></button>. The loss curve shows how the loss changes as the model trains. The following is what a typical loss curve looks like. Loss is on the y-axis and iterations are on the x-axis:",
+"zh": "在训练模型时，您通常会查看<button type=\"button\" class=\"term\" data-term=\"loss-curve\"><b>损失曲线</b></button>，以确定模型是否已<button type=\"button\" class=\"term\" data-term=\"convergence\"><b>收敛</b></button>。损失曲线显示了损失随模型训练的变化情况。下图显示了典型的损失曲线。y 轴表示损失，x 轴表示迭代次数："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/convergence.png",
+"alt": {
+"en": "Figure 12. Graph of loss curve showing a steep decline and then a gentle decline.",
+"zh": "图 12. 损失曲线图，显示损失先急剧下降，然后缓慢下降。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 12</b>. Loss curve showing the model converging around the 1,000th-iteration mark.",
+"zh": "<b>图 12</b>. 损失曲线，显示模型在第 1,000 次迭代左右收敛。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "You can see that loss dramatically decreases during the first few iterations, then gradually decreases before flattening out around the 1,000th-iteration mark. After 1,000 iterations, we can be mostly certain that the model has converged.",
+"zh": "您可以看到，在前几次迭代中，损失大幅减少，然后逐渐减少，在第 1,000 次迭代左右趋于平缓。经过 1,000 次迭代后，我们基本上可以确定模型已收敛。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the following figures, we draw the model at three points during the training process: the beginning, the middle, and the end. Visualizing the model's state at snapshots during the training process solidifies the link between updating the weights and bias, reducing loss, and model convergence.",
+"zh": "在下图中，我们绘制了模型在训练过程中的三个时间点（开始、中间和结束）的状态。直观呈现训练过程中快照的模型状态，可巩固权重和偏差更新、损失减少与模型收敛之间的联系。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the figures, we use the derived weights and bias at a particular iteration to represent the model. In the graph with the data points and the model snapshot, blue loss lines from the model to the data points show the amount of loss. The longer the lines, the more loss there is.",
+"zh": "在图中，我们使用特定迭代次数时得出的权重和偏差来表示模型。在包含数据点和模型快照的图中，从模型到数据点的蓝色损失线表示损失量。线条越长，损失越大。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In the following figure, we can see that around the second iteration the model would not be good at making predictions because of the high amount of loss.",
+"zh": "在下图中，我们可以看到，在第二次迭代左右，由于损失过大，模型将无法很好地进行预测。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/large-loss.png",
+"alt": {
+"en": "Figure 13. Loss curve and corresponding graph of the model, which tilts away from the data points.",
+"zh": "图 13。模型损失曲线和相应图表，该曲线偏离数据点。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 13</b>. Loss curve and snapshot of the model at the beginning of the training process.",
+"zh": "<b>图 13</b>. 训练过程开始时的损失曲线和模型快照。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "At around the 400th-iteration, we can see that gradient descent has found the weight and bias that produce a better model.",
+"zh": "在大约第 400 次迭代时，我们可以看到梯度下降法已经找到了能够生成更好模型的权重和偏差。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/med-loss.png",
+"alt": {
+"en": "Figure 14. Loss curve and corresponding graph of the model, which cuts through the data points but not at the optimal angle.",
+"zh": "图 14. 模型在数据点处切线但未以最佳角度切线的损失曲线和相应图表。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 14</b>. Loss curve and snapshot of model about midway through training.",
+"zh": "<b>图 14</b>. 损失曲线和训练中途的模型快照。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "And at around the 1,000th-iteration, we can see that the model has converged, producing a model with the lowest possible loss.",
+"zh": "在大约第 1,000 次迭代时，我们可以看到模型已经收敛，生成了损失尽可能最低的模型。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/low-loss.png",
+"alt": {
+"en": "Figure 15. Loss curve and corresponding graph of the model, which fits the data well.",
+"zh": "图 15. 可很好地拟合数据的模型的损失曲线和相应图表。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 15</b>. Loss curve and snapshot of the model near the end of the training process.",
+"zh": "<b>图 15</b>. 训练过程接近结束时的损失曲线和模型快照。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What's the role of gradient descent in linear regression?",
+"zh": "梯度下降法在线性回归中的作用是什么？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Gradient descent is an iterative process that finds the best weights and bias that minimize the loss.",
+"zh": "梯度下降法是一种迭代过程，可找到能最大限度减少损失的最佳权重和偏差。"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": true
+},
+{
+"html": {
+"en": "Gradient descent helps to determine what type of loss to use when training a model, for example, L<sub>1</sub> or L<sub>2</sub>.",
+"zh": "梯度下降法有助于确定在训练模型时使用哪种类型的损失，例如 L<sub>1</sub> 或 L<sub>2</sub>。"
+},
+"why": {
+"en": "Gradient descent is not involved in the selection of a loss function for model training.",
+"zh": "梯度下降法不涉及模型训练的损失函数选择。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Gradient descent removes outliers from the dataset to help the model make better predictions.",
+"zh": "梯度下降法会从数据集中移除离群值，以帮助模型做出更好的预测。"
+},
+"why": {
+"en": "Gradient descent doesn't change the dataset.",
+"zh": "梯度下降法不会更改数据集。"
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Convergence and convex functions",
+"zh": "收敛和凸函数"
+},
+"level": 3
+},
+{
+"type": "p",
+"html": {
+"en": "The loss functions for linear models always produce a <button type=\"button\" class=\"term\" data-term=\"convex-function\"><b>convex</b></button> surface. As a result of this property, when a linear regression model converges, we know the model has found the weights and bias that produce the lowest loss.",
+"zh": "线性模型的损失函数始终会生成<button type=\"button\" class=\"term\" data-term=\"convex-function\"><b>凸</b></button>面。根据这一属性，当线性回归模型收敛时，我们知道该模型已找到可产生最低损失的权重和偏差。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "If we graph the loss surface for a model with one feature, we can see its convex shape. The following is the loss surface for a hypothetical miles per gallon dataset. Weight is on the x-axis, bias is on the y-axis, and loss is on the z-axis:",
+"zh": "如果我们绘制具有一个特征的模型的损失曲面图，可以看到其凸形。下图显示了假设的每加仑英里数数据集的损失曲面。权重位于 x 轴上，偏差位于 y 轴上，损失位于 z 轴上："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/convexity.png",
+"alt": {
+"en": "Figure 16. 3-D graph of loss surface.",
+"zh": "图 16. 损失曲面的 3D 图。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 16.</b> Loss surface that shows its convex shape.",
+"zh": "<b>图 16.</b> 显示凸形的损失曲面。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In this example, a weight of -5.44 and bias of 35.94 produce the lowest loss at 5.54:",
+"zh": "在此示例中，权重为 -5.44，偏差为 35.94，可产生最低的损失值 5.54："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/loss-weight-bias.png",
+"alt": {
+"en": "Figure 17. 3-D graph of loss surface, with (-5.44, 35.94, 5.54) at the bottom.",
+"zh": "图 17. 损失曲面的 3D 图，底部为 (-5.44, 35.94, 5.54)。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 17</b>. Loss surface showing the weight and bias values that produce the lowest loss.",
+"zh": "<b>图 17</b>. 显示产生最低损失的权重和偏差值的损失曲面。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A linear model converges when it's found the minimum loss. If we graphed the weights and bias points during gradient descent, the points would look like a ball rolling down a hill, finally stopping at the point where there's no more downward slope.",
+"zh": "当线性模型找到最小损失时，它会收敛。如果我们绘制梯度下降法期间的权重和偏差点图，这些点看起来就像一个球从山上滚下来，最终停在没有更多向下坡度的点。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b> The model almost never finds the exact weight and bias values that minimize loss, but instead finds values very close to them.",
+"zh": "<b>注意</b>：模型几乎找不到可最大限度减少损失的确切权重和偏差值，但可以找到非常接近这些值的值。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/loss-surface-points.png",
+"alt": {
+"en": "Figure 18. Convex 3-D loss surface with gradient descent points moving to the lowest point.",
+"zh": "图 18. 凸 3D 损失曲面，梯度下降点移动到最低点。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 18</b>. Loss graph showing gradient descent points stopping at the lowest point on the graph.",
+"zh": "<b>图 18</b>. 损失图，显示了梯度下降点停止在图表最低点的情况。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Notice that the black loss points create the exact shape of the loss curve: a steep decline before gradually sloping down until they've reached the lowest point on the loss surface.",
+"zh": "请注意，黑色损失点会形成损失曲线的确切形状：先是急剧下降，然后逐渐向下倾斜，直到达到损失曲面上的最低点。"
+}
+},
+{
+"type": "note",
+"kind": "note",
+"html": {
+"en": "<b>Note:</b> This point represents the minimum loss for the model, which is typically greater than 0. A loss of 0 would mean that the model fits every data point exactly, which is usually a sign of overfitting (i.e., the model is too complex/powerful). Overfitting is discussed in more depth <a href=\"#/ch/c07/overfitting-2\">later in the course</a>.",
+"zh": "<b>注意</b>：此点表示模型的最小损失，通常大于 0。损失为 0 意味着模型与每个数据点的拟合度都非常高，这通常是过拟合的迹象（即模型过于复杂/强大）。我们将在<a href=\"#/ch/c07/overfitting-2\">本课程的后续部分</a>更深入地讨论过拟合问题。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Using the weight and bias values that produce the lowest loss—in this case a weight of -5.44 and a bias of 35.94—we can graph the model to see how well it fits the data:",
+"zh": "使用产生最低损失的权重和偏差值（在本例中，权重为 -5.44，偏差为 35.94），我们可以绘制模型图，看看它与数据的拟合程度如何："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/graphed-model.png",
+"alt": {
+"en": "Figure 19. Graph of pounds in 1000s vs miles per gallon, with the model fitting the data.",
+"zh": "图 19. 以千磅为单位的重量与每加仑燃油行驶里程的对比图，其中模型拟合了数据。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 19.</b> Model graphed using the weight and bias values that produce the lowest loss.",
+"zh": "<b>图 19.</b> 使用产生最低损失的权重和偏差值绘制的模型图。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "This would be the best model for this dataset because no other weight and bias values produce a model with lower loss.",
+"zh": "对于此数据集，这将是最佳模型，因为没有其他权重和偏差值能生成损失更低的模型。"
+}
+}
+]
+},
+{
+"id": "hyperparameters",
+"path": "/machine-learning/crash-course/linear-regression/hyperparameters",
+"min": 10,
+"heading": {
+"en": "Linear regression: Hyperparameters",
+"zh": "线性回归：超参数"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/hyperparameters",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/hyperparameters?hl=zh-cn"
+},
+"takeaways": [
+{
+"en": "Hyperparameters, such as learning rate, batch size, and epochs, are external configurations that influence the training process of a machine learning model.",
+"zh": null
+},
+{
+"en": "The learning rate determines the step size during model training, impacting the speed and stability of convergence.",
+"zh": null
+},
+{
+"en": "Batch size dictates the number of training examples processed before updating model parameters, influencing training speed and noise.",
+"zh": null
+},
+{
+"en": "Epochs represent the number of times the entire training dataset is used during training, affecting model performance and training time.",
+"zh": null
+},
+{
+"en": "Choosing appropriate hyperparameters is crucial for optimizing model training and achieving desired results.",
+"zh": null
+}
+],
+"terms": [
+"batch-size",
+"epoch",
+"generalization",
+"hyperparameter",
+"iteration",
+"learning-rate",
+"mini-batch",
+"mini-batch-stochastic-gradient-descent",
+"neural-network",
+"parameter",
+"stochastic-gradient-descent-sgd"
+],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"hyperparameter\"><b>Hyperparameters</b></button> are variables that control different aspects of training. Three common hyperparameters are:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"hyperparameter\"><b>超参数</b></button>是控制训练不同方面的变量。以下是三种常见的超参数："
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"learning-rate\"><b>Learning rate</b></button>",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"learning-rate\"><b>学习速率</b></button>"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"batch-size\"><b>Batch size</b></button>",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"batch-size\"><b>批次大小</b></button>"
+},
+{
+"en": "<button type=\"button\" class=\"term\" data-term=\"epoch\"><b>Epochs</b></button>",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"epoch\"><b>周期</b></button>"
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, <button type=\"button\" class=\"term\" data-term=\"parameter\"><b>parameters</b></button> are the variables, like the weights and bias, that are part of the model itself. In other words, hyperparameters are values that you control; parameters are values that the model calculates during training.",
+"zh": "相比之下，<button type=\"button\" class=\"term\" data-term=\"parameter\"><b>形参</b></button>是模型本身的一部分，例如权重和偏差。换句话说，超参数是您控制的值；参数是模型在训练期间计算的值。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Learning rate",
+"zh": "学习速率"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"learning-rate\"><b>Learning rate</b></button> is a floating point number you set that influences how quickly the model converges. If the learning rate is too low, the model can take a long time to converge. However, if the learning rate is too high, the model never converges, but instead bounces around the weights and bias that minimize the loss. The goal is to pick a learning rate that's not too high nor too low so that the model converges quickly.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"learning-rate\"><b>学习速率</b></button>是一个您设置的浮点数，用于影响模型收敛的速度。如果学习率过低，模型可能需要很长时间才能收敛。不过，如果学习速率过高，模型将永远无法收敛，而是在可最大限度减少损失的权重和偏差附近跳动。目标是选择一个既不太高也不太低的学习速率，以便模型快速收敛。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The learning rate determines the magnitude of the changes to make to the weights and bias during each step of the gradient descent process. The model multiplies the gradient by the learning rate to determine the model's parameters (weight and bias values) for the next iteration. In the third step of <a href=\"#/ch/c02/gradient-descent\">gradient descent</a>, the \"small amount\" to move in the direction of negative slope refers to the learning rate.",
+"zh": "学习速率决定了在梯度下降过程的每一步中，对权重和偏差所做的更改幅度。模型将梯度乘以学习速率，以确定下一次迭代的模型参数（权重和偏差值）。在<a href=\"#/ch/c02/gradient-descent\">梯度下降</a>的第三步中，沿负斜率方向移动的“少量”是指学习速率。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The difference between the old model parameters and the new model parameters is proportional to the slope of the loss function. For example, if the slope is large, the model takes a large step. If small, it takes a small step. For example, if the gradient's magnitude is 2.5 and the learning rate is 0.01, then the model will change the parameter by 0.025.",
+"zh": "旧模型参数与新模型参数之间的差异与损失函数的斜率成正比。例如，如果斜率较大，模型会采取较大的步长。如果较小，则采取较小的步长。例如，如果梯度的大小为 2.5，学习率为 0.01，则模型会将形参更改 0.025。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The ideal learning rate helps the model to converge within a reasonable number of iterations. In Figure 20, the loss curve shows the model significantly improving during the first 20 iterations before beginning to converge:",
+"zh": "理想的学习率有助于模型在合理的迭代次数内收敛。在图 20 中，损失曲线显示模型在前 20 次迭代中显著改进，然后开始收敛："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/correct-lr.png",
+"alt": {
+"en": "Figure 20. Loss curve that shows a steep slope before flattening out.",
+"zh": "图 20. 在趋于平缓之前呈现陡峭斜率的损失曲线。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 20</b>. Loss graph showing a model trained with a learning rate that converges quickly.",
+"zh": "<b>图 20</b>. 损失图，显示了以可快速收敛的学习速率训练的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "In contrast, a learning rate that's too small can take too many iterations to converge. In Figure 21, the loss curve shows the model making only minor improvements after each iteration:",
+"zh": "相比之下，如果学习速率过小，则可能需要过多的迭代次数才能实现收敛。在图 21 中，损失曲线显示模型在每次迭代后仅略有改进："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/small-lr.png",
+"alt": {
+"en": "Figure 21. Loss curve that shows an almost 45-degree slope.",
+"zh": "图 21. 显示近 45 度斜率的损失曲线。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 21</b>. Loss graph showing a model trained with a small learning rate.",
+"zh": "<b>图 21</b>. 损失图，显示了以较小学习速率训练的模型。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "A learning rate that's too large never converges because each iteration either causes the loss to bounce around or continually increase. In Figure 22, the loss curve shows the model decreasing and then increasing loss after each iteration, and in Figure 23 the loss increases at later iterations:",
+"zh": "过大的学习速率永远不会收敛，因为每次迭代都会导致损失在较大范围内波动或持续增加。在图 22 中，损失曲线显示模型在每次迭代后损失先减少后增加；在图 23 中，损失在后续迭代中增加："
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/high-lr.png",
+"alt": {
+"en": "Figure 22. Loss curve that shows jagged up-and-down line.",
+"zh": "图 22. 显示锯齿状上下起伏的损失曲线。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 22</b>. Loss graph showing a model trained with a learning rate that's too big, where the loss curve fluctuates wildly, going up and down as the iterations increase.",
+"zh": "<b>图 22</b>. 损失图，显示了以过大的学习速率训练的模型，其中损失曲线随着迭代次数的增加而剧烈波动，时而上升时而下降。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/increasing-loss.png",
+"alt": {
+"en": "Figure 23. Loss curve that shows the loss increasing at later iterations",
+"zh": "图 23. 显示损失在后期迭代中增加的损失曲线"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 23</b>. Loss graph showing a model trained with a learning rate that's too big, where the loss curve drastically increases in later iterations.",
+"zh": "<b>图 23</b>. 损失图，显示了以过大的学习速率训练的模型，其中损失曲线在后来的迭代中急剧增加。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What is the ideal learning rate?",
+"zh": "理想的学习率是多少？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "The ideal learning rate is problem-dependent.",
+"zh": "理想的学习速率取决于具体问题。"
+},
+"why": {
+"en": "Each model and dataset will have its own ideal learning rate.",
+"zh": "每个模型和数据集都有自己的理想学习率。"
+},
+"correct": true
+},
+{
+"html": {
+"en": "0.01",
+"zh": "0.01"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "1.0",
+"zh": "1.0"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "h",
+"html": {
+"en": "Batch size",
+"zh": "批次大小"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "<button type=\"button\" class=\"term\" data-term=\"batch-size\"><b>Batch size</b></button> is a hyperparameter that refers to the number of <button type=\"button\" class=\"term\" data-term=\"example\"><b>examples</b></button> the model processes before updating its weights and bias. You might think that the model should calculate the loss for <i>every</i> example in the dataset before updating the weights and bias. However, when a dataset contains hundreds of thousands or even millions of examples, using the full batch isn't practical.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"batch-size\"><b>批次大小</b></button>是一种超参数，指的是模型在更新权重和偏差之前处理的<button type=\"button\" class=\"term\" data-term=\"example\"><b>示例</b></button>数量。您可能会认为，模型应先计算数据集中<i>每个</i>样本的损失，然后再更新权重和偏差。不过，如果数据集包含数十万甚至数百万个示例，则使用完整批次并不实际。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Two common techniques to get the right gradient on <i>average</i> without needing to look at every example in the dataset before updating the weights and bias are <button type=\"button\" class=\"term\" data-term=\"SGD\"><b>stochastic gradient descent</b></button> and <button type=\"button\" class=\"term\" data-term=\"mini-batch-stochastic-gradient-descent\"><b>mini-batch stochastic gradient descent</b></button>:",
+"zh": "以下两种常见技术可在不查看数据集中的每个示例的情况下，获得正确的<i>平均</i>梯度，然后更新权重和偏差：<button type=\"button\" class=\"term\" data-term=\"SGD\"><b>随机梯度下降</b></button>和<button type=\"button\" class=\"term\" data-term=\"mini-batch-stochastic-gradient-descent\"><b>小批量随机梯度下降</b></button>。"
+}
+},
+{
+"type": "list",
+"ordered": false,
+"items": [
+{
+"en": "<b>Stochastic gradient descent (SGD)</b>: Stochastic gradient descent uses only a single example (a batch size of one) per iteration. Given enough iterations, SGD works but is very noisy. \"Noise\" refers to variations during training that cause the loss to increase rather than decrease during an iteration. The term \"stochastic\" indicates that the one example comprising each batch is chosen at random.<br> Notice in the following image how loss slightly fluctuates as the model updates its weights and bias using SGD, which can lead to noise in the loss graph:<br> <br> <b>Figure 24</b>. Model trained with stochastic gradient descent (SGD) showing noise in the loss curve.<br> Note that using stochastic gradient descent can produce noise throughout the entire loss curve, not just near convergence.",
+"zh": "<b>随机梯度下降法 (SGD)</b>：随机梯度下降法在每次迭代中仅使用一个示例（批次大小为 1）。在迭代次数足够多的情况下，SGD 可以正常运行，但噪声非常大。“噪声”是指训练期间导致损失在迭代过程中增加而非减少的变化。“随机”一词表示每个批次中的一个示例是随机选择的。<br> 请注意，在下图中，当模型使用 SGD 更新权重和偏差时，损失会略有波动，这可能会导致损失图出现噪声：<br> <br> <b>图 24</b>. 使用随机梯度下降法 (SGD) 训练的模型，显示损失曲线中的噪声。<br> 请注意，使用随机梯度下降可能会在整个损失曲线中产生噪声，而不仅仅是在接近收敛时。"
+},
+{
+"en": "<b>Mini-batch stochastic gradient descent (mini-batch SGD)</b>: Mini-batch stochastic gradient descent is a compromise between full-batch and SGD. For <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">N</span></span></span></span> number of data points, the batch size can be any number greater than 1 and less than <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">N</span></span></span></span>. The model chooses the examples included in each batch at random, averages their gradients, and then updates the weights and bias once per iteration.<br> Determining the number of examples for each batch depends on the dataset and the available compute resources. In general, small batch sizes behaves like SGD, and larger batch sizes behaves like full-batch gradient descent.<br> <br> <b>Figure 25</b>. Model trained with mini-batch SGD.",
+"zh": "<b>小批次随机梯度下降法（小批次 SGD）</b>：小批次随机梯度下降法是全批次和 SGD 之间的折衷方案。对于 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">N</span></span></span></span> 个数据点，批次大小可以是大于 1 且小于 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6833em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.10903em;\">N</span></span></span></span> 的任意数字。模型会随机选择每个批次中包含的示例，对它们的梯度求平均值，然后在每次迭代中更新一次权重和偏差。<br> 确定每个批次的样本数量取决于数据集和可用的计算资源。一般来说，小批量大小的行为类似于 SGD，而大批量大小的行为类似于全批量梯度下降。<br> <br> <b>图 25</b>. 使用小批次随机梯度下降法训练的模型。"
+}
+]
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/noisy-gradient.png",
+"alt": {
+"en": "Figure 24. Steep loss curve that flattens out, but with a lot of tiny fluctuations.",
+"zh": "图 24. 陡峭的损失曲线，但趋于平缓，且有许多细微的波动。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/mini-batch-sgd.png",
+"alt": {
+"en": "Figure 25. Steep loss curve that begins to flatten out, with much smaller fluctuations near convergence.",
+"zh": "图 25. 陡峭的损失曲线，开始趋于平缓，在收敛附近波动幅度很小。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "When training a model, you might think that noise is an undesirable characteristic that should be eliminated. However, a certain amount of noise can be a good thing. In later modules, you'll learn how noise can help a model <button type=\"button\" class=\"term\" data-term=\"generalization\"><b>generalize</b></button> better and find the optimal weights and bias in a <button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>neural network</b></button>.",
+"zh": "在训练模型时，您可能会认为噪声是一种应消除的不良特征。不过，一定程度的噪音可能是一件好事。在后续模块中，您将了解噪声如何帮助模型更好地<button type=\"button\" class=\"term\" data-term=\"generalization\"><b>泛化</b></button>，以及如何在<button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>神经网络</b></button>中找到最佳权重和偏差。"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Epochs",
+"zh": "周期数"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "During training, an <button type=\"button\" class=\"term\" data-term=\"epoch\"><b>epoch</b></button> means that the model has processed every example in the training set <i>once</i>. For example, given a training set with 1,000 examples and a mini-batch size of 100 examples, it will take the model 10 <button type=\"button\" class=\"term\" data-term=\"iteration\"><b>iterations</b></button> to complete one epoch.",
+"zh": "在训练期间，一个<button type=\"button\" class=\"term\" data-term=\"epoch\"><b>周期</b></button>是指模型已处理训练集中的每个示例<i>一次</i>。例如，如果训练集包含 1,000 个示例，而小批次大小为 100 个示例，则模型需要 10 次<button type=\"button\" class=\"term\" data-term=\"iteration\">迭代</button>才能完成一个周期。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Training typically requires many epochs. That is, the system needs to process every example in the training set multiple times.",
+"zh": "训练通常需要多个周期。也就是说，系统需要多次处理训练集中的每个示例。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The number of epochs is a hyperparameter you set before the model begins training. In many cases, you'll need to experiment with how many epochs it takes for the model to converge. In general, more epochs produces a better model, but also takes more time to train.",
+"zh": "周期数是一种超参数，您需要在模型开始训练之前设置该参数。在许多情况下，您需要通过实验来确定模型收敛所需的周期数。一般来说，训练周期数越多，模型效果越好，但训练时间也越长。"
+}
+},
+{
+"type": "figure",
+"src": "img/crash-course/linear-regression/images/batch-size.png",
+"alt": {
+"en": "Figure 26. A full batch is the entire dataset, a mini batch is a subset of the dataset, and an epoch is a full pass through ten mini batches.",
+"zh": "图 26. 完整批次是整个数据集，小批次是数据集的子集，而一个周期是指完整地遍历十个小批次。"
+},
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Figure 26</b>. Full batch versus mini batch.",
+"zh": "<b>图 26</b>. 完整批次与小批次。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "The following table describes how batch size and epochs relate to the number of times a model updates its parameters.",
+"zh": "下表介绍了批次大小和周期与模型更新其参数的次数之间的关系。"
+}
+},
+{
+"type": "table",
+"headers": [
+{
+"en": "Batch type",
+"zh": "批次类型"
+},
+{
+"en": "When weights and bias updates occur",
+"zh": "权重和偏差更新何时发生"
+}
+],
+"rows": [
+[
+{
+"en": "Full batch",
+"zh": "完整批次"
+},
+{
+"en": "After the model looks at all the examples in the dataset. For instance, if a dataset contains 1,000 examples and the model trains for 20 epochs, the model updates the weights and bias 20 times, once per epoch.",
+"zh": "模型查看完数据集中的所有示例后。例如，如果某个数据集包含 1,000 个样本，并且模型训练了 20 个周期，则模型会更新权重和偏差 20 次，每个周期更新一次。"
+}
+],
+[
+{
+"en": "Stochastic gradient descent",
+"zh": "随机梯度下降法"
+},
+{
+"en": "After the model looks at a single example from the dataset. For instance, if a dataset contains 1,000 examples and trains for 20 epochs, the model updates the weights and bias 20,000 times.",
+"zh": "模型查看数据集中的单个示例后。 例如，如果某个数据集包含 1,000 个样本，并且训练了 20 个周期，则模型会更新权重和偏差 20,000 次。"
+}
+],
+[
+{
+"en": "Mini-batch stochastic gradient descent",
+"zh": "小批次随机梯度下降法"
+},
+{
+"en": "After the model looks at the examples in each batch. For instance, if a dataset contains 1,000 examples, and the batch size is 100, and the model trains for 20 epochs, the model updates the weights and bias 200 times.",
+"zh": "模型查看完每个批次中的示例后。例如，如果某个数据集包含 1,000 个样本，批次大小为 100，并且模型训练了 20 个周期，则模型会更新权重和偏差 200 次。"
+}
+]
+],
+"caption": {
+"en": "",
+"zh": ""
+}
+},
+{
+"type": "h",
+"html": {
+"en": "Exercise: Check your understanding",
+"zh": "练习：检查您的理解情况"
+},
+"level": 3
+},
+{
+"type": "quiz",
+"q": {
+"en": "What's the best batch size when using mini-batch SGD?",
+"zh": "使用小批次随机梯度下降法时，最佳批次大小是多少？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "It depends",
+"zh": "视情况而定"
+},
+"why": {
+"en": "The ideal batch size depends on the dataset and the available compute resources",
+"zh": "理想的批次大小取决于数据集和可用的计算资源"
+},
+"correct": true
+},
+{
+"html": {
+"en": "10 examples per batch",
+"zh": "每个批次 10 个示例"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+},
+{
+"html": {
+"en": "100 examples per batch",
+"zh": "每个批次 100 个示例"
+},
+"why": {
+"en": "",
+"zh": ""
+},
+"correct": false
+}
+]
+},
+{
+"type": "quiz",
+"q": {
+"en": "Which of the following statements is true?",
+"zh": "以下哪项陈述是正确的？"
+},
+"open": false,
+"options": [
+{
+"html": {
+"en": "Larger batches are unsuitable for data with many outliers.",
+"zh": "较大的批次不适合包含许多异常值的数据。"
+},
+"why": {
+"en": "This statement is false. By averaging more gradients together, larger batch sizes can help reduce the negative effects of having outliers in the data.",
+"zh": "这个说法不正确。通过对更多梯度求平均值，较大的批次大小有助于减少数据中存在离群值带来的负面影响。"
+},
+"correct": false
+},
+{
+"html": {
+"en": "Doubling the learning rate can slow down training.",
+"zh": "将学习速率提高一倍可能会减慢训练速度。"
+},
+"why": {
+"en": "This statement is true. Doubling the learning rate can result in a learning rate that is too large, and therefore cause the weights to \"bounce around,\" increasing the amount of time needed to converge. As always, the best hyperparameters depend on your dataset and available compute resources.",
+"zh": "这个说法是正确的。将学习速率加倍可能会导致学习速率过大，从而导致权重“四处波动”，增加收敛所需的时间。 与往常一样，最佳超参数取决于您的数据集和可用的计算资源。"
+},
+"correct": true
+}
+]
+}
+]
+},
+{
+"id": "gradient-descent-exercise",
+"path": "/machine-learning/crash-course/linear-regression/gradient-descent-exercise",
+"min": 5,
+"heading": {
+"en": "Linear regression: Gradient descent exercise",
+"zh": "线性回归：梯度下降练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent-exercise",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent-exercise?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In this exercise, you'll revisit the graph of fuel-efficiency data from the <a href=\"#/ch/c02/parameters-exercise\">Parameters exercise</a>. But this time, you'll use gradient descent to learn the optimal weight and bias values for a linear model that minimizes loss.",
+"zh": "在本练习中，您将重新查看<a href=\"#/ch/c02/parameters-exercise\">“形参”练习</a>中的燃油效率数据图表。不过，这次您将使用梯度下降法来学习线性模型的最佳权重和偏差值，以最大限度地减少损失。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Complete the three tasks below the graph.",
+"zh": "完成图表下方的三项任务。"
+}
+},
+{
+"type": "note",
+"kind": "warning",
+"html": {
+"en": "This interactive visualization can produce flashing visuals when set to a high Learning Rate, which may affect photosensitive individuals.",
+"zh": "如果将学习率设置为较高值，此交互式可视化图表可能会生成闪烁的视觉效果，这可能会影响对光敏感的个人。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task #1:</b> Adjust the <b>Learning Rate</b> slider below the graph to set a learning rate of 0.03. Click the <b>Start</b> button to run gradient descent.",
+"zh": "<b>任务 1</b>：调整图表下方的<b>学习速率</b>滑块，将学习速率设置为 0.03。点击<b>开始</b>按钮运行梯度下降法。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "How long does the model training take to converge (reach a stable minimum loss value)? What is the MSE value at model convergence? What weight and bias values produce this value?",
+"zh": "模型训练需要多长时间才能收敛（达到稳定的最小损失值）？模型收敛时的 MSE 值是多少？哪些权重和偏差值会产生此值？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to see our solution",
+"zh": "点击加号图标即可查看我们的解决方案"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "When we set a learning rate of 0.03, the model converged in approximately 30 seconds, achieving a MSE of 2.67 with weight and bias values of –1.14 and 20.389, respectively. This indicates we've picked a good learning rate value.",
+"zh": "当我们将学习率设置为 0.03 时，模型在大约 30 秒内收敛，实现了 2.67 的 MSE，权重和偏差值分别为 -1.14 和 20.389。这表明我们选择的学习速率值是合适的。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task #2:</b> Click the <b>Reset</b> button below the graph to reset the Weight and Bias values in the graph. Adjust the <b>Learning Rate</b> slider to a value around 1.10e<sup>–5</sup>. Click the <b>Start</b> button to run gradient descent.",
+"zh": "<b>任务 2</b>：点击图表下方的<b>重置</b>按钮，重置图表中的权重和偏差值。将<b>学习率</b>滑块调整为 1.10e<sup>–5</sup> 左右的值。点击<b>开始</b>按钮运行梯度下降法。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "What do you notice about how long it takes the model training to converge this time?",
+"zh": "您注意到这次模型训练收敛所需的时间有何变化了吗？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to see the solution",
+"zh": "点击加号图标即可查看解决方案"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "After several minutes, model training still hasn't converged. Small updates to Weight and Bias values continue to result in slightly lower loss values. This suggests that picking a higher learning rate would enable gradient descent to find the optimal weight and bias values more quickly.",
+"zh": "几分钟后，模型训练仍未收敛。权重和偏差值的小幅更新会继续导致损失值略有降低。这表明，选择较高的学习速率有助于梯度下降更快地找到最佳权重和偏差值。"
+}
+}
+]
+},
+{
+"type": "p",
+"html": {
+"en": "<b>Task #3:</b> Click the <b>Reset</b> button below the graph to reset the Weight and Bias values in the graph. Adjust the <b>Learning Rate</b> slider up to 1. Click the <b>Start</b> button to run gradient descent.",
+"zh": "<b>任务 3</b>：点击图表下方的<b>重置</b>按钮，重置图表中的权重和偏差值。将<b>学习率</b>滑块向上调整到 1。 点击<b>开始</b>按钮运行梯度下降法。"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "What happens to the loss values as gradient descent runs? How long will model training take to converge this time?",
+"zh": "梯度下降运行时，损失值会发生什么变化？模型训练需要多长时间才能收敛？"
+}
+},
+{
+"type": "more",
+"title": {
+"en": "Click the plus icon to see the solution",
+"zh": "点击加号图标即可查看解决方案"
+},
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "Loss values fluctuate wildly at high values (MSE over 300). This indicates that the learning rate is too high, and model training will never reach convergence.",
+"zh": "在高值（MSE 超过 300）时，损失值波动很大。 这表示学习速率过高，模型训练永远无法达到收敛状态。"
+}
+}
+]
+}
+]
+},
+{
+"id": "programming-exercise",
+"path": "/machine-learning/crash-course/linear-regression/programming-exercise",
+"min": 20,
+"heading": {
+"en": "Linear regression: Programming exercise",
+"zh": "线性回归：编程练习"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/programming-exercise",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/programming-exercise?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "p",
+"html": {
+"en": "In the following coding exercise, you'll build your own linear regression model using the <a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a> library:",
+"zh": "在以下编码练习中，您将使用 <a href=\"https://keras.io/\" target=\"_blank\" rel=\"noopener\">Keras</a> 库构建自己的线性回归模型："
+}
+},
+{
+"type": "link",
+"href": {
+"en": "https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/linear_regression_taxi.ipynb?utm_source=mlcc&utm_campaign=colab-external&utm_medium=referral&utm_content=linear_regression",
+"zh": "https://colab.research.google.com/github/google/eng-edu/blob/main/ml/cc/exercises/linear_regression_taxi.ipynb?utm_source=mlcc&utm_campaign=colab-external&utm_medium=referral&utm_content=linear_regression&hl=zh-cn"
+},
+"html": {
+"en": "Open linear regression exercise",
+"zh": "打开线性回归练习"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "Programming exercises run directly in your browser (no setup required!) using the <a href=\"https://colab.research.google.com\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> platform. Colaboratory is supported on most major browsers, and is most thoroughly tested on desktop versions of Chrome and Firefox.",
+"zh": "编程练习会直接在浏览器中运行（无需设置！），使用 <a href=\"https://colab.research.google.com?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Colaboratory</a> 平台。大多数主流浏览器都支持 Colaboratory，并且在桌面版 Chrome 和 Firefox 上进行了最全面的测试。"
+}
+}
+]
+},
+{
+"id": "test-your-knowledge",
+"path": "/machine-learning/crash-course/linear-regression/test-your-knowledge",
+"min": 10,
+"heading": {
+"en": "Linear regression: Test your knowledge",
+"zh": "线性回归：测试您的知识"
+},
+"url": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/test-your-knowledge",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/test-your-knowledge?hl=zh-cn"
+},
+"takeaways": [],
+"terms": [],
+"blocks": [
+{
+"type": "gquiz",
+"href": {
+"en": "https://developers.google.com/machine-learning/crash-course/linear-regression/quiz",
+"zh": "https://developers.google.com/machine-learning/crash-course/linear-regression/quiz?hl=zh-cn"
+}
+},
+{
+"type": "h",
+"html": {
+"en": "What's next",
+"zh": "后续步骤"
+},
+"level": 2
+},
+{
+"type": "p",
+"html": {
+"en": "Congratulations on finishing this module!",
+"zh": "恭喜您完成本单元！"
+}
+},
+{
+"type": "p",
+"html": {
+"en": "We encourage you to explore the various <a href=\"https://developers.google.com/machine-learning/crash-course\" target=\"_blank\" rel=\"noopener\">MLCC modules</a> at your own pace and interest. If you'd like to follow a recommended order, we suggest that you move to the following module next: <b><a href=\"#/ch/c03/logistic-regression\">Logistic regression</a></b>.",
+"zh": "我们鼓励您根据自己的兴趣和进度，探索各种 <a href=\"https://developers.google.com/machine-learning/crash-course?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">MLCC 模块</a>。如果您想按照建议的顺序学习，我们建议您接下来学习以下模块：<b><a href=\"#/ch/c03/logistic-regression\">逻辑回归</a></b>。"
+}
+}
+]
+}
+]
+}

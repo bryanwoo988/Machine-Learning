@@ -1,0 +1,6 @@
+{
+  "intro-to-ml": {"en": "A brief introduction to machine learning.", "zh": "简要介绍机器学习。"},
+  "crash-course": {"en": "A hands-on course to explore the critical basics of machine learning.", "zh": "探索机器学习关键基础知识的实操课程。"},
+  "problem-framing": {"en": "A course to help you map real-world problems to machine learning solutions.", "zh": "帮助您将现实问题映射到机器学习解决方案的课程。"},
+  "managing-ml-projects": {"en": "Learn how to manage machine learning projects.", "zh": "学习如何管理机器学习项目。"}
+}
