@@ -95,3 +95,32 @@ test('stored answers are checked, not trusted', () => {
   prefs.init(memStore({ 'ml.prefs.v1': JSON.stringify({ answers: { 'c01/a#1': 2, 'c01/b#2': -1, 'c01/c#3': 'x', 'c01/d#4': 1.5 } }) }));
   assert.deepEqual(prefs.get().answers, { 'c01/a#1': 2 });
 });
+
+test('light and dark looks default to classic and midnight; bad stored values fall back', () => {
+  prefs.init(memStore({ 'ml.prefs.v1': JSON.stringify({ lightTheme: 'neon', darkTheme: 'oled' }) }));
+  const s = prefs.get();
+  assert.equal(s.lightTheme, 'classic');
+  assert.equal(s.darkTheme, 'oled');
+});
+
+test('picking a look shows it: a fixed mode switches to that side, auto stays auto', () => {
+  prefs.init(memStore());
+  assert.equal(prefs.setDarkTheme('grape'), 'grape');
+  assert.equal(prefs.get().theme, 'auto');
+  prefs.setTheme('light');
+  prefs.setDarkTheme('slate');
+  assert.equal(prefs.get().theme, 'dark');
+  prefs.setLightTheme('mint');
+  assert.equal(prefs.get().theme, 'light');
+  assert.equal(prefs.setLightTheme('neon'), 'mint');
+});
+
+test('applyToDocument sets the palette for the side in use', () => {
+  prefs.init(memStore());
+  prefs.setLightTheme('paper'); prefs.setDarkTheme('oled'); prefs.setTheme('auto');
+  const doc = { documentElement: { dataset: {}, style: { setProperty() {} } } };
+  prefs.applyToDocument(doc, true);
+  assert.deepEqual([doc.documentElement.dataset.theme, doc.documentElement.dataset.palette], ['dark', 'oled']);
+  prefs.applyToDocument(doc, false);
+  assert.deepEqual([doc.documentElement.dataset.theme, doc.documentElement.dataset.palette], ['light', 'paper']);
+});

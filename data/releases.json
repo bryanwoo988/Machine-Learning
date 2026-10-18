@@ -1,4 +1,7 @@
 [
+ {"v": "1.1.0", "date": "2026-10-18", "notes": [
+  {"en": "Settings now offers four light themes (Classic, Paper, Mint, Lavender) and four dark themes (Midnight, OLED Black, Slate, Grape). 'Match system' uses your chosen light theme when your phone is light and your dark theme when it is dark.", "zh": "设置里新增 4 种浅色主题（经典、纸张、薄荷、薰衣草）和 4 种深色主题（午夜、纯黑 OLED、石板、葡萄）。「跟随系统」时，手机为浅色就用你选的浅色主题，为深色就用你选的深色主题。"}
+ ]},
  {"v": "1.0.0", "date": "2026-10-18", "notes": [
   {"en": "First release: Google's four foundational machine-learning courses (Intro to ML, Machine Learning Crash Course, Problem Framing, Managing ML Projects) in English and Chinese, usable offline.", "zh": "第一版：Google 四门机器学习基础课程（机器学习简介、机器学习速成课程、问题构建、管理机器学习项目），中英对照，可离线使用。"},
   {"en": "Key takeaways for each lesson, a recap card for each module, 'Check your understanding' questions you can answer in the app, and an 'I've mastered this' checklist.", "zh": "每课的「必会知识点」、每个单元的复习卡、可以直接作答的「检查您的理解情况」题目，以及「我已掌握」进度。"},

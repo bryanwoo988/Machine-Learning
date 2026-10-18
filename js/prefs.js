@@ -10,13 +10,16 @@ const KEY = 'ml.prefs.v1';
 
 export const LANGS = ['en', 'zh'];
 export const THEMES = ['auto', 'light', 'dark'];
+// Each side has its own look; `auto` switches between the two with the phone.
+export const LIGHT_THEMES = ['classic', 'paper', 'mint', 'lavender'];
+export const DARK_THEMES = ['midnight', 'oled', 'slate', 'grape'];
 export const SCALES = [0.9, 1, 1.15, 1.3, 1.5, 1.75];
 
 // English is the default so the first screen — shown before anyone has
 // chosen — reads for the widest audience. `chosen` tells a first visit
 // apart from someone who deliberately picked English.
 const DEFAULTS = () => ({
-  lang: 'en', theme: 'auto', scale: 1, chosen: false,
+  lang: 'en', theme: 'auto', lightTheme: 'classic', darkTheme: 'midnight', scale: 1, chosen: false,
   read: {}, quiz: {}, answers: {}, lastRoute: '', seenVersion: '',
 });
 
@@ -42,6 +45,8 @@ function sanitise(raw) {
   return {
     lang,
     theme: THEMES.includes(raw.theme) ? raw.theme : d.theme,
+    lightTheme: LIGHT_THEMES.includes(raw.lightTheme) ? raw.lightTheme : d.lightTheme,
+    darkTheme: DARK_THEMES.includes(raw.darkTheme) ? raw.darkTheme : d.darkTheme,
     scale: SCALES.includes(raw.scale) ? raw.scale : d.scale,
     chosen: raw.chosen === true && LANGS.includes(raw.lang),
     read: isObj(raw.read) ? Object.fromEntries(Object.entries(raw.read).filter(([, v]) => v === true)) : {},
@@ -107,6 +112,23 @@ export function setTheme(theme) {
   return state.theme;
 }
 
+// Picking a look also shows it: a light look switches a fixed dark mode to light, and back.
+export function setLightTheme(name) {
+  if (!LIGHT_THEMES.includes(name)) return state.lightTheme;
+  state.lightTheme = name;
+  if (state.theme === 'dark') state.theme = 'light';
+  change('theme');
+  return state.lightTheme;
+}
+
+export function setDarkTheme(name) {
+  if (!DARK_THEMES.includes(name)) return state.darkTheme;
+  state.darkTheme = name;
+  if (state.theme === 'light') state.theme = 'dark';
+  change('theme');
+  return state.darkTheme;
+}
+
 export function setScale(scale) {
   if (!SCALES.includes(scale)) return state.scale;
   state.scale = scale;
@@ -154,8 +176,13 @@ export function setSeenVersion(v) {
 export function applyToDocument(doc = document, prefersDark = globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches) {
   const r = doc.documentElement;
   r.lang = state.lang === 'zh' ? 'zh-Hans' : state.lang;
-  r.dataset.theme = state.theme === 'auto' ? (prefersDark ? 'dark' : 'light') : state.theme;
+  const side = state.theme === 'auto' ? (prefersDark ? 'dark' : 'light') : state.theme;
+  r.dataset.theme = side;
+  r.dataset.palette = side === 'dark' ? state.darkTheme : state.lightTheme;
   r.dataset.themePref = state.theme;
+  // The browser bar takes the page colour of the chosen look.
+  const bg = doc.defaultView?.getComputedStyle?.(r).getPropertyValue('--bg').trim();
+  if (bg) doc.querySelectorAll?.('meta[name="theme-color"]').forEach(m => m.setAttribute('content', bg));
   r.style.setProperty('--font-scale', String(state.scale));
   if (state.scale >= 1.3) r.dataset.single = '';
   else delete r.dataset.single;
