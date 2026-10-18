@@ -23,19 +23,19 @@
 "takeaways": [
 {
 "en": "AutoML automates tasks in the machine learning workflow, like feature engineering, algorithm selection, and hyperparameter tuning, making model building faster and easier.",
-"zh": null
+"zh": "AutoML 把机器学习工作流程中的特征工程、算法选择和超参数调整等任务自动化，使构建模型更快、更容易。"
 },
 {
 "en": "While manual training involves writing code and iteratively adjusting it, AutoML reduces repetitive work and the need for specialized skills.",
-"zh": null
+"zh": "手动训练需要编写代码并反复调整，而 AutoML 能减少重复的工作，也降低对专业技能的要求。"
 },
 {
 "en": "AutoML empowers users to focus on the core machine learning problem and data instead of getting bogged down in manual tasks within the model development cycle.",
-"zh": null
+"zh": "AutoML 让用户可以专注于核心的机器学习问题和数据，而不必陷在模型开发周期中的手动工作里。"
 },
 {
 "en": "This module explores the benefits and limitations of using AutoML, common patterns, and how to apply them to machine learning projects, assuming prior knowledge of basic machine learning concepts.",
-"zh": null
+"zh": "本单元探讨使用 AutoML 的优势和限制、常见模式，以及如何把它们用于机器学习项目，前提是您已了解机器学习的基本概念。"
 }
 ],
 "terms": [
@@ -162,23 +162,23 @@
 "takeaways": [
 {
 "en": "AutoML helps save time and improve the quality of machine learning models by automating the model selection and training process.",
-"zh": null
+"zh": "AutoML 把模型选择和训练过程自动化，有助于节省时间、提高机器学习模型的质量。"
 },
 {
 "en": "AutoML democratizes ML by enabling users without specialized skills to build models and is useful for dataset evaluation and enforcing best practices.",
-"zh": null
+"zh": "AutoML 让没有专业技能的用户也能构建模型，使机器学习更普及，也适合用来评估数据集和落实最佳做法。"
 },
 {
 "en": "AutoML may have limitations such as potentially lower model quality compared to manual training, limited customization during training, and opacity in the model search process.",
-"zh": null
+"zh": "AutoML 也有局限，例如模型质量可能不如手动训练、训练时可定制的地方有限，以及模型搜索过程不透明。"
 },
 {
 "en": "Large amounts of data are generally required for AutoML, although specialized systems utilizing transfer learning can reduce this need.",
-"zh": null
+"zh": "AutoML 一般需要大量数据，不过利用迁移学习的专门系统可以降低这项需求。"
 },
 {
 "en": "AutoML is suitable for teams with limited ML experience or those seeking productivity gains without customization needs, while manual training is preferred when model quality and customization are paramount.",
-"zh": null
+"zh": "AutoML 适合机器学习经验有限、或希望提高效率而不需要定制的团队；若模型质量和定制最重要，则较适合手动训练。"
 }
 ],
 "terms": [
@@ -343,23 +343,23 @@
 "takeaways": [
 {
 "en": "AutoML automates the process of developing machine learning models, requiring minimal coding for some tools while others offer more flexibility through APIs and CLIs for advanced users.",
-"zh": null
+"zh": "AutoML 把开发机器学习模型的过程自动化：有些工具几乎不需要写代码，有些则通过 API 和命令行为进阶用户提供更多弹性。"
 },
 {
 "en": "The AutoML workflow follows similar steps to traditional machine learning, including problem definition, data gathering, preparation, model development, evaluation, and potential retraining.",
-"zh": null
+"zh": "AutoML 的工作流程与传统机器学习的步骤相似，包括定义问题、收集数据、准备数据、开发模型、评估，以及可能需要的重新训练。"
 },
 {
 "en": "Data preparation remains crucial for AutoML, involving labeling, cleaning, formatting, and potentially feature transformations to ensure optimal model training.",
-"zh": null
+"zh": "数据准备对 AutoML 仍然至关重要，包括加标签、清理、调整格式，以及可能的特征转换，以确保模型训练效果最佳。"
 },
 {
 "en": "No-code AutoML tools guide users through model development with steps like data import, analysis, refinement, and configuration of training parameters before initiating the automated training process.",
-"zh": null
+"zh": "无代码 AutoML 工具会引导用户完成模型开发：导入数据、分析、改进，并设置训练参数，然后才开始自动训练。"
 },
 {
 "en": "After training, users can evaluate model performance, feature importance, and underlying architecture, with some AutoML systems even supporting model deployment and retraining.",
-"zh": null
+"zh": "训练完成后，用户可以评估模型表现、特征重要性和底层架构，有些 AutoML 系统还支持模型部署和重新训练。"
 }
 ],
 "terms": [

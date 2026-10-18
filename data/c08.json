@@ -23,31 +23,31 @@
 "takeaways": [
 {
 "en": "This module explores neural networks, a model architecture designed to automatically identify nonlinear patterns in data, eliminating the need for manual feature cross experimentation.",
-"zh": null
+"zh": "本单元探讨神经网络。这种模型架构能自动找出数据中的非线性规律，不必再人工尝试各种特征组合。"
 },
 {
 "en": "You will learn the fundamental components of a deep neural network, including nodes, hidden layers, and activation functions, and how they contribute to prediction.",
-"zh": null
+"zh": "您会学到深度神经网络的基本组成部分，包括节点、隐藏层和激活函数，以及它们如何参与预测。"
 },
 {
 "en": "The module covers the training process of neural networks, using the backpropagation algorithm to optimize predictions and minimize loss.",
-"zh": null
+"zh": "本单元介绍神经网络的训练过程：使用反向传播算法优化预测、尽量降低损失。"
 },
 {
 "en": "Additionally, you will gain insights into how neural networks handle multi-class classification problems using one-vs.-all and one-vs.-one approaches.",
-"zh": null
+"zh": "此外，您还会了解神经网络如何用一对多和一对一方法处理多类别分类问题。"
 },
 {
 "en": "This module builds on prior knowledge of machine learning concepts such as linear and logistic regression, classification, and working with numerical and categorical data.",
-"zh": null
+"zh": "本单元建立在您已学过的机器学习概念之上，例如线性回归和逻辑回归、分类，以及数值和分类数据的处理。"
 }
 ],
 "terms": [
-"activation_function",
-"hidden_layer",
+"activation-function",
+"hidden-layer",
 "linear-model",
 "model",
-"neural_network",
+"neural-network",
 "node-neural-network",
 "nonlinear"
 ],
@@ -56,8 +56,8 @@
 "type": "note",
 "kind": "objective",
 "html": {
-"en": "<b>Learning objectives</b> <ul><li>Explain the motivation for building neural networks, and the use cases they address.</li><li>Define and explain the function of the key components of a deep neural network architecture: <ul><li><b><button type=\"button\" class=\"term\" data-term=\"node-neural-network\">Nodes</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"hidden_layer\">Hidden layers</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"activation_function\">Activation functions</button></b></li></ul></li><li>Develop intuition around how neural network predictions are made, by stepping through the inference process.</li><li>Build a high-level intuition of how neural networks are trained, using the backpropagation algorithm.</li><li>Explain how neural networks can be used to perform two types of multi-class classification: one-vs.-all and one-vs.-one.</li></ul>",
-"zh": "<b>学习目标</b> <ul><li>说明构建神经网络的动机，以及它们解决的用例。</li><li>定义并说明深度神经网络架构的关键组件的功能： <ul><li><b><button type=\"button\" class=\"term\" data-term=\"node-neural-network\">节点</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"hidden_layer\">隐藏层</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"activation_function\">激活函数</button></b></li></ul></li><li>通过逐步演示推理过程，直观了解神经网络如何进行预测。</li><li>使用 反向传播算法。</li><li>解释如何使用神经网络来执行两种类型的 多类别分类：一对多和一对一。</li></ul>"
+"en": "<b>Learning objectives</b> <ul><li>Explain the motivation for building neural networks, and the use cases they address.</li><li>Define and explain the function of the key components of a deep neural network architecture: <ul><li><b><button type=\"button\" class=\"term\" data-term=\"node-neural-network\">Nodes</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"hidden-layer\">Hidden layers</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"activation-function\">Activation functions</button></b></li></ul></li><li>Develop intuition around how neural network predictions are made, by stepping through the inference process.</li><li>Build a high-level intuition of how neural networks are trained, using the backpropagation algorithm.</li><li>Explain how neural networks can be used to perform two types of multi-class classification: one-vs.-all and one-vs.-one.</li></ul>",
+"zh": "<b>学习目标</b> <ul><li>说明构建神经网络的动机，以及它们解决的用例。</li><li>定义并说明深度神经网络架构的关键组件的功能： <ul><li><b><button type=\"button\" class=\"term\" data-term=\"node-neural-network\">节点</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"hidden-layer\">隐藏层</button></b></li><li><b><button type=\"button\" class=\"term\" data-term=\"activation-function\">激活函数</button></b></li></ul></li><li>通过逐步演示推理过程，直观了解神经网络如何进行预测。</li><li>使用 反向传播算法。</li><li>解释如何使用神经网络来执行两种类型的 多类别分类：一对多和一对一。</li></ul>"
 }
 },
 {
@@ -103,7 +103,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/neural-networks/images/nonlinear_simple_feature_cross.png",
+"src": "img/crash-course/neural-networks/images/nonlinear_simple_feature_cross.webp",
 "alt": {
 "en": "Figure 2. The same Cartesian coordinate plane of blue and orange\n      dots as in Figure 1.  However, this time a white hyperbolic curve is\n      plotted atop the grid, which separates the blue dots in the top-right\n      and bottom-left quadrants (now shaded with a blue background) from\n      the orange dots in the top-left and bottom right quadrants (now\n      shaded with an orange background).",
 "zh": "图 2. 蓝色和橙色的同一个笛卡尔坐标平面\n      如图 1 所示。不过，这次在网格上方绘制了一条白色双曲线，将右上象限和左下象限中的蓝点（现在用蓝色背景填充）与左上象限和右下象限中的橙点（现在用橙色背景填充）区分开来。"
@@ -142,8 +142,8 @@
 {
 "type": "p",
 "html": {
-"en": "But what if you didn't have to do all that experimentation yourself? <button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>Neural networks</b></button> are a family of model architectures designed to find <button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>nonlinear</b></button> patterns in data. During training of a neural network, the <button type=\"button\" class=\"term\" data-term=\"model\"><b>model</b></button> automatically learns the optimal feature crosses to perform on the input data to minimize loss.",
-"zh": "但如果您不必亲自进行所有这些实验，该怎么办？ <button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>神经网络</b></button>是一类模型架构，旨在发现数据中的<button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>非线性</b></button>模式。在神经网络训练期间，<button type=\"button\" class=\"term\" data-term=\"model\"><b>模型</b></button>会自动学习对输入数据执行的最佳特征交叉，以最大限度地减少损失。"
+"en": "But what if you didn't have to do all that experimentation yourself? <button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>Neural networks</b></button> are a family of model architectures designed to find <button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>nonlinear</b></button> patterns in data. During training of a neural network, the <button type=\"button\" class=\"term\" data-term=\"model\"><b>model</b></button> automatically learns the optimal feature crosses to perform on the input data to minimize loss.",
+"zh": "但如果您不必亲自进行所有这些实验，该怎么办？ <button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>神经网络</b></button>是一类模型架构，旨在发现数据中的<button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>非线性</b></button>模式。在神经网络训练期间，<button type=\"button\" class=\"term\" data-term=\"model\"><b>模型</b></button>会自动学习对输入数据执行的最佳特征交叉，以最大限度地减少损失。"
 }
 },
 {
@@ -169,12 +169,12 @@
 },
 "takeaways": [],
 "terms": [
-"bias",
-"hidden_layer",
+"bias-math-or-bias-term",
+"hidden-layer",
 "input-layer",
 "linear-model",
 "model",
-"neural_network",
+"neural-network",
 "neuron",
 "nonlinear",
 "parameter",
@@ -184,8 +184,8 @@
 {
 "type": "p",
 "html": {
-"en": "To build a <button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>neural network</b></button> that learns <button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>nonlinearities</b></button>, begin with the following familiar model structure: a <button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>linear model</b></button> of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>.",
-"zh": "要构建一个学习<button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>非线性的</b></button><button type=\"button\" class=\"term\" data-term=\"neural_network\"><b>神经网络</b></button>，首先从以下熟悉的模型结构开始：形如 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 的<button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>线性模型</b></button>。"
+"en": "To build a <button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>neural network</b></button> that learns <button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>nonlinearities</b></button>, begin with the following familiar model structure: a <button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>linear model</b></button> of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>.",
+"zh": "要构建一个学习<button type=\"button\" class=\"term\" data-term=\"nonlinear\"><b>非线性的</b></button><button type=\"button\" class=\"term\" data-term=\"neural-network\"><b>神经网络</b></button>，首先从以下熟悉的模型结构开始：形如 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 的<button type=\"button\" class=\"term\" data-term=\"linear-model\"><b>线性模型</b></button>。"
 }
 },
 {
@@ -193,6 +193,13 @@
 "html": {
 "en": "We can visualize this equation as shown below, where <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> are our three input nodes (in blue), and <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> is our output node (in green).",
 "zh": "我们可以将这个方程可视化如下图所示，其中 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 和 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> 是我们的三个输入节点（蓝色），<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.9463em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.7519em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">′</span></span></span></span></span></span></span></span></span></span></span></span> 是我们的输出节点（绿色）。"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/nodes-hidden-layers_674425a25c7df937f6e9b109e162a76b6bf55147a77a4b0681ceb90c89a26437.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/nodes-hidden-layers_674425a25c7df937f6e9b109e162a76b6bf55147a77a4b0681ceb90c89a26437.frame?hl=zh-cn"
 }
 },
 {
@@ -206,8 +213,8 @@
 {
 "type": "p",
 "html": {
-"en": "In the model above, the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> and <button type=\"button\" class=\"term\" data-term=\"bias\"><b>bias</b></button> values have been randomly initialized. Perform the following tasks to familiarize yourself with the interface and explore the linear model. You can ignore the <i>Activation Function</i> dropdown for now; we'll discuss this topic later on in the module.",
-"zh": "在上图中，<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button>和<button type=\"button\" class=\"term\" data-term=\"bias\"><b>偏差</b></button>值已随机初始化。请完成以下任务，熟悉界面并探索线性模型。您可以暂时忽略<i>“激活函数”</i>下拉菜单；我们将在本模块的后续部分讨论此主题。"
+"en": "In the model above, the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> and <button type=\"button\" class=\"term\" data-term=\"bias-math-or-bias-term\"><b>bias</b></button> values have been randomly initialized. Perform the following tasks to familiarize yourself with the interface and explore the linear model. You can ignore the <i>Activation Function</i> dropdown for now; we'll discuss this topic later on in the module.",
+"zh": "在上图中，<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button>和<button type=\"button\" class=\"term\" data-term=\"bias-math-or-bias-term\"><b>偏差</b></button>值已随机初始化。请完成以下任务，熟悉界面并探索线性模型。您可以暂时忽略<i>“激活函数”</i>下拉菜单；我们将在本模块的后续部分讨论此主题。"
 }
 },
 {
@@ -246,8 +253,8 @@
 {
 "type": "p",
 "html": {
-"en": "But what if we add another layer to the network, in between the input layer and the output layer? In neural network terminology, additional layers between the input layer and the output layer are called <button type=\"button\" class=\"term\" data-term=\"hidden_layer\"><b>hidden layers</b></button>, and the nodes in these layers are called <button type=\"button\" class=\"term\" data-term=\"neuron\"><b>neurons</b></button>.",
-"zh": "但是，如果我们在输入层和输出层之间再添加一层呢？在神经网络术语中，输入层和输出层之间的额外层称为<button type=\"button\" class=\"term\" data-term=\"hidden_layer\"><b>隐藏层</b></button>，这些层中的节点称为<button type=\"button\" class=\"term\" data-term=\"neuron\"><b>神经元</b></button>。"
+"en": "But what if we add another layer to the network, in between the input layer and the output layer? In neural network terminology, additional layers between the input layer and the output layer are called <button type=\"button\" class=\"term\" data-term=\"hidden-layer\"><b>hidden layers</b></button>, and the nodes in these layers are called <button type=\"button\" class=\"term\" data-term=\"neuron\"><b>neurons</b></button>.",
+"zh": "但是，如果我们在输入层和输出层之间再添加一层呢？在神经网络术语中，输入层和输出层之间的额外层称为<button type=\"button\" class=\"term\" data-term=\"hidden-layer\"><b>隐藏层</b></button>，这些层中的节点称为<button type=\"button\" class=\"term\" data-term=\"neuron\"><b>神经元</b></button>。"
 }
 },
 {
@@ -277,6 +284,13 @@
 "html": {
 "en": "We've added a hidden layer containing four neurons to the model.",
 "zh": "我们在模型中添加了一个包含四个神经元的隐藏层。"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/nodes-hidden-layers_e3550dad75280767b04a19c69aa3b4d9a38fe7ddead67418c7b5fcd2ed06e966.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/nodes-hidden-layers_e3550dad75280767b04a19c69aa3b4d9a38fe7ddead67418c7b5fcd2ed06e966.frame?hl=zh-cn"
 }
 },
 {
@@ -395,7 +409,7 @@
 },
 "takeaways": [],
 "terms": [
-"activation_function",
+"activation-function",
 "sigmoid-function",
 "vanishing-gradient-problem"
 ],
@@ -429,6 +443,13 @@
 }
 },
 {
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/activation-functions_95e586a519e5669e878887f6b06e994c74db004eac0cafb9c3e95fa30130a0c9.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/activation-functions_95e586a519e5669e878887f6b06e994c74db004eac0cafb9c3e95fa30130a0c9.frame?hl=zh-cn"
+}
+},
+{
 "type": "p",
 "html": {
 "en": "Try stepping through the calculations of each node by clicking the <b>&gt;|</b> button (to the right of the play button). Review the mathematical operations performed to calculate each node value in the <i>Calculations</i> panel below the graph. Note that each node's output is now a sigmoid transform of the linear combination of the nodes in the previous layer, and the output values are all squished between 0 and 1.",
@@ -438,8 +459,8 @@
 {
 "type": "p",
 "html": {
-"en": "Here, the sigmoid serves as an <button type=\"button\" class=\"term\" data-term=\"activation_function\"><b>activation function</b></button> for the neural network, a nonlinear transform of a neuron's output value before the value is passed as input to the calculations of the next layer of the neural network.",
-"zh": "在这里，sigmoid 函数用作神经网络的<button type=\"button\" class=\"term\" data-term=\"activation_function\"><b>激活函数</b></button>，它是神经元输出值在作为神经网络下一层计算的输入之前进行非线性变换的结果。"
+"en": "Here, the sigmoid serves as an <button type=\"button\" class=\"term\" data-term=\"activation-function\"><b>activation function</b></button> for the neural network, a nonlinear transform of a neuron's output value before the value is passed as input to the calculations of the next layer of the neural network.",
+"zh": "在这里，sigmoid 函数用作神经网络的<button type=\"button\" class=\"term\" data-term=\"activation-function\"><b>激活函数</b></button>，它是神经元输出值在作为神经网络下一层计算的输入之前进行非线性变换的结果。"
 }
 },
 {
@@ -601,6 +622,10 @@
 }
 },
 {
+"type": "widget",
+"id": "activation"
+},
+{
 "type": "p",
 "html": {
 "en": "ReLU often works a little better as an activation function than a smooth function like sigmoid or tanh, because it is less susceptible to the <button type=\"button\" class=\"term\" data-term=\"vanishing-gradient-problem\"><b>vanishing gradient problem</b></button> during <a href=\"#/ch/c08/backpropagation\">neural network training</a>. ReLU is also significantly easier to compute than these functions.",
@@ -704,28 +729,28 @@
 "takeaways": [
 {
 "en": "Backpropagation is the primary training algorithm for neural networks, enabling gradient descent for multi-layer networks and often handled automatically by machine learning libraries.",
-"zh": null
+"zh": "反向传播是神经网络的主要训练算法，让多层网络也能使用梯度下降，通常由机器学习库自动处理。"
 },
 {
 "en": "Vanishing gradients occur when gradients in lower layers become very small, hindering their training, and can be mitigated by using ReLU activation function.",
-"zh": null
+"zh": "梯度消失是指较低层的梯度变得非常小，使这些层难以训练；使用 ReLU 激活函数可以缓解。"
 },
 {
 "en": "Exploding gradients happen when large weights cause excessively large gradients, disrupting convergence, and can be addressed with batch normalization or lowering the learning rate.",
-"zh": null
+"zh": "梯度爆炸是指过大的权重导致梯度过大，破坏收敛；可以用批次归一化或降低学习速率来解决。"
 },
 {
 "en": "Dead ReLU units emerge when a ReLU unit's output gets stuck at 0, halting gradient flow, and can be avoided by lowering the learning rate or using ReLU variants like LeakyReLU.",
-"zh": null
+"zh": "当 ReLU 单元的输出卡在 0、梯度无法再流过时，就出现了“死亡 ReLU”；降低学习速率或改用 LeakyReLU 等 ReLU 变体可以避免。"
 },
 {
 "en": "Dropout regularization is a technique to prevent overfitting by randomly dropping unit activations during training, with higher dropout rates indicating stronger regularization.",
-"zh": null
+"zh": "丢弃正则化在训练时随机丢弃单元的激活值，以防止过拟合；丢弃率越高，正则化越强。"
 }
 ],
 "terms": [
 "backpropagation",
-"dropout_regularization",
+"dropout-regularization",
 "exploding-gradient-problem",
 "vanishing-gradient-problem"
 ],
@@ -856,8 +881,8 @@
 {
 "type": "p",
 "html": {
-"en": "Yet another form of regularization, called <button type=\"button\" class=\"term\" data-term=\"dropout_regularization\"><b>dropout regularization</b></button>, is useful for neural networks. It works by randomly \"dropping out\" unit activations in a network for a single gradient step. The more you drop out, the stronger the regularization:",
-"zh": "另一种形式的正则化（称为 <button type=\"button\" class=\"term\" data-term=\"dropout_regularization\"><b>dropout 正则化</b></button>）对神经网络很有用。其工作原理是，在一个梯度步长中随机“丢弃”网络中的单元激活。 丢弃的越多，正则化就越强："
+"en": "Yet another form of regularization, called <button type=\"button\" class=\"term\" data-term=\"dropout-regularization\"><b>dropout regularization</b></button>, is useful for neural networks. It works by randomly \"dropping out\" unit activations in a network for a single gradient step. The more you drop out, the stronger the regularization:",
+"zh": "另一种形式的正则化（称为 <button type=\"button\" class=\"term\" data-term=\"dropout-regularization\"><b>dropout 正则化</b></button>）对神经网络很有用。其工作原理是，在一个梯度步长中随机“丢弃”网络中的单元激活。 丢弃的越多，正则化就越强："
 }
 },
 {
@@ -937,8 +962,8 @@
 "zh": "输出层（1个神经元）"
 },
 {
-"en": "<button type=\"button\" class=\"term\" data-term=\"ReLU\"><b>ReLU</b></button> activation function applied to all hidden layer nodes and the output node",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"ReLU\"><b>ReLU</b></button>激活函数应用于所有隐藏层节点和输出节点"
+"en": "<button type=\"button\" class=\"term\" data-term=\"relu\"><b>ReLU</b></button> activation function applied to all hidden layer nodes and the output node",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"relu\"><b>ReLU</b></button>激活函数应用于所有隐藏层节点和输出节点"
 }
 ]
 },
@@ -947,6 +972,13 @@
 "html": {
 "en": "Review the initial setup of the network (note: <b>do not</b> click the <b>▶️</b> or <b>&gt;|</b> buttons yet), and then complete the tasks below the widget.",
 "zh": "查看网络的初始设置（注意：暂时<b>不要</b>点击<b>▶️</b>或<b>&gt;|</b>按钮），然后完成小部件下面的任务。"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/interactive-exercises_f3717c2d40470db21a69e13cd4c32bfafd79121857d25fc64ea370d989d7324a.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/neural-networks/interactive-exercises_f3717c2d40470db21a69e13cd4c32bfafd79121857d25fc64ea370d989d7324a.frame?hl=zh-cn"
 }
 },
 {
@@ -1378,23 +1410,23 @@
 "takeaways": [
 {
 "en": "This document explores multi-class classification models, which predict from multiple possibilities instead of just two, like binary classification models.",
-"zh": null
+"zh": "本文探讨多类别分类模型。与只在两种可能中预测的二元分类模型不同，它要从多个可能中做出预测。"
 },
 {
 "en": "Multi-class classification can be achieved through two main approaches: one-vs.-all and one-vs.-one (softmax).",
-"zh": null
+"zh": "多类别分类主要有两种方法：一对多和一对一 (softmax)。"
 },
 {
 "en": "One-vs.-all uses multiple binary classifiers, one for each possible outcome, to determine the probability of each class independently.",
-"zh": null
+"zh": "一对多使用多个二元分类器，每个可能的结果一个，分别独立计算每个类别的概率。"
 },
 {
 "en": "One-vs.-one (softmax) predicts probabilities of each class relative to all other classes, ensuring all probabilities sum to 1 using the softmax function.",
-"zh": null
+"zh": "一对一 (softmax) 预测每个类别相对于所有其他类别的概率，并用 softmax 函数确保所有概率加起来等于 1。"
 },
 {
 "en": "Softmax is efficient for fewer classes but can become computationally expensive with many classes; candidate sampling offers an alternative for increased efficiency.",
-"zh": null
+"zh": "类别较少时 softmax 很有效率，类别很多时计算成本会变得很高；候选采样是提高效率的替代方案。"
 }
 ],
 "terms": [
@@ -1428,8 +1460,8 @@
 {
 "type": "p",
 "html": {
-"en": "In this section, we'll investigate <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>multi-class classification</b></button> models, which can pick from <i>multiple</i> possibilities. For example:",
-"zh": "在本节中，我们将介绍 <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>多类别分类</b></button> 模型，并从<i>多种</i>可能性中进行选择。例如："
+"en": "In this section, we'll investigate <button type=\"button\" class=\"term\" data-term=\"multi-class-classification\"><b>multi-class classification</b></button> models, which can pick from <i>multiple</i> possibilities. For example:",
+"zh": "在本节中，我们将介绍 <button type=\"button\" class=\"term\" data-term=\"multi-class-classification\"><b>多类别分类</b></button> 模型，并从<i>多种</i>可能性中进行选择。例如："
 }
 },
 {
@@ -1542,7 +1574,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/neural-networks/images/one_vs_all_binary_classifiers.png",
+"src": "img/crash-course/neural-networks/images/one_vs_all_binary_classifiers.webp",
 "alt": {
 "en": "Figure 7. An image of a pear being passed as input into 4 different\n      binary classifier models. The first model predicts 'apple' or 'not\n      apple', and its prediction is 'not apple'. The second model predicts\n      'orange' or 'not orange', and its prediction is 'not orange'. The\n      third model predicts 'pear' or 'not pear', and its prediction is\n      'pear'. The fourth model predicts 'grape' or 'not grape', and its\n      prediction is 'not grape'.",
 "zh": "图 7. 将梨作为输入传递到 4 个不同\n      二元分类器模型。第一个模型预测“apple”或“非”\n      “apple”，而其预测结果是“not apple”。第二个模型\n      “橙色”即“not orange”，即预测为“not orange”。通过\n      第三个模型即“not pear”，其预测结果是\n      “pear”。第四个模型预测“grape”或“非葡萄”字样，而其\n      而不是“葡萄”。"
@@ -1576,7 +1608,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/neural-networks/images/one_vs_all_neural_net.png",
+"src": "img/crash-course/neural-networks/images/one_vs_all_neural_net.webp",
 "alt": {
 "en": "Figure 8. A neural network with the following architecture: input layer with\n      1 node, hidden layer with 3 nodes, hidden layer with 4 nodes,\n      output layer with 4 nodes. The input node is fed an image of a pear.\n      A sigmoid activation function is applied to the output layer. Each\n      output node represents the probability that the image is a specified\n      fruit. Output node 1 represents 'Is apple?' and has a value of 0.34.\n      Output node 2 represents 'Is orange?' and has a value of 0.18.\n      Output node 3 represents 'Is pear?' and has a value of 0.84.\n      Output node 4 represents 'Is grape?' and has a value of 0.07.",
 "zh": "图 8. 一个具有以下架构的神经网络：输入层\n      1 个节点、包含 3 个节点的隐藏层、包含 4 个节点的隐藏层，\n      输出层，其中包含 4 个节点。向输入节点馈送一个梨图像。\n      对输出层应用 S 型激活函数。每个\n      输出节点表示该图像是指定的\n      水果。输出节点 1 表示“Is apple?”值为 0.34\n      输出节点 2 表示“Is orange?”（是橙色吗？）值为 0.18\n      输出节点 3 表示“Is pear?”（是梨吗？）值为 0.84\n      输出节点 4 表示“Is grape?”（是葡萄吗？）值为 0.07"
@@ -1630,6 +1662,10 @@
 }
 },
 {
+"type": "widget",
+"id": "softmax"
+},
+{
 "type": "more",
 "title": {
 "en": "Click the plus icon to see the softmax equation.",
@@ -1668,7 +1704,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/neural-networks/images/one_vs_one_neural_net.png",
+"src": "img/crash-course/neural-networks/images/one_vs_one_neural_net.webp",
 "alt": {
 "en": "Figure 9. A neural network with the following architecture: input\n      layer with 1 node, hidden layer with 3 nodes, hidden layer with 4 nodes,\n      output layer with 4 nodes. The input node is fed an image of a pear.\n      A softmax activation function is applied to the output layer. Each\n      output node represents the probability that the image is a specified\n      fruit. Output node 1 represents 'Is apple?' and has a value of 0.19.\n      Output node 2 represents 'Is orange?' and has a value of 0.12.\n      Output node 3 represents 'Is pear?' and has a value of 0.63.\n      Output node 4 represents 'Is grape?' and has a value of 0.06.",
 "zh": "图 9.采用以下架构的神经网络：输入\n      有 1 个节点的隐藏层、有 3 个节点的隐藏层、有 4 个节点的隐藏层，\n      输出层，其中包含 4 个节点。向输入节点馈送一个梨图像。\n      将 softmax 激活函数应用于输出层。每个\n      输出节点表示该图像是指定的\n      水果。输出节点 1 表示“Is apple?”值为 0.19\n      输出节点 2 表示“Is orange?”（是橙色吗？）值为 0.12\n      输出节点 3 表示“Is pear?”（是梨吗？）值为 0.63\n      输出节点 4 表示“Is grape?”（是葡萄吗？）值为 0.06"

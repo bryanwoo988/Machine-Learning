@@ -23,19 +23,19 @@
 "takeaways": [
 {
 "en": "This module focuses on identifying and mitigating human biases that can negatively impact machine learning models.",
-"zh": null
+"zh": "本单元着重说明如何识别和减少会对机器学习模型造成不良影响的人类偏见。"
 },
 {
 "en": "You'll learn how to proactively examine data for potential bias before model training and how to evaluate your model's predictions for fairness.",
-"zh": null
+"zh": "您会学到如何在训练模型之前主动检查数据中可能的偏见，以及如何评估模型的预测是否公平。"
 },
 {
 "en": "The module explores various types of human biases that can unintentionally be replicated by machine learning algorithms, emphasizing responsible AI development.",
-"zh": null
+"zh": "本单元探讨各种可能被机器学习算法无意中复制的人类偏见，强调负责任的 AI 开发。"
 },
 {
 "en": "It builds upon foundational machine learning knowledge, including linear and logistic regression, classification, and handling numerical and categorical data.",
-"zh": null
+"zh": "本单元建立在机器学习的基础知识之上，包括线性回归和逻辑回归、分类，以及数值和分类数据的处理。"
 }
 ],
 "terms": [
@@ -94,36 +94,36 @@
 "takeaways": [
 {
 "en": "Machine learning models can be susceptible to bias due to human involvement in data selection and curation.",
-"zh": null
+"zh": "由于数据的选择和整理都有人参与，机器学习模型很容易受到偏见影响。"
 },
 {
 "en": "Understanding common human biases is crucial for mitigating their impact on model predictions.",
-"zh": null
+"zh": "了解常见的人类偏见，对减少它们对模型预测的影响至关重要。"
 },
 {
 "en": "This webpage explores various types of biases, including reporting bias, historical bias, and automation bias, among others, providing definitions and examples for each.",
-"zh": null
+"zh": "本页探讨各种偏见，包括报告偏差、历史偏差和自动化偏差等，并为每一种提供定义和例子。"
 },
 {
 "en": "Selection bias, group attribution bias, and implicit bias are also discussed, with subtypes and illustrations.",
-"zh": null
+"zh": "也会讨论选择偏差、群体归因偏差和隐性偏见，以及它们的子类型和示例。"
 },
 {
 "en": "While not exhaustive, the presented biases highlight potential areas of concern when developing and evaluating machine learning models.",
-"zh": null
+"zh": "这里列出的偏见虽然并不完整，但点出了开发和评估机器学习模型时需要留意的地方。"
 }
 ],
 "terms": [
-"automation_bias",
-"confirmation_bias",
-"selection_bias",
-"group_attribution_bias",
+"automation-bias",
+"confirmation-bias",
+"selection-bias",
+"group-attribution-bias",
 "historical-bias",
-"implicit_bias",
-"in-group_bias",
-"out-group_homogeneity_bias",
-"participation_bias",
-"reporting_bias"
+"implicit-bias",
+"in-group-bias",
+"out-group-homogeneity-bias",
+"participation-bias",
+"reporting-bias"
 ],
 "blocks": [
 {
@@ -306,8 +306,8 @@
 {
 "type": "p",
 "html": {
-"en": "<button type=\"button\" class=\"term\" data-term=\"group_attribution_bias\"><b>Group attribution bias</b></button> is a tendency to generalize what is true of individuals to the entire group to which they belong. Group attribution bias often manifests in the two following forms.",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"group_attribution_bias\"><b>群体归因偏差</b></button> 倾向于将个体的真实情况泛化到整个群体， 它们所属的类别群体归因偏差通常表现为以下两种情况 表单。"
+"en": "<button type=\"button\" class=\"term\" data-term=\"group-attribution-bias\"><b>Group attribution bias</b></button> is a tendency to generalize what is true of individuals to the entire group to which they belong. Group attribution bias often manifests in the two following forms.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"group-attribution-bias\"><b>群体归因偏差</b></button> 倾向于将个体的真实情况泛化到整个群体， 它们所属的类别群体归因偏差通常表现为以下两种情况 表单。"
 }
 },
 {
@@ -499,23 +499,23 @@
 "takeaways": [
 {
 "en": "Training data should represent real-world prevalence to avoid bias in machine learning models.",
-"zh": null
+"zh": "训练数据应反映真实世界中的实际比例，以免机器学习模型产生偏见。"
 },
 {
 "en": "Missing or unexpected feature values in the dataset can be indicative of potential sources of bias.",
-"zh": null
+"zh": "数据集中缺失或出人意料的特征值，可能表示存在偏见的来源。"
 },
 {
 "en": "Data skew, where certain groups are under- or over-represented, can introduce bias and should be addressed.",
-"zh": null
+"zh": "数据偏斜（某些群体的代表性不足或过度）会带来偏见，应加以处理。"
 },
 {
 "en": "Evaluating model performance by subgroup ensures fairness and equal performance across different characteristics.",
-"zh": null
+"zh": "按子群体评估模型表现，可以确保公平，并在不同特性的群体之间表现一致。"
 },
 {
 "en": "Auditing for bias requires a thorough review of data and model outcomes to mitigate potential negative impacts.",
-"zh": null
+"zh": "审查偏见需要彻底检查数据和模型结果，以减少可能的负面影响。"
 }
 ],
 "terms": [
@@ -873,23 +873,23 @@
 "takeaways": [
 {
 "en": "Machine learning engineers use two primary strategies to mitigate bias in models: augmenting training data and adjusting the model's loss function.",
-"zh": null
+"zh": "机器学习工程师减少模型偏见的两种主要策略：扩充训练数据，以及调整模型的损失函数。"
 },
 {
 "en": "Augmenting training data involves collecting additional data to address missing, incorrect, or skewed data, but it can be infeasible due to data availability or resource constraints.",
-"zh": null
+"zh": "扩充训练数据是收集更多数据来弥补缺失、错误或偏斜的数据，但可能受限于数据来源或资源而无法做到。"
 },
 {
 "en": "Adjusting the model's loss function involves using fairness-aware optimization functions like MinDiff or Counterfactual Logit Pairing to penalize errors based on sensitive attributes and counteract imbalances in training data.",
-"zh": null
+"zh": "调整模型的损失函数，是使用 MinDiff 或反事实逻辑配对等考虑公平性的优化函数，根据敏感属性惩罚错误，以抵消训练数据中的不平衡。"
 },
 {
 "en": "MinDiff aims to balance errors between different data slices by penalizing differences in prediction distributions, while Counterfactual Logit Pairing penalizes discrepancies in predictions for similar examples with different sensitive attribute values.",
-"zh": null
+"zh": "MinDiff 通过惩罚不同数据切片之间预测分布的差异来平衡错误；反事实逻辑配对则惩罚敏感属性值不同、但其他方面相似的样本之间的预测差异。"
 },
 {
 "en": "Choosing the right bias-mitigation technique depends on the specific use case of the model, and augmenting training data and adjusting the loss function can be used in conjunction for optimal bias reduction.",
-"zh": null
+"zh": "选择哪种减少偏见的技术取决于模型的具体用途；扩充训练数据和调整损失函数也可以同时使用，以最大程度地减少偏见。"
 }
 ],
 "terms": [
@@ -1062,23 +1062,23 @@
 "takeaways": [
 {
 "en": "Aggregate model performance metrics like precision, recall, and accuracy can hide biases against minority groups.",
-"zh": null
+"zh": "精确率、召回率和准确率等整体模型指标，可能掩盖对少数群体的偏见。"
 },
 {
 "en": "Fairness in model evaluation involves ensuring equitable outcomes across different demographic groups.",
-"zh": null
+"zh": "模型评估中的公平性，是要确保不同人口群体都得到公平的结果。"
 },
 {
 "en": "This page explores various fairness metrics, including demographic parity, equality of opportunity, and counterfactual fairness, to assess model predictions for bias.",
-"zh": null
+"zh": "本页探讨受众特征均等、机会均等和反事实公平性等公平性指标，用来评估模型预测是否有偏见。"
 },
 {
 "en": "Evaluating model predictions with these metrics helps in identifying and mitigating potential biases that can negatively affect minority groups.",
-"zh": null
+"zh": "用这些指标评估模型预测，有助于找出并减少可能对少数群体造成不利影响的偏见。"
 },
 {
 "en": "The goal is to develop models that not only achieve good overall performance but also ensure fair treatment for all individuals, regardless of their demographic background.",
-"zh": null
+"zh": "目标是开发出整体表现良好、同时也能公平对待每个人的模型，无论其人口背景如何。"
 }
 ],
 "terms": [
@@ -1152,19 +1152,19 @@
 "takeaways": [
 {
 "en": "Demographic parity in machine learning models aims to ensure equal acceptance rates for both majority and minority groups, regardless of individual qualifications.",
-"zh": null
+"zh": "机器学习模型中的受众特征均等，目标是让多数群体和少数群体的录取率相同，而不考虑个人的资格。"
 },
 {
 "en": "While demographic parity promotes equal representation, it can overlook differences in the qualifications of individuals within each group, potentially leading to unfair outcomes.",
-"zh": null
+"zh": "受众特征均等虽然能促进平等的代表性，但可能忽略各群体内个人资格的差异，反而导致不公平的结果。"
 },
 {
 "en": "Evaluating model fairness requires considering various metrics and the specific context of the model's application, as demographic parity alone may not be sufficient.",
-"zh": null
+"zh": "评估模型公平性需要考虑多种指标以及模型应用的具体情境，单靠受众特征均等可能不够。"
 },
 {
 "en": "This specific example highlights the potential bias in feature data, leading to disparities in qualification predictions between majority and minority groups.",
-"zh": null
+"zh": "这个具体例子凸显了特征数据中可能存在的偏见，导致对多数群体和少数群体的资格预测出现差异。"
 }
 ],
 "terms": [
@@ -1188,7 +1188,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/fairness/images/fairness_metrics_demographic_parity.png",
+"src": "img/crash-course/fairness/images/fairness_metrics_demographic_parity.webp",
 "alt": {
 "en": "Candidate pool, split into two groups: Rejected Candidates (64 blue\n         students, 16 orange students) and Accepted Candidates (16 blue\n         students, 4 orange students).",
 "zh": "候选人池，分为两组：被拒绝的候选人（64 个蓝色的）\n         学生、16 名橙色学生）和接受的候选学生（16 名蓝色学生）\n         学生，4 个橙色的学生）。"
@@ -1325,7 +1325,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/fairness/images/fairness_metrics_demographic_parity_by_qualifications.png",
+"src": "img/crash-course/fairness/images/fairness_metrics_demographic_parity_by_qualifications.webp",
 "alt": {
 "en": "The same breakdown of Rejected vs. Accepted candidates as in\n      the previous image, but this time the 50 students who are actually\n      qualified (35 blue students, 15 orange students) are shaded in green,\n      and the subset of qualified students who were rejected (19 blue students,\n      11 orange students) are marked with an X.",
 "zh": "与\n      上图中的 50 位学生，\n      （35 名蓝色学生、15 名橙色学生）以绿色阴影表示，\n      而被拒绝的符合条件的学生中（19 名蓝色学生、\n      11 个橙色的学生）标有 X。"
@@ -1491,28 +1491,28 @@
 "takeaways": [
 {
 "en": "Equality of opportunity in machine learning focuses on ensuring that qualified individuals have an equal chance of being accepted, regardless of their demographic group.",
-"zh": null
+"zh": "机器学习中的机会均等，着重于确保符合资格的人无论属于哪个人口群体，都有相同的机会被录取。"
 },
 {
 "en": "It's achieved when the acceptance rates for qualified individuals are the same across different demographic groups, as illustrated by the example with a 40% acceptance rate for qualified candidates in both the majority and minority groups.",
-"zh": null
+"zh": "当不同人口群体中符合资格者的录取率相同时，就达到了机会均等；例如在示例中，多数群体和少数群体中符合资格的候选人录取率都是 40%。"
 },
 {
 "en": "While it promotes fairness in specific scenarios, equality of opportunity has limitations, such as its dependence on a clear preferred label and potential challenges in situations lacking demographic data.",
-"zh": null
+"zh": "机会均等在特定情境下能促进公平，但也有局限，例如它依赖一个明确的首选标签，而在缺乏人口数据的情况下可能难以使用。"
 },
 {
 "en": "Unlike demographic parity which focuses on overall acceptance rates, equality of opportunity concentrates on the acceptance rates within the qualified subset of each group.",
-"zh": null
+"zh": "受众特征均等关注的是整体录取率，而机会均等关注的是各群体中符合资格那部分人的录取率。"
 },
 {
 "en": "It's possible for a model to satisfy both demographic parity and equality of opportunity simultaneously, under specific conditions where positive prediction rates and true positive rates are balanced across groups.",
-"zh": null
+"zh": "在特定条件下，当各群体的正例预测率和真正例率都平衡时，模型可以同时满足受众特征均等和机会均等。"
 }
 ],
 "terms": [
 "bias-ethicsfairness",
-"equality_of_opportunity",
+"equality-of-opportunity",
 "equalized-odds"
 ],
 "blocks": [
@@ -1526,8 +1526,8 @@
 {
 "type": "p",
 "html": {
-"en": "Alternatively, we could compare the acceptance rates for just the qualified candidates in the majority group and the minority group. If the acceptance rates for qualified students in both groups are equal, the model exhibits <button type=\"button\" class=\"term\" data-term=\"equality_of_opportunity\"><b>equality of opportunity</b></button>: students with our preferred label (\"qualified for admission\") have an equal chance of being admitted, irrespective of which demographic group they belong to.",
-"zh": "或者，我们可以只比较合格 多数人和少数族裔群体中的候选人出席。如果接受率 两组符合条件的学生人数相等，该模型显示 <button type=\"button\" class=\"term\" data-term=\"equality_of_opportunity\"><b>机会平等</b></button>： 具有首选标签（“符合入学资格”）的学生在 被录取的可能性，无论他们属于哪个受众特征群体 目标。"
+"en": "Alternatively, we could compare the acceptance rates for just the qualified candidates in the majority group and the minority group. If the acceptance rates for qualified students in both groups are equal, the model exhibits <button type=\"button\" class=\"term\" data-term=\"equality-of-opportunity\"><b>equality of opportunity</b></button>: students with our preferred label (\"qualified for admission\") have an equal chance of being admitted, irrespective of which demographic group they belong to.",
+"zh": "或者，我们可以只比较合格 多数人和少数族裔群体中的候选人出席。如果接受率 两组符合条件的学生人数相等，该模型显示 <button type=\"button\" class=\"term\" data-term=\"equality-of-opportunity\"><b>机会平等</b></button>： 具有首选标签（“符合入学资格”）的学生在 被录取的可能性，无论他们属于哪个受众特征群体 目标。"
 }
 },
 {
@@ -1597,7 +1597,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/fairness/images/fairness_metrics_equality_of_opportunity_by_qualifications.png",
+"src": "img/crash-course/fairness/images/fairness_metrics_equality_of_opportunity_by_qualifications.webp",
 "alt": {
 "en": "Pool of 100 candidates, split into two groups: Rejected\n      Candidates (66 blue students, 14 orange students) and Accepted\n      Candidates (14 blue students, 6 orange students). In the Accepted\n      group, all 20 students are shaded green (signifying\n      qualified), and in the Rejected group, 21 blue students and 9\n      orange students are also shaded green",
 "zh": "分 100 位候选人组成的小组，分为两组：已拒绝\n      候选者（66 位蓝色学生，14 位橙色学生）和“已接受”\n      候选人（14 位蓝色学生，6 位橙色学生）。在“已接受”\n      全部 20 位学生都显示为绿色（表示\n      而“已拒绝”组中，有 21 位蓝色学生和 9 位\n      橙色学生也对应的是绿色"
@@ -1803,23 +1803,23 @@
 "takeaways": [
 {
 "en": "Counterfactual fairness is a metric that evaluates fairness by comparing predictions for similar individuals, differing only in a sensitive attribute like demographic group.",
-"zh": null
+"zh": "反事实公平性通过比较相似个体的预测来评估公平性，这些个体只在人口群体等敏感属性上有所不同。"
 },
 {
 "en": "This metric is particularly useful when datasets lack complete demographic information for all examples but contain it for a subset.",
-"zh": null
+"zh": "当数据集并非所有样本都有完整的人口信息、但有一部分样本有时，这个指标特别有用。"
 },
 {
 "en": "While counterfactual fairness can identify individual-level biases, it might not address broader, systemic biases across subgroups.",
-"zh": null
+"zh": "反事实公平性虽然能找出个体层面的偏见，但可能无法处理子群体之间更广泛的系统性偏见。"
 },
 {
 "en": "Other fairness metrics, such as demographic parity and equality of opportunity, provide a more holistic view but may require complete demographic data.",
-"zh": null
+"zh": "受众特征均等和机会均等等其他公平性指标能提供更全面的视角，但可能需要完整的人口数据。"
 },
 {
 "en": "Selecting the appropriate fairness metric depends on the specific application and desired outcome, with no single \"right\" metric universally applicable.",
-"zh": null
+"zh": "选择合适的公平性指标取决于具体应用和期望的结果，没有一个放之四海而皆准的“正确”指标。"
 }
 ],
 "terms": [
@@ -1844,7 +1844,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_candidate_pool.png",
+"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_candidate_pool.webp",
 "alt": {
 "en": "A candidate pool of 100 students, split into two groups:\n      Rejected Candidates (80 student icons) and Accepted Candidates (20\n      student icons). All of the icons are shaded gray (signifying that their\n      demographic group is unknown), except for 6 icons. In the Rejected\n      group, two student icons are shaded blue and two student icons are shaded\n      orange. In the Accepted group, one student icon is shaded blue and one is\n      shaded orange.",
 "zh": "将 100 名学生分为两组：\n      被拒绝的候选方案（80 个学生图标）和已接受的候选方案（20 个）\n      学生图标）。所有图标均为灰色阴影（表示\n      受众特征群体未知），但 6 个图标除外。在已拒绝的\n      小组，两个学生图标为蓝色阴影，两个学生图标为阴影\n      橙色。在“已接受”群组中，一个学生图标为蓝色阴影，另一个学生图标为蓝色\n      橙色阴影。"
@@ -1870,7 +1870,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_satisfied.png",
+"src": "img/crash-course/fairness/images/fairness_metrics_counterfactual_satisfied.webp",
 "alt": {
 "en": "Same candidate pool as in the previous image, except in\n      this version, one blue student icon (belonging to the majority group) and\n      one orange student icon (belonging to the minority group) in the Rejected\n      group are annotated with a star, indicating that these two candidates are\n      identical (aside from demographic group).",
 "zh": "候选池与上图相同，但\n      一个蓝色的学生图标（属于多数群组）和\n      在“已拒绝”部分中有一个橙色的学生图标（属于少数群体）\n      都带有星标，表示这两个候选字词\n      完全相同（受众特征群体除外）。"

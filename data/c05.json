@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module focuses on preparing numerical data, such as temperature or weight, for use in machine learning models.",
-"zh": null
+"zh": "本单元着重说明如何准备温度或重量等数值数据，供机器学习模型使用。"
 },
 {
 "en": "Machine learning practitioners spend significant time on data preparation tasks like cleaning and transformation.",
-"zh": null
+"zh": "机器学习从业者会花大量时间在数据准备工作上，例如清理和转换数据。"
 },
 {
 "en": "The module covers techniques like feature scaling, outlier detection, and binning to improve data quality for model training.",
-"zh": null
+"zh": "本单元介绍特征缩放、离群值检测和分箱等技术，以提高用于训练模型的数据质量。"
 },
 {
 "en": "Learners should have a basic understanding of machine learning concepts before starting this module.",
-"zh": null
+"zh": "开始本单元之前，学习者应对机器学习概念有基本的了解。"
 },
 {
 "en": "Categorical data, like postal codes, will be addressed in a separate module due to its distinct characteristics and handling requirements.",
-"zh": null
+"zh": "邮政编码等分类数据因为特性和处理方式不同，会在另一个单元中讨论。"
 }
 ],
 "terms": [
@@ -144,26 +144,26 @@
 "takeaways": [
 {
 "en": "Models ingest data through floating-point arrays called feature vectors, which are derived from dataset features.",
-"zh": null
+"zh": "模型通过称为特征向量的浮点数组读取数据，特征向量来自数据集的特征。"
 },
 {
 "en": "Feature vectors often utilize processed or transformed values instead of raw dataset values to enhance model learning.",
-"zh": null
+"zh": "特征向量往往使用经过处理或转换的值，而不是数据集的原始值，以帮助模型学习。"
 },
 {
 "en": "Feature engineering is the crucial process of converting raw data into suitable representations for the model, encompassing techniques like normalization and binning.",
-"zh": null
+"zh": "特征工程是把原始数据转换成适合模型的表示形式的关键过程，包括归一化和分箱等技术。"
 },
 {
 "en": "Non-numerical data like strings must be converted into numerical values for use in feature vectors, a key aspect of feature engineering.",
-"zh": null
+"zh": "字符串等非数值数据必须先转换成数值才能放进特征向量，这是特征工程的重要一环。"
 }
 ],
 "terms": [
 "binning",
 "bucketing",
-"feature_engineering",
-"feature_vector",
+"feature-engineering",
+"feature-vector",
 "normalization",
 "preprocessing"
 ],
@@ -291,23 +291,23 @@
 "takeaways": [
 {
 "en": "Before creating feature vectors, it is crucial to analyze numerical data by visualizing it through plots and graphs and calculating basic statistics like mean, median, and standard deviation.",
-"zh": null
+"zh": "在建立特征向量之前，必须先分析数值数据：用图表把数据可视化，并计算平均值、中位数和标准差等基本统计量。"
 },
 {
 "en": "Visualizations, such as scatter plots and histograms, can reveal anomalies and patterns in the data, aiding in identifying potential issues early in the data analysis process.",
-"zh": null
+"zh": "散点图和直方图等可视化方式可以揭示数据中的异常和规律，帮助在数据分析初期就发现潜在问题。"
 },
 {
 "en": "Outliers, values significantly distant from others, should be identified and handled appropriately, either by correcting mistakes, retaining legitimate outliers for model training, or applying techniques like clipping.",
-"zh": null
+"zh": "离群值是与其他值相差很远的值，应找出来并妥善处理：更正错误、保留确实存在的离群值用于训练，或使用截断等技术。"
 },
 {
 "en": "Statistical evaluation helps in understanding the distribution and characteristics of data, providing insights into potential feature and label relationships.",
-"zh": null
+"zh": "统计评估有助于了解数据的分布和特性，并提供关于特征与标签之间可能关系的线索。"
 },
 {
 "en": "While basic statistics and visualizations provide valuable insights, it's essential to remain vigilant as anomalies can still exist in seemingly well-balanced data.",
-"zh": null
+"zh": "基本统计量和可视化虽然很有帮助，但仍要保持警惕，因为看似分布均衡的数据中也可能存在异常。"
 }
 ],
 "terms": [
@@ -480,15 +480,15 @@
 "takeaways": [
 {
 "en": "This page provides programming exercises focusing on practicing numerical data analysis skills learned in a previous lesson.",
-"zh": null
+"zh": "本页提供编程练习，用来练习上一课学到的数值数据分析技巧。"
 },
 {
 "en": "Two Colab exercises are available: one on calculating descriptive statistics and identifying outliers, and another on detecting and handling bad data values in a dataset.",
-"zh": null
+"zh": "共有两个 Colab 练习：一个计算描述性统计量并找出离群值，另一个检测和处理数据集中的错误数据值。"
 },
 {
 "en": "The exercises are browser-based and require no setup, utilizing the Colaboratory platform, primarily supported on Chrome and Firefox desktop versions.",
-"zh": null
+"zh": "练习在浏览器中进行，无需任何设置，使用 Colaboratory 平台，主要支持桌面版 Chrome 和 Firefox。"
 }
 ],
 "terms": [],
@@ -538,31 +538,31 @@
 "takeaways": [
 {
 "en": "Data normalization is crucial for enhancing machine learning model performance by scaling features to a similar range.",
-"zh": null
+"zh": "数据归一化把各特征缩放到相近的范围，对提升机器学习模型的表现至关重要。"
 },
 {
 "en": "Linear scaling, Z-score scaling, and log scaling are common normalization techniques, each suitable for different data distributions.",
-"zh": null
+"zh": "线性缩放、Z 分数缩放和对数缩放是常见的归一化技术，各自适合不同的数据分布。"
 },
 {
 "en": "Clipping helps manage outliers by limiting extreme values within a defined range, improving model robustness.",
-"zh": null
+"zh": "截断把极端值限制在指定范围内，有助于处理离群值，使模型更稳健。"
 },
 {
 "en": "Selecting the appropriate normalization method depends on the specific dataset and feature characteristics, often requiring experimentation for optimal results.",
-"zh": null
+"zh": "选择哪种归一化方法取决于具体的数据集和特征特性，往往需要实验才能得到最佳结果。"
 },
 {
 "en": "Applying normalization consistently during both training and prediction stages ensures accurate and reliable model outcomes.",
-"zh": null
+"zh": "在训练和预测两个阶段都一致地应用归一化，才能确保模型结果准确可靠。"
 }
 ],
 "terms": [
 "clipping",
-"NaN_trap",
+"nan-trap",
 "normalization",
 "scaling",
-"Z-score-normalization"
+"z-score-normalization"
 ],
 "blocks": [
 {
@@ -742,6 +742,10 @@
 "zh": "对数缩放"
 }
 ]
+},
+{
+"type": "widget",
+"id": "normalize"
 },
 {
 "type": "p",
@@ -1758,23 +1762,23 @@
 "takeaways": [
 {
 "en": "Binning is a feature engineering technique used to group numerical data into categories (bins) to improve model performance when a linear relationship is weak or data is clustered.",
-"zh": null
+"zh": "分箱是一种特征工程技术，把数值数据分成若干类别（箱），在线性关系很弱或数据成簇时可以提升模型表现。"
 },
 {
 "en": "Binning can be beneficial when features exhibit a \"clumpy\" distribution rather than a linear one, allowing the model to learn separate weights for each bin.",
-"zh": null
+"zh": "当特征呈“成团”而非线性的分布时，分箱很有用，因为模型可以为每个箱学习各自的权重。"
 },
 {
 "en": "While creating multiple bins is possible, it's generally recommended to avoid an excessive number as it can lead to insufficient training examples per bin and increased feature dimensionality.",
-"zh": null
+"zh": "虽然可以建立很多箱，但一般建议不要太多，否则每个箱的训练样本会不足，特征维度也会增加。"
 },
 {
 "en": "Quantile bucketing is a specific binning technique that ensures each bin contains a roughly equal number of examples, which can be particularly useful for datasets with skewed distributions.",
-"zh": null
+"zh": "分位数分桶是一种特别的分箱技术，确保每个箱的样本数大致相同，对分布偏斜的数据集特别有用。"
 },
 {
 "en": "Binning offers an alternative to scaling or clipping and is particularly useful for handling outliers and improving model performance on non-linear data.",
-"zh": null
+"zh": "分箱是缩放或截断之外的另一种选择，特别适合处理离群值，并能提升模型在非线性数据上的表现。"
 }
 ],
 "terms": [
@@ -1782,8 +1786,8 @@
 "bucketing",
 "clipping",
 "feature",
-"feature_engineering",
-"feature_vector",
+"feature-engineering",
+"feature-vector",
 "label",
 "scaling"
 ],
@@ -1791,8 +1795,8 @@
 {
 "type": "p",
 "html": {
-"en": "<b>Binning</b> (also called <b>bucketing</b>) is a <button type=\"button\" class=\"term\" data-term=\"feature_engineering\"><b>feature engineering</b></button> technique that groups different numerical subranges into <i>bins</i> or <button type=\"button\" class=\"term\" data-term=\"bucketing\"><b><i>buckets</i></b></button>. In many cases, binning turns numerical data into categorical data. For example, consider a <button type=\"button\" class=\"term\" data-term=\"feature\"><b>feature</b></button> named <code>X</code> whose lowest value is 15 and highest value is 425. Using binning, you could represent <code>X</code> with the following five bins:",
-"zh": "<b>分箱</b>（也称为<b>分桶</b>）是一种<button type=\"button\" class=\"term\" data-term=\"feature_engineering\"><b>特征工程</b></button>技术，可将不同的数值子范围分组到<i>箱</i>或<button type=\"button\" class=\"term\" data-term=\"bucketing\"><b><i>桶</i></b></button>中。在许多情况下，分箱会将数值数据转换为分类数据。例如，假设有一个名为 <code>X</code> 的<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>，其最低值为 15，最高值为 425。使用分箱，您可以使用以下 5 个箱来表示 <code>X</code>："
+"en": "<b>Binning</b> (also called <b>bucketing</b>) is a <button type=\"button\" class=\"term\" data-term=\"feature-engineering\"><b>feature engineering</b></button> technique that groups different numerical subranges into <i>bins</i> or <button type=\"button\" class=\"term\" data-term=\"bucketing\"><b><i>buckets</i></b></button>. In many cases, binning turns numerical data into categorical data. For example, consider a <button type=\"button\" class=\"term\" data-term=\"feature\"><b>feature</b></button> named <code>X</code> whose lowest value is 15 and highest value is 425. Using binning, you could represent <code>X</code> with the following five bins:",
+"zh": "<b>分箱</b>（也称为<b>分桶</b>）是一种<button type=\"button\" class=\"term\" data-term=\"feature-engineering\"><b>特征工程</b></button>技术，可将不同的数值子范围分组到<i>箱</i>或<button type=\"button\" class=\"term\" data-term=\"bucketing\"><b><i>桶</i></b></button>中。在许多情况下，分箱会将数值数据转换为分类数据。例如，假设有一个名为 <code>X</code> 的<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>，其最低值为 15，最高值为 425。使用分箱，您可以使用以下 5 个箱来表示 <code>X</code>："
 }
 },
 {
@@ -1831,8 +1835,8 @@
 {
 "type": "p",
 "html": {
-"en": "The <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vector</b></button> represents the five bins as follows:",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>表示五个箱，如下所示："
+"en": "The <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vector</b></button> represents the five bins as follows:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>表示五个箱，如下所示："
 }
 },
 {
@@ -2231,23 +2235,23 @@
 "takeaways": [
 {
 "en": "Like sorting good apples from bad, ML engineers spend significant time cleaning data by removing or fixing bad examples to improve dataset quality.",
-"zh": null
+"zh": "就像把好苹果和坏苹果分开一样，机器学习工程师会花大量时间清理数据，删除或修正不良样本，以提高数据集质量。"
 },
 {
 "en": "Common data problems include omitted values, duplicate examples, out-of-range values, and incorrect labels, which can negatively impact model performance.",
-"zh": null
+"zh": "常见的数据问题包括缺失值、重复样本、超出范围的值和错误的标签，这些都会损害模型表现。"
 },
 {
 "en": "You can use programs or scripts to identify and handle data issues such as omitted values, duplicates, and out-of-range feature values by removing or correcting them.",
-"zh": null
+"zh": "可以用程序或脚本找出缺失值、重复样本和超出范围的特征值等问题，并加以删除或修正。"
 },
 {
 "en": "When multiple individuals label data, it's important to check for consistency and identify potential biases to ensure label quality.",
-"zh": null
+"zh": "当多人为数据加标签时，要检查标签是否一致，并找出可能的偏见，以确保标签质量。"
 },
 {
 "en": "Addressing data quality issues before training a model leads to better model accuracy and overall performance.",
-"zh": null
+"zh": "在训练模型之前先解决数据质量问题，能让模型更准确、整体表现更好。"
 }
 ],
 "terms": [],
@@ -2419,36 +2423,36 @@
 "takeaways": [
 {
 "en": "Good feature vectors require features that are clearly named and have obvious meanings to anyone on the project.",
-"zh": null
+"zh": "好的特征向量需要命名清楚、对项目中每个人来说意义都很明确的特征。"
 },
 {
 "en": "Data should be checked and tested for bad data or outliers like inappropriate values before being used for training.",
-"zh": null
+"zh": "数据在用于训练之前，应先检查和测试是否有错误数据或不合理值等离群值。"
 },
 {
 "en": "Features should be sensible, avoiding \"magic values\" that create discontinuities; instead, use separate boolean features or new discrete values to indicate missing data.",
-"zh": null
+"zh": "特征应该合理，避免使用会造成不连续的“魔术值”；应改用单独的布尔特征或新的离散值来表示缺失数据。"
 },
 {
 "en": "Continuous features should not have magic values representing the absence of measurement, but rather use separate Boolean features or discrete values.",
-"zh": null
+"zh": "连续特征不应使用魔术值来表示没有测量值，而应使用单独的布尔特征或离散值。"
 },
 {
 "en": "Discrete numerical features with missing values should be assigned a new value within the finite set, enabling the model to learn weights for each value including missing features.",
-"zh": null
+"zh": "有缺失值的离散数值特征，应在有限的取值集合中新增一个值，让模型能为每个值（包括缺失）学习权重。"
 }
 ],
 "terms": [
 "outliers",
 "feature",
-"feature_vector"
+"feature-vector"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "This unit has explored ways to map raw data into suitable <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vectors</b></button>. Good numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button> share the qualities described in this section.",
-"zh": "本单元探讨了将原始数据映射到合适<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>的方法。优质的数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>具有本部分中所述的特性。"
+"en": "This unit has explored ways to map raw data into suitable <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vectors</b></button>. Good numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button> share the qualities described in this section.",
+"zh": "本单元探讨了将原始数据映射到合适<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>的方法。优质的数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>具有本部分中所述的特性。"
 }
 },
 {
@@ -2632,8 +2636,8 @@
 {
 "type": "p",
 "html": {
-"en": "This is a way to handle a continuous dataset with missing values. Now consider a <button type=\"button\" class=\"term\" data-term=\"discrete_feature\"><b>discrete</b></button> numerical feature, like <code>product_category</code>, whose values must belong to a finite set of values. In this case, when a value is missing, signify that missing value using a new value in the finite set. With a discrete feature, the model will learn different weights for each value, including original weights for missing features.",
-"zh": "这是处理包含缺失值的连续数据集的方法。现在，我们来考虑一个<button type=\"button\" class=\"term\" data-term=\"discrete_feature\"><b>离散</b></button>数字特征（例如 <code>product_category</code>），其值必须属于一组有限的值。在这种情况下，如果缺少某个值，请使用有限集合中的新值来表示该缺失值。对于离散特征，模型会为每个值学习不同的权重，包括缺失特征的原始权重。"
+"en": "This is a way to handle a continuous dataset with missing values. Now consider a <button type=\"button\" class=\"term\" data-term=\"discrete-feature\"><b>discrete</b></button> numerical feature, like <code>product_category</code>, whose values must belong to a finite set of values. In this case, when a value is missing, signify that missing value using a new value in the finite set. With a discrete feature, the model will learn different weights for each value, including original weights for missing features.",
+"zh": "这是处理包含缺失值的连续数据集的方法。现在，我们来考虑一个<button type=\"button\" class=\"term\" data-term=\"discrete-feature\"><b>离散</b></button>数字特征（例如 <code>product_category</code>），其值必须属于一组有限的值。在这种情况下，如果缺少某个值，请使用有限集合中的新值来表示该缺失值。对于离散特征，模型会为每个值学习不同的权重，包括缺失特征的原始权重。"
 }
 },
 {
@@ -2668,40 +2672,40 @@
 "takeaways": [
 {
 "en": "Synthetic features, like polynomial transforms, enable linear models to represent non-linear relationships by introducing new features based on existing ones.",
-"zh": null
+"zh": "合成特征（例如多项式转换）根据现有特征产生新特征，让线性模型也能表示非线性关系。"
 },
 {
 "en": "Polynomial transforms involve raising an existing feature to a power, often informed by domain knowledge, such as physical laws involving squared terms.",
-"zh": null
+"zh": "多项式转换是把现有特征取某个次方，通常参考领域知识，例如含有平方项的物理定律。"
 },
 {
 "en": "By incorporating synthetic features, linear regression models can effectively separate data points that are not linearly separable using curves instead of straight lines.",
-"zh": null
+"zh": "加入合成特征后，线性回归模型可以用曲线而不是直线，有效分开无法线性分割的数据点。"
 },
 {
 "en": "This approach maintains the simplicity of linear regression while expanding its capacity to capture complex patterns within the data.",
-"zh": null
+"zh": "这种做法既保持了线性回归的简单，又扩大了它捕捉数据中复杂规律的能力。"
 },
 {
 "en": "Feature crosses, a related concept for categorical data, synthesize new features by combining existing features, further enhancing model flexibility.",
-"zh": null
+"zh": "特征组合是适用于分类数据的相关概念，它组合现有特征来合成新特征，进一步提高模型的灵活性。"
 }
 ],
 "terms": [
-"categorical_data",
+"categorical-data",
 "feature",
-"feature_cross",
-"gradient_descent",
-"linear_regression",
-"synthetic_feature",
+"feature-cross",
+"gradient-descent",
+"linear-regression",
+"synthetic-feature",
 "weight"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "Sometimes, when the ML practitioner has domain knowledge suggesting that one variable is related to the square, cube, or other power of another variable, it's useful to create a <button type=\"button\" class=\"term\" data-term=\"synthetic_feature\"><b>synthetic feature</b></button> from one of the existing numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button>.",
-"zh": "有时，当机器学习从业者拥有的领域知识表明一个变量与另一个变量的平方、立方或其他幂相关时，从现有的某个数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>中创建<button type=\"button\" class=\"term\" data-term=\"synthetic_feature\"><b>合成特征</b></button>会很有用。"
+"en": "Sometimes, when the ML practitioner has domain knowledge suggesting that one variable is related to the square, cube, or other power of another variable, it's useful to create a <button type=\"button\" class=\"term\" data-term=\"synthetic-feature\"><b>synthetic feature</b></button> from one of the existing numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button>.",
+"zh": "有时，当机器学习从业者拥有的领域知识表明一个变量与另一个变量的平方、立方或其他幂相关时，从现有的某个数值<button type=\"button\" class=\"term\" data-term=\"feature\"><b>特征</b></button>中创建<button type=\"button\" class=\"term\" data-term=\"synthetic-feature\"><b>合成特征</b></button>会很有用。"
 }
 },
 {
@@ -2766,8 +2770,8 @@
 {
 "type": "p",
 "html": {
-"en": "<button type=\"button\" class=\"term\" data-term=\"gradient_descent\"><b>Gradient descent</b></button> finds the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> (or weights <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, in the case of additional features) that minimizes the loss of the model. But the data points shown cannot be separated by a line. What can be done?",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"gradient_descent\"><b>梯度下降法</b></button>会找到可最大限度地减少模型损失的<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>（如果有其他特征，则为权重<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>）。但显示的数据点不能用线条分隔。该怎么办？"
+"en": "<button type=\"button\" class=\"term\" data-term=\"gradient-descent\"><b>Gradient descent</b></button> finds the <button type=\"button\" class=\"term\" data-term=\"weight\"><b>weight</b></button> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> (or weights <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, in the case of additional features) that minimizes the loss of the model. But the data points shown cannot be separated by a line. What can be done?",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"gradient-descent\"><b>梯度下降法</b></button>会找到可最大限度地减少模型损失的<button type=\"button\" class=\"term\" data-term=\"weight\"><b>权重</b></button> <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>（如果有其他特征，则为权重<span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>、 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5806em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>）。但显示的数据点不能用线条分隔。该怎么办？"
 }
 },
 {
@@ -2801,8 +2805,8 @@
 {
 "type": "p",
 "html": {
-"en": "This can still be treated like a <button type=\"button\" class=\"term\" data-term=\"linear_regression\"><b>linear regression</b></button> problem, and the weights determined through gradient descent, as usual, despite containing a hidden squared term, the polynomial transform. Without changing how the linear model trains, the addition of a polynomial transform allows the model to separate the data points using a curve of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9641em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>.",
-"zh": "尽管包含隐藏的平方项（多项式转换），但这仍然可以视为<button type=\"button\" class=\"term\" data-term=\"linear_regression\"><b>线性回归</b></button>问题，并且权重可以像往常一样通过梯度下降确定。添加多项式转换后，无需更改线性模型的训练方式，模型便可使用形式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9641em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span> 的曲线来分隔数据点。"
+"en": "This can still be treated like a <button type=\"button\" class=\"term\" data-term=\"linear-regression\"><b>linear regression</b></button> problem, and the weights determined through gradient descent, as usual, despite containing a hidden squared term, the polynomial transform. Without changing how the linear model trains, the addition of a polynomial transform allows the model to separate the data points using a curve of the form <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9641em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>.",
+"zh": "尽管包含隐藏的平方项（多项式转换），但这仍然可以视为<button type=\"button\" class=\"term\" data-term=\"linear-regression\"><b>线性回归</b></button>问题，并且权重可以像往常一样通过梯度下降确定。添加多项式转换后，无需更改线性模型的训练方式，模型便可使用形式为 <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7778em;vertical-align:-0.0833em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.7333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord mathnormal\">x</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9641em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02691em;\">w</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.3011em;\"><span style=\"top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span> 的曲线来分隔数据点。"
 }
 },
 {
@@ -2822,8 +2826,8 @@
 {
 "type": "p",
 "html": {
-"en": "A related concept in <button type=\"button\" class=\"term\" data-term=\"categorical_data\"><b>categorical data</b></button> is the <button type=\"button\" class=\"term\" data-term=\"feature_cross\"><b>feature cross</b></button>, which more frequently synthesizes two different features.",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"categorical_data\"><b>分类数据</b></button>中的一个相关概念是<button type=\"button\" class=\"term\" data-term=\"feature_cross\"><b>特征交叉</b></button>，它更常用于合成两个不同的特征。"
+"en": "A related concept in <button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>categorical data</b></button> is the <button type=\"button\" class=\"term\" data-term=\"feature-cross\"><b>feature cross</b></button>, which more frequently synthesizes two different features.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"categorical-data\"><b>分类数据</b></button>中的一个相关概念是<button type=\"button\" class=\"term\" data-term=\"feature-cross\"><b>特征交叉</b></button>，它更常用于合成两个不同的特征。"
 }
 }
 ]
@@ -2867,23 +2871,23 @@
 "takeaways": [
 {
 "en": "A machine learning model's predictive ability is directly dependent on the quality of data it's trained on.",
-"zh": null
+"zh": "机器学习模型的预测能力直接取决于训练数据的质量。"
 },
 {
 "en": "Numerical features often benefit from normalization or binning to improve model performance.",
-"zh": null
+"zh": "数值特征经过归一化或分箱处理后，模型表现往往会更好。"
 },
 {
 "en": "Data validation through verification tests and visualizations is crucial for identifying and addressing potential issues.",
-"zh": null
+"zh": "通过验证测试和可视化来检查数据，对发现和解决潜在问题至关重要。"
 },
 {
 "en": "Understanding data distribution through statistics on both the entire dataset and its subsets is essential for identifying hidden problems.",
-"zh": null
+"zh": "用统计量了解整个数据集及其子集的分布，是发现隐藏问题的关键。"
 },
 {
 "en": "Maintaining thorough documentation of all data transformations ensures reproducibility and facilitates model understanding.",
-"zh": null
+"zh": "完整记录所有数据转换，能确保结果可复现，也有助于理解模型。"
 }
 ],
 "terms": [
@@ -2891,7 +2895,7 @@
 "bucketing",
 "dataset",
 "feature",
-"feature_vector",
+"feature-vector",
 "normalization"
 ],
 "blocks": [
@@ -2914,8 +2918,8 @@
 "ordered": false,
 "items": [
 {
-"en": "Remember that your ML model interacts with the data in the <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vector</b></button>, not the data in the <button type=\"button\" class=\"term\" data-term=\"dataset\"><b>dataset</b></button>.",
-"zh": "请注意，机器学习模型与<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>中的数据进行交互，而不是与<button type=\"button\" class=\"term\" data-term=\"dataset\"><b>数据集</b></button>中的数据进行交互。"
+"en": "Remember that your ML model interacts with the data in the <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vector</b></button>, not the data in the <button type=\"button\" class=\"term\" data-term=\"dataset\"><b>dataset</b></button>.",
+"zh": "请注意，机器学习模型与<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>中的数据进行交互，而不是与<button type=\"button\" class=\"term\" data-term=\"dataset\"><b>数据集</b></button>中的数据进行交互。"
 },
 {
 "en": "<button type=\"button\" class=\"term\" data-term=\"normalization\"><b>Normalize</b></button> most numerical <button type=\"button\" class=\"term\" data-term=\"feature\"><b>features</b></button>.",

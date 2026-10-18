@@ -11,7 +11,7 @@ import vm from 'node:vm';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'https://bryanwoo988.github.io';
-const BASE = '/plant-physiology/';
+const BASE = '/Machine-Learning/';
 
 class FakeResponse {
   constructor(body, init = {}) {
@@ -81,11 +81,11 @@ await scope.dispatch('install', {});
 const [cacheName] = await scope.caches.keys();
 
 test('every precached asset exists on disk', () => assert.deepEqual(missing, []));
-test('one cache, named by a content hash', () => assert.match(cacheName, /^pphys-[0-9a-f]{10}$/));
+test('one cache, named by a content hash', () => assert.match(cacheName, /^ml-[0-9a-f]{10}$/));
 test('install skips waiting', () => assert.ok(scope.skips > 0));
 
 test('activate removes old versions of this app only', async () => {
-  await (await scope.caches.open('pphys-deadbeef00')).put('x.js', new FakeResponse('old'));
+  await (await scope.caches.open('ml-deadbeef00')).put('x.js', new FakeResponse('old'));
   // Other apps on the same github.io origin keep their caches.
   await (await scope.caches.open('opwiki-1234567890')).put('y.js', new FakeResponse('other'));
   await scope.dispatch('activate', {});

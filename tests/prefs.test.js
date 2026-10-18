@@ -17,11 +17,11 @@ test('first visit defaults to English, not yet chosen', () => {
   assert.equal(s.scale, 1);
 });
 
-test('language cycles zh → en → ms → zh and counts as chosen', () => {
+test('language cycles en → zh → en and counts as chosen', () => {
   prefs.init(memStore());
-  prefs.chooseLang('zh');
-  assert.deepEqual([prefs.cycleLang(), prefs.cycleLang(), prefs.cycleLang()], ['en', 'ms', 'zh']);
+  assert.deepEqual([prefs.cycleLang(), prefs.cycleLang()], ['zh', 'en']);
   assert.equal(prefs.get().chosen, true);
+  assert.throws(() => prefs.chooseLang('ms'), RangeError);
 });
 
 test('theme cycles auto → light → dark → auto', () => {
@@ -29,32 +29,35 @@ test('theme cycles auto → light → dark → auto', () => {
   assert.deepEqual([prefs.cycleTheme(), prefs.cycleTheme(), prefs.cycleTheme()], ['light', 'dark', 'auto']);
 });
 
-test('font scale wraps from 1.5 back to 1', () => {
+test('six text sizes; the scale wraps from 1.75 back to 0.9', () => {
   prefs.init(memStore());
-  assert.deepEqual([1, 2, 3, 4].map(() => prefs.cycleFontScale()), [1.15, 1.3, 1.5, 1]);
+  assert.deepEqual([1, 2, 3, 4, 5].map(() => prefs.cycleFontScale()), [1.15, 1.3, 1.5, 1.75, 0.9]);
+  assert.equal(prefs.setScale(2), 0.9);
 });
 
 test('prefs works when localStorage throws', () => {
   prefs.init(throwing);
-  prefs.chooseLang('ms');
-  assert.equal(prefs.get().lang, 'ms');
+  prefs.chooseLang('zh');
+  assert.equal(prefs.get().lang, 'zh');
   assert.equal(prefs.get().chosen, true);
 });
 
 test('state round-trips through storage', () => {
   const store = memStore();
   prefs.init(store);
-  prefs.chooseLang('ms');
-  prefs.markRead('ch05', true);
+  prefs.chooseLang('zh');
+  prefs.markRead('c05', true);
   prefs.setQuizBest(3, 9);
-  prefs.setLastRoute('#/ch/ch05');
+  prefs.setAnswer('c05/loss#3', 2);
+  prefs.setLastRoute('#/ch/c05/loss');
   prefs.setSeenVersion('1.0.0');
   prefs.init(store);
   const s = prefs.get();
-  assert.equal(s.lang, 'ms');
-  assert.equal(s.read.ch05, true);
+  assert.equal(s.lang, 'zh');
+  assert.equal(s.read.c05, true);
   assert.equal(s.quiz[3], 9);
-  assert.equal(s.lastRoute, '#/ch/ch05');
+  assert.equal(s.answers['c05/loss#3'], 2);
+  assert.equal(s.lastRoute, '#/ch/c05/loss');
   assert.equal(s.seenVersion, '1.0.0');
 });
 
@@ -67,7 +70,7 @@ test('quiz best only goes up; unread removes the mark', () => {
 });
 
 test('corrupted storage falls back to defaults', () => {
-  prefs.init(memStore({ 'pphys.prefs.v1': '{"lang":"xx","chosen":true,"scale":9}' }));
+  prefs.init(memStore({ 'ml.prefs.v1': '{"lang":"xx","chosen":true,"scale":9}' }));
   const s = prefs.get();
   assert.equal(s.lang, 'en'); assert.equal(s.chosen, false); assert.equal(s.scale, 1);
 });
@@ -78,4 +81,17 @@ test('subscribers hear changes and can unsubscribe', () => {
   const off = prefs.subscribe(what => seen.push(what));
   prefs.cycleTheme(); off(); prefs.cycleTheme();
   assert.deepEqual(seen, ['theme']);
+});
+
+test('reset clears progress and answers but keeps settings', () => {
+  prefs.init(memStore());
+  prefs.chooseLang('zh'); prefs.markRead('c01', true); prefs.setAnswer('c01/x#1', 0);
+  prefs.resetProgress();
+  const s = prefs.get();
+  assert.deepEqual([s.read, s.answers, s.lang], [{}, {}, 'zh']);
+});
+
+test('stored answers are checked, not trusted', () => {
+  prefs.init(memStore({ 'ml.prefs.v1': JSON.stringify({ answers: { 'c01/a#1': 2, 'c01/b#2': -1, 'c01/c#3': 'x', 'c01/d#4': 1.5 } }) }));
+  assert.deepEqual(prefs.get().answers, { 'c01/a#1': 2 });
 });

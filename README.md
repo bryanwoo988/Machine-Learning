@@ -52,8 +52,12 @@ python3 tools/serve.py             # http://127.0.0.1:4210/
 
 The service worker is skipped on localhost unless you add `?sw=1`.
 
-## Tests
+## Tests and checks
 
 ```bash
-node --test 'tests/*.test.js'
+node --test 'tests/*.test.js'      # logic: maths behind the figures, prefs, search, quizzes, SW, content lint
+node tools/lint-content.mjs        # both languages present, takeaways translated, figures/links/terms exist
+node tests/e2e.mjs                 # real browser at 375 px: a user's path + every screen in both languages
 ```
+
+`tests/e2e.mjs` needs Playwright and the dev server (`python3 tools/serve.py`).

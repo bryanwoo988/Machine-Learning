@@ -41,7 +41,7 @@
 ]
 },
 {
-"id": "intro",
+"id": "overview",
 "path": "/machine-learning/problem-framing/problem-framing",
 "min": null,
 "heading": {
@@ -148,23 +148,23 @@
 "takeaways": [
 {
 "en": "Define a clear, non-ML goal for your product or feature before considering machine learning solutions.",
-"zh": null
+"zh": "在考虑机器学习方案之前，先为产品或功能定义一个清楚的、与机器学习无关的目标。"
 },
 {
 "en": "Evaluate whether predictive ML, generative AI, or a simpler non-ML approach is the most effective solution for your goal.",
-"zh": null
+"zh": "评估预测式机器学习、生成式 AI 或更简单的非机器学习方法，哪一种最能有效达成目标。"
 },
 {
 "en": "Ensure you have abundant, reliable, and representative data with predictive features if pursuing a predictive ML approach.",
-"zh": null
+"zh": "如果采用预测式机器学习，要确保拥有大量、可靠且具代表性、并含有预测性特征的数据。"
 },
 {
 "en": "Verify that your product can take actionable steps based on the predictions of the ML model to provide user value.",
-"zh": null
+"zh": "确认产品能根据机器学习模型的预测采取实际行动，为用户带来价值。"
 },
 {
 "en": "Use a non-ML solution or heuristic as a benchmark to assess the potential improvements and cost-effectiveness of implementing an ML solution.",
-"zh": null
+"zh": "以非机器学习方案或启发式方法作为基准，评估实施机器学习方案可能带来的改进和成本效益。"
 }
 ],
 "terms": [
@@ -724,23 +724,23 @@
 "takeaways": [
 {
 "en": "Framing machine learning problems involves defining the desired outcome, identifying the model's output (classification, regression, or generation), and establishing success metrics.",
-"zh": null
+"zh": "构建机器学习问题，包括定义期望的结果、确定模型的输出（分类、回归或生成），以及建立成功指标。"
 },
 {
 "en": "Generative AI models can be customized through techniques like distillation, fine-tuning, and prompt engineering to achieve specific tasks.",
-"zh": null
+"zh": "生成式 AI 模型可以通过蒸馏、微调和提示工程等技术进行定制，以完成特定任务。"
 },
 {
 "en": "Success metrics should reflect the desired business outcome of the ML implementation and be distinct from model evaluation metrics.",
-"zh": null
+"zh": "成功指标应反映实施机器学习所期望的业务成果，并且与模型评估指标不同。"
 },
 {
 "en": "Regularly measuring success, analyzing failures, and understanding model improvement potential are crucial for effective ML solutions.",
-"zh": null
+"zh": "定期衡量成效、分析失败原因、了解模型还有多少改进空间，对有效的机器学习方案至关重要。"
 },
 {
 "en": "When implementing ML solutions, consider problem constraints, proxy labels, and the type of model output needed for the specific task.",
-"zh": null
+"zh": "实施机器学习方案时，要考虑问题的限制条件、代理标签，以及特定任务所需的模型输出类型。"
 }
 ],
 "terms": [
@@ -1865,19 +1865,19 @@
 "takeaways": [
 {
 "en": "Begin with a simple model and prioritize data pipeline setup before complex model iterations.",
-"zh": null
+"zh": "先从简单的模型开始，并在进行复杂的模型迭代之前优先建立数据流水线。"
 },
 {
 "en": "Simple models offer valuable baselines and help assess the necessity of complex models.",
-"zh": null
+"zh": "简单的模型能提供有价值的基准，并帮助判断是否真的需要复杂的模型。"
 },
 {
 "en": "Consider utilizing pre-trained models or their subsections when applicable, particularly for generative AI.",
-"zh": null
+"zh": "在适用时考虑使用预训练模型或其部分组件，生成式 AI 尤其如此。"
 },
 {
 "en": "Implement monitoring and alerting systems for model deployment, training-serving skew, and inference servers.",
-"zh": null
+"zh": "为模型部署、训练-应用偏差和推理服务器建立监控和警报系统。"
 }
 ],
 "terms": [],

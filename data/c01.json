@@ -55,23 +55,23 @@
 "takeaways": [
 {
 "en": "Machine learning (ML) is a way to train software, called a model, to make predictions or generate content using data.",
-"zh": null
+"zh": "机器学习 (ML) 是一种利用数据训练软件（称为模型）来做出预测或生成内容的方法。"
 },
 {
 "en": "ML systems can be categorized as supervised, unsupervised, reinforcement, or generative AI, each learning differently.",
-"zh": null
+"zh": "机器学习系统可分为监督式学习、非监督式学习、强化学习和生成式 AI，每一类的学习方式都不同。"
 },
 {
 "en": "Supervised learning uses labeled data to make predictions, often for regression (predicting numerical values) or classification (categorizing data).",
-"zh": null
+"zh": "监督式学习使用有标签的数据进行预测，常用于回归（预测数值）或分类（为数据归类）。"
 },
 {
 "en": "Unsupervised learning identifies patterns in unlabeled data, commonly using clustering to group similar data points.",
-"zh": null
+"zh": "非监督式学习在无标签的数据中找出规律，常用聚类把相似的数据点分成一组。"
 },
 {
 "en": "Generative AI creates new content, such as text, images, or music, by learning patterns from existing data and mimicking them.",
-"zh": null
+"zh": "生成式 AI 通过学习现有数据中的规律并加以模仿，创作出文字、图像或音乐等新内容。"
 }
 ],
 "terms": [
@@ -393,7 +393,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/clustering-02.png",
+"src": "img/intro-to-ml/images/clustering-02.webp",
 "alt": {
 "en": "An image showing colored dots in clusters.",
 "zh": "一张图片，显示了集群中的彩色圆点。"
@@ -412,7 +412,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/clustering-04.png",
+"src": "img/intro-to-ml/images/clustering-04.webp",
 "alt": {
 "en": "An image showing colored dots in clusters that are enclosed in a shape and border each other.",
 "zh": "图片：显示了成簇的彩色圆点，这些圆点被一个形状包围，彼此相邻。"
@@ -437,8 +437,12 @@
 }
 },
 {
+"type": "widget",
+"id": "kmeans"
+},
+{
 "type": "figure",
-"src": "img/intro-to-ml/images/clustering-01.png",
+"src": "img/intro-to-ml/images/clustering-01.webp",
 "alt": {
 "en": "An image showing colored dots in clusters that are labeled as snow, rain, hail, and no rain.",
 "zh": "一张图片，显示了成簇的彩色点，分别标记为雪、雨、冰雹和无雨。"
@@ -457,7 +461,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/clustering-03.png",
+"src": "img/intro-to-ml/images/clustering-03.webp",
 "alt": {
 "en": "An image showing colored dots in clusters that are labeled as snow, rain, hail, and no rain that are enclosed in a shape and border each other.",
 "zh": "一张图片，显示了成簇的彩色点，这些点被标记为雪、雨、冰雹和无雨，并被一个形状包围，彼此相邻。"
@@ -708,7 +712,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/octopus.png",
+"src": "img/intro-to-ml/images/octopus.webp",
 "alt": {
 "en": "Image of a cartoon octopus.",
 "zh": "卡通章鱼的图片。"
@@ -798,23 +802,23 @@
 "takeaways": [
 {
 "en": "Supervised learning uses labeled data to train models that predict outcomes for new, unseen data.",
-"zh": null
+"zh": "监督式学习使用有标签的数据训练模型，让模型为没见过的新数据预测结果。"
 },
 {
 "en": "The training process involves feeding the model labeled examples, allowing it to learn the relationship between features and labels.",
-"zh": null
+"zh": "训练时把有标签的样本输入模型，让它学会特征与标签之间的关系。"
 },
 {
 "en": "Models are evaluated by comparing their predictions on unseen data to the actual values, helping to refine their accuracy.",
-"zh": null
+"zh": "评估模型时，把它对未见数据的预测与真实值比较，以便改进准确度。"
 },
 {
 "en": "Once trained and evaluated, models can be used for inference, making predictions on new, unlabeled data in real-world applications.",
-"zh": null
+"zh": "训练和评估完成后，模型就可以用来推理，在实际应用中为新的无标签数据做预测。"
 },
 {
 "en": "The quality of the dataset, including its size and diversity, significantly impacts the model's performance and ability to generalize.",
-"zh": null
+"zh": "数据集的质量（包括规模和多样性）对模型的表现和泛化能力影响很大。"
 }
 ],
 "terms": [
@@ -932,7 +936,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/labeled_example.png",
+"src": "img/intro-to-ml/images/labeled_example.webp",
 "alt": {
 "en": "Placeholder image.",
 "zh": "占位图片。"
@@ -958,7 +962,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/unlabeled_example.png",
+"src": "img/intro-to-ml/images/unlabeled_example.webp",
 "alt": {
 "en": "Placeholder image.",
 "zh": "占位图片。"
@@ -1130,7 +1134,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/training-a-model-01.png",
+"src": "img/intro-to-ml/images/training-a-model-01.webp",
 "alt": {
 "en": "An image of a model making a prediction.",
 "zh": "一张显示模型进行预测的图片。"
@@ -1142,7 +1146,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/training-a-model-02.png",
+"src": "img/intro-to-ml/images/training-a-model-02.webp",
 "alt": {
 "en": "An image of a model comparing its prediction with actual value.",
 "zh": "一张图片，显示了模型将其预测值与实际值进行比较。"
@@ -1154,7 +1158,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/training-a-model-03.png",
+"src": "img/intro-to-ml/images/training-a-model-03.webp",
 "alt": {
 "en": "An image of a model repeating the process of its prediction versus the actual value.",
 "zh": "一张图片，显示模型重复预测过程与实际值的对比。"
@@ -1195,7 +1199,7 @@
 },
 {
 "type": "figure",
-"src": "img/intro-to-ml/images/evaluating-a-model.png",
+"src": "img/intro-to-ml/images/evaluating-a-model.webp",
 "alt": {
 "en": "An image showing a trained model having its predictions compared against actual values.",
 "zh": "一张图片，显示了训练好的模型的预测结果与实际值的对比情况。"
@@ -1302,19 +1306,19 @@
 "takeaways": [
 {
 "en": "This page tests your understanding of core machine learning (ML) concepts through interactive questions.",
-"zh": null
+"zh": "本页用互动问题检验您对机器学习 (ML) 核心概念的理解。"
 },
 {
 "en": "It covers fundamental ML topics such as predictive power of features, supervised and unsupervised learning, and model training and evaluation.",
-"zh": null
+"zh": "内容涵盖机器学习的基本主题，例如特征的预测能力、监督式与非监督式学习，以及模型的训练和评估。"
 },
 {
 "en": "You'll learn how to choose the right ML approach for different problems and assess the effectiveness of a trained model.",
-"zh": null
+"zh": "您会学到如何为不同问题选择合适的机器学习方法，以及如何评估训练好的模型效果如何。"
 },
 {
 "en": "Links to further resources are provided to deepen your understanding of ML and its practical applications.",
-"zh": null
+"zh": "页面附有延伸资源的链接，帮助您更深入了解机器学习及其实际应用。"
 }
 ],
 "terms": [],

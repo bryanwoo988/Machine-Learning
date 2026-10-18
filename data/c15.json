@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This course provides a comprehensive framework for managing machine learning (ML) projects, guiding you through all stages from ideation to production.",
-"zh": null
+"zh": "本课程提供管理机器学习 (ML) 项目的完整框架，引导您走过从构思到投入生产的每个阶段。"
 },
 {
 "en": "It covers key aspects such as defining project phases, planning and management strategies, establishing success metrics, and implementing responsible AI practices.",
-"zh": null
+"zh": "内容涵盖定义项目阶段、规划和管理策略、建立成功指标，以及落实负责任的 AI 做法等关键方面。"
 },
 {
 "en": "While focused on traditional ML models, the course also offers insights into managing generative AI projects, highlighting common principles and key differences.",
-"zh": null
+"zh": "课程虽然以传统机器学习模型为主，也会介绍如何管理生成式 AI 项目，说明两者的共同原则和主要差异。"
 },
 {
 "en": "To benefit from this course, you should have a basic understanding of machine learning and have already determined that ML is the appropriate solution for your problem.",
-"zh": null
+"zh": "要从本课程中获益，您应对机器学习有基本的了解，并且已经确定机器学习是解决您问题的合适方案。"
 },
 {
 "en": "It's estimated to take approximately 90 minutes to complete this course, equipping you with the necessary skills to effectively manage your ML projects.",
-"zh": null
+"zh": "完成本课程预计约需 90 分钟，让您具备有效管理机器学习项目所需的技能。"
 }
 ],
 "terms": [],
@@ -118,23 +118,23 @@
 "takeaways": [
 {
 "en": "ML solutions are developed in iterative phases: ideation and planning, experimentation, pipeline building, and productionization.",
-"zh": null
+"zh": "机器学习方案分阶段迭代开发：构思与规划、实验、构建流水线，以及投入生产。"
 },
 {
 "en": "Each phase has specific goals, tasks, and outcomes that contribute to the overall success of the project.",
-"zh": null
+"zh": "每个阶段都有具体的目标、任务和成果，共同促成整个项目的成功。"
 },
 {
 "en": "Identifying the right problem for an ML solution and ensuring its feasibility is crucial in the initial phase.",
-"zh": null
+"zh": "在最初阶段，找出适合用机器学习解决的问题并确认其可行性至关重要。"
 },
 {
 "en": "Rigorous experimentation is essential for building an effective ML model and may involve numerous iterations.",
-"zh": null
+"zh": "严谨的实验是构建有效机器学习模型的关键，可能需要多次迭代。"
 },
 {
 "en": "Productionizing an ML solution requires robust pipelines for data processing, model training, serving predictions, and ongoing monitoring.",
-"zh": null
+"zh": "把机器学习方案投入生产，需要稳健的流水线来处理数据、训练模型、提供预测以及持续监控。"
 }
 ],
 "terms": [
@@ -340,7 +340,7 @@
 },
 {
 "type": "figure",
-"src": "img/managing-ml-projects/images/phases.png",
+"src": "img/managing-ml-projects/images/phases.webp",
 "alt": {
 "en": "End-to-end ML workflow.",
 "zh": "端到端机器学习工作流。"
@@ -440,23 +440,23 @@
 "takeaways": [
 {
 "en": "Machine learning projects necessitate diverse teams with specialized roles like ML product managers, data scientists, and ML engineers, to address various aspects of development and deployment.",
-"zh": null
+"zh": "机器学习项目需要多元化的团队，包括机器学习产品经理、数据科学家和机器学习工程师等专门角色，以处理开发和部署的各个方面。"
 },
 {
 "en": "Comprehensive process documentation is crucial for ML teams to establish common practices, ensure smooth collaboration, and enhance project velocity by reducing confusion and streamlining workflows.",
-"zh": null
+"zh": "完整的流程文档对机器学习团队至关重要，能建立共同做法、确保协作顺畅，并通过减少混乱、简化工作流程来加快项目进度。"
 },
 {
 "en": "Process documentation should cover key questions regarding data handling, model development, training, evaluation, and productionization to guide the team's approach and decision-making.",
-"zh": null
+"zh": "流程文档应涵盖数据处理、模型开发、训练、评估和投入生产等关键问题，以指导团队的做法和决策。"
 },
 {
 "en": "Establishing clear expectations, deliverables, and evaluation criteria for team members is essential, emphasizing contributions beyond project success due to the inherent uncertainties in ML development.",
-"zh": null
+"zh": "为团队成员设定清楚的期望、交付成果和评估标准至关重要；由于机器学习开发本身具有不确定性，应重视项目成败以外的贡献。"
 },
 {
 "en": "Successful ML teams foster a collaborative environment where diverse perspectives and expertise are valued, enabling efficient problem-solving and innovative solutions.",
-"zh": null
+"zh": "成功的机器学习团队营造协作的环境，重视不同的观点和专业知识，从而高效解决问题并提出创新的方案。"
 }
 ],
 "terms": [],
@@ -966,19 +966,19 @@
 "takeaways": [
 {
 "en": "Machine learning (ML) projects require early and consistent collaboration with stakeholders who have varying levels of involvement and expectations.",
-"zh": null
+"zh": "机器学习 (ML) 项目需要及早并持续与利益相关方合作，他们的参与程度和期望各不相同。"
 },
 {
 "en": "Clearly define project deliverables like design documents, experimental results, and production-ready implementations, aligning with stakeholder expectations for each project phase.",
-"zh": null
+"zh": "清楚定义设计文档、实验结果和可投入生产的实现等项目交付成果，并让每个项目阶段都与利益相关方的期望一致。"
 },
 {
 "en": "Proactively communicate the unique complexities and potential challenges inherent in ML projects to manage stakeholder expectations and ensure project success.",
-"zh": null
+"zh": "主动说明机器学习项目特有的复杂性和潜在挑战，以管理利益相关方的期望、确保项目成功。"
 },
 {
 "en": "Establish clear communication channels and involve all necessary teams, including those requiring approval, for efficient project execution.",
-"zh": null
+"zh": "建立清楚的沟通渠道，并让所有必要的团队（包括需要审批的团队）参与，以高效推进项目。"
 }
 ],
 "terms": [],

@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "Machine learning solution feasibility hinges on data availability, problem complexity, desired prediction quality, technical requirements, and cost-effectiveness.",
-"zh": null
+"zh": "机器学习方案是否可行，取决于数据是否可用、问题的复杂程度、所需的预测质量、技术要求和成本效益。"
 },
 {
 "en": "Sufficient, high-quality data is crucial for effective model training, especially for generative AI which often requires extensive datasets for tasks like fine-tuning.",
-"zh": null
+"zh": "足够的高质量数据对有效训练模型至关重要，生成式 AI 尤其如此，微调等任务往往需要大量数据集。"
 },
 {
 "en": "Problem complexity and potential vulnerabilities should be assessed; simpler problems with readily available solutions are generally more feasible.",
-"zh": null
+"zh": "应评估问题的复杂程度和可能的弱点；较简单、已有现成方案的问题通常较可行。"
 },
 {
 "en": "Consider prediction quality requirements, technical constraints (latency, platform, etc.), and associated costs, including human resources, infrastructure, and potential generative AI inference expenses.",
-"zh": null
+"zh": "要考虑预测质量要求、技术限制（延迟、平台等）以及相关成本，包括人力、基础架构，以及可能的生成式 AI 推理费用。"
 },
 {
 "en": "Thoroughly evaluating these factors enables informed decision-making regarding the feasibility and successful implementation of an ML solution.",
-"zh": null
+"zh": "全面评估这些因素，才能就机器学习方案的可行性和成功实施做出明智的决定。"
 }
 ],
 "terms": [
@@ -497,23 +497,23 @@
 "takeaways": [
 {
 "en": "Machine learning (ML) projects are inherently uncertain, making it difficult to estimate timelines and predict effort due to their experimental and iterative nature.",
-"zh": null
+"zh": "机器学习 (ML) 项目本质上具有不确定性，由于其实验和迭代的性质，很难估计时间表和预测工作量。"
 },
 {
 "en": "Unlike traditional software projects with clear paths, ML projects often require trying multiple approaches (data transformations, architectures, hyperparameters) to find the best solution.",
-"zh": null
+"zh": "传统软件项目的路径较清楚，而机器学习项目往往需要尝试多种方法（数据转换、架构、超参数）才能找到最佳方案。"
 },
 {
 "en": "Effective ML project planning involves strategies like time-boxing tasks, scoping down requirements, and assigning projects to interns or new hires to explore feasibility and manage expectations.",
-"zh": null
+"zh": "有效的机器学习项目规划包括为任务设定时间上限、缩小需求范围，以及把项目交给实习生或新员工探索可行性等策略，以管理期望。"
 },
 {
 "en": "Embracing an experimental mindset in ML development helps teams understand that failures and dead ends are part of the process, enabling better risk management and stakeholder communication.",
-"zh": null
+"zh": "在机器学习开发中抱持实验的心态，能帮助团队理解失败和走进死胡同都是过程的一部分，从而更好地管理风险、与利益相关方沟通。"
 },
 {
 "en": "While experience improves effort estimation, the unpredictable nature of ML experiments necessitates dynamic project plans that evolve with learnings and breakthroughs.",
-"zh": null
+"zh": "经验虽然能改善工作量估计，但机器学习实验难以预测，因此项目计划必须随着所学和突破不断调整。"
 }
 ],
 "terms": [],
@@ -836,23 +836,23 @@
 "takeaways": [
 {
 "en": "Defining clear business metrics and model metrics is crucial for measuring the success of your machine learning project.",
-"zh": null
+"zh": "定义清楚的业务指标和模型指标，对衡量机器学习项目是否成功至关重要。"
 },
 {
 "en": "Business metrics, such as revenue or click-through rate, are the primary indicators of project success and should be quantifiable and focused.",
-"zh": null
+"zh": "收入或点击率等业务指标是项目成功的主要指标，应该可以量化且重点明确。"
 },
 {
 "en": "While model metrics like AUC or F1 score are important for evaluating model quality, they do not guarantee improvement in business metrics.",
-"zh": null
+"zh": "AUC 或 F1 分数等模型指标虽然对评估模型质量很重要，但并不保证业务指标会改善。"
 },
 {
 "en": "It's essential to establish a connection between model performance and business outcomes through early user testing and careful monitoring of business metrics.",
-"zh": null
+"zh": "必须通过早期用户测试和仔细监控业务指标，把模型表现和业务成果联系起来。"
 },
 {
 "en": "Don't solely focus on model success; prioritize business impact and ensure alignment between model metrics and desired business outcomes.",
-"zh": null
+"zh": "不要只关注模型是否成功；应优先考虑业务影响，并确保模型指标与期望的业务成果一致。"
 }
 ],
 "terms": [

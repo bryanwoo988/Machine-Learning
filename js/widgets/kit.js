@@ -100,3 +100,48 @@ export function frame({ title, lang, schematic = false, source, children }) {
     ...children,
     source ? h('p', { class: 'w-source' }, `${t('source', null, lang)}: ${source}`) : null);
 }
+
+/* ---------- Plots ---------- */
+
+// Width that fits the figure's host, and a plot area with margins.
+export function size(el, { ratio = 0.68, min = 280, max = 640, minH = 200, maxH = 420 } = {}) {
+  const W = Math.round(clamp((el.clientWidth || 600) - 30, min, max));
+  return { W, H: Math.round(clamp(W * ratio, minH, maxH)) };
+}
+
+// Gridlines, tick labels and axis titles for x/y scales over a plot area.
+export function axes(svg, { x, y, xTicks, yTicks, M, W, H, xLabel, yLabel, xFmt = v => v, yFmt = v => v }) {
+  const g = s('g', { class: 'chart-axes' });
+  for (const v of yTicks) {
+    g.append(s('line', { x1: M.l, x2: W - M.r, y1: y(v), y2: y(v), class: 'grid' }));
+    g.append(s('text', { x: M.l - 6, y: y(v) + 4, 'text-anchor': 'end' }, yFmt(v)));
+  }
+  for (const v of xTicks) {
+    g.append(s('line', { x1: x(v), x2: x(v), y1: M.t, y2: H - M.b, class: 'grid' }));
+    g.append(s('text', { x: x(v), y: H - M.b + 15, 'text-anchor': x(v) > W - M.r - 14 ? 'end' : x(v) < M.l + 8 ? 'start' : 'middle' }, xFmt(v)));
+  }
+  if (xLabel) g.append(s('text', { x: W - M.r, y: H - 4, 'text-anchor': 'end', class: 'unit' }, xLabel));
+  if (yLabel) g.append(s('text', { x: 4, y: M.t - 10, class: 'unit' }, yLabel));
+  svg.append(g);
+  return g;
+}
+
+// A row of toggle buttons, one pressed.
+export function seg(options, current, onPick, label) {
+  const g = h('div', { class: 'seg', role: 'group', 'aria-label': label });
+  for (const [value, text] of options) {
+    const b = h('button', { type: 'button', class: 'seg-btn', 'aria-pressed': String(value === current) }, text);
+    b.addEventListener('click', () => { for (const n of g.children) n.setAttribute('aria-pressed', String(n === b)); onPick(value); });
+    g.append(b);
+  }
+  return g;
+}
+
+export function button(text, onClick, cls = 'button button-quiet') {
+  const b = h('button', { type: 'button', class: cls }, text);
+  b.addEventListener('click', onClick);
+  return b;
+}
+
+// Bilingual label helper used by every figure: T('English', '中文').
+export const T = (en, zh) => ({ en, zh });

@@ -45,17 +45,20 @@ BLURBS = json.loads((EXTRA / 'blurbs.json').read_text(encoding='utf-8'))
 # English-only parts of Google's pages (the "Page Summary" key takeaways),
 # translated for this app. Keyed by page path.
 TAKEAWAYS_ZH = json.loads((EXTRA / 'takeaways-zh.json').read_text(encoding='utf-8'))
+# Where the app's own interactive figures go: page path -> [{id, after|at, opts}].
+WIDGETS = json.loads((EXTRA / 'widgets.json').read_text(encoding='utf-8'))
 # Module titles that Google's Chinese navigation leaves in English.
 TITLES_ZH = json.loads((EXTRA / 'titles-zh.json').read_text(encoding='utf-8'))
 
 SINGLE = {'intro-to-ml', 'problem-framing'}
 
 SKIP_TAGS = {'devsite-engedu-telemetry', 'devsite-feedback', 'hr', 'script', 'style',
-             'devsite-mathjax', 'devsite-analytics-scope', 'link', 'meta', 'noscript'}
+             'devsite-mathjax', 'link', 'meta', 'noscript'}
 NOTE_KINDS = {'note': 'note', 'caution': 'caution', 'warning': 'warning', 'special': 'special',
               'key-point': 'key', 'objective': 'objective', 'success': 'note', 'dogfood': 'note'}
 
 PAGES = {}          # path -> (chapter id, section id), filled before parsing, for links
+ALIASES = {}        # old glossary anchor name -> term id ("logistic_regression" -> "logistic-regression")
 MATH = {}           # tex source -> placeholder number
 images = {}         # remote src -> local path
 
@@ -98,7 +101,7 @@ def link(a, lang):
     href = a.get('href', '')
     m = re.match(r'^(?:https://developers\.google\.com)?/machine-learning/glossary(?:/[a-z-]+)?(?:\?[^#]*)?#([\w-]+)', href)
     if m:
-        return 'term', m.group(1)
+        return 'term', ALIASES.get(m.group(1), m.group(1))
     if href.startswith('#'):
         return 'anchor', None
     full = href if href.startswith('http') else (BASE + href if href.startswith('/') else None)
@@ -177,7 +180,10 @@ def fetch_image(src, course):
     tail = full.split('/machine-learning/')[-1] if '/machine-learning/' in full else hashlib.md5(full.encode()).hexdigest()[:10] + '-' + full.rsplit('/', 1)[-1]
     tail = re.sub(r'^static/', '', tail)
     local = IMG / tail
-    if not local.exists():
+    webp = local.with_suffix('.webp')
+    if webp.exists():
+        local = webp
+    elif not local.exists():
         local.parent.mkdir(parents=True, exist_ok=True)
         req = urllib.request.Request(full, headers={'User-Agent': 'Mozilla/5.0'})
         for attempt in range(4):
@@ -191,31 +197,33 @@ def fetch_image(src, course):
                     images[full] = None
                     return None
                 time.sleep(2 ** attempt)
-        local.write_bytes(shrink(raw, local.suffix.lower()))
+        out, ext = shrink(raw, local.suffix.lower())
+        if ext != local.suffix.lower():
+            local = local.with_suffix(ext)
+        local.write_bytes(out)
     rel = local.relative_to(ROOT).as_posix()
     images[full] = rel
     return rel
 
 
 def shrink(raw, ext):
-    """Large still images are scaled to 1200 px wide; animations are left alone."""
-    if ext not in ('.png', '.jpg', '.jpeg'):
-        return raw
+    """Large still images are scaled to at most 1200 px wide and, when that
+    saves at least a third, stored as WebP (every current phone browser reads
+    it). Animations and SVG are left alone. Returns (bytes, extension)."""
+    if ext not in ('.png', '.jpg', '.jpeg') or len(raw) < 100_000:
+        return raw, ext
     try:
         from PIL import Image
         im = Image.open(io.BytesIO(raw))
-        if im.width <= 1200 and len(raw) < 250_000:
-            return raw
         if im.width > 1200:
             im = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)
         buf = io.BytesIO()
-        if ext == '.png':
-            im.save(buf, 'PNG', optimize=True)
-        else:
-            im.convert('RGB').save(buf, 'JPEG', quality=85, optimize=True)
-        return buf.getvalue() if buf.tell() < len(raw) else raw
+        im.save(buf, 'WEBP', quality=86, method=6)
+        if buf.tell() < 0.67 * len(raw):
+            return buf.getvalue(), '.webp'
+        return raw, ext
     except Exception:
-        return raw
+        return raw, ext
 
 
 # ---------------------------------------------------------------- blocks
@@ -260,6 +268,8 @@ def block(n, lang, course):
         res = [{'type': 'p', 'html': t}] if t else []
         for im in imgs:
             res += figure(im, None, lang, course)
+        for fr in n.find_all('iframe'):
+            res += block(fr, lang, course)
         return res
     if name in ('ul', 'ol'):
         items = [inline(li, lang) for li in n.find_all('li', recursive=False)]
@@ -378,6 +388,11 @@ def quiz(n, lang):
     for d in divs[1:]:
         parts = d.find_all('div', recursive=False)
         text = inline(parts[0], lang) if parts else inline(d, lang)
+        # Some questions answer with pictures (ROC curves): keep them.
+        for im in (parts[0] if parts else d).find_all('img'):
+            local = fetch_image(im.get('src', ''), None) if im.get('src') else None
+            if local:
+                text += f'<img class="quiz-img" src="{local}" alt="{html.escape(re.sub(r"\s+", " ", im.get("alt", "")).strip())}" loading="lazy">'
         why = inline(parts[1], lang) if len(parts) > 1 else ''
         opts.append({'html': text, 'why': why, 'correct': d.has_attr('correct')})
     return {'type': 'quiz', 'q': q, 'options': opts}
@@ -503,6 +518,30 @@ def merge(e, z):
     return b
 
 
+def place_widgets(path, bl):
+    """Insert the app's figures: after the first block whose English text
+    contains `after`, or just before Google's online exercise (`at: frame`),
+    or at the start / end."""
+    for spec in WIDGETS.get(path, []):
+        w = {'type': 'widget', 'id': spec['id']}
+        if spec.get('opts'):
+            w['opts'] = spec['opts']
+        where = len(bl)
+        if spec.get('at') == 'start':
+            where = 0
+        elif spec.get('at') == 'frame':
+            where = next((i for i, b in enumerate(bl) if b['type'] == 'frame'), len(bl))
+        elif spec.get('after'):
+            needle = spec['after'].lower()
+            hit = next((i for i, b in enumerate(bl) if needle in re.sub(r'<[^>]+>', '', json.dumps(b.get('html') or b.get('caption') or b.get('alt') or b.get('items') or '', ensure_ascii=False)).lower()), None)
+            if hit is None:
+                print(f'  ! widget {spec["id"]}: "{spec["after"]}" not found in {path}', file=sys.stderr)
+            else:
+                where = hit + 1
+        bl.insert(where, w)
+    return bl
+
+
 # ---------------------------------------------------------------- glossary
 
 def glossary():
@@ -510,6 +549,10 @@ def glossary():
     for lang, f in (('en', 'glossary.en.html'), ('zh', 'glossary.zh-cn.html')):
         s = bs4.BeautifulSoup((CACHE / f).read_text(encoding='utf-8'), 'lxml')
         body = s.select_one('.devsite-article-body')
+        for a in body.select('a.glossary-anchor[name]'):
+            nxt = a.find_next(['h2', 'h3'])
+            if nxt is not None and nxt.get('id'):
+                ALIASES.setdefault(a['name'], nxt['id'])
         for h in body.find_all(['h2', 'h3'], id=True):
             if 'hide-from-toc' not in cls(h):
                 continue
@@ -525,7 +568,7 @@ def glossary():
                     tags = [x.get_text(strip=True).lstrip('#') for x in sib.select('.glossary-icon')]
                     continue
                 if sib.name == 'p' and sib.find('a', class_='glossary-anchor') and not plain(sib):
-                    continue
+                    break
                 if sib.name in ('p', 'ul', 'ol'):
                     t = inline(sib, lang) if sib.name == 'p' else inline(bs4.BeautifulSoup(f'<div>{sib}</div>', 'lxml').div, lang)
                     if t:
@@ -586,7 +629,7 @@ def main():
             for p in m['pages']:
                 sec = p['path'].rstrip('/').rsplit('/', 1)[-1]
                 if sec == c['course'] or sec in [s for s, _ in secs]:
-                    sec = 'intro' if sec == c['course'] else sec + '-2'
+                    sec = ('intro' if 'intro' not in [s for s, _ in secs] else 'overview') if sec == c['course'] else sec + '-2'
                 secs.append((sec, p))
                 PAGES[p['path'].rstrip('/')] = (cid, sec)
             plan.append((stage_n, c['course'], cid, num, m, secs))
@@ -597,6 +640,7 @@ def main():
                                 'blurb': BLURBS[c['course']], 'url': f'{BASE}/machine-learning/{c["course"]}',
                                 'chapters': [cid for s, _, cid, *_ in plan if s == stage_n]})
 
+    terms = glossary()
     for stage_n, course, cid, num, m, secs in plan:
         sections, minutes = [], 0
         for sec, p in secs:
@@ -604,13 +648,14 @@ def main():
             zh = page_parts(p['path'], 'zh', course)
             tz = TAKEAWAYS_ZH.get(p['path'].rstrip('/'))
             takeaways = [{'en': t, 'zh': tz[i] if tz and i < len(tz) else None} for i, t in enumerate(en['takeaways'])]
+            blocks_ = place_widgets(p['path'].rstrip('/'), pair(en['blocks'], zh['blocks']))
             sections.append({
                 'id': sec, 'path': p['path'], 'min': p['min'],
                 'heading': {'en': en['title'] or p['title'], 'zh': zh['title'] or en['title']},
                 'url': {'en': BASE + p['path'], 'zh': BASE + p['path'] + '?hl=zh-cn'},
                 'takeaways': takeaways,
                 'terms': en['terms'] or zh['terms'],
-                'blocks': pair(en['blocks'], zh['blocks']),
+                'blocks': blocks_,
             })
             minutes += p['min'] or 0
         zh_title = TITLES_ZH.get(m['title']) or m.get('zh') or m['title']
@@ -625,7 +670,7 @@ def main():
         print(f'{cid} {m["title"]}: {len(sections)} pages, {total} blocks, {unpaired} unpaired')
 
     (DATA / 'index.json').write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding='utf-8')
-    terms = render_math(glossary())
+    terms = render_math(terms)
     (DATA / 'terms.json').write_text(json.dumps(terms, ensure_ascii=False, indent=0), encoding='utf-8')
     print(f'{len(terms)} glossary terms, {len([v for v in images.values() if v])} images')
 

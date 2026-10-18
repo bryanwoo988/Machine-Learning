@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module explores language models, which estimate the probability of a token or sequence of tokens occurring within a longer sequence, enabling tasks like text generation, translation, and summarization.",
-"zh": null
+"zh": "本单元探讨语言模型。语言模型估计某个词元或词元序列在较长序列中出现的概率，可用于文本生成、翻译和摘要等任务。"
 },
 {
 "en": "Language models utilize context, the surrounding information of a target token, to enhance prediction accuracy, with recurrent neural networks offering more context than traditional N-grams.",
-"zh": null
+"zh": "语言模型利用上下文（目标词元周围的信息）提高预测准确度；循环神经网络能提供的上下文比传统的 N 元语法更多。"
 },
 {
 "en": "N-grams are ordered sequences of words used to build language models, with longer N-grams providing more context but potentially encountering sparsity issues.",
-"zh": null
+"zh": "N 元语法是用来构建语言模型的有序词序列；N 越大提供的上下文越多，但可能遇到稀疏问题。"
 },
 {
 "en": "Tokens, the atomic units of language modeling, represent words, subwords, or characters and are crucial for understanding and processing language.",
-"zh": null
+"zh": "词元是语言建模的基本单位，可以代表词、子词或字符，对理解和处理语言至关重要。"
 },
 {
 "en": "While recurrent neural networks improve context understanding compared to N-grams, they have limitations, paving the way for the emergence of large language models that evaluate the whole context simultaneously.",
-"zh": null
+"zh": "循环神经网络虽然比 N 元语法更能理解上下文，但仍有局限，这为能同时评估整个上下文的大语言模型铺平了道路。"
 }
 ],
 "terms": [
@@ -557,35 +557,35 @@
 "takeaways": [
 {
 "en": "Large language models (LLMs) predict sequences of tokens and outperform previous models due to their vast number of parameters and broader context gathering capabilities.",
-"zh": null
+"zh": "大语言模型 (LLM) 预测词元序列，由于参数数量庞大、能收集更广泛的上下文，表现胜过以往的模型。"
 },
 {
 "en": "Transformers, the leading architecture for LLMs, utilize encoders to process input and decoders to generate output, often for tasks like translation.",
-"zh": null
+"zh": "Transformer 是 LLM 的主流架构，用编码器处理输入、解码器生成输出，常用于翻译等任务。"
 },
 {
 "en": "Self-attention, a core concept in Transformers, allows the model to weigh the importance of different words in relation to each other, enhancing context understanding.",
-"zh": null
+"zh": "自注意力是 Transformer 的核心概念，让模型能衡量不同词之间相互关联的重要程度，加深对上下文的理解。"
 },
 {
 "en": "LLMs are trained using masked predictions on massive datasets, enabling them to learn patterns and generate text based on probabilities.",
-"zh": null
+"zh": "LLM 在海量数据集上用掩码预测进行训练，从而学习规律，并根据概率生成文本。"
 },
 {
 "en": "While LLMs offer benefits like clear text generation, they also present challenges like hallucinations, computational costs, and potential biases.",
-"zh": null
+"zh": "LLM 虽然能生成流畅的文本，但也带来幻觉、计算成本和潜在偏见等挑战。"
 }
 ],
 "terms": [
 "decoder",
-"embedding_layer",
+"embedding-layer",
 "encoder",
 "hallucination",
 "instruction-tuning",
 "large-language-model",
 "neural-net",
 "parameter",
-"self-attention",
+"self-attention-also-called-self-attention-layer",
 "tpu",
 "tpu-pod",
 "unsupervised-machine-learning"
@@ -719,8 +719,8 @@
 "ordered": false,
 "items": [
 {
-"en": "Encoder-only architectures map input text into an intermediate representation (often, an <button type=\"button\" class=\"term\" data-term=\"embedding_layer\"><b>embedding layer</b></button>). Use cases for encoder-only architectures include: <ul><li>Predicting any token in the input sequence (which is the conventional role of language models).</li><li>Creating a sophisticated embedding, which could serve as the input for another system, such as a classifier.</li></ul>",
-"zh": "仅使用编码器的架构会将输入文本映射为中间表示形式（通常是嵌入层）。<button type=\"button\" class=\"term\" data-term=\"embedding_layer\"></button>仅使用编码器架构的应用场景包括： <ul><li>预测输入序列中的任何 token（这是语言模型的传统角色）。</li><li>创建复杂的嵌入，可作为另一个系统（例如分类器）的输入。</li></ul>"
+"en": "Encoder-only architectures map input text into an intermediate representation (often, an <button type=\"button\" class=\"term\" data-term=\"embedding-layer\"><b>embedding layer</b></button>). Use cases for encoder-only architectures include: <ul><li>Predicting any token in the input sequence (which is the conventional role of language models).</li><li>Creating a sophisticated embedding, which could serve as the input for another system, such as a classifier.</li></ul>",
+"zh": "仅使用编码器的架构会将输入文本映射为中间表示形式（通常是嵌入层）。<button type=\"button\" class=\"term\" data-term=\"embedding-layer\"></button>仅使用编码器架构的应用场景包括： <ul><li>预测输入序列中的任何 token（这是语言模型的传统角色）。</li><li>创建复杂的嵌入，可作为另一个系统（例如分类器）的输入。</li></ul>"
 },
 {
 "en": "Decoder-only architectures generate new tokens from the text already generated. Decoder-only models typically excel at generating sequences; modern decoder-only models can use their generation power to create continuations of dialog histories and other prompts.",
@@ -741,8 +741,8 @@
 {
 "type": "p",
 "html": {
-"en": "To enhance context, Transformers rely heavily on a concept called <button type=\"button\" class=\"term\" data-term=\"self-attention\"><b>self-attention</b></button>. Effectively, on behalf of each token of input, self-attention asks the following question:",
-"zh": "为了增强上下文理解能力，Transformer 很大程度上依赖于一种称为<button type=\"button\" class=\"term\" data-term=\"self-attention\"><b>自注意力</b></button>的概念。实际上，自注意力机制会针对输入的每个令牌提出以下问题："
+"en": "To enhance context, Transformers rely heavily on a concept called <button type=\"button\" class=\"term\" data-term=\"self-attention-also-called-self-attention-layer\"><b>self-attention</b></button>. Effectively, on behalf of each token of input, self-attention asks the following question:",
+"zh": "为了增强上下文理解能力，Transformer 很大程度上依赖于一种称为<button type=\"button\" class=\"term\" data-term=\"self-attention-also-called-self-attention-layer\"><b>自注意力</b></button>的概念。实际上，自注意力机制会针对输入的每个令牌提出以下问题："
 }
 },
 {
@@ -1246,23 +1246,23 @@
 "takeaways": [
 {
 "en": "Foundation LLMs are pre-trained on vast amounts of text, enabling them to understand language structure and generate creative content, but they require fine-tuning for specific ML tasks like classification or regression.",
-"zh": null
+"zh": "基础 LLM 在大量文本上预训练，能理解语言结构并生成有创意的内容，但要用于分类或回归等特定机器学习任务，就需要微调。"
 },
 {
 "en": "Fine-tuning adapts a foundation LLM to a particular task by training it on task-specific data, improving its performance for that task but retaining the original model size.",
-"zh": null
+"zh": "微调用特定任务的数据训练基础 LLM，使它适应该任务、提升该任务的表现，但模型大小与原模型相同。"
 },
 {
 "en": "Distillation produces a smaller, more efficient version of a fine-tuned LLM, sacrificing some performance for reduced computational and environmental costs.",
-"zh": null
+"zh": "蒸馏会产生一个较小、较高效的微调 LLM 版本，牺牲部分表现，以换取较低的计算和环境成本。"
 },
 {
 "en": "Prompt engineering allows users to customize an LLM's output by providing examples or instructions within the prompt, leveraging the model's existing abilities without changing its parameters.",
-"zh": null
+"zh": "提示工程让用户在提示中提供示例或指示来定制 LLM 的输出，利用模型现有的能力而不改变其参数。"
 },
 {
 "en": "Offline inference pre-computes and caches LLM predictions for tasks where real-time response isn't critical, saving resources and enabling the use of larger models.",
-"zh": null
+"zh": "离线推理会预先计算并缓存 LLM 的预测，适用于不需要实时回应的任务，可以节省资源，也能使用更大的模型。"
 }
 ],
 "terms": [

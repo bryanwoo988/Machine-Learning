@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "Experiments involve making single, small, iterative changes to model features, architecture, or hyperparameters to improve performance compared to a baseline.",
-"zh": null
+"zh": "实验是对模型的特征、架构或超参数做单一、小幅、迭代的修改，以求比基准表现更好。"
 },
 {
 "en": "It's crucial to track all experimental results, including unsuccessful ones, to understand which approaches work and which don't.",
-"zh": null
+"zh": "必须记录所有实验结果（包括不成功的），才能了解哪些方法有效、哪些无效。"
 },
 {
 "en": "Teams should establish clear experimentation practices, including defining artifacts, coding standards, reproducibility measures, and tracking methods.",
-"zh": null
+"zh": "团队应建立清楚的实验做法，包括定义产出物、编码标准、可复现性措施和记录方法。"
 },
 {
 "en": "Plan for handling wrong predictions early on, potentially by incorporating user feedback for model improvement.",
-"zh": null
+"zh": "及早规划如何处理错误的预测，例如纳入用户反馈来改进模型。"
 },
 {
 "en": "Consider building parts of the final pipeline alongside experimentation to facilitate a smoother transition to production.",
-"zh": null
+"zh": "考虑在实验的同时构建最终流水线的部分组件，以便更顺利地过渡到生产环境。"
 }
 ],
 "terms": [
@@ -310,23 +310,23 @@
 "takeaways": [
 {
 "en": "Production Machine Learning prioritizes automated pipelines over individual models to accommodate evolving data and ensure accuracy through regular retraining.",
-"zh": null
+"zh": "生产环境中的机器学习以自动化流水线为重，而不是单个模型，以适应不断变化的数据，并通过定期重新训练确保准确度。"
 },
 {
 "en": "Pipelines streamline the ML workflow by automating data collection, model training, validation, and deployment for enhanced efficiency and reliability.",
-"zh": null
+"zh": "流水线把数据收集、模型训练、验证和部署自动化，使机器学习工作流程更高效、更可靠。"
 },
 {
 "en": "Two primary pipeline functions exist: serving pipelines for delivering predictions and a combination of data, training, and validation pipelines for updating the model to combat staleness.",
-"zh": null
+"zh": "流水线有两种主要功能：服务流水线负责提供预测；数据、训练和验证流水线一起负责更新模型，以免模型过时。"
 },
 {
 "en": "Model staleness varies based on data dynamism, necessitating training frequency adjustments, ideally with daily training and deployment as a best practice.",
-"zh": null
+"zh": "模型过时的速度因数据变化的快慢而异，需要据此调整训练频率；最佳做法是每天训练和部署。"
 },
 {
 "en": "Version-controlled repositories are crucial for managing datasets, ensuring reproducibility, compliance, and auditability, while logging predictions and ground truth aids in monitoring model quality.",
-"zh": null
+"zh": "使用受版本控制的存储库管理数据集，对可复现性、合规和可审计性至关重要；记录预测和标准答案则有助于监控模型质量。"
 }
 ],
 "terms": [
@@ -1212,19 +1212,19 @@
 "takeaways": [
 {
 "en": "Production ML pipelines require sufficient compute resources like RAM, CPUs, and GPUs/TPUs for serving, training, data processing, and validation.",
-"zh": null
+"zh": "生产环境的机器学习流水线需要足够的计算资源，例如用于服务、训练、数据处理和验证的 RAM、CPU 和 GPU/TPU。"
 },
 {
 "en": "Implement robust logging, monitoring, and alerting to proactively detect data and model issues (e.g., data drift, prediction skews, quality degradation) across all pipeline stages.",
-"zh": null
+"zh": "在流水线的各个阶段落实完善的日志记录、监控和警报，主动发现数据和模型问题（例如数据漂移、预测偏差、质量下降）。"
 },
 {
 "en": "Establish a clear model deployment strategy outlining approvals, procedures, environments, and rollback mechanisms, and aim for automated deployments for efficiency and reliability.",
-"zh": null
+"zh": "制定清楚的模型部署策略，列明审批、流程、环境和回滚机制，并以自动化部署为目标，提高效率和可靠性。"
 },
 {
 "en": "Estimate quota needs based on similar projects and service predictions, and factor in resources for both production and ongoing experimentation.",
-"zh": null
+"zh": "根据类似项目和服务预测来估计配额需求，并同时考虑生产环境和持续实验所需的资源。"
 }
 ],
 "terms": [],

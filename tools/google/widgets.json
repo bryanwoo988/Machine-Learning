@@ -1,0 +1,131 @@
+{
+ "/machine-learning/intro-to-ml/what-is-ml": [
+  {
+   "id": "kmeans",
+   "after": "Clustering differs from classification"
+  }
+ ],
+ "/machine-learning/crash-course/linear-regression": [
+  {
+   "id": "linreg",
+   "after": "Figure 2. A best fit line"
+  }
+ ],
+ "/machine-learning/crash-course/linear-regression/loss": [
+  {
+   "id": "linreg",
+   "after": "the L2 loss for that single data point is 0.81",
+   "opts": {
+    "start": "flat"
+   }
+  }
+ ],
+ "/machine-learning/crash-course/linear-regression/parameters-exercise": [
+  {
+   "id": "linreg",
+   "at": "frame",
+   "opts": {
+    "start": "flat"
+   }
+  }
+ ],
+ "/machine-learning/crash-course/linear-regression/gradient-descent": [
+  {
+   "id": "gradient",
+   "after": "Figure 12. Loss curve"
+  }
+ ],
+ "/machine-learning/crash-course/linear-regression/hyperparameters": [
+  {
+   "id": "gradient",
+   "after": "Figure 23."
+  }
+ ],
+ "/machine-learning/crash-course/linear-regression/gradient-descent-exercise": [
+  {
+   "id": "gradient",
+   "at": "frame"
+  }
+ ],
+ "/machine-learning/crash-course/logistic-regression/sigmoid-function": [
+  {
+   "id": "sigmoid",
+   "after": "approaches but never reaches 1"
+  }
+ ],
+ "/machine-learning/crash-course/classification/thresholding": [
+  {
+   "id": "threshold",
+   "at": "frame"
+  }
+ ],
+ "/machine-learning/crash-course/classification/accuracy-precision-recall": [
+  {
+   "id": "threshold",
+   "at": "frame"
+  }
+ ],
+ "/machine-learning/crash-course/classification/roc-and-auc": [
+  {
+   "id": "roc",
+   "at": "frame"
+  }
+ ],
+ "/machine-learning/crash-course/numerical-data/normalization": [
+  {
+   "id": "normalize",
+   "after": "Z-score scaling"
+  }
+ ],
+ "/machine-learning/crash-course/categorical-data/one-hot-encoding": [
+  {
+   "id": "onehot",
+   "after": "It is the one-hot vector, not the string"
+  }
+ ],
+ "/machine-learning/crash-course/overfitting/overfitting": [
+  {
+   "id": "overfit",
+   "after": "Figure 14. Underfit, fit, and overfit models",
+   "opts": {
+    "lambda": false
+   }
+  }
+ ],
+ "/machine-learning/crash-course/overfitting/model-complexity": [
+  {
+   "id": "overfit",
+   "after": "Simplicity has been beating complexity",
+   "opts": {
+    "lambda": false
+   }
+  }
+ ],
+ "/machine-learning/crash-course/overfitting/regularization": [
+  {
+   "id": "overfit",
+   "after": "A low regularization rate:",
+   "opts": {
+    "degree": 7
+   }
+  }
+ ],
+ "/machine-learning/crash-course/neural-networks/activation-functions": [
+  {
+   "id": "activation",
+   "after": "Figure 6. Plot of the ReLU function"
+  }
+ ],
+ "/machine-learning/crash-course/neural-networks/multi-class": [
+  {
+   "id": "softmax",
+   "after": "For one-vs.-one, we can instead apply a function called softmax"
+  }
+ ],
+ "/machine-learning/crash-course/embeddings/embedding-space": [
+  {
+   "id": "embedding",
+   "after": "Figure 4. Foods plotted"
+  }
+ ]
+}

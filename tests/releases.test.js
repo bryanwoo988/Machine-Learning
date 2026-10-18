@@ -18,9 +18,9 @@ test('unknown or garbage seen version yields nothing', () => {
   assert.deepEqual(notesSince(list, ''), []);
   assert.deepEqual(notesSince(list, 'abc'), []);
 });
-test('releases.json is trilingual and newest-first', () => {
+test('releases.json is bilingual and newest-first', () => {
   const rel = JSON.parse(readFileSync(new URL('../data/releases.json', import.meta.url), 'utf8'));
   assert.ok(rel.length >= 1);
-  for (const r of rel) for (const n of r.notes) for (const l of ['zh', 'en', 'ms']) assert.ok(n[l], `${r.v} ${l}`);
+  for (const r of rel) for (const n of r.notes) for (const l of ['en', 'zh']) assert.ok(n[l], `${r.v} ${l}`);
   for (let i = 1; i < rel.length; i++) assert.ok(compareVersions(rel[i - 1].v, rel[i].v) > 0);
 });

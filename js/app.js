@@ -16,7 +16,7 @@
 import * as prefs from './prefs.js';
 import { t, pick, LANG_NATIVE } from './i18n.js';
 import { loadIndex, loadChapter, loadData, renderSection, takeawayBox, termChips, quizzesOf, quiz, el } from './content.js';
-import { loadTerms, openTermSheet } from './terms.js';
+import { loadTerms, openTermSheet, glossaryUrl } from './terms.js';
 import { newerRevision, updateAction, mayAutoReload } from './updatelogic.js';
 import { notesSince } from './releases.js';
 import { APP_URL, AUTHOR } from './config.js';
@@ -511,6 +511,9 @@ async function searchIndex() {
 }
 
 function showTerm(id) {
+  // A few of Google's links point at glossary anchors that no longer exist;
+  // those open Google's glossary page instead of doing nothing.
+  if (!terms.has(id)) { window.open(glossaryUrl(id, lang()), '_blank', 'noopener'); return; }
   openTermSheet(id, { lang: lang(), openSheet });
 }
 

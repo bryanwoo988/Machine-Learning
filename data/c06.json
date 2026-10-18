@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module focuses on differentiating between categorical and numerical data within machine learning.",
-"zh": null
+"zh": "本单元着重区分机器学习中的分类数据和数值数据。"
 },
 {
 "en": "You will learn how to represent categorical data using one-hot vectors and address common issues associated with it.",
-"zh": null
+"zh": "您会学到如何用独热向量表示分类数据，以及如何处理相关的常见问题。"
 },
 {
 "en": "The module covers encoding techniques for converting categorical data into numerical vectors suitable for model training.",
-"zh": null
+"zh": "本单元介绍把分类数据转换成适合模型训练的数值向量的编码技术。"
 },
 {
 "en": "Feature crosses, a method for combining categorical features to capture interactions, are also discussed.",
-"zh": null
+"zh": "也会讨论特征组合，这是一种组合分类特征以捕捉其相互作用的方法。"
 },
 {
 "en": "It is assumed you have prior knowledge of introductory machine learning and working with numerical data.",
-"zh": null
+"zh": "本单元假定您已学过机器学习入门和数值数据处理。"
 }
 ],
 "terms": [
@@ -150,33 +150,33 @@
 "takeaways": [
 {
 "en": "Dimension refers to the number of elements in a feature vector, and some categorical features have low dimensionality.",
-"zh": null
+"zh": "维度是指特征向量中元素的数量，有些分类特征的维度很低。"
 },
 {
 "en": "Machine learning models require numerical input; therefore, categorical data like strings must be converted to numerical representations.",
-"zh": null
+"zh": "机器学习模型需要数值输入，因此字符串等分类数据必须转换成数值表示。"
 },
 {
 "en": "One-hot encoding transforms categorical values into numerical vectors where each category is represented by a unique element with a value of 1.",
-"zh": null
+"zh": "独热编码把类别值转换成数值向量，每个类别由一个值为 1 的唯一元素表示。"
 },
 {
 "en": "For high-dimensional categorical features with numerous categories, one-hot encoding might be inefficient, and embeddings or hashing are recommended.",
-"zh": null
+"zh": "对于类别非常多的高维分类特征，独热编码可能效率不高，建议改用嵌入或哈希。"
 },
 {
 "en": "Sparse representation efficiently stores one-hot encoded data by only recording the position of the '1' value to reduce memory usage.",
-"zh": null
+"zh": "稀疏表示只记录“1”所在的位置，可以高效存储独热编码数据，减少内存用量。"
 }
 ],
 "terms": [
-"categorical_data",
+"categorical-data",
 "dimensions",
-"discrete_feature",
-"feature_cross",
-"feature_vector",
+"discrete-feature",
+"feature-cross",
+"feature-vector",
 "hashing",
-"one-hot_encoding",
+"one-hot-encoding",
 "sparse-feature",
 "sparse-representation"
 ],
@@ -184,8 +184,8 @@
 {
 "type": "p",
 "html": {
-"en": "The term <b>dimension</b> is a synonym for the number of elements in a <button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>feature vector</b></button>. Some categorical features are low dimensional. For example:",
-"zh": "<b>维度</b>一词是<button type=\"button\" class=\"term\" data-term=\"feature_vector\"><b>特征向量</b></button>中元素数量的同义词。 有些分类特征是低维的。例如："
+"en": "The term <b>dimension</b> is a synonym for the number of elements in a <button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>feature vector</b></button>. Some categorical features are low dimensional. For example:",
+"zh": "<b>维度</b>一词是<button type=\"button\" class=\"term\" data-term=\"feature-vector\"><b>特征向量</b></button>中元素数量的同义词。 有些分类特征是低维的。例如："
 }
 },
 {
@@ -352,8 +352,8 @@
 {
 "type": "p",
 "html": {
-"en": "The next step in building a vocabulary is to convert each index number to its <button type=\"button\" class=\"term\" data-term=\"one-hot_encoding\"><b>one-hot encoding</b></button>. In a one-hot encoding:",
-"zh": "构建词汇表的下一步是将每个索引号转换为其<button type=\"button\" class=\"term\" data-term=\"one-hot_encoding\"><b>独热编码</b></button>。 在独热编码中："
+"en": "The next step in building a vocabulary is to convert each index number to its <button type=\"button\" class=\"term\" data-term=\"one-hot-encoding\"><b>one-hot encoding</b></button>. In a one-hot encoding:",
+"zh": "构建词汇表的下一步是将每个索引号转换为其<button type=\"button\" class=\"term\" data-term=\"one-hot-encoding\"><b>独热编码</b></button>。 在独热编码中："
 }
 },
 {
@@ -736,6 +736,10 @@
 }
 },
 {
+"type": "widget",
+"id": "onehot"
+},
+{
 "type": "note",
 "kind": "note",
 "html": {
@@ -1051,19 +1055,19 @@
 "takeaways": [
 {
 "en": "Categorical data quality hinges on how categories are defined and labeled, impacting data reliability.",
-"zh": null
+"zh": "分类数据的质量取决于类别如何定义和标记，这会影响数据的可靠性。"
 },
 {
 "en": "Human-labeled data, known as \"gold labels,\" is generally preferred for training due to its higher quality, but it's essential to check for human errors and biases.",
-"zh": null
+"zh": "人工标记的数据称为“黄金标签”，质量通常较高，因此训练时一般优先使用，但仍须检查人为错误和偏见。"
 },
 {
 "en": "Machine-labeled data, or \"silver labels,\" can introduce biases or inaccuracies, necessitating careful quality checks and awareness of potential common-sense violations.",
-"zh": null
+"zh": "机器标记的数据称为“白银标签”，可能带来偏见或不准确，需要仔细检查质量，并留意是否有违背常识的情况。"
 },
 {
 "en": "High-dimensionality in categorical data increases training complexity and costs, leading to techniques like embeddings for dimensionality reduction.",
-"zh": null
+"zh": "分类数据的维度过高会增加训练的复杂度和成本，因此会使用嵌入等降维技术。"
 }
 ],
 "terms": [
@@ -1208,24 +1212,24 @@
 "takeaways": [
 {
 "en": "Feature crosses are created by combining two or more categorical or bucketed features to capture interactions and nonlinearities within a dataset.",
-"zh": null
+"zh": "特征组合由两个或多个分类特征或分桶特征组合而成，用来捕捉数据集中的相互作用和非线性。"
 },
 {
 "en": "They enable linear models to handle nonlinearities similar to polynomial transforms, but feature crosses work with categorical data while polynomial transforms are applied to numerical data.",
-"zh": null
+"zh": "它们让线性模型能像多项式转换一样处理非线性，不同的是特征组合用于分类数据，多项式转换用于数值数据。"
 },
 {
 "en": "Feature crosses can be particularly effective when guided by domain expertise, but using neural networks can automate the process of discovering valuable combinations.",
-"zh": null
+"zh": "在领域专业知识的指导下，特征组合会特别有效；而使用神经网络可以自动找出有价值的组合。"
 },
 {
 "en": "Overuse of feature crosses with sparse features should be avoided, as it can lead to excessive sparsity in the resulting feature set.",
-"zh": null
+"zh": "应避免对稀疏特征过度使用特征组合，否则得到的特征集会过于稀疏。"
 }
 ],
 "terms": [
 "feature-cross",
-"neural_network"
+"neural-network"
 ],
 "blocks": [
 {
@@ -1390,15 +1394,15 @@
 "takeaways": [
 {
 "en": "Playground is an interactive tool for experimenting with machine learning models by adjusting features and hyperparameters to observe their impact.",
-"zh": null
+"zh": "Playground 是一个互动工具，可以调整特征和超参数来实验机器学习模型，观察它们的影响。"
 },
 {
 "en": "Exercise 1 focuses on feature crosses and manipulating feature weights to achieve accurate model predictions of sick and healthy trees.",
-"zh": null
+"zh": "练习 1 着重于特征组合，以及调整特征权重，使模型准确预测生病和健康的树木。"
 },
 {
 "en": "Exercise 2 explores model training, the influence of features and learning rate on model performance, and minimizing test loss for better predictions.",
-"zh": null
+"zh": "练习 2 探讨模型训练、特征和学习速率对模型表现的影响，以及如何降低测试损失以获得更好的预测。"
 }
 ],
 "terms": [],

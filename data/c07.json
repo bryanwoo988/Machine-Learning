@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module emphasizes the critical role of data quality in machine learning projects, highlighting that it significantly impacts model performance more than algorithm choice.",
-"zh": null
+"zh": "本单元强调数据质量在机器学习项目中的关键作用：它对模型表现的影响比算法的选择更大。"
 },
 {
 "en": "Machine learning practitioners typically dedicate a substantial portion of their project time (around 80%) to data preparation and transformation, including tasks like dataset construction and feature engineering.",
-"zh": null
+"zh": "机器学习从业者通常会把项目中很大一部分时间（约 80%）用在数据准备和转换上，包括构建数据集和特征工程等工作。"
 },
 {
 "en": "The module covers key concepts in data preparation, such as identifying data characteristics, handling unreliable data, understanding data labels, and splitting datasets for training and evaluation.",
-"zh": null
+"zh": "本单元涵盖数据准备的关键概念，例如识别数据特性、处理不可靠的数据、理解数据标签，以及为训练和评估划分数据集。"
 },
 {
 "en": "Learners will gain insights into techniques for improving data quality, mitigating issues like overfitting, and interpreting loss curves to assess model performance.",
-"zh": null
+"zh": "学习者将了解提高数据质量、缓解过拟合等问题的技术，以及如何解读损失曲线来评估模型表现。"
 },
 {
 "en": "This module builds upon foundational machine learning concepts, assuming familiarity with topics like linear regression, numerical and categorical data handling, and basic machine learning principles.",
-"zh": null
+"zh": "本单元建立在机器学习基础概念之上，假定您已熟悉线性回归、数值和分类数据的处理，以及机器学习的基本原理。"
 }
 ],
 "terms": [],
@@ -170,23 +170,23 @@
 "takeaways": [
 {
 "en": "A machine learning model's performance is heavily reliant on the quality and quantity of the dataset it's trained on, with larger, high-quality datasets generally leading to better results.",
-"zh": null
+"zh": "机器学习模型的表现在很大程度上取决于训练数据集的质量和数量，规模更大、质量更高的数据集通常带来更好的结果。"
 },
 {
 "en": "Datasets can contain various data types, including numerical, categorical, text, multimedia, and embedding vectors, each requiring specific handling for optimal model training.",
-"zh": null
+"zh": "数据集可以包含多种数据类型，包括数值、分类、文本、多媒体和嵌入向量，每一种都需要特定的处理才能得到最佳训练效果。"
 },
 {
 "en": "Maintaining data quality involves addressing issues like label errors, noisy features, and proper filtering to ensure the reliability of the dataset for accurate predictions.",
-"zh": null
+"zh": "维护数据质量需要处理标签错误、特征噪声等问题，并做好过滤，确保数据集可靠，才能做出准确的预测。"
 },
 {
 "en": "Incomplete examples with missing feature values should be handled by either deletion or imputation to avoid negatively impacting model training.",
-"zh": null
+"zh": "缺少特征值的不完整样本，应删除或进行插补，以免对模型训练造成不良影响。"
 },
 {
 "en": "When imputing missing values, use reliable methods like mean/median imputation and consider adding an indicator column to signal imputed values to the model.",
-"zh": null
+"zh": "插补缺失值时，应使用平均值或中位数插补等可靠方法，并考虑加一个指示列，告诉模型哪些值是插补的。"
 }
 ],
 "terms": [
@@ -692,23 +692,23 @@
 "takeaways": [
 {
 "en": "This document explains the differences between direct and proxy labels for machine learning models, highlighting that direct labels are preferred but often unavailable.",
-"zh": null
+"zh": "本文说明机器学习模型的直接标签与代理标签有何不同，并强调直接标签较理想，但往往无法取得。"
 },
 {
 "en": "It emphasizes the importance of carefully evaluating proxy labels to ensure they are a suitable approximation of the target prediction.",
-"zh": null
+"zh": "文中强调要仔细评估代理标签，确保它确实能恰当地近似要预测的目标。"
 },
 {
 "en": "Human-generated data, while offering flexibility and nuanced understanding, can be expensive and prone to errors, requiring careful quality control.",
-"zh": null
+"zh": "人工产生的数据虽然灵活、理解细致，但成本高、容易出错，需要严格的质量控制。"
 },
 {
 "en": "Machine learning models can utilize a combination of automated and human-generated labels, but the added complexity of maintaining human-generated labels often outweighs the benefits.",
-"zh": null
+"zh": "机器学习模型可以同时使用自动产生和人工产生的标签，但维护人工标签所增加的复杂度往往得不偿失。"
 },
 {
 "en": "Regardless of the label source, manual data inspection and comparison with human ratings are crucial for identifying potential issues and ensuring data quality.",
-"zh": null
+"zh": "无论标签来自哪里，人工检查数据并与人工评分比较，对于发现潜在问题、确保数据质量都至关重要。"
 }
 ],
 "terms": [
@@ -993,34 +993,34 @@
 "takeaways": [
 {
 "en": "Imbalanced datasets occur when one label (majority class) is significantly more frequent than another (minority class), potentially hindering model training on the minority class.",
-"zh": null
+"zh": "当某个标签（多数类）出现的频率远高于另一个标签（少数类）时，就是类别不平衡的数据集，这可能妨碍模型学习少数类。"
 },
 {
 "en": "Downsampling the majority class and upweighting it can improve model performance by balancing class representation and reducing prediction bias.",
-"zh": null
+"zh": "对多数类进行下采样并提高其权重，可以平衡各类别的比例、减少预测偏差，从而改善模型表现。"
 },
 {
 "en": "Experimenting with rebalancing ratios is crucial for optimal performance, ensuring batches contain enough minority class examples for effective training.",
-"zh": null
+"zh": "必须实验不同的再平衡比例才能得到最佳表现，并确保每个批次都有足够的少数类样本用于有效训练。"
 },
 {
 "en": "Upweighting the minority class is simpler but may increase prediction bias compared to downsampling and upweighting the majority class.",
-"zh": null
+"zh": "提高少数类的权重做法较简单，但与对多数类下采样并提高权重相比，可能会增加预测偏差。"
 },
 {
 "en": "Downsampling offers benefits like faster convergence and less disk space usage but requires manual effort, especially for large datasets.",
-"zh": null
+"zh": "下采样的好处包括收敛更快、占用的磁盘空间更少，但需要人工处理，数据集很大时尤其费工。"
 }
 ],
 "terms": [
 "batch",
 "class-balanced-dataset",
-"class_imbalanced_data_set",
+"class-imbalanced-dataset",
 "dataset",
 "downsampling",
 "hyperparameter",
-"majority_class",
-"minority_class",
+"majority-class",
+"minority-class",
 "prediction-bias",
 "upweighting"
 ],
@@ -1077,12 +1077,12 @@
 "ordered": false,
 "items": [
 {
-"en": "The <i>more</i> common label is called the <button type=\"button\" class=\"term\" data-term=\"majority_class\"><b>majority class</b></button>.",
-"zh": "<i>较</i>常见的标签称为<button type=\"button\" class=\"term\" data-term=\"majority_class\"><b>多数类</b></button>。"
+"en": "The <i>more</i> common label is called the <button type=\"button\" class=\"term\" data-term=\"majority-class\"><b>majority class</b></button>.",
+"zh": "<i>较</i>常见的标签称为<button type=\"button\" class=\"term\" data-term=\"majority-class\"><b>多数类</b></button>。"
 },
 {
-"en": "The <i>less</i> common label is called the <button type=\"button\" class=\"term\" data-term=\"minority_class\"><b>minority class</b></button>.",
-"zh": "<i>较不</i>常见的标签称为<button type=\"button\" class=\"term\" data-term=\"minority_class\"><b>少数类</b></button>。"
+"en": "The <i>less</i> common label is called the <button type=\"button\" class=\"term\" data-term=\"minority-class\"><b>minority class</b></button>.",
+"zh": "<i>较不</i>常见的标签称为<button type=\"button\" class=\"term\" data-term=\"minority-class\"><b>少数类</b></button>。"
 }
 ]
 },
@@ -1314,29 +1314,29 @@
 "takeaways": [
 {
 "en": "Machine learning models should be tested against a separate dataset, called the test set, to ensure accurate predictions on unseen data.",
-"zh": null
+"zh": "机器学习模型应该用另一个独立的数据集（称为测试集）来测试，以确保它对没见过的数据也能准确预测。"
 },
 {
 "en": "It's recommended to split the dataset into three subsets: training, validation, and test sets, with the validation set used for initial testing during training and the test set used for final evaluation.",
-"zh": null
+"zh": "建议把数据集分成三个子集：训练集、验证集和测试集；验证集用于训练期间的初步测试，测试集用于最终评估。"
 },
 {
 "en": "The validation and test sets can \"wear out\" with repeated use, requiring fresh data to maintain reliable evaluation results.",
-"zh": null
+"zh": "验证集和测试集反复使用后会“磨损”，需要新的数据才能维持可靠的评估结果。"
 },
 {
 "en": "A good test set is statistically significant, representative of the dataset and real-world data, and contains no duplicates from the training set.",
-"zh": null
+"zh": "好的测试集应具有统计显著性，能代表数据集和真实世界的数据，而且不包含与训练集重复的样本。"
 },
 {
 "en": "It's crucial to address discrepancies between the dataset used for training and testing and the real-world data the model will encounter to achieve satisfactory real-world performance.",
-"zh": null
+"zh": "必须处理训练和测试所用的数据集与模型在真实世界中会遇到的数据之间的差异，模型在实际使用中才能有满意的表现。"
 }
 ],
 "terms": [
 "test-set",
 "training-set",
-"validation_set"
+"validation-set"
 ],
 "blocks": [
 {
@@ -1742,19 +1742,19 @@
 "takeaways": [
 {
 "en": "Machine learning models require all data, including features like street names, to be transformed into numerical (floating-point) representations for training.",
-"zh": null
+"zh": "机器学习模型要求所有数据（包括街道名称这类特征）都转换成数值（浮点数）表示才能训练。"
 },
 {
 "en": "Normalization is crucial for optimizing model training by converting existing floating-point features to a specific range.",
-"zh": null
+"zh": "归一化把现有的浮点特征转换到特定范围，对优化模型训练至关重要。"
 },
 {
 "en": "When dealing with large datasets, selecting a relevant subset of data for training is essential for model performance.",
-"zh": null
+"zh": "处理大型数据集时，选择一个相关的数据子集来训练，对模型表现非常重要。"
 },
 {
 "en": "Protecting user privacy by excluding Personally Identifiable Information (PII) from datasets is a critical consideration.",
-"zh": null
+"zh": "从数据集中排除个人身份信息 (PII) 以保护用户隐私，是必须重视的考量。"
 }
 ],
 "terms": [
@@ -1864,23 +1864,23 @@
 "takeaways": [
 {
 "en": "Overfitting occurs when a model performs well on training data but poorly on new, unseen data.",
-"zh": null
+"zh": "过拟合是指模型在训练数据上表现很好，在没见过的新数据上却表现很差。"
 },
 {
 "en": "A model is considered to generalize well if it accurately predicts on new data, indicating it hasn't overfit.",
-"zh": null
+"zh": "如果模型能对新数据做出准确的预测，就说明它泛化得好，没有过拟合。"
 },
 {
 "en": "Overfitting can be detected by observing diverging loss curves for training and validation sets on a generalization curve.",
-"zh": null
+"zh": "在泛化曲线上，如果训练集和验证集的损失曲线逐渐分开，就可以看出过拟合。"
 },
 {
 "en": "Common causes of overfitting include unrepresentative training data and overly complex models.",
-"zh": null
+"zh": "过拟合的常见原因包括训练数据不具代表性和模型过于复杂。"
 },
 {
 "en": "Dataset conditions for good generalization include examples being independent, identically distributed, and stationary, with similar distributions across partitions.",
-"zh": null
+"zh": "有利于良好泛化的数据集条件包括：样本彼此独立、同分布且平稳，各个划分子集的分布相似。"
 }
 ],
 "terms": [
@@ -2022,6 +2022,13 @@
 "caption": {
 "en": "<b>Figure 14.</b> Underfit, fit, and overfit models.",
 "zh": "<b>图 14.</b> 欠拟合、拟合和过拟合模型。"
+}
+},
+{
+"type": "widget",
+"id": "overfit",
+"opts": {
+"lambda": false
 }
 },
 {
@@ -2355,28 +2362,28 @@
 "takeaways": [
 {
 "en": "Simpler models often generalize better to new data than complex models, even if they perform slightly worse on training data.",
-"zh": null
+"zh": "较简单的模型往往比复杂的模型更能泛化到新数据，即使它在训练数据上的表现略差。"
 },
 {
 "en": "Occam's Razor favors simpler explanations and models, prioritizing them over more complex ones.",
-"zh": null
+"zh": "奥卡姆剃刀原则偏好较简单的解释和模型，把它们放在比较复杂的之前。"
 },
 {
 "en": "Regularization techniques help prevent overfitting by penalizing model complexity during training.",
-"zh": null
+"zh": "正则化技术在训练时惩罚模型的复杂度，有助于防止过拟合。"
 },
 {
 "en": "Model training aims to minimize both loss (errors on training data) and complexity for optimal performance on new data.",
-"zh": null
+"zh": "模型训练的目标是同时尽量降低损失（训练数据上的错误）和复杂度，才能在新数据上有最佳表现。"
 },
 {
 "en": "Model complexity can be quantified using functions of model weights, like L1 and L2 regularization.",
-"zh": null
+"zh": "模型复杂度可以用模型权重的函数来量化，例如 L1 和 L2 正则化。"
 }
 ],
 "terms": [
-"L1_regularization",
-"L2_regularization",
+"l1-regularization",
+"l2-regularization",
 "regularization"
 ],
 "blocks": [
@@ -2430,6 +2437,13 @@
 "html": {
 "en": "Simplicity has been beating complexity for a long time. In fact, the preference for simplicity dates back to ancient Greece. Centuries later, a fourteenth-century friar named William of Occam formalized the preference for simplicity in a philosophy known as <a href=\"https://wikipedia.org/wiki/Occam%27s_razor\" target=\"_blank\" rel=\"noopener\">Occam's razor</a>. This philosophy remains an essential underlying principle of many sciences, including machine learning.",
 "zh": "简单一直以来都胜过复杂。事实上，人们对简约的偏好可以追溯到古希腊。几个世纪后，14 世纪的一位修士奥卡姆的威廉将这种对简单性的偏好正式化为一种哲学，称为“奥卡姆剃刀”。<a href=\"https://wikipedia.org/wiki/Occam%27s_razor\" target=\"_blank\" rel=\"noopener\"></a>这一哲学仍然是许多科学（包括机器学习）的基本原理。"
+}
+},
+{
+"type": "widget",
+"id": "overfit",
+"opts": {
+"lambda": false
 }
 },
 {
@@ -2647,8 +2661,8 @@
 "zh": "复杂度是模型权重的函数。"
 },
 "why": {
-"en": "Yes, this is one way to measure some models' complexity. This metric is called <button type=\"button\" class=\"term\" data-term=\"L1_regularization\"><b>L<sub>1</sub> regularization.</b></button>",
-"zh": "是的，这是衡量某些模型复杂性的一种方法。 此指标称为 <button type=\"button\" class=\"term\" data-term=\"L1_regularization\"><b>L<sub>1</sub> 正则化。</b></button>"
+"en": "Yes, this is one way to measure some models' complexity. This metric is called <button type=\"button\" class=\"term\" data-term=\"l1-regularization\"><b>L<sub>1</sub> regularization.</b></button>",
+"zh": "是的，这是衡量某些模型复杂性的一种方法。 此指标称为 <button type=\"button\" class=\"term\" data-term=\"l1-regularization\"><b>L<sub>1</sub> 正则化。</b></button>"
 },
 "correct": true
 },
@@ -2658,8 +2672,8 @@
 "zh": "复杂度是模型权重的平方的函数。"
 },
 "why": {
-"en": "Yes, you can measure some models' complexity this way. This metric is called <button type=\"button\" class=\"term\" data-term=\"L2_regularization\"><b>L<sub>2</sub> regularization</b></button>.",
-"zh": "可以，您可以通过这种方式衡量某些模型的复杂性。此指标称为 <button type=\"button\" class=\"term\" data-term=\"L2_regularization\"><b>L<sub>2</sub> 正则化</b></button>。"
+"en": "Yes, you can measure some models' complexity this way. This metric is called <button type=\"button\" class=\"term\" data-term=\"l2-regularization\"><b>L<sub>2</sub> regularization</b></button>.",
+"zh": "可以，您可以通过这种方式衡量某些模型的复杂性。此指标称为 <button type=\"button\" class=\"term\" data-term=\"l2-regularization\"><b>L<sub>2</sub> 正则化</b></button>。"
 },
 "correct": true
 },
@@ -2693,25 +2707,25 @@
 "takeaways": [
 {
 "en": "L2 regularization is a technique used to reduce model complexity and prevent overfitting by penalizing large weights.",
-"zh": null
+"zh": "L2 正则化通过惩罚较大的权重，降低模型复杂度、防止过拟合。"
 },
 {
 "en": "A regularization rate (lambda) controls the strength of regularization, with higher values leading to simpler models and lower values increasing the risk of overfitting.",
-"zh": null
+"zh": "正则化率 (lambda) 控制正则化的强度：值越高，模型越简单；值越低，过拟合的风险越高。"
 },
 {
 "en": "Early stopping is an alternative regularization method that involves ending training before the model fully converges to prevent overfitting.",
-"zh": null
+"zh": "早停法是另一种正则化方法，在模型完全收敛之前就结束训练，以防止过拟合。"
 },
 {
 "en": "Finding the right balance between learning rate and regularization rate is crucial for optimal model performance, as they influence weights in opposite directions.",
-"zh": null
+"zh": "学习速率和正则化率对权重的影响方向相反，在两者之间找到合适的平衡，对模型的最佳表现至关重要。"
 }
 ],
 "terms": [
 "early-stopping",
-"L1_regularization",
-"L2_regularization",
+"l1-regularization",
+"l2-regularization",
 "learning-rate",
 "regularization",
 "regularization-rate"
@@ -3042,6 +3056,13 @@
 }
 },
 {
+"type": "widget",
+"id": "overfit",
+"opts": {
+"degree": 7
+}
+},
+{
 "type": "list",
 "ordered": false,
 "items": [
@@ -3191,23 +3212,23 @@
 "takeaways": [
 {
 "en": "This document helps you understand and interpret Machine Learning loss curves through a series of exercises and visual examples.",
-"zh": null
+"zh": "本文通过一系列练习和图例，帮助您理解和解读机器学习的损失曲线。"
 },
 {
 "en": "You will learn how to identify common issues like oscillating loss, exploding loss, overfitting, and erratic behavior in your models.",
-"zh": null
+"zh": "您会学到如何识别模型中常见的问题，例如损失振荡、损失爆炸、过拟合和行为不稳定。"
 },
 {
 "en": "Solutions are provided for each exercise, along with explanations for various loss curve patterns.",
-"zh": null
+"zh": "每个练习都附有解答，并解释各种损失曲线形态的含义。"
 },
 {
 "en": "Techniques to address these issues are discussed, including adjusting learning rate, cleaning training data, and applying regularization.",
-"zh": null
+"zh": "文中讨论解决这些问题的技术，包括调整学习速率、清理训练数据和使用正则化。"
 },
 {
 "en": "A glossary of key Machine Learning terminology related to loss curves and model training is included for quick reference.",
-"zh": null
+"zh": "另附与损失曲线和模型训练相关的重要机器学习术语表，方便快速查阅。"
 }
 ],
 "terms": [
@@ -3215,21 +3236,21 @@
 "example",
 "feature",
 "learning-rate",
-"loss_curve",
+"loss-curve",
 "outliers",
 "overfitting",
 "regularization",
 "regularization-rate",
 "test-set",
 "training-set",
-"validation_set"
+"validation-set"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "Machine learning would be much simpler if all your <button type=\"button\" class=\"term\" data-term=\"loss_curve\"><b>loss curves</b></button> looked like this the first time you trained your model:",
-"zh": "如果您在首次训练模型时，所有<button type=\"button\" class=\"term\" data-term=\"loss_curve\"><b>损失曲线</b></button>都如下所示，机器学习会变得简单得多："
+"en": "Machine learning would be much simpler if all your <button type=\"button\" class=\"term\" data-term=\"loss-curve\"><b>loss curves</b></button> looked like this the first time you trained your model:",
+"zh": "如果您在首次训练模型时，所有<button type=\"button\" class=\"term\" data-term=\"loss-curve\"><b>损失曲线</b></button>都如下所示，机器学习会变得简单得多："
 }
 },
 {

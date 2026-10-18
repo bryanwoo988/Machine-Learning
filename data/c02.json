@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module introduces linear regression, a statistical method used to predict a label value based on its features.",
-"zh": null
+"zh": "本单元介绍线性回归，这是一种根据特征预测标签值的统计方法。"
 },
 {
 "en": "The linear regression model uses an equation (y' = b + w₁x₁ + ...) to represent the relationship between features and the label.",
-"zh": null
+"zh": "线性回归模型用一个方程式（y' = b + w₁x₁ + ...）表示特征与标签之间的关系。"
 },
 {
 "en": "During training, the model adjusts its bias (b) and weights (w) to minimize the difference between predicted and actual values.",
-"zh": null
+"zh": "训练时，模型会调整偏差 (b) 和权重 (w)，使预测值与实际值之间的差距尽量小。"
 },
 {
 "en": "Linear regression can be applied to models with multiple features, each with its own weight, to improve prediction accuracy.",
-"zh": null
+"zh": "线性回归可以用于有多个特征的模型，每个特征都有自己的权重，以提高预测准确度。"
 },
 {
 "en": "Gradient descent and hyperparameter tuning are key techniques used to optimize the performance of a linear regression model.",
-"zh": null
+"zh": "梯度下降和超参数调整是优化线性回归模型表现的关键技术。"
 }
 ],
 "terms": [
@@ -228,6 +228,10 @@
 "en": "<b>Figure 2</b>. A best fit line drawn through the data from the previous figure.",
 "zh": "<b>图 2</b>. 通过上图数据绘制的最佳拟合线。"
 }
+},
+{
+"type": "widget",
+"id": "linreg"
 },
 {
 "type": "h",
@@ -447,7 +451,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/displacement.png",
+"src": "img/crash-course/linear-regression/images/displacement.webp",
 "alt": {
 "en": "Figure 6. Displacement in cubic centimeters graphed against miles per gallon showing a negative linear relationship.",
 "zh": "图 6. 以立方厘米为单位的排量与以每加仑英里数为单位的燃油效率的对比图，显示了负线性关系。"
@@ -466,7 +470,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/acceleration.png",
+"src": "img/crash-course/linear-regression/images/acceleration.webp",
 "alt": {
 "en": "Figure 7. Acceleration from zero to sixty in seconds graphed against miles per gallon showing a positive linear relationship.",
 "zh": "图 7. 以秒为单位的从 0 到 60 的加速与以每加仑英里数为单位的燃油效率之间的关系图，显示出正线性关系。"
@@ -551,19 +555,19 @@
 "takeaways": [
 {
 "en": "Loss is a numerical value indicating the difference between a model's predictions and the actual values.",
-"zh": null
+"zh": "损失是一个数值，表示模型的预测与实际值之间的差距。"
 },
 {
 "en": "The goal of model training is to minimize loss, bringing it as close to zero as possible.",
-"zh": null
+"zh": "训练模型的目标是尽量减少损失，使它尽可能接近零。"
 },
 {
 "en": "Two common methods for calculating loss are Mean Absolute Error (MAE) and Mean Squared Error (MSE), which differ in their sensitivity to outliers.",
-"zh": null
+"zh": "计算损失的两种常见方法是平均绝对误差 (MAE) 和均方误差 (MSE)，两者对离群值的敏感程度不同。"
 },
 {
 "en": "Choosing between MAE and MSE depends on the dataset and how you want the model to handle outliers, with MSE penalizing them more heavily.",
-"zh": null
+"zh": "选择 MAE 还是 MSE，取决于数据集以及您希望模型如何处理离群值；MSE 对离群值的惩罚更重。"
 }
 ],
 "terms": [
@@ -895,6 +899,13 @@
 }
 },
 {
+"type": "widget",
+"id": "linreg",
+"opts": {
+"start": "flat"
+}
+},
+{
 "type": "h",
 "html": {
 "en": "Choosing a loss",
@@ -1172,6 +1183,20 @@
 ]
 },
 {
+"type": "widget",
+"id": "linreg",
+"opts": {
+"start": "flat"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/linear-regression/parameters-exercise_7d1c563bd575d085a8f5a5620fe5bb910a482af32504cfc9d3dcbc92fa19ee31.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/linear-regression/parameters-exercise_7d1c563bd575d085a8f5a5620fe5bb910a482af32504cfc9d3dcbc92fa19ee31.frame?hl=zh-cn"
+}
+},
+{
 "type": "more",
 "title": {
 "en": "Click the plus icon to see the solution",
@@ -1187,7 +1212,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/parameters-exercise-solution.png",
+"src": "img/crash-course/linear-regression/images/parameters-exercise-solution.webp",
 "alt": {
 "en": "Plot of 20 points and the optimal linear regression line for\n              these points, using the weight and bias values above.",
 "zh": "20 个点的图以及使用上述权重和偏差值得出的这些点的最佳线性回归线。"
@@ -1216,23 +1241,23 @@
 "takeaways": [
 {
 "en": "Gradient descent is an iterative optimization algorithm used to find the best weights and bias for a linear regression model by minimizing the loss function.",
-"zh": null
+"zh": "梯度下降是一种迭代优化算法，通过使损失函数最小化，为线性回归模型找出最佳的权重和偏差。"
 },
 {
 "en": "The process involves repeatedly calculating the loss, determining the direction to adjust weights and bias to reduce loss, and updating the parameters accordingly.",
-"zh": null
+"zh": "这个过程会反复计算损失、判断应往哪个方向调整权重和偏差才能降低损失，然后据此更新参数。"
 },
 {
 "en": "A model is considered to have converged when further iterations do not significantly reduce the loss, indicating it has found the weights and bias that produce the lowest possible loss.",
-"zh": null
+"zh": "当继续迭代也无法明显降低损失时，就认为模型已收敛，表示它已找到产生最低损失的权重和偏差。"
 },
 {
 "en": "Loss curves visually represent the model's progress during training, showing how the loss decreases over iterations and helping to identify convergence.",
-"zh": null
+"zh": "损失曲线直观地显示模型在训练中的进展，呈现损失如何随迭代次数下降，有助于判断是否收敛。"
 },
 {
 "en": "Linear models have convex loss functions, ensuring that gradient descent will always find the global minimum, resulting in the best possible model for the given data.",
-"zh": null
+"zh": "线性模型的损失函数是凸函数，因此梯度下降一定能找到全局最小值，得到对给定数据而言最好的模型。"
 }
 ],
 "terms": [
@@ -1292,7 +1317,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/gradient-descent.png",
+"src": "img/crash-course/linear-regression/images/gradient-descent.webp",
 "alt": {
 "en": "Figure 11. Illustration of the gradient descent process.",
 "zh": "图 11. 梯度下降过程的图示。"
@@ -1627,6 +1652,10 @@
 }
 },
 {
+"type": "widget",
+"id": "gradient"
+},
+{
 "type": "p",
 "html": {
 "en": "You can see that loss dramatically decreases during the first few iterations, then gradually decreases before flattening out around the 1,000th-iteration mark. After 1,000 iterations, we can be mostly certain that the model has converged.",
@@ -1656,7 +1685,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/large-loss.png",
+"src": "img/crash-course/linear-regression/images/large-loss.webp",
 "alt": {
 "en": "Figure 13. Loss curve and corresponding graph of the model, which tilts away from the data points.",
 "zh": "图 13。模型损失曲线和相应图表，该曲线偏离数据点。"
@@ -1708,7 +1737,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/low-loss.png",
+"src": "img/crash-course/linear-regression/images/low-loss.webp",
 "alt": {
 "en": "Figure 15. Loss curve and corresponding graph of the model, which fits the data well.",
 "zh": "图 15. 可很好地拟合数据的模型的损失曲线和相应图表。"
@@ -1800,7 +1829,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/convexity.png",
+"src": "img/crash-course/linear-regression/images/convexity.webp",
 "alt": {
 "en": "Figure 16. 3-D graph of loss surface.",
 "zh": "图 16. 损失曲面的 3D 图。"
@@ -1826,7 +1855,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/loss-weight-bias.png",
+"src": "img/crash-course/linear-regression/images/loss-weight-bias.webp",
 "alt": {
 "en": "Figure 17. 3-D graph of loss surface, with (-5.44, 35.94, 5.54) at the bottom.",
 "zh": "图 17. 损失曲面的 3D 图，底部为 (-5.44, 35.94, 5.54)。"
@@ -1860,7 +1889,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/loss-surface-points.png",
+"src": "img/crash-course/linear-regression/images/loss-surface-points.webp",
 "alt": {
 "en": "Figure 18. Convex 3-D loss surface with gradient descent points moving to the lowest point.",
 "zh": "图 18. 凸 3D 损失曲面，梯度下降点移动到最低点。"
@@ -1942,23 +1971,23 @@
 "takeaways": [
 {
 "en": "Hyperparameters, such as learning rate, batch size, and epochs, are external configurations that influence the training process of a machine learning model.",
-"zh": null
+"zh": "学习速率、批次大小和周期数等超参数，是影响机器学习模型训练过程的外部设置。"
 },
 {
 "en": "The learning rate determines the step size during model training, impacting the speed and stability of convergence.",
-"zh": null
+"zh": "学习速率决定训练时每一步的步长，影响收敛的速度和稳定性。"
 },
 {
 "en": "Batch size dictates the number of training examples processed before updating model parameters, influencing training speed and noise.",
-"zh": null
+"zh": "批次大小决定在更新模型参数之前要处理多少个训练样本，影响训练速度和噪声。"
 },
 {
 "en": "Epochs represent the number of times the entire training dataset is used during training, affecting model performance and training time.",
-"zh": null
+"zh": "周期数表示训练期间整个训练数据集被使用的次数，影响模型表现和训练时间。"
 },
 {
 "en": "Choosing appropriate hyperparameters is crucial for optimizing model training and achieving desired results.",
-"zh": null
+"zh": "选择合适的超参数，对优化模型训练、达到预期结果至关重要。"
 }
 ],
 "terms": [
@@ -2134,6 +2163,10 @@
 }
 },
 {
+"type": "widget",
+"id": "gradient"
+},
+{
 "type": "h",
 "html": {
 "en": "Exercise: Check your understanding",
@@ -2202,8 +2235,8 @@
 {
 "type": "p",
 "html": {
-"en": "Two common techniques to get the right gradient on <i>average</i> without needing to look at every example in the dataset before updating the weights and bias are <button type=\"button\" class=\"term\" data-term=\"SGD\"><b>stochastic gradient descent</b></button> and <button type=\"button\" class=\"term\" data-term=\"mini-batch-stochastic-gradient-descent\"><b>mini-batch stochastic gradient descent</b></button>:",
-"zh": "以下两种常见技术可在不查看数据集中的每个示例的情况下，获得正确的<i>平均</i>梯度，然后更新权重和偏差：<button type=\"button\" class=\"term\" data-term=\"SGD\"><b>随机梯度下降</b></button>和<button type=\"button\" class=\"term\" data-term=\"mini-batch-stochastic-gradient-descent\"><b>小批量随机梯度下降</b></button>。"
+"en": "Two common techniques to get the right gradient on <i>average</i> without needing to look at every example in the dataset before updating the weights and bias are <button type=\"button\" class=\"term\" data-term=\"stochastic-gradient-descent-sgd\"><b>stochastic gradient descent</b></button> and <button type=\"button\" class=\"term\" data-term=\"mini-batch-stochastic-gradient-descent\"><b>mini-batch stochastic gradient descent</b></button>:",
+"zh": "以下两种常见技术可在不查看数据集中的每个示例的情况下，获得正确的<i>平均</i>梯度，然后更新权重和偏差：<button type=\"button\" class=\"term\" data-term=\"stochastic-gradient-descent-sgd\"><b>随机梯度下降</b></button>和<button type=\"button\" class=\"term\" data-term=\"mini-batch-stochastic-gradient-descent\"><b>小批量随机梯度下降</b></button>。"
 }
 },
 {
@@ -2282,7 +2315,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/linear-regression/images/batch-size.png",
+"src": "img/crash-course/linear-regression/images/batch-size.webp",
 "alt": {
 "en": "Figure 26. A full batch is the entire dataset, a mini batch is a subset of the dataset, and an epoch is a full pass through ten mini batches.",
 "zh": "图 26. 完整批次是整个数据集，小批次是数据集的子集，而一个周期是指完整地遍历十个小批次。"
@@ -2475,6 +2508,17 @@
 "html": {
 "en": "This interactive visualization can produce flashing visuals when set to a high Learning Rate, which may affect photosensitive individuals.",
 "zh": "如果将学习率设置为较高值，此交互式可视化图表可能会生成闪烁的视觉效果，这可能会影响对光敏感的个人。"
+}
+},
+{
+"type": "widget",
+"id": "gradient"
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/linear-regression/gradient-descent-exercise_0446e1476b2aabf177500ba8e132ae28b508f7a0b1dc1689d624f1be0f146419.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/linear-regression/gradient-descent-exercise_0446e1476b2aabf177500ba8e132ae28b508f7a0b1dc1689d624f1be0f146419.frame?hl=zh-cn"
 }
 },
 {

@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module explores the broader ecosystem of a production ML system, emphasizing that the model itself is only a small part of the overall system.",
-"zh": null
+"zh": "本单元探讨生产环境机器学习系统的整体生态，强调模型本身只是整个系统中很小的一部分。"
 },
 {
 "en": "You will learn to choose the appropriate training and inference paradigms (static or dynamic) based on your specific needs.",
-"zh": null
+"zh": "您会学到如何根据自己的需求，选择合适的训练和推理方式（静态或动态）。"
 },
 {
 "en": "The module covers key aspects of production ML systems, including testing, identifying potential flaws, and monitoring the system's components.",
-"zh": null
+"zh": "本单元涵盖生产环境机器学习系统的关键方面，包括测试、找出潜在缺陷，以及监控系统的各个组成部分。"
 },
 {
 "en": "As a prerequisite, familiarity with foundational machine learning concepts, including linear regression, data types, and overfitting, is assumed.",
-"zh": null
+"zh": "前提是您已熟悉机器学习的基础概念，包括线性回归、数据类型和过拟合。"
 },
 {
 "en": "Building upon previous modules, this content shifts focus to the practical aspects of deploying and maintaining ML models in real-world scenarios.",
-"zh": null
+"zh": "在前面单元的基础上，本单元把重点转到在真实场景中部署和维护机器学习模型的实际问题。"
 }
 ],
 "terms": [],
@@ -103,23 +103,23 @@
 "takeaways": [
 {
 "en": "Machine learning models can be trained statically (once) or dynamically (continuously).",
-"zh": null
+"zh": "机器学习模型可以静态训练（只训练一次），也可以动态训练（持续训练）。"
 },
 {
 "en": "Static training is simpler but can become outdated if data patterns change, requiring data monitoring.",
-"zh": null
+"zh": "静态训练较简单，但如果数据规律改变，模型就会过时，因此需要监控数据。"
 },
 {
 "en": "Dynamic training adapts to new data, providing more accurate predictions but demands more resources and monitoring.",
-"zh": null
+"zh": "动态训练能适应新数据、提供更准确的预测，但需要更多资源和监控。"
 },
 {
 "en": "Choosing between static and dynamic training depends on the specific dataset and how frequently it changes.",
-"zh": null
+"zh": "选择静态还是动态训练，取决于具体的数据集以及它变化的频率。"
 },
 {
 "en": "Monitoring input data is essential for both static and dynamic training to ensure reliable predictions.",
-"zh": null
+"zh": "无论静态还是动态训练，监控输入数据都是确保预测可靠的必要工作。"
 }
 ],
 "terms": [
@@ -150,7 +150,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/images/StaticModel.png",
+"src": "img/crash-course/images/StaticModel.webp",
 "alt": {
 "en": "Figure 2. Raw dough creates three identical loaves of bread.",
 "zh": "图 2. 用原始面团制作出三个完全相同的面包。"
@@ -162,7 +162,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/images/DynamicModel.png",
+"src": "img/crash-course/images/DynamicModel.webp",
 "alt": {
 "en": "Figure 3. Raw dough creates slightly different loaves of bread\n            each time.",
 "zh": "图 3. 每次使用生面团制作面包，都会得到略有不同的面包。"
@@ -373,36 +373,36 @@
 "takeaways": [
 {
 "en": "Inference involves using a trained model to make predictions on unlabeled examples, and it can be done statically or dynamically.",
-"zh": null
+"zh": "推理是用训练好的模型为无标签样本做预测，可以静态进行，也可以动态进行。"
 },
 {
 "en": "Static inference generates predictions in advance and caches them, making it suitable for scenarios where prediction speed is critical but limiting its ability to handle uncommon inputs.",
-"zh": null
+"zh": "静态推理预先生成预测并缓存起来，适合预测速度至关重要的场景，但较难处理不常见的输入。"
 },
 {
 "en": "Dynamic inference generates predictions on demand, offering flexibility for diverse inputs but potentially increasing latency and computational demands.",
-"zh": null
+"zh": "动态推理按需生成预测，能灵活处理各种输入，但可能增加延迟和计算需求。"
 },
 {
 "en": "Choosing between static and dynamic inference depends on factors like model complexity, desired prediction speed, and the nature of the input data.",
-"zh": null
+"zh": "选择静态还是动态推理，取决于模型复杂度、所需的预测速度和输入数据的性质等因素。"
 },
 {
 "en": "Static inference is advantageous when cost and prediction verification are prioritized, while dynamic inference excels in handling diverse, real-time predictions.",
-"zh": null
+"zh": "当成本和预测结果的核查较重要时，静态推理较有利；动态推理则擅长处理多样的实时预测。"
 }
 ],
 "terms": [
 "example",
 "inference",
-"unlabeled_example"
+"unlabeled-example"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "<button type=\"button\" class=\"term\" data-term=\"inference\"><b>Inference</b></button> is the process of making predictions by applying a trained model to <button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>unlabeled examples</b></button>. Broadly speaking, a model can infer predictions in one of two ways:",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"inference\"><b>推理</b></button>是指通过将训练后的模型应用于<button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>无标签示例</b></button>做出预测的过程。一般来说，模型可以通过以下两种方式之一推断预测结果："
+"en": "<button type=\"button\" class=\"term\" data-term=\"inference\"><b>Inference</b></button> is the process of making predictions by applying a trained model to <button type=\"button\" class=\"term\" data-term=\"unlabeled-example\"><b>unlabeled examples</b></button>. Broadly speaking, a model can infer predictions in one of two ways:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"inference\"><b>推理</b></button>是指通过将训练后的模型应用于<button type=\"button\" class=\"term\" data-term=\"unlabeled-example\"><b>无标签示例</b></button>做出预测的过程。一般来说，模型可以通过以下两种方式之一推断预测结果："
 }
 },
 {
@@ -410,8 +410,8 @@
 "ordered": false,
 "items": [
 {
-"en": "<b>Static inference</b> (also called <b>offline inference</b> or <b>batch inference</b>) means the model makes predictions on a bunch of common <button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>unlabeled examples</b></button> and then caches those predictions somewhere.",
-"zh": "<b>静态推理</b>（也称为<b>离线推理</b>或<b>批量推理</b>）是指模型对一组常见的<button type=\"button\" class=\"term\" data-term=\"unlabeled_example\"><b>无标签示例</b></button>进行预测，然后将这些预测缓存在某个位置。"
+"en": "<b>Static inference</b> (also called <b>offline inference</b> or <b>batch inference</b>) means the model makes predictions on a bunch of common <button type=\"button\" class=\"term\" data-term=\"unlabeled-example\"><b>unlabeled examples</b></button> and then caches those predictions somewhere.",
+"zh": "<b>静态推理</b>（也称为<b>离线推理</b>或<b>批量推理</b>）是指模型对一组常见的<button type=\"button\" class=\"term\" data-term=\"unlabeled-example\"><b>无标签示例</b></button>进行预测，然后将这些预测缓存在某个位置。"
 },
 {
 "en": "<b>Dynamic inference</b> (also called <b>online inference</b> or real-time inference) means that the model only makes predictions on demand, for example, when a client requests a prediction.",
@@ -696,19 +696,19 @@
 "takeaways": [
 {
 "en": "Feature engineering can be performed before or during model training, each with its own advantages and disadvantages.",
-"zh": null
+"zh": "特征工程可以在模型训练之前或训练期间进行，两者各有优缺点。"
 },
 {
 "en": "Transforming data before training allows for a one-time transformation of the entire dataset but requires careful recreation of transformations during prediction to avoid training-serving skew.",
-"zh": null
+"zh": "在训练前转换数据，只需对整个数据集转换一次，但预测时必须仔细重现同样的转换，以免出现训练-应用偏差。"
 },
 {
 "en": "Transforming data during training ensures consistency between training and prediction but can increase model latency and complicate batch processing.",
-"zh": null
+"zh": "在训练期间转换数据，能确保训练和预测的一致性，但可能增加模型延迟，并使批处理变得复杂。"
 },
 {
 "en": "When transforming data during training, considerations such as Z-score normalization across batches with varying distributions need to be addressed.",
-"zh": null
+"zh": "在训练期间转换数据时，需要处理一些问题，例如各批次分布不同时如何做 Z 分数归一化。"
 }
 ],
 "terms": [
@@ -892,23 +892,23 @@
 "takeaways": [
 {
 "en": "Deploying a machine learning model involves validating data, features, model versions, serving infrastructure, and pipeline integration.",
-"zh": null
+"zh": "部署机器学习模型需要验证数据、特征、模型版本、服务基础架构以及流水线的整合。"
 },
 {
 "en": "Reproducible model training involves deterministic seeding, fixed initialization order, averaging multiple runs, and using version control.",
-"zh": null
+"zh": "可复现的模型训练需要确定性的随机种子、固定的初始化顺序、多次运行取平均，以及使用版本控制。"
 },
 {
 "en": "Integration tests ensure that different components of the ML pipeline work together seamlessly, and should be run continuously and for new model/software versions.",
-"zh": null
+"zh": "集成测试确保机器学习流水线的各个组件能顺利协同工作，应持续运行，并在新的模型或软件版本推出时运行。"
 },
 {
 "en": "Before serving a new model, validate its quality by checking for sudden and slow degradations against previous versions and fixed thresholds.",
-"zh": null
+"zh": "在推出新模型之前，应与旧版本和固定阈值比较，检查是否有突然或缓慢的性能下降，以验证其质量。"
 },
 {
 "en": "Ensure model-infrastructure compatibility by staging the model in a sandboxed server environment to avoid dependency conflicts.",
-"zh": null
+"zh": "把模型放在沙盒服务器环境中预先测试，确保模型与基础架构兼容，避免依赖项冲突。"
 }
 ],
 "terms": [
@@ -1121,27 +1121,27 @@
 "takeaways": [
 {
 "en": "ML pipeline monitoring involves validating data and features, tracking real-world metrics, and addressing potential biases in data slices.",
-"zh": null
+"zh": "监控机器学习流水线包括验证数据和特征、追踪真实世界的指标，以及处理数据切片中可能的偏见。"
 },
 {
 "en": "Monitoring training-serving skew, label leakage, model age, and numerical stability are crucial for maintaining pipeline health and model performance.",
-"zh": null
+"zh": "监控训练-应用偏差、标签泄露、模型新旧程度和数值稳定性，对维持流水线健康和模型表现至关重要。"
 },
 {
 "en": "Live model quality testing uses methods like human labeling and statistical analysis to ensure ongoing model effectiveness in real-world scenarios.",
-"zh": null
+"zh": "实时模型质量测试使用人工标记和统计分析等方法，确保模型在真实场景中持续有效。"
 },
 {
 "en": "Implementing proper randomization through deterministic data generation enables reproducible experiments and consistent analysis.",
-"zh": null
+"zh": "通过确定性的数据生成实现适当的随机化，可以让实验可复现、分析结果一致。"
 },
 {
 "en": "Maintaining invariant hashing ensures data splits remain consistent across experiments, contributing to reliable analysis and model evaluation.",
-"zh": null
+"zh": "保持哈希不变，可以确保各次实验的数据划分一致，有助于可靠的分析和模型评估。"
 }
 ],
 "terms": [
-"AUC",
+"auc-area-under-the-roc-curve",
 "clipping",
 "ground-truth",
 "hashing",
@@ -1410,8 +1410,8 @@
 "zh": "点击此处查看答案"
 },
 "why": {
-"en": "Click here to see the answer <b>Answer:</b> The problem is that you don't know the number of customers at prediction time, before the day's sales are complete. So, this feature isn't useful, even if this feature is strongly predictive of your daily revenue. Relatedly, when you're training a model and get amazing evaluation metrics (like 0.99 <button type=\"button\" class=\"term\" data-term=\"AUC\"><b>AUC</b></button>), look for these sorts of features that can bleed into your label.",
-"zh": "点击此处查看答案 <b>答</b>：问题在于，在预测时，您不知道客户数量，而此时当天的销售尚未完成。因此，即使此功能能很好地预测您的每日收入，也并无用处。同样，当您训练模型并获得出色的评估指标（例如 0.99 <button type=\"button\" class=\"term\" data-term=\"AUC\"><b>AUC</b></button>）时，请寻找可能会泄露到标签中的这类特征。"
+"en": "Click here to see the answer <b>Answer:</b> The problem is that you don't know the number of customers at prediction time, before the day's sales are complete. So, this feature isn't useful, even if this feature is strongly predictive of your daily revenue. Relatedly, when you're training a model and get amazing evaluation metrics (like 0.99 <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\"><b>AUC</b></button>), look for these sorts of features that can bleed into your label.",
+"zh": "点击此处查看答案 <b>答</b>：问题在于，在预测时，您不知道客户数量，而此时当天的销售尚未完成。因此，即使此功能能很好地预测您的每日收入，也并无用处。同样，当您训练模型并获得出色的评估指标（例如 0.99 <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\"><b>AUC</b></button>）时，请寻找可能会泄露到标签中的这类特征。"
 },
 "correct": null
 }
@@ -1766,23 +1766,23 @@
 "takeaways": [
 {
 "en": "Continuously monitor models in production to evaluate feature importance and potentially remove unnecessary ones, ensuring prediction quality and resource efficiency.",
-"zh": null
+"zh": "持续监控生产环境中的模型，评估各特征的重要性，并考虑移除不必要的特征，以确保预测质量和资源效率。"
 },
 {
 "en": "Data reliability is crucial; consider data source stability, potential changes in upstream data processes, and create local data copies to control versioning and mitigate risks.",
-"zh": null
+"zh": "数据的可靠性至关重要：要考虑数据来源是否稳定、上游数据处理流程可能的变化，并保留本地数据副本以控制版本、降低风险。"
 },
 {
 "en": "Be aware of feedback loops where a model's predictions influence future input data, potentially leading to unexpected behavior or biased outcomes, especially in interconnected systems.",
-"zh": null
+"zh": "要留意反馈环：模型的预测会影响未来的输入数据，可能导致意想不到的行为或有偏差的结果，在相互关联的系统中尤其如此。"
 },
 {
 "en": "Regularly assess your model by asking if features are truly helpful and if their value outweighs the costs of inclusion, aiming for a balance between prediction accuracy and maintainability.",
-"zh": null
+"zh": "定期评估模型：问问各个特征是否真的有帮助、其价值是否高于纳入它的成本，在预测准确度和可维护性之间取得平衡。"
 },
 {
 "en": "Evaluate if your model is susceptible to a feedback loop and take steps to isolate it if you find it is.",
-"zh": null
+"zh": "评估您的模型是否容易受反馈环影响；如果是，就采取措施把它隔离开。"
 }
 ],
 "terms": [],

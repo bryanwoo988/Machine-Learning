@@ -23,26 +23,26 @@
 "takeaways": [
 {
 "en": "This module focuses on converting logistic regression models into binary classification models for predicting categories instead of probabilities.",
-"zh": null
+"zh": "本单元着重说明如何把逻辑回归模型转换成二元分类模型，用来预测类别而不是概率。"
 },
 {
 "en": "You'll learn how to determine the optimal threshold for classification, calculate and select appropriate evaluation metrics, and interpret ROC and AUC.",
-"zh": null
+"zh": "您会学到如何确定最佳的分类阈值、计算并选择合适的评估指标，以及如何解读 ROC 和 AUC。"
 },
 {
 "en": "The module covers binary and provides an introduction to multi-class classification, building upon prior knowledge of machine learning, linear regression, and logistic regression.",
-"zh": null
+"zh": "本单元涵盖二元分类，并简单介绍多类别分类，建立在您对机器学习、线性回归和逻辑回归的已有认识之上。"
 },
 {
 "en": "The content explores methods for evaluating the quality of classification model predictions and applying them to real-world scenarios.",
-"zh": null
+"zh": "内容探讨评估分类模型预测质量的方法，以及如何把这些方法用于实际情境。"
 }
 ],
 "terms": [
 "binary-classification",
 "class",
 "classification-model",
-"multi-class",
+"multi-class-classification",
 "sigmoid-function"
 ],
 "blocks": [
@@ -72,8 +72,8 @@
 {
 "type": "p",
 "html": {
-"en": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>Classification</b></button> is the task of predicting which of a set of <button type=\"button\" class=\"term\" data-term=\"class\"><b>classes</b></button> (categories) an example belongs to. In this module, you'll learn how to convert a logistic regression model that predicts a probability into a <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>binary classification</b></button> model that predicts one of two classes. You'll also learn how to choose and calculate appropriate metrics to evaluate the quality of a classification model's predictions. Finally, you'll get a brief introduction to <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>multi-class classification</b></button> problems, which are discussed in more depth later in the course.",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>分类</b></button>是指预测某个示例属于一组<button type=\"button\" class=\"term\" data-term=\"class\"><b>类</b></button>（类别）中的哪一类。在本单元中，您将了解如何 一种逻辑回归模型， <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>二元分类</b></button> 用于预测两个类别中某一个的模型。您还将了解如何选择和计算适当的指标，以评估分类模型的预测质量。最后，该课程将简要介绍 <button type=\"button\" class=\"term\" data-term=\"multi-class\"><b>多类别分类</b></button> 这些问题将在本课程的稍后部分进行详细介绍。"
+"en": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>Classification</b></button> is the task of predicting which of a set of <button type=\"button\" class=\"term\" data-term=\"class\"><b>classes</b></button> (categories) an example belongs to. In this module, you'll learn how to convert a logistic regression model that predicts a probability into a <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>binary classification</b></button> model that predicts one of two classes. You'll also learn how to choose and calculate appropriate metrics to evaluate the quality of a classification model's predictions. Finally, you'll get a brief introduction to <button type=\"button\" class=\"term\" data-term=\"multi-class-classification\"><b>multi-class classification</b></button> problems, which are discussed in more depth later in the course.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"classification-model\"><b>分类</b></button>是指预测某个示例属于一组<button type=\"button\" class=\"term\" data-term=\"class\"><b>类</b></button>（类别）中的哪一类。在本单元中，您将了解如何 一种逻辑回归模型， <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>二元分类</b></button> 用于预测两个类别中某一个的模型。您还将了解如何选择和计算适当的指标，以评估分类模型的预测质量。最后，该课程将简要介绍 <button type=\"button\" class=\"term\" data-term=\"multi-class-classification\"><b>多类别分类</b></button> 这些问题将在本课程的稍后部分进行详细介绍。"
 }
 }
 ]
@@ -93,12 +93,12 @@
 "takeaways": [],
 "terms": [
 "binary-classification",
-"class_imbalanced_data_set",
+"class-imbalanced-dataset",
 "classification-threshold",
-"confusion_matrix",
-"ground_truth",
-"negative_class",
-"positive_class"
+"confusion-matrix",
+"ground-truth",
+"negative-class",
+"positive-class"
 ],
 "blocks": [
 {
@@ -118,8 +118,8 @@
 {
 "type": "p",
 "html": {
-"en": "To make this conversion, you choose a threshold probability, called a <button type=\"button\" class=\"term\" data-term=\"classification-threshold\"><b>classification threshold</b></button>. Examples with a probability above the threshold value are then assigned to the <button type=\"button\" class=\"term\" data-term=\"positive_class\"><b>positive class</b></button>, the class you are testing for (here, <code>spam</code>). Examples with a lower probability are assigned to the <button type=\"button\" class=\"term\" data-term=\"negative_class\"><b>negative class</b></button>, the alternative class (here, <code>not spam</code>).",
-"zh": "如需进行此转换，您需要选择一个阈值概率，称为<button type=\"button\" class=\"term\" data-term=\"classification-threshold\"><b>分类阈值</b></button>。然后，概率高于阈值的示例会被分配到<button type=\"button\" class=\"term\" data-term=\"positive_class\"><b>正类别</b></button>（即您要测试的类，此处为 <code>spam</code>）。概率较低的示例会被分配到<button type=\"button\" class=\"term\" data-term=\"negative_class\"><b>负类别</b></button>（即备选类别，此处为 <code>not spam</code>）。"
+"en": "To make this conversion, you choose a threshold probability, called a <button type=\"button\" class=\"term\" data-term=\"classification-threshold\"><b>classification threshold</b></button>. Examples with a probability above the threshold value are then assigned to the <button type=\"button\" class=\"term\" data-term=\"positive-class\"><b>positive class</b></button>, the class you are testing for (here, <code>spam</code>). Examples with a lower probability are assigned to the <button type=\"button\" class=\"term\" data-term=\"negative-class\"><b>negative class</b></button>, the alternative class (here, <code>not spam</code>).",
+"zh": "如需进行此转换，您需要选择一个阈值概率，称为<button type=\"button\" class=\"term\" data-term=\"classification-threshold\"><b>分类阈值</b></button>。然后，概率高于阈值的示例会被分配到<button type=\"button\" class=\"term\" data-term=\"positive-class\"><b>正类别</b></button>（即您要测试的类，此处为 <code>spam</code>）。概率较低的示例会被分配到<button type=\"button\" class=\"term\" data-term=\"negative-class\"><b>负类别</b></button>（即备选类别，此处为 <code>not spam</code>）。"
 }
 },
 {
@@ -163,8 +163,8 @@
 {
 "type": "p",
 "html": {
-"en": "The probability score is not reality, or <button type=\"button\" class=\"term\" data-term=\"ground_truth\"><b>ground truth</b></button>. There are four possible outcomes for each output from a binary classifier. For the spam classifier example, if you lay out the ground truth as columns and the model's prediction as rows, the following table, called a <button type=\"button\" class=\"term\" data-term=\"confusion_matrix\"><b>confusion matrix</b></button>, is the result:",
-"zh": "概率得分不是现实情况，也不是<button type=\"button\" class=\"term\" data-term=\"ground_truth\"><b>标准答案</b></button>。二元分类器的每个输出有四种可能的结果。在垃圾邮件分类器示例中，如果您将标准答案作为列，将模型的预测作为行，则会得到以下表格（称为<button type=\"button\" class=\"term\" data-term=\"confusion_matrix\"><b>混淆矩阵</b></button>）："
+"en": "The probability score is not reality, or <button type=\"button\" class=\"term\" data-term=\"ground-truth\"><b>ground truth</b></button>. There are four possible outcomes for each output from a binary classifier. For the spam classifier example, if you lay out the ground truth as columns and the model's prediction as rows, the following table, called a <button type=\"button\" class=\"term\" data-term=\"confusion-matrix\"><b>confusion matrix</b></button>, is the result:",
+"zh": "概率得分不是现实情况，也不是<button type=\"button\" class=\"term\" data-term=\"ground-truth\"><b>标准答案</b></button>。二元分类器的每个输出有四种可能的结果。在垃圾邮件分类器示例中，如果您将标准答案作为列，将模型的预测作为行，则会得到以下表格（称为<button type=\"button\" class=\"term\" data-term=\"confusion-matrix\"><b>混淆矩阵</b></button>）："
 }
 },
 {
@@ -228,8 +228,8 @@
 {
 "type": "p",
 "html": {
-"en": "When the total of actual positives is not close to the total of actual negatives, the dataset is <button type=\"button\" class=\"term\" data-term=\"class_imbalanced_data_set\"><b>imbalanced</b></button>. An instance of an imbalanced dataset might be a set of thousands of photos of clouds, where the rare cloud type you are interested in, say, volutus clouds, only appears a few times.",
-"zh": "如果实际正例的总数与实际负例的总数不接近，则表示数据集<button type=\"button\" class=\"term\" data-term=\"class_imbalanced_data_set\"><b>不平衡</b></button>。不平衡数据集的一个示例可能是一组数以千计的云彩照片，其中您感兴趣的罕见云彩类型（例如卷云）只出现了几次。"
+"en": "When the total of actual positives is not close to the total of actual negatives, the dataset is <button type=\"button\" class=\"term\" data-term=\"class-imbalanced-dataset\"><b>imbalanced</b></button>. An instance of an imbalanced dataset might be a set of thousands of photos of clouds, where the rare cloud type you are interested in, say, volutus clouds, only appears a few times.",
+"zh": "如果实际正例的总数与实际负例的总数不接近，则表示数据集<button type=\"button\" class=\"term\" data-term=\"class-imbalanced-dataset\"><b>不平衡</b></button>。不平衡数据集的一个示例可能是一组数以千计的云彩照片，其中您感兴趣的罕见云彩类型（例如卷云）只出现了几次。"
 }
 },
 {
@@ -256,6 +256,17 @@
 "html": {
 "en": "Try changing the threshold yourself.",
 "zh": "请尝试自行更改阈值。"
+}
+},
+{
+"type": "widget",
+"id": "threshold"
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/classification/thresholding_4b167fa9670ef44f12c226cd8c8ce88bf2e67b3ec21b2c04d284b5cac95a55c3.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/classification/thresholding_4b167fa9670ef44f12c226cd8c8ce88bf2e67b3ec21b2c04d284b5cac95a55c3.frame?hl=zh-cn"
 }
 },
 {
@@ -683,6 +694,17 @@
 }
 },
 {
+"type": "widget",
+"id": "threshold"
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/classification/accuracy-precision-recall_3a19ef0b611fdafb27a536492d56a5549e31527339b278642fb152342116a17d.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/classification/accuracy-precision-recall_3a19ef0b611fdafb27a536492d56a5549e31527339b278642fb152342116a17d.frame?hl=zh-cn"
+}
+},
+{
 "type": "more",
 "title": {
 "en": "What does NaN mean in the metrics?",
@@ -962,7 +984,7 @@
 },
 "takeaways": [],
 "terms": [
-"AUC",
+"auc-area-under-the-roc-curve",
 "roc-receiver-operating-characteristic-curve"
 ],
 "blocks": [
@@ -1018,8 +1040,8 @@
 {
 "type": "p",
 "html": {
-"en": "The <button type=\"button\" class=\"term\" data-term=\"AUC\"><b>area under the ROC curve (AUC)</b></button> represents the probability that the model, if given a randomly chosen positive and negative example, will rank the positive higher than the negative.",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"AUC\"><b>ROC 曲线下面积 (AUC)</b></button> 表示，如果给定随机选择的正例和负例，模型将正例排在负例之上的概率。"
+"en": "The <button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\"><b>area under the ROC curve (AUC)</b></button> represents the probability that the model, if given a randomly chosen positive and negative example, will rank the positive higher than the negative.",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"auc-area-under-the-roc-curve\"><b>ROC 曲线下面积 (AUC)</b></button> 表示，如果给定随机选择的正例和负例，模型将正例排在负例之上的概率。"
 }
 },
 {
@@ -1163,6 +1185,17 @@
 }
 },
 {
+"type": "widget",
+"id": "roc"
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/classification/roc-and-auc_cd8eefef66204f47d46c9d7c70dfb95c66dc3e95c654f551902526bb98a8e644.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/classification/roc-and-auc_cd8eefef66204f47d46c9d7c70dfb95c66dc3e95c654f551902526bb98a8e644.frame?hl=zh-cn"
+}
+},
+{
 "type": "h",
 "html": {
 "en": "Exercise: Check your understanding",
@@ -1180,8 +1213,8 @@
 "options": [
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-77.png\" alt=\"ROC curve that arcs upward and then rightward from (0,0) to (1,1). The curve has an AUC of 0.77.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-77.png\" alt=\"ROC 曲线，从 (0,0) 向右上方弧形延伸，然后向右下方弧形延伸至 (1,1)。该曲线的 AUC 为 0.77。\" loading=\"lazy\">"
 },
 "why": {
 "en": "This model has the highest AUC, which corresponds with the best performance.",
@@ -1191,8 +1224,8 @@
 },
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-508.png\" alt=\"ROC curve that is approximately a straight line from (0,0) to (1,1), with a few zig-zags. The curve has an AUC of 0.508.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-508.png\" alt=\"ROC 曲线大致为从 (0,0) 到 (1,1) 的直线，其中包含一些锯齿形。该曲线的 AUC 为 0.508。\" loading=\"lazy\">"
 },
 "why": {
 "en": "",
@@ -1202,8 +1235,8 @@
 },
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-623.png\" alt=\"ROC curve that zig-zags up and to the right from (0,0) to (1,1). The curve has an AUC of 0.623.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-623.png\" alt=\"从 (0,0) 到 (1,1) 呈锯齿形向上和向右延伸的 ROC 曲线。 该曲线的 AUC 为 0.623。\" loading=\"lazy\">"
 },
 "why": {
 "en": "",
@@ -1213,8 +1246,8 @@
 },
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-31.png\" alt=\"ROC curve that arcs rightward and then upward from (0,0) to (1,1). The curve has an AUC of 0.31.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-31.png\" alt=\"ROC 曲线，从 (0,0) 向右弯曲，然后向上弯曲，到达 (1,1)。该曲线的 AUC 为 0.31。\" loading=\"lazy\">"
 },
 "why": {
 "en": "",
@@ -1234,8 +1267,8 @@
 "options": [
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-32.png\" alt=\"ROC curve that arcs rightward and then upward from (0,0) to (1,1). The curve has an AUC of 0.32.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-32.png\" alt=\"ROC 曲线，从 (0,0) 向右弯曲，然后向上弯曲，到达 (1,1)。该曲线的 AUC 为 0.32。\" loading=\"lazy\">"
 },
 "why": {
 "en": "This model has an AUC lower than 0.5, which means it performs worse than chance.",
@@ -1245,8 +1278,8 @@
 },
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-508.png\" alt=\"ROC curve that is approximately a straight line from (0,0) to (1,1), with a few zig-zags. The curve has an AUC of 0.508.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-508.png\" alt=\"ROC 曲线大致为从 (0,0) 到 (1,1) 的直线，其中包含一些锯齿形。该曲线的 AUC 为 0.508。\" loading=\"lazy\">"
 },
 "why": {
 "en": "This model performs slightly better than chance.",
@@ -1256,8 +1289,8 @@
 },
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-5.png\" alt=\"ROC curve that is a diagonal straight line from (0,0) to (1,1). The curve has an AUC of 0.5.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_0-5.png\" alt=\"ROC 曲线，即从 (0,0) 到 (1,1) 的对角线直线。该曲线的 AUC 为 0.5。\" loading=\"lazy\">"
 },
 "why": {
 "en": "This model performs the same as chance.",
@@ -1267,8 +1300,8 @@
 },
 {
 "html": {
-"en": "",
-"zh": ""
+"en": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_1-0.png\" alt=\"ROC curve that is composed of two perpendicular lines: a vertical line from (0,0) to (0,1) and a horizontal line from (0,1) to (1,1). This curve has an AUC of 1.0.\" loading=\"lazy\">",
+"zh": "<img class=\"quiz-img\" src=\"img/crash-course/images/auc_1-0.png\" alt=\"由两条垂直线组成的 ROC 曲线：一条垂直线的范围为 (0,0) 到 (0,1)，一条水平线的范围为 (0,1) 到 (1,1)。 此曲线的曲线下面积为 1.0。\" loading=\"lazy\">"
 },
 "why": {
 "en": "This is a hypothetical perfect classifier.",
@@ -1436,32 +1469,32 @@
 "takeaways": [
 {
 "en": "Prediction bias, calculated as the difference between the average prediction and the average ground truth, is a quick check for model or data issues.",
-"zh": null
+"zh": "预测偏差是平均预测值与平均标准答案之间的差，可以快速检查模型或数据是否有问题。"
 },
 {
 "en": "A model with zero prediction bias ideally predicts the same average outcome as observed in the ground truth data, such as a spam detection model predicting the same percentage of spam emails as actually present in the dataset.",
-"zh": null
+"zh": "预测偏差为零的模型，理想情况下预测出的平均结果与标准答案数据中观察到的相同；例如垃圾邮件检测模型预测出的垃圾邮件比例，与数据集中实际的比例相同。"
 },
 {
 "en": "Significant prediction bias can indicate problems in the training data, the model itself, or the new data being applied to the model.",
-"zh": null
+"zh": "明显的预测偏差可能表示训练数据、模型本身或输入模型的新数据有问题。"
 },
 {
 "en": "Common causes of prediction bias include biased data, excessive regularization, bugs in the training process, and insufficient features provided to the model.",
-"zh": null
+"zh": "预测偏差的常见原因包括数据有偏差、正则化过度、训练过程中的程序错误，以及提供给模型的特征不足。"
 }
 ],
 "terms": [
 "ground-truth",
 "prediction",
-"prediction_bias"
+"prediction-bias"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "Calculating <button type=\"button\" class=\"term\" data-term=\"prediction_bias\"><b>prediction bias</b></button> is a quick check that can flag issues with the model or training data early on.",
-"zh": "计算<button type=\"button\" class=\"term\" data-term=\"prediction_bias\"><b>预测偏差</b></button>是一种快速检查，可尽早发现模型或训练数据的问题。"
+"en": "Calculating <button type=\"button\" class=\"term\" data-term=\"prediction-bias\"><b>prediction bias</b></button> is a quick check that can flag issues with the model or training data early on.",
+"zh": "计算<button type=\"button\" class=\"term\" data-term=\"prediction-bias\"><b>预测偏差</b></button>是一种快速检查，可尽早发现模型或训练数据的问题。"
 }
 },
 {
@@ -1524,30 +1557,30 @@
 "takeaways": [
 {
 "en": "Multi-class classification extends binary classification to handle more than two classes, often by breaking the problem down into multiple binary classifications.",
-"zh": null
+"zh": "多类别分类把二元分类扩展到两个以上的类别，通常是把问题拆成多个二元分类。"
 },
 {
 "en": "In multi-class classification, each example is assigned to only one class, like classifying handwritten digits (0-9).",
-"zh": null
+"zh": "在多类别分类中，每个样本只归入一个类别，例如识别手写数字（0–9）。"
 },
 {
 "en": "If an example can belong to multiple classes, it's called multi-label classification, which is a distinct but related concept.",
-"zh": null
+"zh": "如果一个样本可以同时属于多个类别，就称为多标签分类，这是一个相关但不同的概念。"
 },
 {
 "en": "Multi-class classification can be achieved by creating a series of binary classifiers, each distinguishing between a subset of classes.",
-"zh": null
+"zh": "多类别分类可以通过建立一系列二元分类器来实现，每个分类器负责区分其中一部分类别。"
 }
 ],
 "terms": [
-"binary_classification"
+"binary-classification"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "Multi-class classification can be treated as an extension of <button type=\"button\" class=\"term\" data-term=\"binary_classification\"><b>binary classification</b></button> to more than two classes. If each example can only be assigned to one class, then the classification problem can be handled as a binary classification problem, where one class contains one of the multiple classes, and the other class contains all the other classes put together. The process can then be repeated for each of the original classes.",
-"zh": "多类别分类可被视为对<button type=\"button\" class=\"term\" data-term=\"binary_classification\">二元分类</button>的扩展，适用于两个以上的类别。如果每个示例只能分配到一个类，则可以将分类问题处理为二元分类问题，其中一个类包含多个类中的其中一个，另一个类包含所有其他类。然后，可以对每个原始类别重复此过程。"
+"en": "Multi-class classification can be treated as an extension of <button type=\"button\" class=\"term\" data-term=\"binary-classification\"><b>binary classification</b></button> to more than two classes. If each example can only be assigned to one class, then the classification problem can be handled as a binary classification problem, where one class contains one of the multiple classes, and the other class contains all the other classes put together. The process can then be repeated for each of the original classes.",
+"zh": "多类别分类可被视为对<button type=\"button\" class=\"term\" data-term=\"binary-classification\">二元分类</button>的扩展，适用于两个以上的类别。如果每个示例只能分配到一个类，则可以将分类问题处理为二元分类问题，其中一个类包含多个类中的其中一个，另一个类包含所有其他类。然后，可以对每个原始类别重复此过程。"
 }
 },
 {

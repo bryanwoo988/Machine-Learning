@@ -23,27 +23,27 @@
 "takeaways": [
 {
 "en": "This module introduces logistic regression, a model used to predict the probability of an outcome, unlike linear regression which predicts continuous numerical values.",
-"zh": null
+"zh": "本单元介绍逻辑回归。它是一种预测某个结果发生概率的模型，不同于预测连续数值的线性回归。"
 },
 {
 "en": "Logistic regression utilizes the sigmoid function to calculate probability and employs log loss as its loss function.",
-"zh": null
+"zh": "逻辑回归用 S 型函数计算概率，并以对数损失作为损失函数。"
 },
 {
 "en": "Regularization is crucial when training logistic regression models to prevent overfitting and improve generalization.",
-"zh": null
+"zh": "训练逻辑回归模型时，正则化对防止过拟合、提高泛化能力至关重要。"
 },
 {
 "en": "The module covers the comparison between linear and logistic regression and explores use cases for logistic regression.",
-"zh": null
+"zh": "本单元比较线性回归与逻辑回归，并探讨逻辑回归的应用场景。"
 },
 {
 "en": "Familiarity with introductory machine learning and linear regression concepts is assumed for this 35-minute module.",
-"zh": null
+"zh": "这个 35 分钟的单元假定您已熟悉机器学习入门和线性回归的概念。"
 }
 ],
 "terms": [
-"logistic_regression"
+"logistic-regression"
 ],
 "blocks": [
 {
@@ -72,8 +72,8 @@
 {
 "type": "p",
 "html": {
-"en": "This module introduces a new type of regression model called <button type=\"button\" class=\"term\" data-term=\"logistic_regression\"><b>logistic regression</b></button> that is designed to predict the probability of a given outcome.",
-"zh": "本单元介绍了一种名为<button type=\"button\" class=\"term\" data-term=\"logistic_regression\"><b>逻辑回归</b></button>的新类型回归模型，该模型旨在预测给定结果的概率。"
+"en": "This module introduces a new type of regression model called <button type=\"button\" class=\"term\" data-term=\"logistic-regression\"><b>logistic regression</b></button> that is designed to predict the probability of a given outcome.",
+"zh": "本单元介绍了一种名为<button type=\"button\" class=\"term\" data-term=\"logistic-regression\"><b>逻辑回归</b></button>的新类型回归模型，该模型旨在预测给定结果的概率。"
 }
 },
 {
@@ -97,33 +97,33 @@
 "takeaways": [
 {
 "en": "Logistic regression models output probabilities, which can be used directly or converted to binary categories.",
-"zh": null
+"zh": "逻辑回归模型输出的是概率，可以直接使用，也可以转换成二元类别。"
 },
 {
 "en": "The sigmoid function ensures the output of logistic regression is always between 0 and 1, representing a probability.",
-"zh": null
+"zh": "S 型函数确保逻辑回归的输出始终介于 0 和 1 之间，代表一个概率。"
 },
 {
 "en": "A logistic regression model uses a linear equation and the sigmoid function to calculate the probability of an event.",
-"zh": null
+"zh": "逻辑回归模型用一个线性方程式加上 S 型函数，计算某个事件发生的概率。"
 },
 {
 "en": "The log-odds (z) represent the log of the ratio of probabilities for the two possible outcomes.",
-"zh": null
+"zh": "对数几率 (z) 表示两种可能结果的概率之比的对数。"
 }
 ],
 "terms": [
 "binary-classification",
 "log-odds",
-"logistic_regression",
+"logistic-regression",
 "sigmoid-function"
 ],
 "blocks": [
 {
 "type": "p",
 "html": {
-"en": "Many problems require a probability estimate as output. <button type=\"button\" class=\"term\" data-term=\"logistic_regression\"><b>Logistic regression</b></button> is an extremely efficient mechanism for calculating probabilities. Practically speaking, you can use the returned probability in either of the following two ways:",
-"zh": "许多问题都需要将概率估计值作为输出。 <button type=\"button\" class=\"term\" data-term=\"logistic_regression\"><b>逻辑回归</b></button>是一种用于计算概率的极其高效的机制。实际上，您可以通过以下两种方式之一使用返回的概率："
+"en": "Many problems require a probability estimate as output. <button type=\"button\" class=\"term\" data-term=\"logistic-regression\"><b>Logistic regression</b></button> is an extremely efficient mechanism for calculating probabilities. Practically speaking, you can use the returned probability in either of the following two ways:",
+"zh": "许多问题都需要将概率估计值作为输出。 <button type=\"button\" class=\"term\" data-term=\"logistic-regression\"><b>逻辑回归</b></button>是一种用于计算概率的极其高效的机制。实际上，您可以通过以下两种方式之一使用返回的概率："
 }
 },
 {
@@ -219,6 +219,10 @@
 "en": "As the input, <code>x</code>, increases, the output of the sigmoid function approaches but never reaches <code>1</code>. Similarly, as the input decreases, the sigmoid function's output approaches but never reaches <code>0</code>.",
 "zh": "随着输入 <code>x</code> 的增加，sigmoid 函数的输出会接近 <code>1</code>，但永远不会达到 <code>1</code>。同样，随着输入减小，sigmoid 函数的输出会接近但永远不会达到 <code>0</code>。"
 }
+},
+{
+"type": "widget",
+"id": "sigmoid"
 },
 {
 "type": "more",
@@ -555,7 +559,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/logistic-regression/images/linear_to_logistic.png",
+"src": "img/crash-course/logistic-regression/images/linear_to_logistic.webp",
 "alt": {
 "en": "Left: Line with the points (-7.5, –10), (-2.5, 0), and (0, 5)\n         highlighted. Right: Sigmoid curve with the corresponding transformed\n         points (-10, 0.00004), (0, 0.5), and (5, 0.9933) highlighted.",
 "zh": "左图：突出显示了点 (-7.5, -10)、(-2.5, 0) 和 (0, 5) 的直线。右图：突出显示了具有相应转换点 (-10, 0.00004)、(0, 0.5) 和 (5, 0.9933) 的 Sigmoid 曲线。"
@@ -740,22 +744,22 @@
 "takeaways": [
 {
 "en": "Logistic regression models are trained similarly to linear regression models but use Log Loss instead of squared loss and require regularization.",
-"zh": null
+"zh": "逻辑回归模型的训练方式与线性回归模型类似，但使用对数损失而不是平方损失，而且需要正则化。"
 },
 {
 "en": "Log Loss is used in logistic regression because the rate of change isn't constant, requiring varying precision levels unlike squared loss used in linear regression.",
-"zh": null
+"zh": "逻辑回归使用对数损失，是因为它的变化率不是常数，需要不同程度的精度；这与线性回归使用的平方损失不同。"
 },
 {
 "en": "Regularization, such as L2 regularization or early stopping, is crucial in logistic regression to prevent overfitting due to the model's asymptotic nature.",
-"zh": null
+"zh": "由于逻辑回归模型的渐近特性，L2 正则化或早停法等正则化手段对防止过拟合至关重要。"
 }
 ],
 "terms": [
 "gradient-descent",
-"linear_regression",
-"Log_Loss",
-"logistic_regression",
+"linear-regression",
+"log-loss",
+"logistic-regression",
 "loss-function",
 "overfitting",
 "regularization",
@@ -765,8 +769,8 @@
 {
 "type": "p",
 "html": {
-"en": "<button type=\"button\" class=\"term\" data-term=\"logistic_regression\"><b>Logistic regression</b></button> models are trained using the same process as <a href=\"#/ch/c02/linear-regression\"><b>linear regression</b></a> models, with two key distinctions:",
-"zh": "<button type=\"button\" class=\"term\" data-term=\"logistic_regression\"><b>逻辑回归</b></button>模型的训练过程与<a href=\"#/ch/c02/linear-regression\"><b>线性回归</b></a>模型相同，但有两点主要区别："
+"en": "<button type=\"button\" class=\"term\" data-term=\"logistic-regression\"><b>Logistic regression</b></button> models are trained using the same process as <a href=\"#/ch/c02/linear-regression\"><b>linear regression</b></a> models, with two key distinctions:",
+"zh": "<button type=\"button\" class=\"term\" data-term=\"logistic-regression\"><b>逻辑回归</b></button>模型的训练过程与<a href=\"#/ch/c02/linear-regression\"><b>线性回归</b></a>模型相同，但有两点主要区别："
 }
 },
 {
@@ -774,8 +778,8 @@
 "ordered": false,
 "items": [
 {
-"en": "Logistic regression models use <button type=\"button\" class=\"term\" data-term=\"Log_Loss\"><b>Log Loss</b></button> as the loss function instead of <button type=\"button\" class=\"term\" data-term=\"l2-loss\"><b>squared loss</b></button>.",
-"zh": "逻辑回归模型使用<button type=\"button\" class=\"term\" data-term=\"Log_Loss\"><b>对数损失函数</b></button>作为损失函数，而不是<button type=\"button\" class=\"term\" data-term=\"l2-loss\"><b>平方损失函数</b></button>。"
+"en": "Logistic regression models use <button type=\"button\" class=\"term\" data-term=\"log-loss\"><b>Log Loss</b></button> as the loss function instead of <button type=\"button\" class=\"term\" data-term=\"l2-loss\"><b>squared loss</b></button>.",
+"zh": "逻辑回归模型使用<button type=\"button\" class=\"term\" data-term=\"log-loss\"><b>对数损失函数</b></button>作为损失函数，而不是<button type=\"button\" class=\"term\" data-term=\"l2-loss\"><b>平方损失函数</b></button>。"
 },
 {
 "en": "Applying <a href=\"#/ch/c07/regularization\">regularization</a> is critical to prevent <button type=\"button\" class=\"term\" data-term=\"overfitting\"><b>overfitting</b></button>.",
@@ -929,8 +933,8 @@
 {
 "type": "p",
 "html": {
-"en": "Instead, the loss function for logistic regression is <button type=\"button\" class=\"term\" data-term=\"Log_Loss\"><b>Log Loss</b></button>. The Log Loss equation returns the logarithm of the magnitude of the change, rather than just the distance from data to prediction. Log Loss is calculated as follows:",
-"zh": "相反，逻辑回归的损失函数是<button type=\"button\" class=\"term\" data-term=\"Log_Loss\"><b>对数损失函数</b></button>。对数损失函数返回的是变化幅度的对数，而不仅仅是数据与预测之间的距离。对数损失的计算方式如下："
+"en": "Instead, the loss function for logistic regression is <button type=\"button\" class=\"term\" data-term=\"log-loss\"><b>Log Loss</b></button>. The Log Loss equation returns the logarithm of the magnitude of the change, rather than just the distance from data to prediction. Log Loss is calculated as follows:",
+"zh": "相反，逻辑回归的损失函数是<button type=\"button\" class=\"term\" data-term=\"log-loss\"><b>对数损失函数</b></button>。对数损失函数返回的是变化幅度的对数，而不仅仅是数据与预测之间的距离。对数损失的计算方式如下："
 }
 },
 {

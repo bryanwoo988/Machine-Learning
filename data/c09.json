@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "This module explains how to create embeddings, which are lower-dimensional representations of sparse data that address the problems of large input vectors and lack of meaningful relations between vectors in one-hot encoding.",
-"zh": null
+"zh": "本单元说明如何创建嵌入。嵌入是稀疏数据的低维表示，可以解决独热编码中输入向量太大、向量之间缺乏有意义关系的问题。"
 },
 {
 "en": "One-hot encoding creates large input vectors, leading to a huge number of weights in a neural network, requiring more data, computation, and memory.",
-"zh": null
+"zh": "独热编码会产生很大的输入向量，使神经网络的权重数量庞大，需要更多数据、计算和内存。"
 },
 {
 "en": "One-hot encoding vectors lack meaningful relationships, failing to capture semantic similarities between items, like the example of hot dogs and shawarmas being more similar than hot dogs and salads.",
-"zh": null
+"zh": "独热编码的向量之间没有有意义的关系，无法捕捉项目之间的语义相似性；例如热狗与沙威玛的相似度，其实比热狗与沙拉更高。"
 },
 {
 "en": "Embeddings offer a solution by providing dense vector representations that capture semantic relationships and reduce the dimensionality of data, improving efficiency and performance in machine learning models.",
-"zh": null
+"zh": "嵌入提供能捕捉语义关系的密集向量表示，并降低数据的维度，从而提高机器学习模型的效率和表现。"
 },
 {
 "en": "This module assumes familiarity with introductory machine learning concepts like linear regression, categorical data, and neural networks.",
-"zh": null
+"zh": "本单元假定您已熟悉线性回归、分类数据和神经网络等机器学习入门概念。"
 }
 ],
 "terms": [
@@ -174,23 +174,23 @@
 "takeaways": [
 {
 "en": "Embeddings are low-dimensional representations of high-dimensional data, often used to capture semantic relationships between items.",
-"zh": null
+"zh": "嵌入是高维数据的低维表示，常用来捕捉项目之间的语义关系。"
 },
 {
 "en": "Embeddings place similar items closer together in the embedding space, allowing for efficient machine learning on large datasets.",
-"zh": null
+"zh": "嵌入会把相似的项目放在嵌入空间中较靠近的位置，使机器学习能在大型数据集上高效进行。"
 },
 {
 "en": "The distance between points in an embedding space represents the relative similarity between the corresponding items.",
-"zh": null
+"zh": "嵌入空间中两点之间的距离，代表对应项目之间的相对相似程度。"
 },
 {
 "en": "Real-world embeddings can encode complex relationships, like those between countries and their capitals, allowing models to detect patterns.",
-"zh": null
+"zh": "真实世界的嵌入可以编码复杂的关系，例如国家与其首都之间的关系，让模型能发现其中的规律。"
 },
 {
 "en": "Static embeddings like word2vec represent all meanings of a word with a single point, which can be a limitation in some cases.",
-"zh": null
+"zh": "word2vec 等静态嵌入用单一一个点表示一个词的所有含义，在某些情况下这是一个局限。"
 }
 ],
 "terms": [
@@ -221,7 +221,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/images/embeddings_1D.png",
+"src": "img/crash-course/images/embeddings_1D.webp",
 "alt": {
 "en": "Figure 3. Along an axis of sandwichness, from least to most:\n    borscht, salad, pizza, hot dog, shawarma.",
 "zh": "图 3. 沿着三明治度轴，从最不像到最像：罗宋汤、沙拉、披萨、热狗、沙瓦玛。"
@@ -240,7 +240,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/images/embeddings_2D.png",
+"src": "img/crash-course/images/embeddings_2D.webp",
 "alt": {
 "en": "Figure 4. Same image as before, but with a vertical axis of\n    dessertness. Apple strudel is between hot dog and shawarma but high up on\n    the horizontal axis, but higher up the desserteness axis.",
 "zh": "图 4. 与之前的图片相同，但垂直轴为甜点度。苹果馅饼介于热狗和沙瓦玛之间，但在水平轴上位于较高位置，而在甜点轴上位于更高位置。"
@@ -249,6 +249,10 @@
 "en": "<b>Figure 4.</b> Foods plotted by both \"sandwichness\" and \"dessertness.\"",
 "zh": "<b>图 4.</b> 按“三明治度”和“甜点度”绘制的食物图表。"
 }
+},
+{
+"type": "widget",
+"id": "embedding"
 },
 {
 "type": "p",
@@ -288,7 +292,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/images/embeddings_3D.png",
+"src": "img/crash-course/images/embeddings_3D.webp",
 "alt": {
 "en": "Figure 5. Same image as before, but with a third axis of liquidness\n    orthogonal to the other two, and borscht moved far along that axis.",
 "zh": "图 5. 与之前的图片相同，但第三个轴“液体度”与其他两个轴垂直，并且罗宋汤沿该轴移动了很远。"
@@ -307,7 +311,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/images/embeddings_3D_tangyuan.png",
+"src": "img/crash-course/images/embeddings_3D_tangyuan.webp",
 "alt": {
 "en": "Figure 6. Same image as before, but with tangyuan placed high on\n    dessertness and liquidness and low on sandwichness.",
 "zh": "图 6. 与之前的图片相同，但汤圆在甜点度和液体度方面得分较高，在三明治度方面得分较低。"
@@ -428,7 +432,22 @@
 "type": "p",
 "html": {
 "en": "The following widget, based on TensorFlow's <a href=\"https://projector.tensorflow.org/\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a>, flattens 10,000 <code>word2vec</code> static vectors into a 3D space. This collapse of dimensions can be misleading, because the points closest to each other in the original high-dimensional space may appear farther apart in the 3D projection. The closest <i>n</i> points are highlighted in purple, with <i>n</i> chosen by the user in <b>Isolate __ points</b>. The sidebar on the right identifies those nearest neighbors.",
+"zh": "The following widget, based on TensorFlow's <a href=\"https://projector.tensorflow.org/\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a>, flattens 10,000 <code>word2vec</code> static vectors into a 3D space. This collapse of dimensions can be misleading, because the points closest to each other in the original high-dimensional space may appear farther apart in the 3D projection. The closest <i>n</i> points are highlighted in purple, with <i>n</i> chosen by the user in <b>Isolate __ points</b>. The sidebar on the right identifies those nearest neighbors."
+},
+"only": "en"
+},
+{
+"type": "p",
+"html": {
+"en": "html",
 "zh": "以下基于 TensorFlow <a href=\"https://projector.tensorflow.org/?hl=zh-cn\" target=\"_blank\" rel=\"noopener\">Embedding Projector</a> 的 widget 会将 10,000 个 <code>word2vec</code> 静态向量展平到 3D 空间中。这种维度合并可能会造成误导，因为在原始高维空间中彼此最接近的点在 3D 投影中可能会显得相距更远。最接近的 n 个点以紫色突出显示，n 由用户在 <b>Isolate __ points</b> 中设定。右侧的边栏会标识最近的近邻。"
+}
+},
+{
+"type": "frame",
+"src": {
+"en": "https://developers.google.com/frame/machine-learning/crash-course/embeddings/interactive-exercises_3b05cfa64fe0a79079bfc80bcca3e8e0b93de1dcbebe0970bcfd4970335c8079.frame",
+"zh": "https://developers.google.com/frame/machine-learning/crash-course/embeddings/interactive-exercises_3b05cfa64fe0a79079bfc80bcca3e8e0b93de1dcbebe0970bcfd4970335c8079.frame?hl=zh-cn"
 }
 },
 {
@@ -672,19 +691,19 @@
 "takeaways": [
 {
 "en": "Embeddings can be created using dimensionality reduction techniques like PCA or by training them as part of a neural network.",
-"zh": null
+"zh": "可以用 PCA 等降维技术创建嵌入，也可以把它作为神经网络的一部分来训练。"
 },
 {
 "en": "Training an embedding within a neural network allows customization for specific tasks, where the embedding layer learns optimal weights to represent data in a lower-dimensional space.",
-"zh": null
+"zh": "在神经网络中训练嵌入，可以针对特定任务定制：嵌入层会学习最佳权重，在较低维的空间中表示数据。"
 },
 {
 "en": "Word embeddings, like word2vec, leverage the distributional hypothesis to map semantically similar words to geometrically close vectors.",
-"zh": null
+"zh": "word2vec 等词嵌入利用分布假设，把语义相近的词映射到几何上相近的向量。"
 },
 {
 "en": "Static word embeddings have limitations as they assign a single representation per word, while contextual embeddings offer multiple representations based on context.",
-"zh": null
+"zh": "静态词嵌入为每个词只指定一种表示，有其局限；上下文嵌入则会根据上下文给出多种表示。"
 }
 ],
 "terms": [
@@ -764,7 +783,7 @@
 },
 {
 "type": "figure",
-"src": "img/crash-course/embeddings/images/one_hot_hot_dog_embedding.png",
+"src": "img/crash-course/embeddings/images/one_hot_hot_dog_embedding.webp",
 "alt": {
 "en": "Figure 12. Neural net for one-hot encoding of hot dog. The first layer is an\n    input layer with 5 nodes, each annotated with an icon of the food it\n    represents (borscht, hot dog, salad, ..., and shawarma). These nodes have\n    the values [0, 1, 0, ..., 0], respectively, representing the one-hot\n    encoding of 'hot dog'. The input layer is connected to a 3-node embedding\n    layer, whose nodes have the values 2.98, -0.75, and 0, respectively. The\n    embedding layer is connected to a 5-node hidden layer, which is then\n    connected to a 5-node output layer.",
 "zh": "图 12. 用于对热狗进行独热编码的神经网络。第一层是包含 5 个节点的输入层，每个节点都带有表示其所代表食物（罗宋汤、热狗、沙拉、沙瓦玛等）的图标。这些节点分别具有值 [0, 1, 0, ..., 0]，表示“热狗”的独热编码。输入层连接到 3 个节点的嵌入层，其节点的值分别为 2.98、-0.75 和 0。嵌入层连接到 5 个节点的隐藏层，然后连接到 5 个节点的输出层。"

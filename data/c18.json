@@ -23,23 +23,23 @@
 "takeaways": [
 {
 "en": "ML models should benefit society and avoid causing harm, bias, or misuse of personal data.",
-"zh": null
+"zh": "机器学习模型应造福社会，避免造成伤害、偏见或滥用个人数据。"
 },
 {
 "en": "Google's AI principles emphasize fairness, privacy, transparency, and safety in ML development.",
-"zh": null
+"zh": "Google 的 AI 原则强调机器学习开发中的公平、隐私、透明和安全。"
 },
 {
 "en": "Fairness in models requires addressing potential biases in training data and ensuring equitable outcomes for all user groups.",
-"zh": null
+"zh": "模型的公平性需要处理训练数据中可能的偏见，并确保所有用户群体都得到公平的结果。"
 },
 {
 "en": "Privacy considerations involve adhering to relevant regulations, protecting personal data, and ensuring secure data handling practices.",
-"zh": null
+"zh": "隐私方面的考量包括遵守相关法规、保护个人数据，以及确保安全的数据处理做法。"
 },
 {
 "en": "Transparency and safety involve making model functionality understandable, documenting model details, and designing models to operate securely and reliably.",
-"zh": null
+"zh": "透明和安全包括让人能理解模型的功能、记录模型的细节，以及把模型设计成能安全可靠地运行。"
 }
 ],
 "terms": [],
